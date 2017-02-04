@@ -179,7 +179,7 @@
             // 
             this.Sharpness_SLD.Location = new System.Drawing.Point(153, 162);
             this.Sharpness_SLD.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Sharpness_SLD.Maximum = 200;
+            this.Sharpness_SLD.Maximum = 500;
             this.Sharpness_SLD.Name = "Sharpness_SLD";
             this.Sharpness_SLD.Size = new System.Drawing.Size(357, 69);
             this.Sharpness_SLD.TabIndex = 21;
@@ -212,7 +212,7 @@
             // 
             this.Brigtness_SLD.Location = new System.Drawing.Point(154, 5);
             this.Brigtness_SLD.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Brigtness_SLD.Maximum = 100;
+            this.Brigtness_SLD.Maximum = 500;
             this.Brigtness_SLD.Name = "Brigtness_SLD";
             this.Brigtness_SLD.Size = new System.Drawing.Size(357, 69);
             this.Brigtness_SLD.TabIndex = 14;
@@ -267,7 +267,7 @@
             // 
             this.Contrast_SLD.Location = new System.Drawing.Point(153, 83);
             this.Contrast_SLD.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Contrast_SLD.Maximum = 200;
+            this.Contrast_SLD.Maximum = 500;
             this.Contrast_SLD.Name = "Contrast_SLD";
             this.Contrast_SLD.Size = new System.Drawing.Size(357, 69);
             this.Contrast_SLD.TabIndex = 18;
@@ -315,7 +315,6 @@
             this.richTextBox1.Size = new System.Drawing.Size(571, 152);
             this.richTextBox1.TabIndex = 11;
             this.richTextBox1.Text = "";
-            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
             // label2
             // 

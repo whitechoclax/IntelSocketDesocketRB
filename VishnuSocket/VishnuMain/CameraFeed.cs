@@ -69,13 +69,13 @@ namespace VishnuMain
 
             if (RetrieveBgrFrame.Checked)
             {
-               Image<Bgr, Byte> frame = _capture.QueryFrame().ToImage<Bgr,byte>();
+                Image<Bgr, byte> frame = _capture.QueryFrame().ToImage<Bgr, byte>();
                 //because we are using an autosize picturebox we need to do a thread safe update
                DisplayImage(frame.ToBitmap());
             }
             else if (RetrieveGrayFrame.Checked)
             {
-                Image<Bgr, Byte> frame = _capture.QueryFrame().ToImage<Bgr, byte>();
+                Image<Bgr, byte> frame = _capture.QueryFrame().ToImage<Bgr, byte>();
                 Image<Gray, byte> grayframe = frame.Convert<Gray, Byte>();
                 //because we are using an autosize picturebox we need to do a thread safe update
                 DisplayImage(grayframe.ToBitmap());
@@ -83,6 +83,7 @@ namespace VishnuMain
         }
 
         private delegate void DisplayImageDelegate(Bitmap Image);
+
         private void DisplayImage(Bitmap Image)
         {
             if (captureBox.InvokeRequired)
@@ -299,7 +300,7 @@ namespace VishnuMain
             if (_capture != null) _capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Sharpness, Sharpness_SLD.Value);
         }
 
-        protected void OnFromClosing(CancelEventArgs e)
+        protected void OnFormClosing(CancelEventArgs e)
         {
             if (Capture != null)
             {
@@ -325,9 +326,6 @@ namespace VishnuMain
             }
         }
 
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+    
     }
 }
