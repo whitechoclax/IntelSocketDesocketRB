@@ -53,6 +53,9 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DirectShowLib-2005">
+      <HintPath>..\Common\DirectShow\lib\DirectShowLib-2005.dll</HintPath>
+    </Reference>
     <Reference Include="Emgu.CV.UI">
       <HintPath>..\emgucv-windesktop 3.1.0.2504\bin\Emgu.CV.UI.dll</HintPath>
     </Reference>
@@ -75,6 +78,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CameraFeed.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CameraFeed.Designer.cs">
+      <DependentUpon>CameraFeed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CameraStructures.cs" />
     <Compile Include="LoginMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,6 +93,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CameraFeed.resx">
+      <DependentUpon>CameraFeed.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LoginMain.resx">
       <DependentUpon>LoginMain.cs</DependentUpon>
     </EmbeddedResource>

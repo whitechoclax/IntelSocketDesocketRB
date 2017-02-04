@@ -17,17 +17,29 @@ namespace VishnuMain
         public LoginMain()
         {
             InitializeComponent();
-            //file is specific to mine.  change it if you wish.
+            
+            
+            
            
         }
+       
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string fileName = @"C:\Users\Justin Morgan\Documents\CapstoneDevelopment\VishnuSocket\emgucv-windesktop 3.1.0.2504\bin\lena.jpg";
-            Image<Bgr, byte> imf = new Image<Bgr, byte>(fileName);
-            CvInvoke.Imshow("Image", imf);
+            if (!centralPanel.Controls.Contains(CameraFeed.Instance))
+            {
+                centralPanel.Controls.Add(CameraFeed.Instance);
+                CameraFeed.Instance.Dock = DockStyle.Fill;
+                CameraFeed.Instance.BringToFront();
+            }
+            else
+                CameraFeed.Instance.BringToFront();
+            
+        }
 
-            CvInvoke.WaitKey(0);
+        private void button2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
