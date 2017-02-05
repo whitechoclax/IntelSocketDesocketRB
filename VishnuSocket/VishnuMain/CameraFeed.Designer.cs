@@ -38,7 +38,7 @@
             this.Sharpness_SLD = new System.Windows.Forms.TrackBar();
             this.Sharpness_LBL = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.Brigtness_SLD = new System.Windows.Forms.TrackBar();
+            this.Brightness_SLD = new System.Windows.Forms.TrackBar();
             this.label5 = new System.Windows.Forms.Label();
             this.Brigthness_LBL = new System.Windows.Forms.Label();
             this.Contrast_LBL = new System.Windows.Forms.Label();
@@ -55,14 +55,14 @@
             this.label1 = new System.Windows.Forms.Label();
             this.Camera_Selection = new System.Windows.Forms.ComboBox();
             this.Cam_lbl = new System.Windows.Forms.Label();
-            this.captureBox = new System.Windows.Forms.PictureBox();
+            this.CaptureBox = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Sharpness_SLD)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Brigtness_SLD)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Brightness_SLD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Contrast_SLD)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.captureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CaptureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // flipVerticalButton
@@ -110,7 +110,7 @@
             this.tableLayoutPanel1.Controls.Add(this.Setting_lbl, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.Cam_lbl, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.captureBox, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.CaptureBox, 0, 1);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(18, 18);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -163,7 +163,7 @@
             this.panel2.Controls.Add(this.Sharpness_SLD);
             this.panel2.Controls.Add(this.Sharpness_LBL);
             this.panel2.Controls.Add(this.label8);
-            this.panel2.Controls.Add(this.Brigtness_SLD);
+            this.panel2.Controls.Add(this.Brightness_SLD);
             this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.Brigthness_LBL);
             this.panel2.Controls.Add(this.Contrast_LBL);
@@ -179,7 +179,7 @@
             // 
             this.Sharpness_SLD.Location = new System.Drawing.Point(153, 162);
             this.Sharpness_SLD.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Sharpness_SLD.Maximum = 500;
+            this.Sharpness_SLD.Maximum = 250;
             this.Sharpness_SLD.Name = "Sharpness_SLD";
             this.Sharpness_SLD.Size = new System.Drawing.Size(357, 69);
             this.Sharpness_SLD.TabIndex = 21;
@@ -208,16 +208,16 @@
             this.label8.TabIndex = 23;
             this.label8.Text = "Sharpness:";
             // 
-            // Brigtness_SLD
+            // Brightness_SLD
             // 
-            this.Brigtness_SLD.Location = new System.Drawing.Point(154, 5);
-            this.Brigtness_SLD.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Brigtness_SLD.Maximum = 500;
-            this.Brigtness_SLD.Name = "Brigtness_SLD";
-            this.Brigtness_SLD.Size = new System.Drawing.Size(357, 69);
-            this.Brigtness_SLD.TabIndex = 14;
-            this.Brigtness_SLD.TickFrequency = 5;
-            this.Brigtness_SLD.Scroll += new System.EventHandler(this.Brigtness_SLD_Scroll);
+            this.Brightness_SLD.Location = new System.Drawing.Point(154, 5);
+            this.Brightness_SLD.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Brightness_SLD.Maximum = 250;
+            this.Brightness_SLD.Name = "Brightness_SLD";
+            this.Brightness_SLD.Size = new System.Drawing.Size(357, 69);
+            this.Brightness_SLD.TabIndex = 14;
+            this.Brightness_SLD.TickFrequency = 5;
+            this.Brightness_SLD.Scroll += new System.EventHandler(this.Brigtness_SLD_Scroll);
             // 
             // label5
             // 
@@ -267,7 +267,7 @@
             // 
             this.Contrast_SLD.Location = new System.Drawing.Point(153, 83);
             this.Contrast_SLD.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Contrast_SLD.Maximum = 500;
+            this.Contrast_SLD.Maximum = 250;
             this.Contrast_SLD.Name = "Contrast_SLD";
             this.Contrast_SLD.Size = new System.Drawing.Size(357, 69);
             this.Contrast_SLD.TabIndex = 18;
@@ -395,18 +395,13 @@
             this.Cam_lbl.TabIndex = 1;
             this.Cam_lbl.Text = "Camera View";
             // 
-            // captureBox
+            // CaptureBox
             // 
-            this.captureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.captureBox.Location = new System.Drawing.Point(4, 36);
-            this.captureBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.captureBox.Name = "captureBox";
-            this.captureBox.Size = new System.Drawing.Size(605, 1116);
-            this.captureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.captureBox.TabIndex = 3;
-            this.captureBox.TabStop = false;
+            this.CaptureBox.Location = new System.Drawing.Point(3, 34);
+            this.CaptureBox.Name = "CaptureBox";
+            this.CaptureBox.Size = new System.Drawing.Size(607, 540);
+            this.CaptureBox.TabIndex = 3;
+            this.CaptureBox.TabStop = false;
             // 
             // CameraFeed
             // 
@@ -423,9 +418,9 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Sharpness_SLD)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Brigtness_SLD)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Brightness_SLD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Contrast_SLD)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.captureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CaptureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -442,7 +437,6 @@
         private System.Windows.Forms.ComboBox Camera_Selection;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.PictureBox captureBox;
         private System.Windows.Forms.CheckBox RetrieveBgrFrame;
         private System.Windows.Forms.CheckBox RetrieveGrayFrame;
         private System.Windows.Forms.Label label2;
@@ -450,7 +444,7 @@
         private System.Windows.Forms.Button Refresh_BTN;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label Brigthness_LBL;
-        private System.Windows.Forms.TrackBar Brigtness_SLD;
+        private System.Windows.Forms.TrackBar Brightness_SLD;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button Reset_Cam_Settings;
         private System.Windows.Forms.Label label5;
@@ -460,6 +454,7 @@
         private System.Windows.Forms.TrackBar Sharpness_SLD;
         private System.Windows.Forms.Label Sharpness_LBL;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.PictureBox CaptureBox;
     }
 }
  

@@ -32,9 +32,10 @@ namespace VishnuMain
 
 
         #region Variables
-        private VideoCapture _capture = null;
+        private Capture _capture = null;
         private bool _captureInProgress = false;
-
+        Mat frame = new Mat();
+        Mat grayFrame = new Mat();
         int CameraDevice = 0; //Variable to track camera device selected
         CameraStructures[] WebCams; //List containing all the camera available
 
@@ -65,20 +66,21 @@ namespace VishnuMain
         private void ProcessFrame(object sender, EventArgs arg)
         {
             //***If you want to access the image data the use the following method call***/
-            //Image<Bgr, Byte> frame = new Image<Bgr,byte>(_capture.RetrieveBgrFrame().ToBitmap());
-
+            
             if (RetrieveBgrFrame.Checked)
             {
-                Image<Bgr, byte> frame = _capture.QueryFrame().ToImage<Bgr, byte>();
+                _capture.Retrieve(frame);
+
                 //because we are using an autosize picturebox we need to do a thread safe update
-               DisplayImage(frame.ToBitmap());
+                DisplayImage(frame.Bitmap);
+                //_capture.Dispose();     if we have dispose this shit never works lol
             }
             else if (RetrieveGrayFrame.Checked)
             {
-                Image<Bgr, byte> frame = _capture.QueryFrame().ToImage<Bgr, byte>();
-                Image<Gray, byte> grayframe = frame.Convert<Gray, Byte>();
+                _capture.Retrieve(frame);
+                CvInvoke.CvtColor(frame, grayFrame, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
                 //because we are using an autosize picturebox we need to do a thread safe update
-                DisplayImage(grayframe.ToBitmap());
+                DisplayImage(frame.Bitmap);
             }
         }
 
@@ -86,7 +88,7 @@ namespace VishnuMain
 
         private void DisplayImage(Bitmap Image)
         {
-            if (captureBox.InvokeRequired)
+            if (CaptureBox.InvokeRequired)
             {
                 try
                 {
@@ -99,14 +101,15 @@ namespace VishnuMain
             }
             else
             {
-                captureBox.Image = Image;
+                
+                CaptureBox.Image = Image;
             }
         }
 
 
         private void Slider_Enable(bool State)
         {
-            Brigtness_SLD.Enabled = State;
+            Brightness_SLD.Enabled = State;
             Contrast_SLD.Enabled = State;
             Sharpness_SLD.Enabled = State;
         }
@@ -141,7 +144,7 @@ namespace VishnuMain
                         SetupCapture(Camera_Selection.SelectedIndex); //Setup capture with the new device
                     }
 
-                    RetrieveCaptureInformation(); //Get Camera information
+                    //RetrieveCaptureInformation(); //Get Camera information
                     captureButton.Text = "Stop"; //Change text on button
                     StoreCameraSettings(); //Save Camera Settings
                     Slider_Enable(true);  //Enable User Controls
@@ -169,7 +172,7 @@ namespace VishnuMain
             try
             {
                 //Set up capture device
-                _capture = new VideoCapture(CameraDevice);
+                _capture = new Capture(CameraDevice);
                 _capture.ImageGrabbed += ProcessFrame;
             }
             catch (NullReferenceException excpt)
@@ -185,8 +188,8 @@ namespace VishnuMain
 
             //Brightness
             richTextBox1.AppendText("Brightness: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Brightness).ToString() + "\n"); //get the value and add it to richtextbox
-            Brigtness_SLD.Value = (int)_capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Brightness);  //Set the slider value
-            Brigthness_LBL.Text = Brigtness_SLD.Value.ToString(); //set the slider text
+            Brightness_SLD.Value = (int)_capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Brightness);  //Set the slider value
+            Brigthness_LBL.Text = Brightness_SLD.Value.ToString(); //set the slider text
 
             //Contrast
             richTextBox1.AppendText("Contrast: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Contrast).ToString() + "\n");//get the value and add it to richtextbox
@@ -257,7 +260,7 @@ namespace VishnuMain
 
         private void StoreCameraSettings()
         {
-            Brightness_Store = Brigtness_SLD.Value;
+            Brightness_Store = Brightness_SLD.Value;
             Contrast_Store = Contrast_SLD.Value;
             Sharpness_Store = Sharpness_SLD.Value;
         }
@@ -284,8 +287,8 @@ namespace VishnuMain
 
         private void Brigtness_SLD_Scroll(object sender, EventArgs e)
         {
-            Brigthness_LBL.Text = Brigtness_SLD.Value.ToString();
-            if (_capture != null) _capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Contrast, Brigtness_SLD.Value);
+            Brigthness_LBL.Text = Brightness_SLD.Value.ToString();
+            if (_capture != null) _capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Contrast, Brightness_SLD.Value);
         }
 
         private void Contrast_SLD_Scroll(object sender, EventArgs e)
