@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginMain));
             this.centralPanel = new System.Windows.Forms.Panel();
             this.DebugMode = new System.Windows.Forms.Button();
             this.UserMode = new System.Windows.Forms.Button();
@@ -62,14 +63,15 @@
             // 
             // LoginMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1691, 1504);
             this.Controls.Add(this.UserMode);
             this.Controls.Add(this.DebugMode);
             this.Controls.Add(this.centralPanel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "LoginMain";
-            this.Text = "Form1";
+            this.Text = "Vishnu 2017";
             this.ResumeLayout(false);
 
         }
