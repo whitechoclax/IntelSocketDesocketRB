@@ -80,7 +80,7 @@ namespace VishnuMain
                 _capture.Retrieve(frame);
                 CvInvoke.CvtColor(frame, grayFrame, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
                 //because we are using an autosize picturebox we need to do a thread safe update
-                DisplayImage(frame.Bitmap);
+                DisplayImage(grayFrame.Bitmap);
             }
         }
 
@@ -144,7 +144,7 @@ namespace VishnuMain
                         SetupCapture(Camera_Selection.SelectedIndex); //Setup capture with the new device
                     }
 
-                    //RetrieveCaptureInformation(); //Get Camera information
+                    RetrieveCaptureInformation(); //Get Camera information
                     captureButton.Text = "Stop"; //Change text on button
                     StoreCameraSettings(); //Save Camera Settings
                     Slider_Enable(true);  //Enable User Controls
@@ -312,6 +312,8 @@ namespace VishnuMain
             }
 
         }
+        
+        
         //both boxes cant be checked!
         private void RetrieveBgrFrame_CheckedChanged(object sender, EventArgs e)
         {
