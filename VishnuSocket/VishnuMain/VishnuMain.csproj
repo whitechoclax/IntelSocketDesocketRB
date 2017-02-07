@@ -97,6 +97,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArmControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ArmControl.Designer.cs">
+      <DependentUpon>ArmControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="CameraFeed.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -112,6 +118,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ArmControl.resx">
+      <DependentUpon>ArmControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CameraFeed.resx">
       <DependentUpon>CameraFeed.cs</DependentUpon>
     </EmbeddedResource>
