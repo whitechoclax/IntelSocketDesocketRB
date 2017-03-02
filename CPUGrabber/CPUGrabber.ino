@@ -22,6 +22,8 @@ int ypos = 0;
 int zpos = 0;
 int angle = 0; //Angle for end effector
 
+byte Delay = 0;
+
 //Desired Positions
 int xposNew = 0;
 int yposNew = 0;

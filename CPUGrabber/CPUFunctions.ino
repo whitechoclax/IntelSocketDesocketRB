@@ -2,20 +2,60 @@ int Calibrate(){
   return 1;
 }
 
-void Navigate(){
+void Navigate(){ //Moves to new positions
+  int deltaX = 0;
+  int deltaY = 0;
+  int deltaZ = 0;
+  int deltaAngle = 0;
+  
+  if(xposNew != xpos){
+    if(xposNew > xpos){
+      digitalWrite(Dir[XMOTOR], HIGH);
+      deltaX = xposNew - xpos;
+    }
+    else{
+      digitalWrite(Dir[XMOTOR], LOW);
+      deltaX = xpos - xposNew;
+    }
+  }
+  if(yposNew != ypos){
+    if(yposNew > ypos){
+      digitalWrite(Dir[YMOTOR], HIGH);
+      deltaY = yposNew - ypos;
+    }
+    else{
+      digitalWrite(Dir[YMOTOR], LOW);
+      deltaY = ypos - yposNew;
+    }
+  }
+  if(zposNew != zpos){
+    if(zposNew > zpos){
+      digitalWrite(Dir[ZMOTOR], HIGH);
+      deltaZ = zposNew - zpos;
+    }
+    else{
+      digitalWrite(Dir[ZMOTOR], LOW);
+      deltaZ = zpos - zposNew;
+    }
+  }
+  if(angleNew != angle){
+    if(angleNew > angle){
+      digitalWrite(Dir[ANGLEMOTOR], HIGH);
+      deltaAngle = angleNew - angle;
+    }
+    else{
+      digitalWrite(Dir[ANGLEMOTOR], LOW);
+      deltaAngle = angle - angleNew;
+    }
+  }  
+
+  int totalDelta = (deltaAngle + deltaZ + deltaY + deltaX);
   
   return;
 }
 
-int MoveX(int distance, byte){
-  return 1;
-}
-
-int MoveY(int distance){
-  return 1;
-}
-
-int MoveZ(int distance){
+int Move(int steps, int motor){
+  //for(int i=0;i<steps
   return 1;
 }
 
@@ -43,6 +83,13 @@ void serialEvent() {
 
 void CommandProcess(){
   if(stringComplete){
+
+      
+    char* command = strtok(inputString, ':');
+    while(command){
+      
+    }
+    
     if(inputString.startsWith("STOP")){ //Emergency Brake
       EmergencyStop();
       Serial.println("STOPPING");
@@ -50,20 +97,31 @@ void CommandProcess(){
       return;
     }
     
-    if(inputString.startsWith("SHIFT ")){ //Move from where we are
+    boolean Shift = false;
+    if(inputString.startsWith("SHIFT")){ //Move from where we are
       inputString = inputString.substring(6);
+      Shift = true;
     }
-    else if(inputString.startsWith("MOVE ")){ //Move to coordinates
+    else if(inputString.startsWith("MOVE")){ //Move to coordinates
       inputString = inputString.substring(5);
     }
-    else if(inputString.startsWith("REDEF ")){ //Reorient coordinates
+    else if(inputString.startsWith("REDEF")){ //Reorient coordinates
       inputString = inputString.substring(6);
     }
-      
-    xposNew = (inputString.substring(0, 2)).toInt();
-    yposNew = (inputString.substring(3, 5)).toInt();
-    zposNew = (inputString.substring(6, 8)).toInt();
-    angleNew = (inputString.substring(9, 11)).toInt();
+    /*//Use split
+    xposNew = (inputString.substring(0, 3)).toInt();
+    yposNew = (inputString.substring(4, 7)).toInt();
+    zposNew = (inputString.substring(8, 11)).toInt();
+    angleNew = (inputString.substring(12, 15)).toInt();*/
+
+    
+
+    if(Shift){
+      xposNew += xpos;
+      yposNew += ypos;
+      zposNew += zpos;      
+      angleNew += angle;
+    }
 
     if(DEBUG){
       Serial.println(xposNew);
