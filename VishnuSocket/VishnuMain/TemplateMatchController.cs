@@ -10,16 +10,19 @@ using System.Drawing;
 
 namespace VishnuMain
 {
-    class TemplateMatchController
+    public class TemplateMatchController
     {
-
+        //local vars to namespace
         private Capture camera_frame = null;
         Mat gray_frame = new Mat();
+        Mat Overlay = new Mat();
+        Mat Load_Img = new Mat();
+        Mat Comp_Img = new Mat();
         private bool isCapturing;
 
-
+        //take picture with capture button
         public Mat SnapPicture()
-        { //take picture with capture button
+        { 
             Mat frame = new Mat();
             camera_frame.Retrieve(frame, 0);
             CvInvoke.CvtColor(frame, gray_frame, ColorConversion.Bgr2Gray);
@@ -29,11 +32,11 @@ namespace VishnuMain
 
         public void templateDetection(String template)
         {
-            Mat Load_Img = gray_frame;
-            Mat Comp_Img = new Mat(template, LoadImageType.Grayscale);
+            Load_Img = gray_frame;
+            Comp_Img = new Mat(template, LoadImageType.Grayscale);
 
             Mat Result = new Mat(); //stores results of CvInvoke.MatchTemplate();
-            Mat Overlay = gray_frame.Clone();
+            Overlay = gray_frame.Clone();
             Mat Mask = new Mat();
             CvInvoke.MatchTemplate(Load_Img, Comp_Img, Result, TemplateMatchingType.CcoeffNormed);
 
