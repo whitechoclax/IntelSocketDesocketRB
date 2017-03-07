@@ -15,17 +15,19 @@ namespace VishnuMain
 {
     public partial class TemplateMatchView : UserControl
     {
-        private Capture snap = null;
-        Mat grayframe2 = new Mat();
+        private Capture Camera_frame = null;
+       
         private bool snap_on;
 
+        //declare object for class TemplateMatchController
+        TemplateMatchController _Template = new TemplateMatchController();
         public TemplateMatchView()
         {
             InitializeComponent();
             try
             {
-                snap = new Capture();
-                snap.ImageGrabbed += Live; //live stream image cap
+                Camera_frame = new Capture();
+                Camera_frame.ImageGrabbed += CaptureFeed; //live stream image cap
             }
             catch (NullReferenceException except)
             {
@@ -33,10 +35,11 @@ namespace VishnuMain
             }
         }
 
-        private void Live(object sender, EventArgs arg)
+        //code for imagebox4 cap feed viewer
+        private void CaptureFeed(object sender, EventArgs arg)
         {
             Mat frame = new Mat();
-            snap.Retrieve(frame, 0);
+            Camera_frame.Retrieve(frame, 0);
             imageBox4.Image = frame;
         }
 
@@ -47,26 +50,52 @@ namespace VishnuMain
 
         private void takepicture_Click(object sender, EventArgs e)
         {
-            SnapPicture(); //declare object matchtemplatecontroller so we can use it
+            captured_imgbox.Image = _Template.SnapPicture(); //declare object matchtemplatecontroller so we can use it
         }
 
         private void startCaptureButton_Click(object sender, EventArgs e)
         {
-                if (snap != null)
+                if (Camera_frame != null)
                 {
                     if (snap_on)
                     {
                         startCaptureButton.Text = "Start Capture";
-                        snap.Pause();
+                        Camera_frame.Pause();
                     }
                     else
                     {
                         startCaptureButton.Text = "Stop";
-                        snap.Start();
+                        Camera_frame.Start();
                     }
                     snap_on = !snap_on;
                 }
             
+        }
+
+
+        private void loadSource_Click(object sender, EventArgs e)
+        {
+
+            DialogResult result = openFileDialog1.ShowDialog();
+            if (result == DialogResult.OK || result == DialogResult.Yes)
+            {
+                sourceimg_textbox.Text = openFileDialog1.FileName;
+            }
+        }
+
+        private void loadTemplate_Click(object sender, EventArgs e)
+        {
+            DialogResult result = openFileDialog2.ShowDialog();
+            if (result == DialogResult.OK || result == DialogResult.Yes)
+            {
+                template_textbox.Text = openFileDialog2.FileName;
+            }
+        }
+
+        private void ReleaseData()
+        {
+            if (Camera_frame != null)
+                Camera_frame.Dispose();
         }
     }
 }

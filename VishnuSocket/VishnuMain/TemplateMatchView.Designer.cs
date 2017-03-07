@@ -34,21 +34,23 @@
             this.label3 = new System.Windows.Forms.Label();
             this.imageBox2 = new Emgu.CV.UI.ImageBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.imageBox1 = new Emgu.CV.UI.ImageBox();
+            this.captured_imgbox = new Emgu.CV.UI.ImageBox();
             this.label2 = new System.Windows.Forms.Label();
             this.imageBox3 = new Emgu.CV.UI.ImageBox();
             this.startCaptureButton = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.fileNameTextBox2 = new System.Windows.Forms.TextBox();
+            this.template_textbox = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.loadTemplate = new System.Windows.Forms.Button();
             this.takepicture = new System.Windows.Forms.Button();
-            this.fileNameTextBox = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.sourceimg_textbox = new System.Windows.Forms.TextBox();
+            this.loadSource = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.captured_imgbox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox3)).BeginInit();
             this.SuspendLayout();
             // 
@@ -101,15 +103,15 @@
             this.label1.TabIndex = 19;
             this.label1.Text = "Captured Image";
             // 
-            // imageBox1
+            // captured_imgbox
             // 
-            this.imageBox1.Location = new System.Drawing.Point(719, 54);
-            this.imageBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.imageBox1.Name = "imageBox1";
-            this.imageBox1.Size = new System.Drawing.Size(640, 480);
-            this.imageBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.imageBox1.TabIndex = 20;
-            this.imageBox1.TabStop = false;
+            this.captured_imgbox.Location = new System.Drawing.Point(719, 54);
+            this.captured_imgbox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.captured_imgbox.Name = "captured_imgbox";
+            this.captured_imgbox.Size = new System.Drawing.Size(640, 480);
+            this.captured_imgbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.captured_imgbox.TabIndex = 20;
+            this.captured_imgbox.TabStop = false;
             // 
             // label2
             // 
@@ -162,13 +164,13 @@
             this.label4.TabIndex = 29;
             this.label4.Text = "Image";
             // 
-            // fileNameTextBox2
+            // template_textbox
             // 
-            this.fileNameTextBox2.Location = new System.Drawing.Point(138, 1200);
-            this.fileNameTextBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.fileNameTextBox2.Name = "fileNameTextBox2";
-            this.fileNameTextBox2.Size = new System.Drawing.Size(373, 26);
-            this.fileNameTextBox2.TabIndex = 28;
+            this.template_textbox.Location = new System.Drawing.Point(138, 1200);
+            this.template_textbox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.template_textbox.Name = "template_textbox";
+            this.template_textbox.Size = new System.Drawing.Size(373, 26);
+            this.template_textbox.TabIndex = 28;
             // 
             // button3
             // 
@@ -180,15 +182,16 @@
             this.button3.Text = "Find";
             this.button3.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // loadTemplate
             // 
-            this.button2.Location = new System.Drawing.Point(522, 1192);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(38, 34);
-            this.button2.TabIndex = 26;
-            this.button2.Text = "...";
-            this.button2.UseVisualStyleBackColor = true;
+            this.loadTemplate.Location = new System.Drawing.Point(522, 1192);
+            this.loadTemplate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.loadTemplate.Name = "loadTemplate";
+            this.loadTemplate.Size = new System.Drawing.Size(38, 34);
+            this.loadTemplate.TabIndex = 26;
+            this.loadTemplate.Text = "...";
+            this.loadTemplate.UseVisualStyleBackColor = true;
+            this.loadTemplate.Click += new System.EventHandler(this.loadTemplate_Click);
             // 
             // takepicture
             // 
@@ -202,23 +205,32 @@
             this.takepicture.UseVisualStyleBackColor = true;
             this.takepicture.Click += new System.EventHandler(this.takepicture_Click);
             // 
-            // fileNameTextBox
+            // sourceimg_textbox
             // 
-            this.fileNameTextBox.Location = new System.Drawing.Point(138, 1151);
-            this.fileNameTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.fileNameTextBox.Name = "fileNameTextBox";
-            this.fileNameTextBox.Size = new System.Drawing.Size(373, 26);
-            this.fileNameTextBox.TabIndex = 24;
+            this.sourceimg_textbox.Location = new System.Drawing.Point(138, 1151);
+            this.sourceimg_textbox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.sourceimg_textbox.Name = "sourceimg_textbox";
+            this.sourceimg_textbox.Size = new System.Drawing.Size(373, 26);
+            this.sourceimg_textbox.TabIndex = 24;
             // 
-            // button1
+            // loadSource
             // 
-            this.button1.Location = new System.Drawing.Point(522, 1151);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(38, 31);
-            this.button1.TabIndex = 23;
-            this.button1.Text = "...";
-            this.button1.UseVisualStyleBackColor = true;
+            this.loadSource.Location = new System.Drawing.Point(522, 1151);
+            this.loadSource.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.loadSource.Name = "loadSource";
+            this.loadSource.Size = new System.Drawing.Size(38, 31);
+            this.loadSource.TabIndex = 23;
+            this.loadSource.Text = "...";
+            this.loadSource.UseVisualStyleBackColor = true;
+            this.loadSource.Click += new System.EventHandler(this.loadSource_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // openFileDialog2
+            // 
+            this.openFileDialog2.FileName = "openFileDialog2";
             // 
             // TemplateMatchView
             // 
@@ -227,15 +239,15 @@
             this.Controls.Add(this.startCaptureButton);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.fileNameTextBox2);
+            this.Controls.Add(this.template_textbox);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.loadTemplate);
             this.Controls.Add(this.takepicture);
-            this.Controls.Add(this.fileNameTextBox);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.sourceimg_textbox);
+            this.Controls.Add(this.loadSource);
             this.Controls.Add(this.imageBox3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.imageBox1);
+            this.Controls.Add(this.captured_imgbox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.imageBox2);
             this.Controls.Add(this.label3);
@@ -245,7 +257,7 @@
             this.Size = new System.Drawing.Size(1680, 1306);
             ((System.ComponentModel.ISupportInitialize)(this.imageBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.captured_imgbox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -259,17 +271,19 @@
         private System.Windows.Forms.Label label3;
         private Emgu.CV.UI.ImageBox imageBox2;
         private System.Windows.Forms.Label label1;
-        private Emgu.CV.UI.ImageBox imageBox1;
+        private Emgu.CV.UI.ImageBox captured_imgbox;
         private System.Windows.Forms.Label label2;
         private Emgu.CV.UI.ImageBox imageBox3;
         private System.Windows.Forms.Button startCaptureButton;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox fileNameTextBox2;
+        private System.Windows.Forms.TextBox template_textbox;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button loadTemplate;
         private System.Windows.Forms.Button takepicture;
-        private System.Windows.Forms.TextBox fileNameTextBox;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox sourceimg_textbox;
+        private System.Windows.Forms.Button loadSource;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog2;
     }
 }
