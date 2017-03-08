@@ -32,11 +32,11 @@
             this.imageBox4 = new Emgu.CV.UI.ImageBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.imageBox2 = new Emgu.CV.UI.ImageBox();
+            this.template_imgbox = new Emgu.CV.UI.ImageBox();
             this.label1 = new System.Windows.Forms.Label();
             this.captured_imgbox = new Emgu.CV.UI.ImageBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.imageBox3 = new Emgu.CV.UI.ImageBox();
+            this.tracked_imgbox = new Emgu.CV.UI.ImageBox();
             this.startCaptureButton = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -49,9 +49,9 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.imageBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.template_imgbox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.captured_imgbox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.imageBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tracked_imgbox)).BeginInit();
             this.SuspendLayout();
             // 
             // imageBox4
@@ -84,14 +84,14 @@
             this.label3.TabIndex = 17;
             this.label3.Text = "Template Image";
             // 
-            // imageBox2
+            // template_imgbox
             // 
-            this.imageBox2.Location = new System.Drawing.Point(25, 633);
-            this.imageBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.imageBox2.Name = "imageBox2";
-            this.imageBox2.Size = new System.Drawing.Size(950, 480);
-            this.imageBox2.TabIndex = 18;
-            this.imageBox2.TabStop = false;
+            this.template_imgbox.Location = new System.Drawing.Point(25, 633);
+            this.template_imgbox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.template_imgbox.Name = "template_imgbox";
+            this.template_imgbox.Size = new System.Drawing.Size(950, 480);
+            this.template_imgbox.TabIndex = 18;
+            this.template_imgbox.TabStop = false;
             // 
             // label1
             // 
@@ -123,15 +123,15 @@
             this.label2.TabIndex = 21;
             this.label2.Text = "Tracked Objects";
             // 
-            // imageBox3
+            // tracked_imgbox
             // 
-            this.imageBox3.Location = new System.Drawing.Point(1006, 633);
-            this.imageBox3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.imageBox3.Name = "imageBox3";
-            this.imageBox3.Size = new System.Drawing.Size(640, 480);
-            this.imageBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.imageBox3.TabIndex = 22;
-            this.imageBox3.TabStop = false;
+            this.tracked_imgbox.Location = new System.Drawing.Point(1006, 633);
+            this.tracked_imgbox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tracked_imgbox.Name = "tracked_imgbox";
+            this.tracked_imgbox.Size = new System.Drawing.Size(640, 480);
+            this.tracked_imgbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.tracked_imgbox.TabIndex = 22;
+            this.tracked_imgbox.TabStop = false;
             // 
             // startCaptureButton
             // 
@@ -245,20 +245,20 @@
             this.Controls.Add(this.takepicture);
             this.Controls.Add(this.sourceimg_textbox);
             this.Controls.Add(this.loadSource);
-            this.Controls.Add(this.imageBox3);
+            this.Controls.Add(this.tracked_imgbox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.captured_imgbox);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.imageBox2);
+            this.Controls.Add(this.template_imgbox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.imageBox4);
             this.Name = "TemplateMatchView";
             this.Size = new System.Drawing.Size(1680, 1306);
             ((System.ComponentModel.ISupportInitialize)(this.imageBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.imageBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.template_imgbox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.captured_imgbox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.imageBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tracked_imgbox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -269,11 +269,11 @@
         private Emgu.CV.UI.ImageBox imageBox4;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label3;
-        private Emgu.CV.UI.ImageBox imageBox2;
+        private Emgu.CV.UI.ImageBox template_imgbox;
         private System.Windows.Forms.Label label1;
         private Emgu.CV.UI.ImageBox captured_imgbox;
         private System.Windows.Forms.Label label2;
-        private Emgu.CV.UI.ImageBox imageBox3;
+        private Emgu.CV.UI.ImageBox tracked_imgbox;
         private System.Windows.Forms.Button startCaptureButton;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;

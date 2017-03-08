@@ -8,6 +8,7 @@ using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using System.Drawing;
 
+
 namespace VishnuMain
 {
     public class TemplateMatchController
@@ -30,7 +31,7 @@ namespace VishnuMain
             return gray_frame;
         }
 
-        public void templateDetection(String template)
+        public  List<Mat> templateDetection(String template)
         {
             Load_Img = gray_frame;
             Comp_Img = new Mat(template, LoadImageType.Grayscale);
@@ -39,6 +40,9 @@ namespace VishnuMain
             Overlay = gray_frame.Clone();
             Mat Mask = new Mat();
             CvInvoke.MatchTemplate(Load_Img, Comp_Img, Result, TemplateMatchingType.CcoeffNormed);
+
+            //declare new list of Mat objects
+            List<Mat> template_imageArray = new List<Mat>();
 
             while (true)
             {
@@ -73,18 +77,20 @@ namespace VishnuMain
                 }
                 else
                     break;
-            }    
+            }
+
+            //Add items to list
+            template_imageArray.Add(Load_Img);
+            template_imageArray.Add(Comp_Img);
+            template_imageArray.Add(Overlay);
+
+            return template_imageArray;
         }
-
-
-        public void DisplayImages()
-        {
-
 
             //load img and comp img are given by frames from top of this class function, overlay is a clone
             //captured_imgbox.Image = Load_Img;
             //template_imgbox.Image = Comp_Img;
             //tracked_imgbox.Image = Overlay;
-        }
+       
     }
 }
