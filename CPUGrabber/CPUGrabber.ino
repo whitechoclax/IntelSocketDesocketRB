@@ -16,6 +16,8 @@
 #define ZMOTOR 2
 #define ANGLEMOTOR 3
 
+#define DEBUG 1
+
 //Current position
 int xpos = 0;
 int ypos = 0;
@@ -41,7 +43,6 @@ String inputString = "";
 
 boolean CommandReceived = false;
 boolean stringComplete = false;
-boolean DEBUG = true;
 
 
 void setup() {

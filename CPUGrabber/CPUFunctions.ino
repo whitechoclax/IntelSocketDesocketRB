@@ -93,9 +93,16 @@ void CommandProcess(){
     for(int i=0;i<len;++i){
       inputChars[i]=inputString[i];
     }
-    char* command = strtok(inputChars, ':');
-    while(command){
-      
+    char* command = strtok(inputChars, ':'); //break up input string
+
+    char pieces[4][10];
+    int i = 0;
+    while(command){ //iterate through sections
+      if(i < 5){
+        strcpy(pieces[i++], command);
+      }
+      if(DEBUG)
+        Serial.println(command);
     }
     
     if(inputString.startsWith("STOP")){ //Emergency Brake
@@ -105,7 +112,7 @@ void CommandProcess(){
       return;
     }
     
-    boolean Shift = false;
+    boolean Shift = false; //Shifting, not moving to coordinates
     if(inputString.startsWith("SHIFT")){ //Move from where we are
       inputString = inputString.substring(6);
       Shift = true;
@@ -116,13 +123,11 @@ void CommandProcess(){
     else if(inputString.startsWith("REDEF")){ //Reorient coordinates
       inputString = inputString.substring(6);
     }
-    /*//Use split
-    xposNew = (inputString.substring(0, 3)).toInt();
-    yposNew = (inputString.substring(4, 7)).toInt();
-    zposNew = (inputString.substring(8, 11)).toInt();
-    angleNew = (inputString.substring(12, 15)).toInt();*/
-
     
+    xposNew = atoi(pieces[1]);
+    yposNew = atoi(pieces[2]);
+    zposNew = atoi(pieces[3]);
+    angleNew = atoi(pieces[4]);
 
     if(Shift){
       xposNew += xpos;
