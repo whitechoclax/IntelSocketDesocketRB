@@ -65,7 +65,9 @@ int Move(int steps, int motor){
 
 void RelayCoordinates(){
   Serial.print("COOR: ");
-  Serial.print(xpos);Serial.print(ypos);Serial.print(zpos);
+  Serial.print(xpos);Serial.print(':');
+  Serial.print(ypos);Serial.print(':');
+  Serial.print(zpos);Serial.print(':');
   Serial.println(angle);
   return;
 }
@@ -93,16 +95,19 @@ void CommandProcess(){
     for(int i=0;i<len;++i){
       inputChars[i]=inputString[i];
     }
-    char* command = strtok(inputChars, ':'); //break up input string
+    char* command = strtok(inputChars, ":"); //break up input string
 
-    char pieces[4][10];
+    char pieces[5][10];
     int i = 0;
-    while(command){ //iterate through sections
+    while(command != NULL && i < 5){ //iterate through sections
+      if(DEBUG){
+        Serial.print("Current piece: ");Serial.println(command);
+        delay(100);
+      }
       if(i < 5){
         strcpy(pieces[i++], command);
+        command = strtok(NULL, ":");
       }
-      if(DEBUG)
-        Serial.println(command);
     }
     
     if(inputString.startsWith("STOP")){ //Emergency Brake
@@ -129,18 +134,18 @@ void CommandProcess(){
     zposNew = atoi(pieces[3]);
     angleNew = atoi(pieces[4]);
 
+    if(DEBUG){
+      Serial.print("X: ");Serial.println(xposNew);
+      Serial.print("Y: ");Serial.println(yposNew);
+      Serial.print("Z: ");Serial.println(zposNew);
+      Serial.print("Angle: ");Serial.println(angleNew);
+    }
+
     if(Shift){
       xposNew += xpos;
       yposNew += ypos;
       zposNew += zpos;      
       angleNew += angle;
-    }
-
-    if(DEBUG){
-      Serial.println(xposNew);
-      Serial.println(yposNew);
-      Serial.println(zposNew);
-      Serial.println(angleNew);
     }
 
     if(xposNew >= 0 && yposNew >= 0 && zposNew >= 0 && angleNew >=0 && xposNew < 1000 && yposNew < 1000 && zposNew < 1000 && angleNew < 360){
