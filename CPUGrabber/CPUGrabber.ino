@@ -36,6 +36,7 @@ const byte Step[6] = {A1, 12, A5, 5, 50, 28};
 const byte Dir[6] = {A2, 13, A6, 6, 52, 30};
 
 String inputString = "";
+//char str[] = "";
 
 
 boolean CommandReceived = false;
@@ -56,6 +57,5 @@ void setup() {
 }
 
 void loop() {
-  Calibrate();
-
+  delay(1);
 }

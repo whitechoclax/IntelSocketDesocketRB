@@ -2,6 +2,10 @@ int Calibrate(){
   return 1;
 }
 
+void MapCoordinates(){
+  return;
+}
+
 void Navigate(){ //Moves to new positions
   int deltaX = 0;
   int deltaY = 0;
@@ -84,8 +88,12 @@ void serialEvent() {
 void CommandProcess(){
   if(stringComplete){
 
-      
-    char* command = strtok(inputString, ':');
+    int len = inputString.length();
+    char inputChars[50];
+    for(int i=0;i<len;++i){
+      inputChars[i]=inputString[i];
+    }
+    char* command = strtok(inputChars, ':');
     while(command){
       
     }
@@ -130,8 +138,9 @@ void CommandProcess(){
       Serial.println(angleNew);
     }
 
-    if(xposNew >= 0 && yposNew >= 0 && zposNew >= 0 && angleNew >=0 && xposNew < 1000 && yposNew < 1000 && zposNew < 1000 && angleNew < 1000){
+    if(xposNew >= 0 && yposNew >= 0 && zposNew >= 0 && angleNew >=0 && xposNew < 1000 && yposNew < 1000 && zposNew < 1000 && angleNew < 360){
        Serial.println("NAVIGATING");
+       MapCoordinates();
        Navigate();
     }
     Serial.println("DONE");
