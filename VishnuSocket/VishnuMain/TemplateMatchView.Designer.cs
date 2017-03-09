@@ -87,14 +87,14 @@
             // 
             // template_imgbox
             // 
-            this.imageBox2.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.imageBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imageBox2.Location = new System.Drawing.Point(25, 648);
-            this.imageBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.imageBox2.Name = "imageBox2";
-            this.imageBox2.Size = new System.Drawing.Size(640, 480);
-            this.imageBox2.TabIndex = 18;
-            this.imageBox2.TabStop = false;
+            this.template_imgbox.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.template_imgbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.template_imgbox.Location = new System.Drawing.Point(25, 648);
+            this.template_imgbox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.template_imgbox.Name = "imageBox2";
+            this.template_imgbox.Size = new System.Drawing.Size(640, 480);
+            this.template_imgbox.TabIndex = 18;
+            this.template_imgbox.TabStop = false;
             // 
             // label1
             // 
@@ -128,13 +128,13 @@
             // 
             // tracked_imgbox
             // 
-            this.imageBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imageBox3.Location = new System.Drawing.Point(1001, 648);
-            this.imageBox3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.imageBox3.Name = "imageBox3";
-            this.imageBox3.Size = new System.Drawing.Size(640, 480);
-            this.imageBox3.TabIndex = 22;
-            this.imageBox3.TabStop = false;
+            this.tracked_imgbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tracked_imgbox.Location = new System.Drawing.Point(1001, 648);
+            this.tracked_imgbox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tracked_imgbox.Name = "imageBox3";
+            this.tracked_imgbox.Size = new System.Drawing.Size(640, 480);
+            this.tracked_imgbox.TabIndex = 22;
+            this.tracked_imgbox.TabStop = false;
             // 
             // startCaptureButton
             // 

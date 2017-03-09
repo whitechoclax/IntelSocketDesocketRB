@@ -36,21 +36,11 @@ namespace VishnuMain
         public TemplateMatchView()
         {
             InitializeComponent();
-           
+            _Template.StartCapture();
         }
 
         //code for imagebox4 cap feed viewer
-        private void CaptureFeed(object sender, EventArgs arg)
-        {
-            Mat frame = new Mat();
-            Camera_frame.Retrieve(frame, 0);
-            imageBox4.Image = frame;
-        }
-
-        private void fileNameTextBox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+       
 
         private void takepicture_Click(object sender, EventArgs e)
         {
@@ -67,20 +57,11 @@ namespace VishnuMain
         private void startCaptureButton_Click(object sender, EventArgs e)
         {
             //start capture of images
-            try
-            {
-                Camera_frame = new Capture();
-                Camera_frame.ImageGrabbed += CaptureFeed; //live stream image cap
-            }
-            catch (NullReferenceException except)
-            {
-                MessageBox.Show(except.Message);
-            }
-
-
-
+            
             if (Camera_frame != null)
                 {
+                    
+
                     if (snap_on)
                     {
                         startCaptureButton.Text = "Start Capture";

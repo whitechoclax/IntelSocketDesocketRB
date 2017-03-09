@@ -14,21 +14,42 @@ namespace VishnuMain
     public class TemplateMatchController
     {
         //local vars to namespace
-        private Capture camera_frame = null;
+        private Capture Camera_frame = null;
         Mat gray_frame = new Mat();
         Mat Overlay = new Mat();
         Mat Load_Img = new Mat();
         Mat Comp_Img = new Mat();
-        private bool isCapturing;
+        public bool isCapturing;
+
+        public void StartCapture()
+        {
+            try
+            {
+                Camera_frame = new Capture();
+                Camera_frame.ImageGrabbed += CaptureFeed; //live stream image cap
+                isCapturing = true;
+            }
+            catch (NullReferenceException except)
+            {
+                //MessageBox.Show(except.Message);
+            }
+
+            
+        }
 
         //take picture with capture button
         public Mat SnapPicture()
         { 
             Mat frame = new Mat();
-            camera_frame.Retrieve(frame, 0);
-            CvInvoke.CvtColor(frame, gray_frame, ColorConversion.Bgr2Gray);
-            //returns grayframe, so hopefully whenver this is run the imagebox 
-            return gray_frame;
+            if (isCapturing)
+            {
+                Camera_frame.Retrieve(frame, 0);
+                CvInvoke.CvtColor(frame, gray_frame, ColorConversion.Bgr2Gray);
+                //returns grayframe, so hopefully whenver this is run the imagebox 
+                return gray_frame;
+            }
+            else
+                return frame;
         }
 
         public  List<Mat> templateDetection(String template)
@@ -87,10 +108,17 @@ namespace VishnuMain
             return template_imageArray;
         }
 
-            //load img and comp img are given by frames from top of this class function, overlay is a clone
-            //captured_imgbox.Image = Load_Img;
-            //template_imgbox.Image = Comp_Img;
-            //tracked_imgbox.Image = Overlay;
-       
+        private void CaptureFeed(object sender, EventArgs arg)
+        {
+            Mat frame = new Mat();
+            Camera_frame.Retrieve(frame, 0);
+            //imageBox4.Image = frame;
+        }
+
+        //load img and comp img are given by frames from top of this class function, overlay is a clone
+        //captured_imgbox.Image = Load_Img;
+        //template_imgbox.Image = Comp_Img;
+        //tracked_imgbox.Image = Overlay;
+
     }
 }
