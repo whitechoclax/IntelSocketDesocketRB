@@ -16,7 +16,7 @@ namespace VishnuMain
     public partial class TemplateMatchView : UserControl
     {
         private Capture Camera_frame = null;
-       
+        List<Mat> UI_images = new List<Mat>();
         private bool snap_on;
 
         //singletons
@@ -55,6 +55,13 @@ namespace VishnuMain
         private void takepicture_Click(object sender, EventArgs e)
         {
             captured_imgbox.Image = _Template.SnapPicture(); //declare object matchtemplatecontroller so we can use it
+
+            //grab images from UI, run templ detection and retrieve images.  
+            UI_images = _Template.templateDetection(template_textbox.Text);
+            captured_imgbox.Image = UI_images.ElementAt(1);
+            template_imgbox.Image = UI_images.ElementAt(2);
+            tracked_imgbox.Image = UI_images.ElementAt(3);
+
         }
 
         private void startCaptureButton_Click(object sender, EventArgs e)
