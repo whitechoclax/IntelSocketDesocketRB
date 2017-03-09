@@ -56,11 +56,12 @@
             // 
             // imageBox4
             // 
+            this.imageBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.imageBox4.Location = new System.Drawing.Point(25, 54);
             this.imageBox4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.imageBox4.Name = "imageBox4";
             this.imageBox4.Size = new System.Drawing.Size(640, 480);
-            this.imageBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.imageBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imageBox4.TabIndex = 3;
             this.imageBox4.TabStop = false;
             // 
@@ -77,7 +78,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(21, 588);
+            this.label3.Location = new System.Drawing.Point(21, 623);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(124, 20);
@@ -86,17 +87,19 @@
             // 
             // imageBox2
             // 
-            this.imageBox2.Location = new System.Drawing.Point(25, 633);
+            this.imageBox2.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.imageBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imageBox2.Location = new System.Drawing.Point(25, 648);
             this.imageBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.imageBox2.Name = "imageBox2";
-            this.imageBox2.Size = new System.Drawing.Size(950, 480);
+            this.imageBox2.Size = new System.Drawing.Size(640, 480);
             this.imageBox2.TabIndex = 18;
             this.imageBox2.TabStop = false;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(715, 29);
+            this.label1.Location = new System.Drawing.Point(997, 29);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(124, 20);
@@ -105,18 +108,18 @@
             // 
             // captured_imgbox
             // 
-            this.captured_imgbox.Location = new System.Drawing.Point(719, 54);
+            this.captured_imgbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.captured_imgbox.Location = new System.Drawing.Point(1001, 54);
             this.captured_imgbox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.captured_imgbox.Name = "captured_imgbox";
             this.captured_imgbox.Size = new System.Drawing.Size(640, 480);
-            this.captured_imgbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.captured_imgbox.TabIndex = 20;
             this.captured_imgbox.TabStop = false;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1002, 588);
+            this.label2.Location = new System.Drawing.Point(997, 612);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(124, 20);
@@ -125,11 +128,11 @@
             // 
             // imageBox3
             // 
-            this.imageBox3.Location = new System.Drawing.Point(1006, 633);
+            this.imageBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imageBox3.Location = new System.Drawing.Point(1001, 648);
             this.imageBox3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.imageBox3.Name = "imageBox3";
             this.imageBox3.Size = new System.Drawing.Size(640, 480);
-            this.imageBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.imageBox3.TabIndex = 22;
             this.imageBox3.TabStop = false;
             // 
@@ -181,6 +184,7 @@
             this.button3.TabIndex = 27;
             this.button3.Text = "Find";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // loadTemplate
             // 
@@ -201,7 +205,6 @@
             this.takepicture.Size = new System.Drawing.Size(150, 35);
             this.takepicture.TabIndex = 25;
             this.takepicture.Text = "Capture Picture";
-            this.takepicture.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.takepicture.UseVisualStyleBackColor = true;
             this.takepicture.Click += new System.EventHandler(this.takepicture_Click);
             // 
@@ -236,6 +239,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.Controls.Add(this.startCaptureButton);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -254,7 +258,7 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.imageBox4);
             this.Name = "TemplateMatchView";
-            this.Size = new System.Drawing.Size(1680, 1306);
+            this.Size = new System.Drawing.Size(1665, 1306);
             ((System.ComponentModel.ISupportInitialize)(this.imageBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.captured_imgbox)).EndInit();

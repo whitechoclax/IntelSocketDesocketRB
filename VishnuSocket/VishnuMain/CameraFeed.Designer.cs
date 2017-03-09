@@ -117,7 +117,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1227, 1157);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1227, 1073);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // Setting_lbl
@@ -154,7 +154,7 @@
             this.panel1.Location = new System.Drawing.Point(617, 36);
             this.panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(606, 1116);
+            this.panel1.Size = new System.Drawing.Size(606, 1032);
             this.panel1.TabIndex = 0;
             // 
             // panel2
@@ -172,7 +172,7 @@
             this.panel2.Location = new System.Drawing.Point(4, 386);
             this.panel2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(596, 438);
+            this.panel2.Size = new System.Drawing.Size(596, 325);
             this.panel2.TabIndex = 24;
             // 
             // Sharpness_SLD
@@ -276,7 +276,7 @@
             // 
             // Reset_Cam_Settings
             // 
-            this.Reset_Cam_Settings.Location = new System.Drawing.Point(447, 834);
+            this.Reset_Cam_Settings.Location = new System.Drawing.Point(445, 731);
             this.Reset_Cam_Settings.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Reset_Cam_Settings.Name = "Reset_Cam_Settings";
             this.Reset_Cam_Settings.Size = new System.Drawing.Size(153, 35);
@@ -298,7 +298,7 @@
             // 
             // Refresh_BTN
             // 
-            this.Refresh_BTN.Location = new System.Drawing.Point(447, 1072);
+            this.Refresh_BTN.Location = new System.Drawing.Point(445, 969);
             this.Refresh_BTN.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Refresh_BTN.Name = "Refresh_BTN";
             this.Refresh_BTN.Size = new System.Drawing.Size(153, 35);
@@ -309,7 +309,7 @@
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(27, 909);
+            this.richTextBox1.Location = new System.Drawing.Point(27, 807);
             this.richTextBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(571, 152);
@@ -320,7 +320,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(22, 880);
+            this.label2.Location = new System.Drawing.Point(22, 777);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(48, 25);
@@ -397,6 +397,7 @@
             // 
             // CaptureBox
             // 
+            this.CaptureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.CaptureBox.Location = new System.Drawing.Point(3, 34);
             this.CaptureBox.Name = "CaptureBox";
             this.CaptureBox.Size = new System.Drawing.Size(607, 540);
@@ -411,7 +412,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "CameraFeed";
-            this.Size = new System.Drawing.Size(1263, 1194);
+            this.Size = new System.Drawing.Size(1263, 1110);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.panel1.ResumeLayout(false);

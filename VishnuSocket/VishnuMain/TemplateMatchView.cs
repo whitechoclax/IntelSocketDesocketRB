@@ -19,20 +19,24 @@ namespace VishnuMain
        
         private bool snap_on;
 
+        //singletons
+        private static TemplateMatchView _instance;
+        public static TemplateMatchView Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new TemplateMatchView();
+                return _instance;
+            }
+        }
+
         //declare object for class TemplateMatchController
         TemplateMatchController _Template = new TemplateMatchController();
         public TemplateMatchView()
         {
             InitializeComponent();
-            try
-            {
-                Camera_frame = new Capture();
-                Camera_frame.ImageGrabbed += CaptureFeed; //live stream image cap
-            }
-            catch (NullReferenceException except)
-            {
-                MessageBox.Show(except.Message);
-            }
+           
         }
 
         //code for imagebox4 cap feed viewer
@@ -55,7 +59,20 @@ namespace VishnuMain
 
         private void startCaptureButton_Click(object sender, EventArgs e)
         {
-                if (Camera_frame != null)
+            //start capture of images
+            try
+            {
+                Camera_frame = new Capture();
+                Camera_frame.ImageGrabbed += CaptureFeed; //live stream image cap
+            }
+            catch (NullReferenceException except)
+            {
+                MessageBox.Show(except.Message);
+            }
+
+
+
+            if (Camera_frame != null)
                 {
                     if (snap_on)
                     {
@@ -96,6 +113,11 @@ namespace VishnuMain
         {
             if (Camera_frame != null)
                 Camera_frame.Dispose();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

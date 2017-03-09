@@ -23,7 +23,37 @@ namespace VishnuMain
         }
        
 
-        private void button1_Click(object sender, EventArgs e)
+        private void armControlButton_Click(object sender, EventArgs e)
+        {
+            if (!centralPanel.Controls.Contains(ArmControl.Instance))
+            {
+                centralPanel.Controls.Add(ArmControl.Instance);
+                ArmControl.Instance.Dock = DockStyle.Fill;
+                ArmControl.Instance.BringToFront();
+
+            }
+            else
+            {
+                ArmControl.Instance.BringToFront();
+            }
+        }
+
+        private void templateViewButton_Click(object sender, EventArgs e)
+        {
+            if (!centralPanel.Controls.Contains(TemplateMatchView.Instance))
+            {
+                centralPanel.Controls.Add(TemplateMatchView.Instance);
+                TemplateMatchView.Instance.Dock = DockStyle.Fill;
+                TemplateMatchView.Instance.BringToFront();
+
+            }
+            else
+            {
+                TemplateMatchView.Instance.BringToFront();
+            }
+        }
+
+        private void userModeButton_Click(object sender, EventArgs e)
         {
             if (!centralPanel.Controls.Contains(CameraFeed.Instance))
             {
@@ -34,21 +64,6 @@ namespace VishnuMain
             else
             {
                 CameraFeed.Instance.BringToFront();
-            }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if (!centralPanel.Controls.Contains(ArmControl.Instance))
-            {
-                centralPanel.Controls.Add(ArmControl.Instance);
-                ArmControl.Instance.Dock = DockStyle.Fill;
-                CameraFeed.Instance.BringToFront();
-
-            }
-            else
-            {
-                ArmControl.Instance.BringToFront();
             }
         }
     }

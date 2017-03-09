@@ -30,44 +30,62 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginMain));
             this.centralPanel = new System.Windows.Forms.Panel();
-            this.DebugMode = new System.Windows.Forms.Button();
-            this.UserMode = new System.Windows.Forms.Button();
+            this.userModeButton = new System.Windows.Forms.Button();
+            this.templateViewButton = new System.Windows.Forms.Button();
+            this.armControlButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // centralPanel
             // 
-            this.centralPanel.Location = new System.Drawing.Point(13, 13);
+            this.centralPanel.Location = new System.Drawing.Point(12, 56);
             this.centralPanel.Name = "centralPanel";
-            this.centralPanel.Size = new System.Drawing.Size(1280, 1479);
+            this.centralPanel.Size = new System.Drawing.Size(1667, 1436);
             this.centralPanel.TabIndex = 0;
             // 
-            // DebugMode
+            // userModeButton
             // 
-            this.DebugMode.Location = new System.Drawing.Point(1318, 13);
-            this.DebugMode.Name = "DebugMode";
-            this.DebugMode.Size = new System.Drawing.Size(230, 139);
-            this.DebugMode.TabIndex = 1;
-            this.DebugMode.Text = "Debug Mode";
-            this.DebugMode.UseVisualStyleBackColor = true;
-            this.DebugMode.Click += new System.EventHandler(this.button1_Click);
+            this.userModeButton.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.userModeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.userModeButton.Location = new System.Drawing.Point(13, 12);
+            this.userModeButton.Name = "userModeButton";
+            this.userModeButton.Size = new System.Drawing.Size(141, 38);
+            this.userModeButton.TabIndex = 1;
+            this.userModeButton.Text = "User Mode";
+            this.userModeButton.UseVisualStyleBackColor = false;
+            this.userModeButton.Click += new System.EventHandler(this.userModeButton_Click);
             // 
-            // UserMode
+            // templateViewButton
             // 
-            this.UserMode.Location = new System.Drawing.Point(1318, 177);
-            this.UserMode.Name = "UserMode";
-            this.UserMode.Size = new System.Drawing.Size(230, 139);
-            this.UserMode.TabIndex = 2;
-            this.UserMode.Text = "User Mode";
-            this.UserMode.UseVisualStyleBackColor = true;
-            this.UserMode.Click += new System.EventHandler(this.button2_Click);
+            this.templateViewButton.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.templateViewButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.templateViewButton.Location = new System.Drawing.Point(160, 12);
+            this.templateViewButton.Name = "templateViewButton";
+            this.templateViewButton.Size = new System.Drawing.Size(141, 38);
+            this.templateViewButton.TabIndex = 2;
+            this.templateViewButton.Text = "Template Viewer";
+            this.templateViewButton.UseVisualStyleBackColor = false;
+            this.templateViewButton.Click += new System.EventHandler(this.templateViewButton_Click);
+            // 
+            // armControlButton
+            // 
+            this.armControlButton.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.armControlButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.armControlButton.Location = new System.Drawing.Point(307, 13);
+            this.armControlButton.Name = "armControlButton";
+            this.armControlButton.Size = new System.Drawing.Size(141, 37);
+            this.armControlButton.TabIndex = 3;
+            this.armControlButton.Text = "Arm Control";
+            this.armControlButton.UseVisualStyleBackColor = false;
+            this.armControlButton.Click += new System.EventHandler(this.armControlButton_Click);
             // 
             // LoginMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1691, 1504);
-            this.Controls.Add(this.UserMode);
-            this.Controls.Add(this.DebugMode);
+            this.Controls.Add(this.armControlButton);
+            this.Controls.Add(this.templateViewButton);
+            this.Controls.Add(this.userModeButton);
             this.Controls.Add(this.centralPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "LoginMain";
@@ -79,8 +97,9 @@
         #endregion
 
         private System.Windows.Forms.Panel centralPanel;
-        private System.Windows.Forms.Button DebugMode;
-        private System.Windows.Forms.Button UserMode;
+        private System.Windows.Forms.Button userModeButton;
+        private System.Windows.Forms.Button templateViewButton;
+        private System.Windows.Forms.Button armControlButton;
     }
 }
 
