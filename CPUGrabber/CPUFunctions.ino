@@ -99,18 +99,17 @@ void CommandProcess(){
 
     char pieces[5][10];
     int i = 0;
-    while(command != NULL && i < 5){ //iterate through sections
-      if(DEBUG){
-        Serial.print("Current piece: ");Serial.println(command);
-        delay(100);
-      }
+    while(command && i < 5){ //iterate through sections
       if(i < 5){
         strcpy(pieces[i++], command);
         command = strtok(NULL, ":");
       }
     }
     
-    if(inputString.startsWith("STOP")){ //Emergency Brake
+    if(strcmp(pieces[0], "STOP") == 0){ //Emergency Brake
+      if(DEBUG)
+        Serial.println("Stop found");
+      
       EmergencyStop();
       Serial.println("STOPPING");
       RelayCoordinates();
@@ -118,15 +117,29 @@ void CommandProcess(){
     }
     
     boolean Shift = false; //Shifting, not moving to coordinates
-    if(inputString.startsWith("SHIFT")){ //Move from where we are
-      inputString = inputString.substring(6);
+    if(strcmp(pieces[0], "SHIFT") == 0){ //Move from where we are
+      if(DEBUG)
+        Serial.println("Shift found");
+        
       Shift = true;
     }
-    else if(inputString.startsWith("MOVE")){ //Move to coordinates
-      inputString = inputString.substring(5);
+    else if(strcmp(pieces[0], "MOVE") == 0){ //Move to coordinates
+      if(DEBUG)
+        Serial.println("Move found");
     }
-    else if(inputString.startsWith("REDEF")){ //Reorient coordinates
-      inputString = inputString.substring(6);
+    else if(strcmp(pieces[0], "REDEF") == 0){ //Reorient coordinates
+      if(DEBUG)
+        Serial.println("Redef found");
+        
+      xpos = atoi(pieces[1]);
+      ypos = atoi(pieces[2]);
+      zpos = atoi(pieces[3]);
+      angle = atoi(pieces[4]);
+      Serial.println("DONE");
+      RelayCoordinates();
+      inputString = "";
+      stringComplete = false;
+      return;
     }
     
     xposNew = atoi(pieces[1]);
@@ -153,13 +166,17 @@ void CommandProcess(){
        MapCoordinates();
        Navigate();
     }
+
+    else{
+      Serial.println("ERROR:OOB");
+    }
     Serial.println("DONE");
     RelayCoordinates();
     inputString = "";
     stringComplete = false;
   }
   else{
-    Serial.println("ERROR");
+    Serial.println("ERROR:PARSE");
     return;
   }
 }
