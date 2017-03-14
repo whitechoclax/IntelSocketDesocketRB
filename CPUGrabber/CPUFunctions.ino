@@ -2,34 +2,44 @@ int Calibrate(){
   return 1;
 }
 
-void MapCoordinates(){
+void MapCoordinates(boolean cartesian){
+  if(!cartesian){
+    thetaNew = atan(xposNew/yposNew);
+    radiusNew = sqrt(pow(xposNew,2)+pow(yposNew,2));
+    theta = atan(xpos/ypos);
+    radius = sqrt(pow(xpos,2)+pow(ypos,2));
+  }
+  else{
+    xpos = radius * cos(theta);
+    ypos = radius * sin(theta);
+  }
   return;
 }
 
 void Navigate(){ //Moves to new positions
-  int deltaX = 0;
-  int deltaY = 0;
-  int deltaZ = 0;
-  int deltaAngle = 0;
+  float deltaZ = 0;
+  float deltaTheta = 0;
+  float deltaRadius = 0;
+  float deltaAngle = 0;
   
-  if(xposNew != xpos){
-    if(xposNew > xpos){
-      digitalWrite(Dir[XMOTOR], HIGH);
-      deltaX = xposNew - xpos;
+  if(radiusNew != radius){
+    if(radiusNew > radius){
+      digitalWrite(Dir[RADMOTOR], HIGH);
+      deltaRadius =  radiusNew - radius;
     }
     else{
-      digitalWrite(Dir[XMOTOR], LOW);
-      deltaX = xpos - xposNew;
+      digitalWrite(Dir[RADMOTOR], LOW);
+      deltaRadius = radius - radiusNew;
     }
   }
-  if(yposNew != ypos){
-    if(yposNew > ypos){
-      digitalWrite(Dir[YMOTOR], HIGH);
-      deltaY = yposNew - ypos;
+  if(thetaNew != theta){
+    if(thetaNew > theta){
+      digitalWrite(Dir[THETAMOTOR], HIGH);
+      deltaTheta = thetaNew - theta;
     }
     else{
-      digitalWrite(Dir[YMOTOR], LOW);
-      deltaY = ypos - yposNew;
+      digitalWrite(Dir[THETAMOTOR], LOW);
+      deltaTheta = theta - thetaNew;
     }
   }
   if(zposNew != zpos){
@@ -52,15 +62,63 @@ void Navigate(){ //Moves to new positions
       deltaAngle = angle - angleNew;
     }
   }  
-
-  int totalDelta = (deltaAngle + deltaZ + deltaY + deltaX);
+  //Do z chunk first if going up
+  if(zposNew > zpos){
+    digitalWrite(Enable[ZMOTOR], LOW);
+    for(int i=0;i<deltaZ;++i){
+      for(int j=0;j<Z;++j){
+        digitalWrite(Step[ZMOTOR], LOW);
+        delay(3);
+        digitalWrite(Step[ZMOTOR], HIGH);
+        delay(1);
+      }
+      ++zpos;
+    }
+  }
   
-  return;
-}
+  boolean done = false;
+  digitalWrite(Enable[RADMOTOR], LOW);
+  digitalWrite(Enable[THETAMOTOR], LOW);
+  while(!done){
+    if(deltaTheta > 0){
+      digitalWrite(Step[RADMOTOR], LOW);
+      deltaTheta -= 1/THETA;
+      theta += 1/THETA;
+    }
+    if(deltaRadius > 0){
+      digitalWrite(Step[THETAMOTOR], LOW);
+      deltaRadius -= 1/RAD;
+      radius += 1/RAD;
+    }
+    if(deltaAngle > 0){
+      digitalWrite(Step[ANGLEMOTOR], LOW);
+      deltaAngle -= 1.8;
+      angle += 1.8;
+    }
+    delay(1);
+    digitalWrite(Step[RADMOTOR], HIGH);
+    digitalWrite(Step[THETAMOTOR], HIGH);
+    digitalWrite(Step[ANGLEMOTOR], HIGH);
+    delay(3);
 
-int Move(int steps, int motor){
-  //for(int i=0;i<steps
-  return 1;
+    if(deltaTheta <= 0 && deltaRadius <= 0 && deltaAngle <= 0){
+       done = true;
+    }
+  }
+
+  if(zpos > zposNew){
+    digitalWrite(Enable[ZMOTOR], LOW);
+    for(int i=0;i<deltaZ;++i){
+      for(int j=0;j<Z;++j){
+        digitalWrite(Step[ZMOTOR], LOW);
+        delay(3);
+        digitalWrite(Step[ZMOTOR], HIGH);
+        delay(1);
+      }
+      --zpos;
+    }
+  }
+  return;
 }
 
 void RelayCoordinates(){
@@ -113,6 +171,7 @@ void CommandProcess(){
     }
     
     boolean Shift = false; //Shifting, not moving to coordinates
+    boolean Redef = false;
     if(inputString.startsWith("SHIFT")){ //Move from where we are
       inputString = inputString.substring(6);
       Shift = true;
@@ -122,18 +181,26 @@ void CommandProcess(){
     }
     else if(inputString.startsWith("REDEF")){ //Reorient coordinates
       inputString = inputString.substring(6);
+      Redef = true;
     }
     
     xposNew = atoi(pieces[1]);
     yposNew = atoi(pieces[2]);
     zposNew = atoi(pieces[3]);
-    angleNew = atoi(pieces[4]);
+    angleNew = atof(pieces[4]);
 
     if(Shift){
       xposNew += xpos;
       yposNew += ypos;
       zposNew += zpos;      
       angleNew += angle;
+    }
+
+    if(Redef){
+      xpos = xposNew;
+      ypos = yposNew;
+      zpos = zposNew;      
+      angle = angleNew;
     }
 
     if(DEBUG){
@@ -145,7 +212,7 @@ void CommandProcess(){
 
     if(xposNew >= 0 && yposNew >= 0 && zposNew >= 0 && angleNew >=0 && xposNew < 1000 && yposNew < 1000 && zposNew < 1000 && angleNew < 360){
        Serial.println("NAVIGATING");
-       MapCoordinates();
+       MapCoordinates(false);
        Navigate();
     }
     Serial.println("DONE");

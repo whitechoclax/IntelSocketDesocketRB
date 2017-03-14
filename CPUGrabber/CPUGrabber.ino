@@ -1,18 +1,18 @@
 /*
- * Main Program code for Intel CPU Grabber robot
- * Arduino control portion, only works on MEGA
- * The program receives commands and navigates
- * using A4988 Stepper motor Drivers
- */
+   Main Program code for Intel CPU Grabber robot
+   Arduino control portion, only works on MEGA
+   The program receives commands and navigates
+   using A4988 Stepper motor Drivers
+*/
 
 //Millimeter to step mappings
-#define X 20
-#define Y 20
-#define Z 20
+# define RAD 20
+# define THETA 20 //to one degree
+# define Z 20
 
 //Motor Mappings
-#define XMOTOR 0
-#define YMOTOR 1
+#define RADMOTOR 0
+#define THETAMOTOR 1
 #define ZMOTOR 2
 #define ANGLEMOTOR 3
 
@@ -22,15 +22,19 @@
 int xpos = 0;
 int ypos = 0;
 int zpos = 0;
-int angle = 0; //Angle for end effector
+float angle = 0; //Angle for end effector
 
-byte Delay = 0;
+float theta = 0; //angle of robot
+float radius = 0; //extension of arm
+
+float thetaNew = 0;
+int radiusNew = 0;
 
 //Desired Positions
 int xposNew = 0;
 int yposNew = 0;
 int zposNew = 0;
-int angleNew = 0;
+float angleNew = 0;
 
 //Pin Mappings to Stepper Drivers based on shield
 const byte Enable[6] = {A0, 8, A3, 2, A7, 26};
@@ -47,14 +51,14 @@ boolean stringComplete = false;
 
 void setup() {
   Serial.begin(115200);
-  
+
   //Setup for pinouts
-  for(int i=0;i<6;++i){
+  for (int i = 0; i < 6; ++i) {
     pinMode(Enable[i], OUTPUT);
     digitalWrite(Enable[i], HIGH);
     pinMode(Step[i], OUTPUT);
     digitalWrite(Step[i], LOW);
-  } 
+  }
 }
 
 void loop() {
