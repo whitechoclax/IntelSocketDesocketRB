@@ -41,9 +41,9 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.template_textbox = new System.Windows.Forms.TextBox();
-            this.button3 = new System.Windows.Forms.Button();
+            this.findMatch = new System.Windows.Forms.Button();
             this.loadTemplate = new System.Windows.Forms.Button();
-            this.takepicture = new System.Windows.Forms.Button();
+            this.capturePicture = new System.Windows.Forms.Button();
             this.sourceimg_textbox = new System.Windows.Forms.TextBox();
             this.loadSource = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -91,7 +91,7 @@
             this.template_imgbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.template_imgbox.Location = new System.Drawing.Point(25, 648);
             this.template_imgbox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.template_imgbox.Name = "imageBox2";
+            this.template_imgbox.Name = "template_imgbox";
             this.template_imgbox.Size = new System.Drawing.Size(640, 480);
             this.template_imgbox.TabIndex = 18;
             this.template_imgbox.TabStop = false;
@@ -131,7 +131,7 @@
             this.tracked_imgbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tracked_imgbox.Location = new System.Drawing.Point(1001, 648);
             this.tracked_imgbox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tracked_imgbox.Name = "imageBox3";
+            this.tracked_imgbox.Name = "tracked_imgbox";
             this.tracked_imgbox.Size = new System.Drawing.Size(640, 480);
             this.tracked_imgbox.TabIndex = 22;
             this.tracked_imgbox.TabStop = false;
@@ -175,16 +175,16 @@
             this.template_textbox.Size = new System.Drawing.Size(373, 26);
             this.template_textbox.TabIndex = 28;
             // 
-            // button3
+            // findMatch
             // 
-            this.button3.Location = new System.Drawing.Point(364, 1249);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(150, 35);
-            this.button3.TabIndex = 27;
-            this.button3.Text = "Find";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.findMatch.Location = new System.Drawing.Point(364, 1249);
+            this.findMatch.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.findMatch.Name = "findMatch";
+            this.findMatch.Size = new System.Drawing.Size(150, 35);
+            this.findMatch.TabIndex = 27;
+            this.findMatch.Text = "Find";
+            this.findMatch.UseVisualStyleBackColor = true;
+            this.findMatch.Click += new System.EventHandler(this.findMatch_Click);
             // 
             // loadTemplate
             // 
@@ -197,16 +197,16 @@
             this.loadTemplate.UseVisualStyleBackColor = true;
             this.loadTemplate.Click += new System.EventHandler(this.loadTemplate_Click);
             // 
-            // takepicture
+            // capturePicture
             // 
-            this.takepicture.Location = new System.Drawing.Point(198, 1249);
-            this.takepicture.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.takepicture.Name = "takepicture";
-            this.takepicture.Size = new System.Drawing.Size(150, 35);
-            this.takepicture.TabIndex = 25;
-            this.takepicture.Text = "Capture Picture";
-            this.takepicture.UseVisualStyleBackColor = true;
-            this.takepicture.Click += new System.EventHandler(this.takepicture_Click);
+            this.capturePicture.Location = new System.Drawing.Point(198, 1249);
+            this.capturePicture.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.capturePicture.Name = "capturePicture";
+            this.capturePicture.Size = new System.Drawing.Size(150, 35);
+            this.capturePicture.TabIndex = 25;
+            this.capturePicture.Text = "Capture Picture";
+            this.capturePicture.UseVisualStyleBackColor = true;
+            this.capturePicture.Click += new System.EventHandler(this.takepicture_Click);
             // 
             // sourceimg_textbox
             // 
@@ -244,9 +244,9 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.template_textbox);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.findMatch);
             this.Controls.Add(this.loadTemplate);
-            this.Controls.Add(this.takepicture);
+            this.Controls.Add(this.capturePicture);
             this.Controls.Add(this.sourceimg_textbox);
             this.Controls.Add(this.loadSource);
             this.Controls.Add(this.tracked_imgbox);
@@ -282,9 +282,9 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox template_textbox;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button findMatch;
         private System.Windows.Forms.Button loadTemplate;
-        private System.Windows.Forms.Button takepicture;
+        private System.Windows.Forms.Button capturePicture;
         private System.Windows.Forms.TextBox sourceimg_textbox;
         private System.Windows.Forms.Button loadSource;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,106 +15,97 @@ namespace VishnuMain
     public class TemplateMatchController
     {
         //local vars to namespace
-        private Capture Camera_frame = null;
+        Capture camera_feed = null;
+        Mat camera_img = new Mat();
         Mat gray_frame = new Mat();
         Mat Overlay = new Mat();
         Mat Load_Img = new Mat();
         Mat Comp_Img = new Mat();
-        public bool isCapturing;
+        //public bool isCapturing;
 
-        public void StartCapture()
-        {
-            try
-            {
-                Camera_frame = new Capture();
-                Camera_frame.ImageGrabbed += CaptureFeed; //live stream image cap
-                isCapturing = true;
-            }
-            catch (NullReferenceException except)
-            {
-                //MessageBox.Show(except.Message);
-            }
 
-            
-        }
-
-        //take picture with capture button
-        public Mat SnapPicture()
+        //take picture with capture button.  Retreive feed data from caller.  NEEDS 
+        // a camera stream as an argument
+        public Mat SnapPicture(Capture camera_feed)
         { 
             Mat frame = new Mat();
-            if (isCapturing)
-            {
-                Camera_frame.Retrieve(frame, 0);
-                CvInvoke.CvtColor(frame, gray_frame, ColorConversion.Bgr2Gray);
-                //returns grayframe, so hopefully whenver this is run the imagebox 
-                return gray_frame;
-            }
-            else
-                return frame;
+            
+            camera_feed.Retrieve(frame, 0);
+            CvInvoke.CvtColor(frame, camera_img, ColorConversion.Bgr2Gray);
+            return camera_img;
+     
         }
 
-        public  List<Mat> templateDetection(String template)
+        //Main templete detection.  Uses a list of images (choosen by user in this case, 
+        public List<Mat> TemplateDetection(String[] templatelist, Mat sourceImg, int template_length)
         {
-            Load_Img = gray_frame;
-            Comp_Img = new Mat(template, LoadImageType.Grayscale);
 
-            Mat Result = new Mat(); //stores results of CvInvoke.MatchTemplate();
-            Overlay = gray_frame.Clone();
-            Mat Mask = new Mat();
-            CvInvoke.MatchTemplate(Load_Img, Comp_Img, Result, TemplateMatchingType.CcoeffNormed);
+            Mat ResultMat = new Mat(); //mat data holds template matches coordinates
+            Mat result_img = sourceImg.Clone(); //image with rectangles
 
             //declare new list of Mat objects
             List<Mat> template_imageArray = new List<Mat>();
 
-            while (true)
-            {
 
-                double minValues = 0;
-                double maxValues = 0;
-                Point minLocations = new Point { X = 0, Y = 0 };
-                Point maxLocations = new Point { X = 0, Y = 0 };
+            for (int i = 0; i < template_length; ++i)
+            { //loop used to go through all template images
 
-                //Result.MinMax(out minValues, out maxValues, out minLocations, out maxLocations);
-                CvInvoke.MinMaxLoc(Result, ref minValues, ref maxValues, ref minLocations, ref maxLocations);
+                Mat templateImg = new Mat(templatelist[i], LoadImageType.Grayscale);
+                CvInvoke.MatchTemplate(sourceImg, templateImg, ResultMat, TemplateMatchingType.CcoeffNormed);
 
-                if (maxValues > 0.7)
-                {
-                    // This is a match. Do something with it, for example draw a rectangle around it.
-                    Rectangle match = new Rectangle(maxLocations, Comp_Img.Size);
-                    CvInvoke.Rectangle(Overlay, match, new MCvScalar(0, 255, 0), 2);
-                    Rectangle outRect;
+                while (true)
+                { //loop to mark all matches
 
-                    Mat size = Result.Clone();
-                    int width = size.Width;
-                    int height = size.Height;
+                    //requirement for Floodfill
+                    double minValues = 0;
+                    double maxValues = 0;
+                    Point minLocations = new Point { X = 0, Y = 0 };
+                    Point maxLocations = new Point { X = 0, Y = 0 };
 
-                    Image<Gray, Byte> fillMask = size.ToImage<Gray, Byte>();
-                    Image<Gray, Byte> fillMasks = new Image<Gray, Byte>(width + 2, height + 2);
+                    //finds best matching location
+                    CvInvoke.MinMaxLoc(ResultMat, ref minValues, ref maxValues, ref minLocations, ref maxLocations);
 
-                    MCvScalar lo = new MCvScalar(0);
-                    MCvScalar up = new MCvScalar(255);
+                    //accpetance check
+                    if (maxValues > 0.8)
+                    {
+                        //draw a rectangle around matched template location
+                        Rectangle match = new Rectangle(maxLocations, templateImg.Size);
+                        CvInvoke.Rectangle(result_img, match, new MCvScalar(0, 255, 0), 2);
 
-                    CvInvoke.FloodFill(Result,fillMasks, maxLocations, new MCvScalar(0), out outRect,
-                        lo, up, Connectivity.FourConnected, FloodFillType.Default);
+                        //section to compelte floodfill function
+                        Rectangle outRect;
+                        Mat mask = ResultMat.Clone();
+                        int width = mask.Width;
+                        int height = mask.Height;
+                        Image<Gray, Byte> fillMasks = new Image<Gray, Byte>(width + 2, height + 2);
+                        MCvScalar lo = new MCvScalar(0);
+                        MCvScalar up = new MCvScalar(255);
+
+                        //method to fill in all rectagles so there will be no redundant detection
+                        CvInvoke.FloodFill(ResultMat,
+                            fillMasks, maxLocations,
+                            new MCvScalar(0), out outRect,
+                            lo, up,
+                            Connectivity.FourConnected,
+                            FloodFillType.Default);
+                    }
+                    else
+                        break;
                 }
-                else
-                    break;
             }
+            
 
             //Add items to list
-            template_imageArray.Add(Load_Img);
+            template_imageArray.Add(sourceImg);
             template_imageArray.Add(Comp_Img);
-            template_imageArray.Add(Overlay);
+            template_imageArray.Add(result_img);
 
             return template_imageArray;
         }
 
-        private void CaptureFeed(object sender, EventArgs arg)
-        {
-            Mat frame = new Mat();
-            Camera_frame.Retrieve(frame, 0);
-            //imageBox4.Image = frame;
-        }
+       
+
+
 
         //load img and comp img are given by frames from top of this class function, overlay is a clone
         //captured_imgbox.Image = Load_Img;

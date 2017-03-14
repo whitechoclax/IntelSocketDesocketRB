@@ -58,7 +58,12 @@ void setup() {
     digitalWrite(Enable[i], HIGH);
     pinMode(Step[i], OUTPUT);
     digitalWrite(Step[i], LOW);
+<<<<<<< HEAD
   }
+=======
+  } 
+  Serial.println("Booted");
+>>>>>>> 0a51f065de90851e1781c9502f1dac13f01d21ee
 }
 
 void loop() {
