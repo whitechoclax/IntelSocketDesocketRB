@@ -123,9 +123,7 @@ void Navigate(){ //Moves to new positions
 
 void RelayCoordinates(){
   Serial.print("COOR: ");
-  Serial.print(xpos);Serial.print(':');
-  Serial.print(ypos);Serial.print(':');
-  Serial.print(zpos);Serial.print(':');
+  Serial.print(xpos);Serial.print(ypos);Serial.print(zpos);
   Serial.println(angle);
   return;
 }
@@ -153,21 +151,19 @@ void CommandProcess(){
     for(int i=0;i<len;++i){
       inputChars[i]=inputString[i];
     }
-    char* command = strtok(inputChars, ":"); //break up input string
+    char* command = strtok(inputChars, ':'); //break up input string
 
-    char pieces[5][10];
+    char pieces[4][10];
     int i = 0;
-    while(command && i < 5){ //iterate through sections
+    while(command){ //iterate through sections
       if(i < 5){
         strcpy(pieces[i++], command);
-        command = strtok(NULL, ":");
       }
+      if(DEBUG)
+        Serial.println(command);
     }
     
-    if(strcmp(pieces[0], "STOP") == 0){ //Emergency Brake
-      if(DEBUG)
-        Serial.println("Stop found");
-      
+    if(inputString.startsWith("STOP")){ //Emergency Brake
       EmergencyStop();
       Serial.println("STOPPING");
       RelayCoordinates();
@@ -175,54 +171,23 @@ void CommandProcess(){
     }
     
     boolean Shift = false; //Shifting, not moving to coordinates
-<<<<<<< HEAD
     boolean Redef = false;
     if(inputString.startsWith("SHIFT")){ //Move from where we are
       inputString = inputString.substring(6);
-=======
-    if(strcmp(pieces[0], "SHIFT") == 0){ //Move from where we are
-      if(DEBUG)
-        Serial.println("Shift found");
-        
->>>>>>> 0a51f065de90851e1781c9502f1dac13f01d21ee
       Shift = true;
     }
-    else if(strcmp(pieces[0], "MOVE") == 0){ //Move to coordinates
-      if(DEBUG)
-        Serial.println("Move found");
+    else if(inputString.startsWith("MOVE")){ //Move to coordinates
+      inputString = inputString.substring(5);
     }
-<<<<<<< HEAD
     else if(inputString.startsWith("REDEF")){ //Reorient coordinates
       inputString = inputString.substring(6);
       Redef = true;
-=======
-    else if(strcmp(pieces[0], "REDEF") == 0){ //Reorient coordinates
-      if(DEBUG)
-        Serial.println("Redef found");
-        
-      xpos = atoi(pieces[1]);
-      ypos = atoi(pieces[2]);
-      zpos = atoi(pieces[3]);
-      angle = atoi(pieces[4]);
-      Serial.println("DONE");
-      RelayCoordinates();
-      inputString = "";
-      stringComplete = false;
-      return;
->>>>>>> 0a51f065de90851e1781c9502f1dac13f01d21ee
     }
     
     xposNew = atoi(pieces[1]);
     yposNew = atoi(pieces[2]);
     zposNew = atoi(pieces[3]);
     angleNew = atof(pieces[4]);
-
-    if(DEBUG){
-      Serial.print("X: ");Serial.println(xposNew);
-      Serial.print("Y: ");Serial.println(yposNew);
-      Serial.print("Z: ");Serial.println(zposNew);
-      Serial.print("Angle: ");Serial.println(angleNew);
-    }
 
     if(Shift){
       xposNew += xpos;
@@ -231,7 +196,6 @@ void CommandProcess(){
       angleNew += angle;
     }
 
-<<<<<<< HEAD
     if(Redef){
       xpos = xposNew;
       ypos = yposNew;
@@ -246,16 +210,10 @@ void CommandProcess(){
       Serial.println(angleNew);
     }
 
-=======
->>>>>>> 0a51f065de90851e1781c9502f1dac13f01d21ee
     if(xposNew >= 0 && yposNew >= 0 && zposNew >= 0 && angleNew >=0 && xposNew < 1000 && yposNew < 1000 && zposNew < 1000 && angleNew < 360){
        Serial.println("NAVIGATING");
        MapCoordinates(false);
        Navigate();
-    }
-
-    else{
-      Serial.println("ERROR:OOB");
     }
     Serial.println("DONE");
     RelayCoordinates();
@@ -263,7 +221,7 @@ void CommandProcess(){
     stringComplete = false;
   }
   else{
-    Serial.println("ERROR:PARSE");
+    Serial.println("ERROR");
     return;
   }
 }
