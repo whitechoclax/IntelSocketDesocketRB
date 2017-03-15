@@ -26,7 +26,7 @@ namespace VishnuMain
         }
 
         public SerialPort myPort;
-
+        public string portName = "COM6";
         public ArmControl()
         {
             InitializeComponent();
@@ -35,8 +35,8 @@ namespace VishnuMain
         private void onButton_Click(object sender, EventArgs e)
         {
             myPort = new SerialPort();
-            myPort.BaudRate = 9600;
-            myPort.PortName = "COM5";
+            myPort.BaudRate = 115200;
+            myPort.PortName = portName;
             myPort.Open();
             myPort.WriteLine("c");
             myPort.Close();
@@ -45,8 +45,8 @@ namespace VishnuMain
         private void offButton_Click(object sender, EventArgs e)
         {
             myPort = new SerialPort();
-            myPort.BaudRate = 9600;
-            myPort.PortName = "COM5";
+            myPort.BaudRate = 115200;
+            myPort.PortName = portName;
             myPort.Open();
             myPort.WriteLine("f");
             myPort.Close();
