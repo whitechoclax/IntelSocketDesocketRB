@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO.Ports;
 
 namespace VishnuMain
 {
@@ -24,10 +25,33 @@ namespace VishnuMain
             }
         }
 
+        public SerialPort myPort;
 
         public ArmControl()
         {
             InitializeComponent();
+        }
+
+        private void onButton_Click(object sender, EventArgs e)
+        {
+            myPort = new SerialPort();
+            myPort.BaudRate = 9600;
+            myPort.PortName = "COM5";
+            myPort.Open();
+            myPort.WriteLine("c");
+            myPort.Close();
+        }
+
+        private void offButton_Click(object sender, EventArgs e)
+        {
+            myPort = new SerialPort();
+            myPort.BaudRate = 9600;
+            myPort.PortName = "COM5";
+            myPort.Open();
+            myPort.WriteLine("f");
+            myPort.Close();
+
+           
         }
     }
 }
