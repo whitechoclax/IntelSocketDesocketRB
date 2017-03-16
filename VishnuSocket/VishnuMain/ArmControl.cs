@@ -25,31 +25,38 @@ namespace VishnuMain
             }
         }
 
-        public SerialPort myPort;
-        public string portName = "COM6";
+        public SerialPort myPort = new SerialPort();
+        public String portName = "COM6";
+       
         public ArmControl()
         {
             InitializeComponent();
+            if (!myPort.IsOpen)
+            {
+                myPort.DataReceived += MyPort_DataReceived;
+            }
+            myPort.BaudRate = 115200;
+            myPort.PortName = portName;
+            myPort.Open();
+        }
+
+        private void MyPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            string data = myPort.ReadTo("\r");
+            MessageBox.Show(data);
         }
 
         private void onButton_Click(object sender, EventArgs e)
         {
-            myPort = new SerialPort();
-            myPort.BaudRate = 115200;
-            myPort.PortName = portName;
-            myPort.Open();
+            
             myPort.WriteLine("c");
-            myPort.Close();
+            //myPort.Close();
         }
 
         private void offButton_Click(object sender, EventArgs e)
         {
-            myPort = new SerialPort();
-            myPort.BaudRate = 115200;
-            myPort.PortName = portName;
-            myPort.Open();
             myPort.WriteLine("f");
-            myPort.Close();
+            //myPort.Close();
 
            
         }
