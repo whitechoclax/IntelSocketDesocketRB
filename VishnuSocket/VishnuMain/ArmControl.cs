@@ -50,20 +50,21 @@ namespace VishnuMain
 
         private void onButton_Click(object sender, EventArgs e)
         {
-            
-            myPort.WriteLine("c");
+            Arduino.LEDon(portName);
+            //myPort.WriteLine("c");
         }
 
         private void offButton_Click(object sender, EventArgs e)
         {
-            myPort.WriteLine("f");
+            Arduino.LEDoff(portName);
+            //myPort.WriteLine("f");
 
            
         }
 
         private void findPorts_Click(object sender, EventArgs e)
         {
-            string [] portList = Arduino.FindPortsAvailible();
+            string [] portList = Arduino.FindPortsAvailable();
             foreach (string line in portList)
             {
                 portListBox.AppendText(line);
