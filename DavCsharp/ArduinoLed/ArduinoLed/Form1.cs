@@ -16,7 +16,7 @@ namespace ArduinoLed
         {
             InitializeComponent();
             serialPort1.PortName = "COM3";
-            serialPort1.BaudRate = 9600;
+            serialPort1.BaudRate = 115200;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -24,7 +24,7 @@ namespace ArduinoLed
             serialPort1.Open();
             if (serialPort1.IsOpen)
             {
-                serialPort1.WriteLine("A");
+                serialPort1.WriteLine("c");
             }
             serialPort1.Close();
             panel1.BackColor = Color.Lime;
@@ -36,7 +36,7 @@ namespace ArduinoLed
             serialPort1.Open();
             if (serialPort1.IsOpen)
             {
-                serialPort1.WriteLine("a");
+                serialPort1.WriteLine("f");
             }
             serialPort1.Close();
             panel2.BackColor = Color.Red;
