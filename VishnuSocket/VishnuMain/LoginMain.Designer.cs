@@ -37,6 +37,8 @@
             // 
             // centralPanel
             // 
+            this.centralPanel.AutoSize = true;
+            this.centralPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.centralPanel.Location = new System.Drawing.Point(12, 56);
             this.centralPanel.Name = "centralPanel";
             this.centralPanel.Size = new System.Drawing.Size(1667, 1436);
@@ -70,9 +72,9 @@
             // 
             this.armControlButton.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.armControlButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.armControlButton.Location = new System.Drawing.Point(307, 13);
+            this.armControlButton.Location = new System.Drawing.Point(307, 12);
             this.armControlButton.Name = "armControlButton";
-            this.armControlButton.Size = new System.Drawing.Size(141, 37);
+            this.armControlButton.Size = new System.Drawing.Size(141, 38);
             this.armControlButton.TabIndex = 3;
             this.armControlButton.Text = "Arm Control";
             this.armControlButton.UseVisualStyleBackColor = false;
@@ -91,6 +93,7 @@
             this.Name = "LoginMain";
             this.Text = "Vishnu 2017";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
