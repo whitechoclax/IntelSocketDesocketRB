@@ -98,6 +98,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArduinoMotionLibrary.cs" />
+    <Compile Include="ArduinoPort.cs" />
     <Compile Include="ArmControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

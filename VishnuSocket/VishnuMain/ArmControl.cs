@@ -26,18 +26,20 @@ namespace VishnuMain
         }
 
         public SerialPort myPort = new SerialPort();
-        public String portName = "COM6";
+        ArduinoMotionLibrary Arduino = new ArduinoMotionLibrary();
+        public String portName;
        
         public ArmControl()
         {
             InitializeComponent();
+            findPorts.Enabled = true;
+            openPort.Enabled = false;
+             
             if (!myPort.IsOpen)
             {
                 myPort.DataReceived += MyPort_DataReceived;
             }
-            myPort.BaudRate = 115200;
-            myPort.PortName = portName;
-            myPort.Open();
+            
         }
 
         private void MyPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -50,15 +52,45 @@ namespace VishnuMain
         {
             
             myPort.WriteLine("c");
-            //myPort.Close();
         }
 
         private void offButton_Click(object sender, EventArgs e)
         {
             myPort.WriteLine("f");
-            //myPort.Close();
 
            
+        }
+
+        private void findPorts_Click(object sender, EventArgs e)
+        {
+            string [] portList = Arduino.FindPortsAvailible();
+            foreach (string line in portList)
+            {
+                portListBox.AppendText(line);
+                portListBox.AppendText(Environment.NewLine);
+            }
+
+            if (portList[0] != null)
+            {
+                portName = portList[0];
+                openPort.Enabled = true;
+            }
+
+        }
+
+        private void openPort_Click(object sender, EventArgs e)
+        {
+            myPort.BaudRate = 115200;
+            myPort.PortName = portName;
+            try
+            {
+                myPort.Open();
+            }
+            catch
+            {
+                MessageBox.Show("COM PORT not found, Have you checked Arduino Connection?");
+            }
+
         }
     }
 }
