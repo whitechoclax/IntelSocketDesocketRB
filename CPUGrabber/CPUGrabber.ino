@@ -27,7 +27,7 @@ float angle = 0; //Angle for end effector
 float theta = 0; //angle of robot
 float radius = 0; //extension of arm
 
-float thetaNew = 0;
+double thetaNew = 0;
 int radiusNew = 0;
 
 //Desired Positions
@@ -59,8 +59,9 @@ void setup() {
     pinMode(Step[i], OUTPUT);
     digitalWrite(Step[i], LOW);
   }
+  Serial.println("Booted1");
 }
 
 void loop() {
-  delay(1);
+  delay(100);
 }
