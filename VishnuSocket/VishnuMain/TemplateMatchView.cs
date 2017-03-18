@@ -58,7 +58,8 @@ namespace VishnuMain
                 return Camera_frame = null;
             }
         }
-private void takepicture_Click(object sender, EventArgs e)
+
+        private void takepicture_Click(object sender, EventArgs e)
         {
             //click take a pciture, grab source image from the testbox file, 
             captured_imgbox.Image = _Template.SnapPicture(Camera_frame); //declare object matchtemplatecontroller so we can use it
@@ -117,12 +118,17 @@ private void takepicture_Click(object sender, EventArgs e)
 
         private void findMatch_Click(object sender, EventArgs e)
         {
+
             source_img = new Mat(sourceimg_textbox.Text, LoadImageType.Grayscale);
             //grab images from UI, run templ detection and retrieve images.  
             UI_images = _Template.TemplateDetection(templateList, source_img, templateList.Length);
-            captured_imgbox.Image = UI_images.ElementAt(1);
-            template_imgbox.Image = UI_images.ElementAt(2);
-            tracked_imgbox.Image = UI_images.ElementAt(3);
+
+            if (UI_images.Count > 0)
+            { 
+                captured_imgbox.Image = UI_images.ElementAt(1);
+                template_imgbox.Image = UI_images.ElementAt(2);
+                tracked_imgbox.Image = UI_images.ElementAt(3);
+            }
 
         }
 
