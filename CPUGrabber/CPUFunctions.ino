@@ -4,15 +4,42 @@ int Calibrate(){
 
 void MapCoordinates(boolean cartesian){
   if(!cartesian){
-    thetaNew = atan(xposNew/yposNew);
+    double x = double(xposNew);
+    double y = double(yposNew);
+    thetaNew = atan2(x,y)*57.2958;
     radiusNew = sqrt(pow(xposNew,2)+pow(yposNew,2));
-    theta = atan(xpos/ypos);
+    x = double(xpos);
+    y = double(ypos);
+    theta = atan2(x,y);
     radius = sqrt(pow(xpos,2)+pow(ypos,2));
   }
   else{
-    xpos = radius * cos(theta);
-    ypos = radius * sin(theta);
+    xpos = radius * (cos(theta/(180.0/PI)));
+    ypos = radius * (sin(theta/(180.0/PI)));
+
+    if(DEBUG){
+      Serial.print("Theta: ");Serial.println(theta, 2);
+      Serial.print("Radius: ");Serial.println(radius, 2);
+      Serial.print("Xpos: ");Serial.println(xpos, 2);
+      Serial.print("Ypos: ");Serial.println(ypos, 2);
+    }
   }
+
+  if(DEBUG){
+    Serial.println("Mapped coordinates: ");
+    Serial.print("New theta: ");Serial.println(thetaNew,5);
+    Serial.print("New radius: ");Serial.println(radiusNew, 2);
+  }
+  return;
+}
+
+void RelayCoordinates(){
+  MapCoordinates(true);
+  Serial.print("COOR: ");
+  Serial.print(xpos);Serial.print(':');
+  Serial.print(ypos);Serial.print(':');
+  Serial.print(zpos);Serial.print(':');
+  Serial.println(angle);
   return;
 }
 
@@ -21,7 +48,6 @@ void Navigate(){ //Moves to new positions
   float deltaTheta = 0;
   float deltaRadius = 0;
   float deltaAngle = 0;
-  
   if(radiusNew != radius){
     if(radiusNew > radius){
       digitalWrite(Dir[RADMOTOR], HIGH);
@@ -62,8 +88,23 @@ void Navigate(){ //Moves to new positions
       deltaAngle = angle - angleNew;
     }
   }  
+  
+  if(DEBUG){
+    Serial.println("Deltas are:");
+    Serial.print("Theta: ");Serial.println(deltaTheta,2);
+    Serial.print("Radius: ");Serial.println(deltaRadius,2);
+    Serial.print("Z: ");Serial.println(deltaZ,2);
+    Serial.print("Angle: ");Serial.println(deltaAngle,2);
+  
+  }
+  
   //Do z chunk first if going up
   if(zposNew > zpos){
+
+    if(DEBUG){
+      Serial.println("Moving Up");
+    }
+    
     digitalWrite(Enable[ZMOTOR], LOW);
     for(int i=0;i<deltaZ;++i){
       for(int j=0;j<Z;++j){
@@ -73,27 +114,45 @@ void Navigate(){ //Moves to new positions
         delay(1);
       }
       ++zpos;
+
+      if(DEBUG){
+        Serial.print("Z position: ");Serial.println(zpos);
+      }
     }
+    digitalWrite(Enable[ZMOTOR], HIGH);
   }
-  
+
+  if(DEBUG){
+    Serial.println("Moving over");
+  }
+
   boolean done = false;
   digitalWrite(Enable[RADMOTOR], LOW);
   digitalWrite(Enable[THETAMOTOR], LOW);
   while(!done){
-    if(deltaTheta > 0){
+    if(deltaTheta > .4){
       digitalWrite(Step[RADMOTOR], LOW);
-      deltaTheta -= 1/THETA;
-      theta += 1/THETA;
+      deltaTheta -= 1/float(THETA);
+      theta += 1/float(THETA);
+      if(DEBUG){
+        Serial.print("Theta position: ");Serial.println(theta);
+      }
     }
     if(deltaRadius > 0){
       digitalWrite(Step[THETAMOTOR], LOW);
-      deltaRadius -= 1/RAD;
-      radius += 1/RAD;
+      deltaRadius -= 1/float(RAD);
+      radius += 1/float(RAD);
+      if(DEBUG){
+        Serial.print("Radius position: ");Serial.println(radius);
+      }
     }
     if(deltaAngle > 0){
       digitalWrite(Step[ANGLEMOTOR], LOW);
       deltaAngle -= 1.8;
       angle += 1.8;
+      if(DEBUG){
+        Serial.print("Angle position: ");Serial.println(angle);
+      }
     }
     delay(1);
     digitalWrite(Step[RADMOTOR], HIGH);
@@ -101,12 +160,17 @@ void Navigate(){ //Moves to new positions
     digitalWrite(Step[ANGLEMOTOR], HIGH);
     delay(3);
 
-    if(deltaTheta <= 0 && deltaRadius <= 0 && deltaAngle <= 0){
+    if(deltaTheta <= .4 && deltaRadius <= 0 && deltaAngle <= 0){
        done = true;
     }
   }
 
   if(zpos > zposNew){
+
+    if(DEBUG){
+      Serial.println("Moving down");
+    }
+    
     digitalWrite(Enable[ZMOTOR], LOW);
     for(int i=0;i<deltaZ;++i){
       for(int j=0;j<Z;++j){
@@ -116,15 +180,12 @@ void Navigate(){ //Moves to new positions
         delay(1);
       }
       --zpos;
+
+      if(DEBUG){
+        Serial.print("Z position: ");Serial.println(zpos);
+      }
     }
   }
-  return;
-}
-
-void RelayCoordinates(){
-  Serial.print("COOR: ");
-  Serial.print(xpos);Serial.print(ypos);Serial.print(zpos);
-  Serial.println(angle);
   return;
 }
 
@@ -138,6 +199,11 @@ void serialEvent() {
     inputString += inChar;
     if (inChar == '\n' || inChar == '\r') {
       stringComplete = true;
+      Serial.flush();
+      if(DEBUG){
+        Serial.println("Command received");
+        Serial.println(inputString);
+      }
       CommandProcess();
     } 
   }
@@ -145,22 +211,35 @@ void serialEvent() {
 
 void CommandProcess(){
   if(stringComplete){
-
+    int i = 0;
     int len = inputString.length();
     char inputChars[50];
-    for(int i=0;i<len;++i){
+    for(i=0;i<=len;++i){
       inputChars[i]=inputString[i];
     }
-    char* command = strtok(inputChars, ':'); //break up input string
+    inputChars[i+1]='\n';
+    char* command = strtok(inputChars, ":"); //break up input string
+    char pieces[5][10];
+    i = 0;
 
-    char pieces[4][10];
-    int i = 0;
-    while(command){ //iterate through sections
+    if(DEBUG){
+      Serial.println("Command:");
+      Serial.println(command);
+      delay(1000);
+    }
+    
+    while(command != NULL){ //iterate through sections
       if(i < 5){
         strcpy(pieces[i++], command);
+        command = strtok(NULL, ":"); //This 
       }
-      if(DEBUG)
-        Serial.println(command);
+      if(DEBUG){
+        Serial.print("Current Piece is: (");
+        Serial.print(i-1);
+        Serial.print(") ");
+        Serial.println(pieces[i-1]);
+        delay(100);
+      }
     }
     
     if(inputString.startsWith("STOP")){ //Emergency Brake
@@ -174,15 +253,29 @@ void CommandProcess(){
     boolean Redef = false;
     if(inputString.startsWith("SHIFT")){ //Move from where we are
       inputString = inputString.substring(6);
+      if(DEBUG){
+        Serial.println("Command is SHIFT");
+      }
       Shift = true;
     }
     else if(inputString.startsWith("MOVE")){ //Move to coordinates
       inputString = inputString.substring(5);
+      if(DEBUG){
+        Serial.println("Command is MOVE");
+      }
     }
     else if(inputString.startsWith("REDEF")){ //Reorient coordinates
       inputString = inputString.substring(6);
       Redef = true;
+      if(DEBUG){
+        Serial.println("Command is REDEF");
+      }
     }
+    else{
+      Serial.println("ERROR:NOVALIDCMD");
+    }
+    inputString = "";
+    stringComplete = false;
     
     xposNew = atoi(pieces[1]);
     yposNew = atoi(pieces[2]);
@@ -204,21 +297,24 @@ void CommandProcess(){
     }
 
     if(DEBUG){
+      Serial.println("New Coordinates:");
       Serial.println(xposNew);
       Serial.println(yposNew);
       Serial.println(zposNew);
       Serial.println(angleNew);
+      delay(100);
     }
 
     if(xposNew >= 0 && yposNew >= 0 && zposNew >= 0 && angleNew >=0 && xposNew < 1000 && yposNew < 1000 && zposNew < 1000 && angleNew < 360){
        Serial.println("NAVIGATING");
        MapCoordinates(false);
        Navigate();
+       Serial.println("DONE");
+       RelayCoordinates();
     }
-    Serial.println("DONE");
-    RelayCoordinates();
-    inputString = "";
-    stringComplete = false;
+    else{
+      Serial.println("ERROR:EOB");
+    }
   }
   else{
     Serial.println("ERROR");

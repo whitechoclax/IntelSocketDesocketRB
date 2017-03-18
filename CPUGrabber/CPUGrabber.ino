@@ -6,9 +6,9 @@
 */
 
 //Millimeter to step mappings
-# define RAD 20
-# define THETA 20 //to one degree
-# define Z 20
+# define RAD 25
+# define THETA 2 //to one degree
+# define Z 25
 
 //Motor Mappings
 #define RADMOTOR 0
@@ -19,22 +19,22 @@
 #define DEBUG 1
 
 //Current position
-int xpos = 0;
-int ypos = 0;
+double xpos = 0;
+double ypos = 0;
 int zpos = 0;
-float angle = 0; //Angle for end effector
+double angle = 0; //Angle for end effector
 
-float theta = 0; //angle of robot
-float radius = 0; //extension of arm
+double theta = 0; //angle of robot
+double radius = 0; //extension of arm
 
-float thetaNew = 0;
-int radiusNew = 0;
+double thetaNew = 0;
+double radiusNew = 0;
 
 //Desired Positions
-int xposNew = 0;
-int yposNew = 0;
+double xposNew = 0;
+double yposNew = 0;
 int zposNew = 0;
-float angleNew = 0;
+double angleNew = 0;
 
 //Pin Mappings to Stepper Drivers based on shield
 const byte Enable[6] = {A0, 8, A3, 2, A7, 26};
@@ -59,8 +59,9 @@ void setup() {
     pinMode(Step[i], OUTPUT);
     digitalWrite(Step[i], LOW);
   }
+  Serial.println("MAINROBOTARM");
 }
 
 void loop() {
-  delay(1);
+  delay(100);
 }
