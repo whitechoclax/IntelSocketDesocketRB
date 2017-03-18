@@ -16,7 +16,19 @@ namespace VishnuMain
         public ArduinoMotionLibrary()
         {
             ArdPort.BaudRate = 115200;
+
+            //if (!ArdPort.IsOpen)
+            //{
+            //    ArdPort.DataReceived += ArdPort_DataReceived;
+            //}
         }
+
+        /*private void ArdPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            string data = ArdPort.ReadTo("\r");
+            //this.Invoke(new EventHandler(processData));
+            
+        }*/
 
         public void RotateLeft()
         {
@@ -44,27 +56,57 @@ namespace VishnuMain
 
         }
 
+        //Send STOP command to Arduino.  
+        public void StopMotor()
+        {
+          
+            ArdPort.WriteLine("STOP");
+            
+
+        }
         //Dummy functions used for testing
         public void LEDon(string portID)
         {
-            ArdPort.PortName = portID;
-            ArdPort.Open();
-            ArdPort.WriteLine("c");
-            ArdPort.Close();
+            if (ArdPort.PortName != portID)
+                ArdPort.PortName = portID;
+
+            if (ArdPort.IsOpen)
+            {
+                ArdPort.WriteLine("c");
+            }
+            else
+            {
+                OpenPorts(portID);
+                ArdPort.WriteLine("c");
+            }
         }
 
         public void LEDoff(string portID)
         {
-            ArdPort.PortName = portID;
-            ArdPort.Open();
-            ArdPort.WriteLine("f");
-            ArdPort.Close();
+            if (ArdPort.PortName != portID)
+                ArdPort.PortName = portID;
+
+            if (ArdPort.IsOpen)
+            {
+                ArdPort.WriteLine("f");
+            }
+            else
+            {
+                OpenPorts(portID);
+                ArdPort.WriteLine("f");
+            }
         }
 
-        public string [] FindPortsAvailable()
+        public string[] FindPortsAvailable()
         {
             string[] ports = SerialPort.GetPortNames();
             return ports;
+        }
+
+        public void OpenPorts(string Port)
+        {
+            ArdPort.PortName = Port;
+            ArdPort.Open();
         }
 
     }

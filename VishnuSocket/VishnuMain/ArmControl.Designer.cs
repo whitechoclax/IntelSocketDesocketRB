@@ -64,7 +64,7 @@
             // lowerDown
             // 
             this.lowerDown.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lowerDown.Location = new System.Drawing.Point(27, 505);
+            this.lowerDown.Location = new System.Drawing.Point(27, 490);
             this.lowerDown.Name = "lowerDown";
             this.lowerDown.Size = new System.Drawing.Size(134, 117);
             this.lowerDown.TabIndex = 1;
@@ -111,12 +111,13 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.BackColor = System.Drawing.Color.Goldenrod;
+            this.groupBox2.BackColor = System.Drawing.Color.Orange;
             this.groupBox2.Controls.Add(this.openPort);
             this.groupBox2.Controls.Add(this.findPorts);
             this.groupBox2.Controls.Add(this.portListBox);
             this.groupBox2.Controls.Add(this.offButton);
             this.groupBox2.Controls.Add(this.onButton);
+            this.groupBox2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.groupBox2.Font = new System.Drawing.Font("Segoe UI Black", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.groupBox2.Location = new System.Drawing.Point(4, 16);

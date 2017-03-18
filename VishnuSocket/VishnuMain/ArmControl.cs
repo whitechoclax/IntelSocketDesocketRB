@@ -25,41 +25,35 @@ namespace VishnuMain
             }
         }
 
-        public SerialPort myPort = new SerialPort();
+        //
         ArduinoMotionLibrary Arduino = new ArduinoMotionLibrary();
-        public String portName;
+        delegate void SetTextCallback(string text);
+        private BackgroundWorker hardworker;
+        string portName;
        
         public ArmControl()
         {
             InitializeComponent();
+            hardworker = new BackgroundWorker();
             findPorts.Enabled = true;
             openPort.Enabled = false;
-             
-            if (!myPort.IsOpen)
-            {
-                myPort.DataReceived += MyPort_DataReceived;
-            }
-            
-        }
 
-        private void MyPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
-        {
-            string data = myPort.ReadTo("\r");
-            MessageBox.Show(data);
+            if (!Arduino.ArdPort.IsOpen)
+            {
+                Arduino.ArdPort.DataReceived += ArdPort_DataReceived; ;
+            }
+
+
         }
 
         private void onButton_Click(object sender, EventArgs e)
         {
             Arduino.LEDon(portName);
-            //myPort.WriteLine("c");
         }
 
         private void offButton_Click(object sender, EventArgs e)
         {
             Arduino.LEDoff(portName);
-            //myPort.WriteLine("f");
-
-           
         }
 
         private void findPorts_Click(object sender, EventArgs e)
@@ -80,18 +74,15 @@ namespace VishnuMain
         }
 
         private void openPort_Click(object sender, EventArgs e)
-        {
-            myPort.BaudRate = 115200;
-            myPort.PortName = portName;
-            try
-            {
-                myPort.Open();
-            }
-            catch
-            {
-                MessageBox.Show("COM PORT not found, Have you checked Arduino Connection?");
-            }
+        { 
+            portListBox.AppendText(portName + " opened.");
+            //MessageBox.Show("COM PORT not found, Have you checked Arduino Connection?");
+        }
 
+        private void ArdPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            string data = Arduino.ArdPort.ReadTo("\r");
+            //portListBox.AppendText(data);
         }
     }
 }
