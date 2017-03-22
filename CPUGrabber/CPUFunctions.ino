@@ -221,24 +221,11 @@ void CommandProcess(){
     char* command = strtok(inputChars, ":"); //break up input string
     char pieces[5][10];
     i = 0;
-
-    if(DEBUG){
-      Serial.println("Command:");
-      Serial.println(command);
-      delay(1000);
-    }
     
     while(command != NULL){ //iterate through sections
       if(i < 5){
         strcpy(pieces[i++], command);
         command = strtok(NULL, ":"); //This 
-      }
-      if(DEBUG){
-        Serial.print("Current Piece is: (");
-        Serial.print(i-1);
-        Serial.print(") ");
-        Serial.println(pieces[i-1]);
-        delay(100);
       }
     }
     
@@ -271,8 +258,17 @@ void CommandProcess(){
         Serial.println("Command is REDEF");
       }
     }
+    else if(inputString.startsWith("RELAY")){
+      RelayCoordinates();
+      inputString = "";
+      stringComplete = false;
+      return;
+    }
     else{
       Serial.println("ERROR:NOVALIDCMD");
+      inputString = "";
+      stringComplete = false;
+      return;
     }
     inputString = "";
     stringComplete = false;
@@ -289,7 +285,7 @@ void CommandProcess(){
       angleNew += angle;
     }
 
-    if(Redef){
+    if(Redef){ //Still has issue
       xpos = xposNew;
       ypos = yposNew;
       zpos = zposNew;      
