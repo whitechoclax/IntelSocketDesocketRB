@@ -10,24 +10,19 @@ void MapCoordinates(boolean cartesian){
     radiusNew = sqrt(pow(xposNew,2)+pow(yposNew,2));
     x = double(xpos);
     y = double(ypos);
-    theta = atan2(x,y);
+    theta = atan2(x,y)*57.2958;
     radius = sqrt(pow(xpos,2)+pow(ypos,2));
   }
   else{
-    xpos = radius * (cos(theta/(180.0/PI)));
-    ypos = radius * (sin(theta/(180.0/PI)));
-
-    if(DEBUG){
-      Serial.print("Theta: ");Serial.println(theta, 2);
-      Serial.print("Radius: ");Serial.println(radius, 2);
-      Serial.print("Xpos: ");Serial.println(xpos, 2);
-      Serial.print("Ypos: ");Serial.println(ypos, 2);
-    }
+    xpos = radius * (sin(theta/(180.0/PI)));
+    ypos = radius * (cos(theta/(180.0/PI)));
   }
 
   if(DEBUG){
     Serial.println("Mapped coordinates: ");
-    Serial.print("New theta: ");Serial.println(thetaNew,5);
+    Serial.print("Theta: ");Serial.println(theta, 4);
+    Serial.print("Radius: ");Serial.println(radius, 2);
+    Serial.print("New theta: ");Serial.println(thetaNew,4);
     Serial.print("New radius: ");Serial.println(radiusNew, 2);
   }
   return;
@@ -35,11 +30,14 @@ void MapCoordinates(boolean cartesian){
 
 void RelayCoordinates(){
   MapCoordinates(true);
-  Serial.print("COOR: ");
-  Serial.print(xpos);Serial.print(':');
-  Serial.print(ypos);Serial.print(':');
-  Serial.print(zpos);Serial.print(':');
-  Serial.println(angle);
+  float xTmp = round(xpos);
+  float yTmp = round(ypos);
+  float zTmp = round(zpos);
+  Serial.print("COOR:");
+  Serial.print(xTmp);Serial.print(':');
+  Serial.print(yTmp);Serial.print(':');
+  Serial.print(zTmp);Serial.print(':');
+  Serial.println(angle,1);
   return;
 }
 
@@ -48,24 +46,32 @@ void Navigate(){ //Moves to new positions
   float deltaTheta = 0;
   float deltaRadius = 0;
   float deltaAngle = 0;
+  boolean radDirection;
+  boolean thetaDirection;
+  boolean angleDirection;
+  
   if(radiusNew != radius){
     if(radiusNew > radius){
       digitalWrite(Dir[RADMOTOR], HIGH);
       deltaRadius =  radiusNew - radius;
+      radDirection = OUT;
     }
     else{
       digitalWrite(Dir[RADMOTOR], LOW);
       deltaRadius = radius - radiusNew;
+      radDirection = IN;
     }
   }
   if(thetaNew != theta){
     if(thetaNew > theta){
       digitalWrite(Dir[THETAMOTOR], HIGH);
       deltaTheta = thetaNew - theta;
+      thetaDirection = RIGHT;
     }
     else{
       digitalWrite(Dir[THETAMOTOR], LOW);
       deltaTheta = theta - thetaNew;
+      thetaDirection = LEFT;
     }
   }
   if(zposNew != zpos){
@@ -90,7 +96,7 @@ void Navigate(){ //Moves to new positions
   }  
   
   if(DEBUG){
-    Serial.println("Deltas are:");
+    Serial.println("\nDeltas are:");
     Serial.print("Theta: ");Serial.println(deltaTheta,2);
     Serial.print("Radius: ");Serial.println(deltaRadius,2);
     Serial.print("Z: ");Serial.println(deltaZ,2);
@@ -116,7 +122,7 @@ void Navigate(){ //Moves to new positions
       ++zpos;
 
       if(DEBUG){
-        Serial.print("Z position: ");Serial.println(zpos);
+        //Serial.print("Z position: ");Serial.println(zpos);
       }
     }
     digitalWrite(Enable[ZMOTOR], HIGH);
@@ -133,25 +139,37 @@ void Navigate(){ //Moves to new positions
     if(deltaTheta > .4){
       digitalWrite(Step[RADMOTOR], LOW);
       deltaTheta -= 1/float(THETA);
-      theta += 1/float(THETA);
+      if(thetaDirection == LEFT){
+        theta -= 1/float(THETA);
+      }
+      else
+        theta += 1/float(THETA);
       if(DEBUG){
-        Serial.print("Theta position: ");Serial.println(theta);
+        //Serial.print("Theta position: ");Serial.println(theta);
       }
     }
     if(deltaRadius > 0){
       digitalWrite(Step[THETAMOTOR], LOW);
       deltaRadius -= 1/float(RAD);
-      radius += 1/float(RAD);
+      if(radDirection == IN){
+        radius -= 1/float(RAD);
+      }
+      else
+        radius += 1/float(RAD);
       if(DEBUG){
-        Serial.print("Radius position: ");Serial.println(radius);
+        //Serial.print("Radius position: ");Serial.println(radius);
       }
     }
     if(deltaAngle > 0){
       digitalWrite(Step[ANGLEMOTOR], LOW);
       deltaAngle -= 1.8;
-      angle += 1.8;
+      if(angleDirection == LEFT){
+        angle -=1.8;
+      }
+      else
+        angle += 1.8;
       if(DEBUG){
-        Serial.print("Angle position: ");Serial.println(angle);
+        //Serial.print("Angle position: ");Serial.println(angle);
       }
     }
     delay(1);
@@ -182,7 +200,7 @@ void Navigate(){ //Moves to new positions
       --zpos;
 
       if(DEBUG){
-        Serial.print("Z position: ");Serial.println(zpos);
+        //Serial.print("Z position: ");Serial.println(zpos);
       }
     }
   }
@@ -298,10 +316,15 @@ void CommandProcess(){
       Serial.println(yposNew);
       Serial.println(zposNew);
       Serial.println(angleNew);
+      Serial.println("Old Coordinates:");
+      Serial.println(xpos);
+      Serial.println(ypos);
+      Serial.println(zpos);
+      Serial.println(angle);
       delay(100);
     }
 
-    if(xposNew >= 0 && yposNew >= 0 && zposNew >= 0 && angleNew >=0 && xposNew < 1000 && yposNew < 1000 && zposNew < 1000 && angleNew < 360){
+    if(xposNew >= -0.05 && yposNew >= -0.05 && zposNew >= -0.05 && angleNew >=0 && xposNew < 1000 && yposNew < 1000 && zposNew < 1000 && angleNew < 360){
        Serial.println("NAVIGATING");
        MapCoordinates(false);
        Navigate();

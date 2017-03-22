@@ -15,6 +15,10 @@
 #define THETAMOTOR 1
 #define ZMOTOR 2
 #define ANGLEMOTOR 3
+#define RIGHT true
+#define LEFT false
+#define OUT true
+#define IN false
 
 #define DEBUG 1
 
