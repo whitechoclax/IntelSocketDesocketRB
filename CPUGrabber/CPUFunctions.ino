@@ -1,9 +1,9 @@
-int Calibrate(){
+int Calibrate(){ //TBD Later
   return 1;
 }
 
-void MapCoordinates(boolean cartesian){
-  if(!cartesian){
+void MapCoordinates(boolean cartesian){ //Converts cart -> cyl and back
+  if(!cartesian){// If we call it with false, we convert cyl. coor.
     double x = double(xposNew);
     double y = double(yposNew);
     thetaNew = atan2(x,y)*57.2958;
@@ -13,7 +13,7 @@ void MapCoordinates(boolean cartesian){
     theta = atan2(x,y)*57.2958;
     radius = sqrt(pow(xpos,2)+pow(ypos,2));
   }
-  else{
+  else{ //Convert to cart. coor
     xpos = radius * (sin(theta/(180.0/PI)));
     ypos = radius * (cos(theta/(180.0/PI)));
   }
@@ -28,10 +28,10 @@ void MapCoordinates(boolean cartesian){
   return;
 }
 
-void RelayCoordinates(){
-  MapCoordinates(true);
-  float xTmp = round(xpos);
-  float yTmp = round(ypos);
+void RelayCoordinates(){ //Send back coordinates
+  MapCoordinates(true); //Round them off, if need be 
+  float xTmp = round(xpos); //round the real values if error
+  float yTmp = round(ypos); //is an issue later
   float zTmp = round(zpos);
   Serial.print("COOR:");
   Serial.print(xTmp);Serial.print(':');
@@ -50,7 +50,7 @@ void Navigate(){ //Moves to new positions
   boolean thetaDirection;
   boolean angleDirection;
   
-  if(radiusNew != radius){
+  if(radiusNew != radius){ //These determine direction
     if(radiusNew > radius){
       digitalWrite(Dir[RADMOTOR], HIGH);
       deltaRadius =  radiusNew - radius;
@@ -106,7 +106,6 @@ void Navigate(){ //Moves to new positions
   
   //Do z chunk first if going up
   if(zposNew > zpos){
-
     if(DEBUG){
       Serial.println("Moving Up");
     }
@@ -128,13 +127,14 @@ void Navigate(){ //Moves to new positions
     digitalWrite(Enable[ZMOTOR], HIGH);
   }
 
-  if(DEBUG){
+  if(DEBUG){ //Move laterally
     Serial.println("Moving over");
   }
 
   boolean done = false;
   digitalWrite(Enable[RADMOTOR], LOW);
   digitalWrite(Enable[THETAMOTOR], LOW);
+  digitalWrite(Enable[ANGLEMOTOR], LOW);
   while(!done){
     if(deltaTheta > .4){
       digitalWrite(Step[RADMOTOR], LOW);
@@ -173,9 +173,9 @@ void Navigate(){ //Moves to new positions
       }
     }
     delay(1);
-    digitalWrite(Step[RADMOTOR], HIGH);
-    digitalWrite(Step[THETAMOTOR], HIGH);
-    digitalWrite(Step[ANGLEMOTOR], HIGH);
+    digitalWrite(Enable[RADMOTOR], HIGH);
+    digitalWrite(Enable[THETAMOTOR], HIGH);
+    digitalWrite(Enable[ANGLEMOTOR], HIGH);
     delay(3);
 
     if(deltaTheta <= .4 && deltaRadius <= 0 && deltaAngle <= 0){
@@ -183,12 +183,10 @@ void Navigate(){ //Moves to new positions
     }
   }
 
-  if(zpos > zposNew){
-
+  if(zpos > zposNew){ //Z going down, do last
     if(DEBUG){
       Serial.println("Moving down");
     }
-    
     digitalWrite(Enable[ZMOTOR], LOW);
     for(int i=0;i<deltaZ;++i){
       for(int j=0;j<Z;++j){
@@ -198,7 +196,6 @@ void Navigate(){ //Moves to new positions
         delay(1);
       }
       --zpos;
-
       if(DEBUG){
         //Serial.print("Z position: ");Serial.println(zpos);
       }
@@ -207,11 +204,11 @@ void Navigate(){ //Moves to new positions
   return;
 }
 
-void EmergencyStop(){
+void EmergencyStop(){ //We're going to have to make this an interrupt later
   return;
 }
 
-void serialEvent() {
+void serialEvent(){ //Catch chars coming in
   while (Serial.available()) {
     char inChar = (char)Serial.read(); 
     inputString += inChar;
@@ -227,7 +224,7 @@ void serialEvent() {
   }
 }
 
-void CommandProcess(){
+void CommandProcess(){//Parse command
   if(stringComplete){
     int i = 0;
     int len = inputString.length();
@@ -243,7 +240,7 @@ void CommandProcess(){
     while(command != NULL){ //iterate through sections
       if(i < 5){
         strcpy(pieces[i++], command);
-        command = strtok(NULL, ":"); //This 
+        command = strtok(NULL, ":"); //This moves to next chunk
       }
     }
     
@@ -276,14 +273,14 @@ void CommandProcess(){
         Serial.println("Command is REDEF");
       }
     }
-    else if(inputString.startsWith("RELAY")){
+    else if(inputString.startsWith("RELAY")){//Send coordinates
       RelayCoordinates();
       inputString = "";
       stringComplete = false;
       return;
     }
     else{
-      Serial.println("ERROR:NOVALIDCMD");
+      Serial.println("ERROR:NOVALIDCMD");//Command didn't make sense
       inputString = "";
       stringComplete = false;
       return;
@@ -291,7 +288,7 @@ void CommandProcess(){
     inputString = "";
     stringComplete = false;
     
-    xposNew = atoi(pieces[1]);
+    xposNew = atoi(pieces[1]);//Assign actual values
     yposNew = atoi(pieces[2]);
     zposNew = atoi(pieces[3]);
     angleNew = atof(pieces[4]);
@@ -303,7 +300,7 @@ void CommandProcess(){
       angleNew += angle;
     }
 
-    if(Redef){ //Still has issue
+    if(Redef){
       xpos = xposNew;
       ypos = yposNew;
       zpos = zposNew;      

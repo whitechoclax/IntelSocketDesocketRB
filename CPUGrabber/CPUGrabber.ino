@@ -46,12 +46,8 @@ const byte Step[6] = {A1, 12, A5, 5, 50, 28};
 const byte Dir[6] = {A2, 13, A6, 6, 52, 30};
 
 String inputString = "";
-//char str[] = "";
-
-
 boolean CommandReceived = false;
 boolean stringComplete = false;
-
 
 void setup() {
   Serial.begin(115200);
