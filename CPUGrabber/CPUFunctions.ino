@@ -141,7 +141,7 @@ void Navigate(){ //Moves to new positions
       else
         theta += 1/float(THETA);
       if(DEBUG){
-        //Serial.print("Theta position: ");Serial.println(theta);
+        Serial.print("Theta position: ");Serial.println(theta);
       }
     }
     if(deltaRadius > 0){
@@ -153,7 +153,7 @@ void Navigate(){ //Moves to new positions
       else
         radius += 1/float(RAD);
       if(DEBUG){
-        //Serial.print("Radius position: ");Serial.println(radius);
+        Serial.print("Radius position: ");Serial.println(radius);
       }
     }
     if(deltaAngle > 0){
@@ -169,13 +169,16 @@ void Navigate(){ //Moves to new positions
       }
     }
     delay(1);
-    digitalWrite(Enable[RADMOTOR], HIGH);
-    digitalWrite(Enable[THETAMOTOR], HIGH);
-    digitalWrite(Enable[ANGLEMOTOR], HIGH);
+    digitalWrite(Step[RADMOTOR], HIGH);
+    digitalWrite(Step[THETAMOTOR], HIGH);
+    digitalWrite(Step[ANGLEMOTOR], HIGH);
     delay(3);
 
     if(deltaTheta <= .4 && deltaRadius <= 0 && deltaAngle <= 0){
-       done = true;
+      done = true;
+      digitalWrite(Enable[RADMOTOR], HIGH);
+      digitalWrite(Enable[THETAMOTOR], HIGH);
+      digitalWrite(Enable[ANGLEMOTOR], HIGH);
     }
   }
 
