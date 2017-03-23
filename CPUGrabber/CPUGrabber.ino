@@ -58,6 +58,8 @@ void setup() {
     digitalWrite(Enable[i], HIGH);
     pinMode(Step[i], OUTPUT);
     digitalWrite(Step[i], LOW);
+    pinMode(Dir[i], OUTPUT);
+    digitalWrite(Dir[i], LOW);
   }
   Serial.println("MAINROBOTARM");
 }
