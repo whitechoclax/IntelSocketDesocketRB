@@ -75,14 +75,10 @@ void Navigate(){ //Moves to new positions
     }
   }
   if(zposNew != zpos){
-    if(zposNew > zpos){
-      digitalWrite(Dir[ZMOTOR], HIGH);
+    if(zposNew > zpos)
       deltaZ = zposNew - zpos;
-    }
-    else{
-      digitalWrite(Dir[ZMOTOR], LOW);
+    else
       deltaZ = zpos - zposNew;
-    }
   }
   if(angleNew != angle){
     if(angleNew > angle){
@@ -109,7 +105,7 @@ void Navigate(){ //Moves to new positions
     if(DEBUG){
       Serial.println("Moving Up");
     }
-    
+    digitalWrite(Dir[ZMOTOR], HIGH);
     digitalWrite(Enable[ZMOTOR], LOW);
     for(int i=0;i<deltaZ;++i){
       for(int j=0;j<Z;++j){
@@ -187,6 +183,7 @@ void Navigate(){ //Moves to new positions
     if(DEBUG){
       Serial.println("Moving down");
     }
+    digitalWrite(Dir[ZMOTOR], LOW);
     digitalWrite(Enable[ZMOTOR], LOW);
     for(int i=0;i<deltaZ;++i){
       for(int j=0;j<Z;++j){
@@ -200,6 +197,7 @@ void Navigate(){ //Moves to new positions
         //Serial.print("Z position: ");Serial.println(zpos);
       }
     }
+    digitalWrite(Enable[ZMOTOR], HIGH);
   }
   return;
 }
