@@ -30,6 +30,10 @@ namespace VishnuMain
         delegate void SetTextCallback(string text);
         private BackgroundWorker hardworker;
         string portName;
+        int ZcoodrinateValue;
+        int RotationVal;
+        int XcoordinateValue;
+        int YcoordinateValue;
        
         public ArmControl()
         {
@@ -83,6 +87,54 @@ namespace VishnuMain
         {
             string data = Arduino.ArdPort.ReadTo("\r");
             //portListBox.AppendText(data);
+        }
+
+       
+
+        
+
+
+        //ALL coordinate values assignment functions
+        private void moveXval_ValueChanged(object sender, EventArgs e)
+        {
+            XcoordinateValue = (int)moveXval.Value;
+        }
+
+        private void moveZval_ValueChanged(object sender, EventArgs e)
+        {
+            ZcoodrinateValue = (int)moveZval.Value;
+        }
+
+        private void moveYval_ValueChanged(object sender, EventArgs e)
+        {
+            YcoordinateValue = (int)moveYval.Value;
+        }
+
+        private void RotationDegrees_ValueChanged(object sender, EventArgs e)
+        {
+            RotationVal = (int)RotationDegrees.Value;
+        }
+
+
+        //Run motor functions
+        private void stopButton_Click(object sender, EventArgs e)
+        {
+            Arduino.StopMotor();
+        }
+
+        private void redefineButton_Click(object sender, EventArgs e)
+        {
+            Arduino.RedefinePosition(portName, XcoordinateValue, YcoordinateValue, ZcoodrinateValue, RotationVal);
+        }
+
+        private void moveButton_Click(object sender, EventArgs e)
+        {
+            Arduino.MovePosition(portName, XcoordinateValue, YcoordinateValue, ZcoodrinateValue, RotationVal);
+        }
+
+        private void ShiftButton_Click(object sender, EventArgs e)
+        {
+            Arduino.ShiftPosition(portName, XcoordinateValue, YcoordinateValue, ZcoodrinateValue, RotationVal);
         }
     }
 }
