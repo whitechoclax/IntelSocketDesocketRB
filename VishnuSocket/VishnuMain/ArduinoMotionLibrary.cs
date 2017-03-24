@@ -42,6 +42,10 @@ namespace VishnuMain
             ArdPort.Close();
         }
 
+        //shift is " i know where I am, move offset with these coords"
+        //move is "i dont care where I am, I am moving to this absolute location
+        //format is COMMAND:X:Y:Z:THETA/n
+        //REDEF dont move, heres where I am.
 
         public void RaisePlatform()
         {

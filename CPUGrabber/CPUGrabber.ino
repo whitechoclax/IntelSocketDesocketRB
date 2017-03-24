@@ -10,6 +10,7 @@
 # define THETA 2 //to one degree
 # define Z 25
 
+//power settings: .5 A , 12v 
 //Motor Mappings
 #define RADMOTOR 0
 #define THETAMOTOR 1
@@ -20,7 +21,8 @@
 #define OUT true
 #define IN false
 
-#define DEBUG 1
+
+boolean DEBUG = true; 
 
 //Current position
 double xpos = 0;

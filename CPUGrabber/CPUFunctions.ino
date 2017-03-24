@@ -280,6 +280,16 @@ void CommandProcess(){//Parse command
       stringComplete = false;
       return;
     }
+    else if(inputString.startsWith("DEBUG")){//send debug messages
+      if(DEBUG){
+        DEBUG = false;
+        }
+       else
+        DEBUG = true;
+       inputString = "";
+       stringComplete = false;
+       return;
+    }
     else{
       Serial.println("ERROR:NOVALIDCMD");//Command didn't make sense
       inputString = "";
