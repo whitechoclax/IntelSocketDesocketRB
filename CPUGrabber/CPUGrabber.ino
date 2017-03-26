@@ -43,6 +43,8 @@ int zposNew = 0;
 double angleNew = 0;
 
 //Pin Mappings to Stepper Drivers based on shield
+// z motor:   pins 2,5,6
+//theta motor:  pins 8,12,13
 const byte Enable[6] = {A0, 8, A3, 2, A7, 26};
 const byte Step[6] = {A1, 12, A5, 5, 50, 28};
 const byte Dir[6] = {A2, 13, A6, 6, 52, 30};
