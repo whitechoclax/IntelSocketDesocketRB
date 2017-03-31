@@ -15,7 +15,7 @@ namespace VishnuMain
 
         public ArduinoMotionLibrary()
         {
-            ArdPort.BaudRate = 115200;
+            ArdPort.BaudRate = 74880;
 
            
         }
@@ -77,7 +77,7 @@ namespace VishnuMain
         //Send STOP command to Arduino.  
         public void StopMotor()
         {
-            ArdPort.WriteLine("STOP");
+            ArdPort.WriteLine("STOP\r");
         }
         //Dummy functions used for testing
         public void LEDon(string portID)

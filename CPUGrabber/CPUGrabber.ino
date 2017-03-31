@@ -22,7 +22,7 @@
 #define IN false
 
 
-boolean DEBUG = false; 
+boolean DEBUG = true; 
 
 //Current position
 double xpos = 0;
@@ -52,7 +52,7 @@ boolean CommandReceived = false;
 boolean stringComplete = false;
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(74880);
 
   //Setup for pinouts
   for (int i = 0; i < 6; ++i) {
