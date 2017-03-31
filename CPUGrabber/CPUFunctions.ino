@@ -213,7 +213,7 @@ void serialEvent(){ //Catch chars coming in
   while (Serial.available()) {
     char inChar = (char)Serial.read(); 
     inputString += inChar;
-    if (inChar == '\n' || inChar == '\r') {
+    if (inChar == '\r') {
       stringComplete = true;
       Serial.flush();
       if(DEBUG){
