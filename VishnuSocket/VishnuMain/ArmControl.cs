@@ -40,7 +40,7 @@ namespace VishnuMain
             InitializeComponent();
             hardworker = new BackgroundWorker();
             findPorts.Enabled = true;
-            openPort.Enabled = false;
+            groupBox1.Enabled = false;
 
             if (!Arduino.ArdPort.IsOpen)
             {
@@ -72,7 +72,7 @@ namespace VishnuMain
             if (portList[0] != null)
             {
                 portName = portList[0];
-                openPort.Enabled = true;
+                groupBox1.Enabled = true;
             }
 
         }
@@ -85,15 +85,16 @@ namespace VishnuMain
 
         private void ArdPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            string data = Arduino.ArdPort.ReadTo("\r");
+            string data = Arduino.ArdPort.ReadTo("\n");
             //portListBox.AppendText(data);
+
+            this.Invoke((MethodInvoker)delegate
+            {
+                portListBox.AppendText(data);
+            });
         }
 
-       
-
-        
-
-
+      
         //ALL coordinate values assignment functions
         private void moveXval_ValueChanged(object sender, EventArgs e)
         {

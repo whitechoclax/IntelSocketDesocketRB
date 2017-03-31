@@ -209,19 +209,25 @@ void EmergencyStop(){ //We're going to have to make this an interrupt later
   return;
 }
 
-void serialEvent(){ //Catch chars coming in
-  while (Serial.available()) {
-    char inChar = (char)Serial.read(); 
-    inputString += inChar;
-    if (inChar == '\r') {
-      stringComplete = true;
-      Serial.flush();
-      if(DEBUG){
-        Serial.println("Command received");
-        Serial.println(inputString);
-      }
-      CommandProcess();
-    } 
+void serialEvent()
+{ //Catch chars coming in
+  while (Serial.available()) 
+  {
+    char inChar = (char)Serial.read();
+    if (inChar >= 'A' && inChar <= 'Z' || inChar >= '0' && inChar <= ':' || inChar == '\r')
+    { 
+      inputString += inChar;
+      if (inChar == '\r') 
+      {
+        stringComplete = true;
+        Serial.flush();
+        if(DEBUG){
+          Serial.println("Command received");
+          Serial.println(inputString);
+        }
+        CommandProcess();
+      } 
+    }
   }
 }
 
@@ -292,6 +298,7 @@ void CommandProcess(){//Parse command
     }
     else{
       Serial.println("ERROR:NOVALIDCMD");//Command didn't make sense
+      Serial.println(inputString); //what we received
       inputString = "";
       stringComplete = false;
       return;

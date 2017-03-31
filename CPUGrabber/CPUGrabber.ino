@@ -22,7 +22,7 @@
 #define IN false
 
 
-boolean DEBUG = true; 
+boolean DEBUG = false; 
 
 //Current position
 double xpos = 0;

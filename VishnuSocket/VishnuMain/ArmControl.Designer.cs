@@ -44,11 +44,8 @@
             this.moveZval = new System.Windows.Forms.NumericUpDown();
             this.RotationDegrees = new System.Windows.Forms.NumericUpDown();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.openPort = new System.Windows.Forms.Button();
             this.findPorts = new System.Windows.Forms.Button();
             this.portListBox = new System.Windows.Forms.RichTextBox();
-            this.offButton = new System.Windows.Forms.Button();
-            this.onButton = new System.Windows.Forms.Button();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.groupBox1.SuspendLayout();
             this.coordControl.SuspendLayout();
@@ -234,11 +231,8 @@
             // groupBox2
             // 
             this.groupBox2.BackColor = System.Drawing.Color.Orange;
-            this.groupBox2.Controls.Add(this.openPort);
             this.groupBox2.Controls.Add(this.findPorts);
             this.groupBox2.Controls.Add(this.portListBox);
-            this.groupBox2.Controls.Add(this.offButton);
-            this.groupBox2.Controls.Add(this.onButton);
             this.groupBox2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.groupBox2.Font = new System.Drawing.Font("Segoe UI Black", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
@@ -249,24 +243,11 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Arduino Control";
             // 
-            // openPort
-            // 
-            this.openPort.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.openPort.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.openPort.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.openPort.Location = new System.Drawing.Point(47, 658);
-            this.openPort.Name = "openPort";
-            this.openPort.Size = new System.Drawing.Size(141, 76);
-            this.openPort.TabIndex = 4;
-            this.openPort.Text = "Open Port";
-            this.openPort.UseVisualStyleBackColor = true;
-            this.openPort.Click += new System.EventHandler(this.openPort_Click);
-            // 
             // findPorts
             // 
             this.findPorts.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.findPorts.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.findPorts.Location = new System.Drawing.Point(47, 576);
+            this.findPorts.Location = new System.Drawing.Point(47, 430);
             this.findPorts.Name = "findPorts";
             this.findPorts.Size = new System.Drawing.Size(141, 76);
             this.findPorts.TabIndex = 3;
@@ -277,35 +258,11 @@
             // portListBox
             // 
             this.portListBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.portListBox.Location = new System.Drawing.Point(47, 357);
+            this.portListBox.Location = new System.Drawing.Point(47, 66);
             this.portListBox.Name = "portListBox";
-            this.portListBox.Size = new System.Drawing.Size(283, 182);
+            this.portListBox.Size = new System.Drawing.Size(575, 316);
             this.portListBox.TabIndex = 2;
             this.portListBox.Text = "";
-            // 
-            // offButton
-            // 
-            this.offButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.offButton.ForeColor = System.Drawing.Color.DarkCyan;
-            this.offButton.Location = new System.Drawing.Point(390, 106);
-            this.offButton.Name = "offButton";
-            this.offButton.Size = new System.Drawing.Size(128, 117);
-            this.offButton.TabIndex = 1;
-            this.offButton.Text = "OFF";
-            this.offButton.UseVisualStyleBackColor = true;
-            this.offButton.Click += new System.EventHandler(this.offButton_Click);
-            // 
-            // onButton
-            // 
-            this.onButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.onButton.ForeColor = System.Drawing.Color.DarkCyan;
-            this.onButton.Location = new System.Drawing.Point(140, 106);
-            this.onButton.Name = "onButton";
-            this.onButton.Size = new System.Drawing.Size(128, 117);
-            this.onButton.TabIndex = 0;
-            this.onButton.Text = "ON";
-            this.onButton.UseVisualStyleBackColor = true;
-            this.onButton.Click += new System.EventHandler(this.onButton_Click);
             // 
             // ArmControl
             // 
@@ -335,12 +292,9 @@
         private System.Windows.Forms.Button ShiftButton;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button offButton;
-        private System.Windows.Forms.Button onButton;
         private System.IO.Ports.SerialPort serialPort1;
         private System.Windows.Forms.Button findPorts;
         private System.Windows.Forms.RichTextBox portListBox;
-        private System.Windows.Forms.Button openPort;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown moveZval;

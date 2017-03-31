@@ -37,7 +37,7 @@ namespace VishnuMain
                 OpenPorts(portID);
             }
 
-            string inputline = "SHIFT:" + Xval + ":" + Yval + ":" + Zval + ":" + thetaVal + "\n";
+            string inputline = "SHIFT:" + Xval + ":" + Yval + ":" + Zval + ":" + thetaVal + "\r";
             ArdPort.WriteLine(inputline);
         
         }
@@ -53,7 +53,7 @@ namespace VishnuMain
                 OpenPorts(portID);
             }
 
-            string inputline = "MOVE:" + Xval + ":" + Yval + ":" + Zval + ":" + thetaVal+"\n";
+            string inputline = "MOVE:" + Xval + ":" + Yval + ":" + Zval + ":" + thetaVal+"\r";
             ArdPort.WriteLine(inputline);
         }
 
@@ -69,7 +69,7 @@ namespace VishnuMain
                 OpenPorts(portID);
             }
 
-            string inputline = "REDEFINE:" + Xval + ":" + Yval + ":" + Zval + ":" + thetaVal + "\n";
+            string inputline = "REDEFINE:" + Xval + ":" + Yval + ":" + Zval + ":" + thetaVal + "\r";
             ArdPort.WriteLine(inputline);
         }
 
