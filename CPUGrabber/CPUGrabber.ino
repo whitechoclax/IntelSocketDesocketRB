@@ -8,7 +8,7 @@
 //Millimeter to step mappings
 # define RAD 25
 # define THETA 2 //to one degree
-# define Z 25
+# define Z 100
 
 //power settings: .5 A , 12v 
 //Motor Mappings

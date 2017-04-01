@@ -172,10 +172,11 @@ void Navigate(){ //Moves to new positions
     digitalWrite(Step[RADMOTOR], HIGH);
     digitalWrite(Step[THETAMOTOR], HIGH);
     digitalWrite(Step[ANGLEMOTOR], HIGH);
-    delay(3);
+    delay(15);
 
     if(deltaTheta <= .4 && deltaRadius <= 0 && deltaAngle <= 0){
       done = true;
+      delay(500);
       digitalWrite(Enable[RADMOTOR], HIGH);
       digitalWrite(Enable[THETAMOTOR], HIGH);
       digitalWrite(Enable[ANGLEMOTOR], HIGH);
