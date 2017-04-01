@@ -16,12 +16,8 @@ namespace VishnuMain
         public ArduinoMotionLibrary()
         {
             ArdPort.BaudRate = 74880;
-
-           
         }
-
-
-
+        
         //shift is " i know where I am, move offset with these coords"
         //move is "i dont care where I am, I am moving to this absolute location
         //format is COMMAND:X:Y:Z:THETA/n
@@ -79,39 +75,7 @@ namespace VishnuMain
         {
             ArdPort.WriteLine("STOP\r");
         }
-        //Dummy functions used for testing
-        public void LEDon(string portID)
-        {
-            if (ArdPort.PortName != portID)
-                ArdPort.PortName = portID;
-
-            if (ArdPort.IsOpen)
-            {
-                ArdPort.WriteLine("c");
-            }
-            else
-            {
-                OpenPorts(portID);
-                ArdPort.WriteLine("c");
-            }
-        }
-
-        public void LEDoff(string portID)
-        {
-            if (ArdPort.PortName != portID)
-                ArdPort.PortName = portID;
-
-            if (ArdPort.IsOpen)
-            {
-                ArdPort.WriteLine("f");
-            }
-            else
-            {
-                OpenPorts(portID);
-                ArdPort.WriteLine("f");
-            }
-        }
-
+        
         public string[] FindPortsAvailable()
         {
             string[] ports = SerialPort.GetPortNames();

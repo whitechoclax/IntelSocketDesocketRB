@@ -50,16 +50,6 @@ namespace VishnuMain
 
         }
 
-        private void onButton_Click(object sender, EventArgs e)
-        {
-            Arduino.LEDon(portName);
-        }
-
-        private void offButton_Click(object sender, EventArgs e)
-        {
-            Arduino.LEDoff(portName);
-        }
-
         private void findPorts_Click(object sender, EventArgs e)
         {
             string [] portList = Arduino.FindPortsAvailable();

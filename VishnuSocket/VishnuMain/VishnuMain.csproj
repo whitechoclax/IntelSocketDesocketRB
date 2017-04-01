@@ -105,6 +105,7 @@
     <Compile Include="ArmControl.Designer.cs">
       <DependentUpon>ArmControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="ArmHandlerLibrary.cs" />
     <Compile Include="CameraFeed.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -127,6 +128,7 @@
     <Compile Include="TemplateMatchView.Designer.cs">
       <DependentUpon>TemplateMatchView.cs</DependentUpon>
     </Compile>
+    <Compile Include="TrayManagerLibrary.cs" />
     <EmbeddedResource Include="ArmControl.resx">
       <DependentUpon>ArmControl.cs</DependentUpon>
     </EmbeddedResource>
