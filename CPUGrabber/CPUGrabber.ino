@@ -6,7 +6,7 @@
 */
 
 //Millimeter to step mappings
-# define RAD 25
+# define RAD 100
 # define THETA 2 //to one degree
 # define Z 100
 
@@ -54,7 +54,7 @@ boolean CommandReceived = false;
 boolean stringComplete = false;
 
 void setup() {
-  Serial.begin(74880);
+  Serial.begin(115200);
 
   //Setup for pinouts
   for (int i = 0; i < 6; ++i) {
