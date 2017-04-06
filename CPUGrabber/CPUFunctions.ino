@@ -127,13 +127,16 @@ void Navigate(){ //Moves to new positions
     Serial.println("Moving over");
   }
 
-  boolean done = false;
-  digitalWrite(Enable[RADMOTOR], LOW);
-  digitalWrite(Enable[THETAMOTOR], LOW);
-  digitalWrite(Enable[ANGLEMOTOR], LOW);
-  while(!done){
-    if(deltaTheta > .4){
-      digitalWrite(Step[RADMOTOR], LOW);
+  boolean doneRad = false;
+  boolean doneTheta = false;
+  boolean doneAngle = false;
+  while(!doneTheta){
+    if(deltaTheta > .4){  //Theta Section
+      digitalWrite(Enable[THETAMOTOR], LOW);
+      digitalWrite(Step[THETAMOTOR], LOW);
+      delay(3);
+      digitalWrite(Step[THETAMOTOR], HIGH);
+      delay(25);  
       deltaTheta -= 1/float(THETA);
       if(thetaDirection == LEFT){
         theta -= 1/float(THETA);
@@ -142,10 +145,20 @@ void Navigate(){ //Moves to new positions
         theta += 1/float(THETA);
       if(DEBUG){
         //Serial.print("Theta position: ");Serial.println(theta);
-      }
+      }  
     }
-    if(deltaRadius > 0){
-      digitalWrite(Step[THETAMOTOR], LOW);
+    if(deltaTheta <= .4){
+      doneTheta = true;
+      digitalWrite(Enable[THETAMOTOR], HIGH);
+    }  
+  }
+  while(!doneRad){  //Radius Section
+    if(deltaRadius > 0.01){
+      digitalWrite(Enable[RADMOTOR], LOW);
+      digitalWrite(Step[RADMOTOR], LOW);
+      delay(3);
+      digitalWrite(Step[RADMOTOR], HIGH);
+      delay(1);
       deltaRadius -= 1/float(RAD);
       if(radDirection == IN){
         radius -= 1/float(RAD);
@@ -156,8 +169,18 @@ void Navigate(){ //Moves to new positions
         //Serial.print("Radius position: ");Serial.println(radius);
       }
     }
+    if(deltaRadius <= 0.01){
+      doneRad = true;
+      digitalWrite(Enable[RADMOTOR], HIGH);
+    }
+  }
+  while(!doneAngle){ //Angle Section
     if(deltaAngle > 0){
+      digitalWrite(Enable[ANGLEMOTOR], LOW);
       digitalWrite(Step[ANGLEMOTOR], LOW);
+      delay(3);
+      digitalWrite(Step[ANGLEMOTOR], HIGH);
+      delay(5);
       deltaAngle -= 1.8;
       if(angleDirection == LEFT){
         angle -=1.8;
@@ -165,20 +188,11 @@ void Navigate(){ //Moves to new positions
       else
         angle += 1.8;
       if(DEBUG){
-        //Serial.print("Angle position: ");Serial.println(angle);
+        Serial.print("Angle position: ");Serial.println(angle);
       }
     }
-    delay(1);
-    digitalWrite(Step[RADMOTOR], HIGH);
-    digitalWrite(Step[THETAMOTOR], HIGH);
-    digitalWrite(Step[ANGLEMOTOR], HIGH);
-    delay(15);
-
-    if(deltaTheta <= .4 && deltaRadius <= 0 && deltaAngle <= 0){
-      done = true;
-      delay(500);
-      digitalWrite(Enable[RADMOTOR], HIGH);
-      digitalWrite(Enable[THETAMOTOR], HIGH);
+    if(deltaAngle <= 0){
+      doneAngle = true;
       digitalWrite(Enable[ANGLEMOTOR], HIGH);
     }
   }
@@ -215,7 +229,7 @@ void serialEvent()
   while (Serial.available()) 
   {
     char inChar = (char)Serial.read();
-    if (inChar >= 'A' && inChar <= 'Z' || inChar >= '0' && inChar <= ':' || inChar == '\r')
+    if (inChar >= 'A' && inChar <= 'Z' || inChar >= '0' && inChar <= ':' || inChar == '\r' || inChar == '-')
     { 
       inputString += inChar;
       if (inChar == '\r') 
@@ -340,7 +354,17 @@ void CommandProcess(){//Parse command
       delay(100);
     }
 
-    if(xposNew >= -0.05 && yposNew >= -0.05 && zposNew >= -0.05 && angleNew >=0 && xposNew < 1000 && yposNew < 1000 && zposNew < 1000 && angleNew < 360){
+    if(xposNew < 0 && xposNew > -0.01){
+      xposNew = 0;
+    }
+    if(yposNew < 0 && yposNew > -0.01){
+      yposNew = 0;
+    }
+    if(angleNew < 0 && angleNew > -0.01){
+      angleNew = 0;
+    }
+
+    if(xposNew >= 0 && yposNew >= 0 && zposNew >= 0 && angleNew >=0 && xposNew < 1000 && yposNew < 1000 && zposNew < 1000 && angleNew < 360){
        Serial.println("NAVIGATING");
        MapCoordinates(false);
        Navigate();

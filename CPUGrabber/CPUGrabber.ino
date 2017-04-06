@@ -12,9 +12,9 @@
 
 //power settings: .5 A , 12v 
 //Motor Mappings
-#define RADMOTOR 0
-#define THETAMOTOR 1
-#define ZMOTOR 2
+#define RADMOTOR 2
+#define THETAMOTOR 0
+#define ZMOTOR 4
 #define ANGLEMOTOR 3
 #define RIGHT true
 #define LEFT false
@@ -22,7 +22,7 @@
 #define IN false
 
 
-boolean DEBUG = false; 
+boolean DEBUG = true; 
 
 //Current position
 double xpos = 0;
