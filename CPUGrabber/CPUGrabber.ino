@@ -33,8 +33,12 @@ double angle = 0; //Angle for end effector
 double theta = 0; //angle of robot
 double radius = 0; //extension of arm
 
-double thetaNew = 0;
-double radiusNew = 0;
+volatile double thetaNew = 0;
+volatile double radiusNew = 0;
+volatile float deltaZ = 0;
+volatile float deltaTheta = 0;
+volatile float deltaRadius = 0;
+volatile float deltaAngle = 0;
 
 //Desired Positions
 double xposNew = 0;
@@ -65,6 +69,7 @@ void setup() {
     pinMode(Dir[i], OUTPUT);
     digitalWrite(Dir[i], LOW);
   }
+  delay(250);
   Serial.println("MAINROBOTARM");
 }
 

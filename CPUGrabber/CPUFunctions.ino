@@ -42,10 +42,7 @@ void RelayCoordinates(){ //Send back coordinates
 }
 
 void Navigate(){ //Moves to new positions
-  float deltaZ = 0;
-  float deltaTheta = 0;
-  float deltaRadius = 0;
-  float deltaAngle = 0;
+  
   boolean radDirection;
   boolean thetaDirection;
   boolean angleDirection;
@@ -109,6 +106,7 @@ void Navigate(){ //Moves to new positions
     digitalWrite(Enable[ZMOTOR], LOW);
     for(int i=0;i<deltaZ;++i){
       for(int j=0;j<Z;++j){
+        serialEvent();
         digitalWrite(Step[ZMOTOR], LOW);
         delay(3);
         digitalWrite(Step[ZMOTOR], HIGH);
@@ -131,6 +129,7 @@ void Navigate(){ //Moves to new positions
   boolean doneTheta = false;
   boolean doneAngle = false;
   while(!doneTheta){
+    serialEvent();
     if(deltaTheta > .4){  //Theta Section
       digitalWrite(Enable[THETAMOTOR], LOW);
       digitalWrite(Step[THETAMOTOR], LOW);
@@ -153,6 +152,7 @@ void Navigate(){ //Moves to new positions
     }  
   }
   while(!doneRad){  //Radius Section
+    serialEvent();
     if(deltaRadius > 0.01){
       digitalWrite(Enable[RADMOTOR], LOW);
       digitalWrite(Step[RADMOTOR], LOW);
@@ -175,6 +175,7 @@ void Navigate(){ //Moves to new positions
     }
   }
   while(!doneAngle){ //Angle Section
+    serialEvent();
     if(deltaAngle > 0){
       digitalWrite(Enable[ANGLEMOTOR], LOW);
       digitalWrite(Step[ANGLEMOTOR], LOW);
@@ -205,6 +206,7 @@ void Navigate(){ //Moves to new positions
     digitalWrite(Enable[ZMOTOR], LOW);
     for(int i=0;i<deltaZ;++i){
       for(int j=0;j<Z;++j){
+        serialEvent();
         digitalWrite(Step[ZMOTOR], LOW);
         delay(3);
         digitalWrite(Step[ZMOTOR], HIGH);
@@ -220,25 +222,36 @@ void Navigate(){ //Moves to new positions
   return;
 }
 
-void EmergencyStop(){ //We're going to have to make this an interrupt later
+void EmergencyStop(){ //Resets movement information
+  thetaNew = 0;
+  radiusNew = 0;
+  deltaZ = 0;
+  deltaTheta = 0;
+  deltaRadius = 0;
+  deltaAngle = 0;
   return;
 }
 
 void serialEvent()
 { //Catch chars coming in
-  while (Serial.available()) 
-  {
+  while (Serial.available()){
     char inChar = (char)Serial.read();
-    if (inChar >= 'A' && inChar <= 'Z' || inChar >= '0' && inChar <= ':' || inChar == '\r' || inChar == '-')
-    { 
+    if (inChar >= 'A' && inChar <= 'Z' || inChar >= '0' && inChar <= ':' || inChar == '\r' || inChar == '-'){ 
       inputString += inChar;
-      if (inChar == '\r') 
-      {
+      if (inChar == '\r'){
         stringComplete = true;
         Serial.flush();
         if(DEBUG){
           Serial.println("Command received");
           Serial.println(inputString);
+        }
+        if(inputString.startsWith("STOP")){ //Emergency Brake
+          EmergencyStop();
+          Serial.println("STOPPING");
+          inputString = "";
+          stringComplete = false;
+          RelayCoordinates();
+          return;
         }
         CommandProcess();
       } 
@@ -264,15 +277,7 @@ void CommandProcess(){//Parse command
         strcpy(pieces[i++], command);
         command = strtok(NULL, ":"); //This moves to next chunk
       }
-    }
-    
-    if(inputString.startsWith("STOP")){ //Emergency Brake
-      EmergencyStop();
-      Serial.println("STOPPING");
-      RelayCoordinates();
-      return;
-    }
-    
+    }    
     boolean Shift = false; //Shifting, not moving to coordinates
     boolean Redef = false;
     if(inputString.startsWith("SHIFT")){ //Move from where we are
@@ -304,12 +309,20 @@ void CommandProcess(){//Parse command
     else if(inputString.startsWith("DEBUG")){//send debug messages
       if(DEBUG){
         DEBUG = false;
-        }
-       else
+      }
+      else{
         DEBUG = true;
-       inputString = "";
-       stringComplete = false;
-       return;
+        Serial.println("Debug on");
+      }
+      inputString = "";
+      stringComplete = false;
+      return;
+    }
+    else if(inputString.startsWith("QUERY")){//Send boot message
+      Serial.println("MAINROBOTARM");
+      inputString = "";
+      stringComplete = false;
+      return;
     }
     else{
       Serial.println("ERROR:NOVALIDCMD");//Command didn't make sense
