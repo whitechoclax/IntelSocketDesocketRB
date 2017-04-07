@@ -39,7 +39,7 @@
             // 
             this.centralPanel.AutoSize = true;
             this.centralPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.centralPanel.Location = new System.Drawing.Point(12, 56);
+            this.centralPanel.Location = new System.Drawing.Point(13, 56);
             this.centralPanel.Name = "centralPanel";
             this.centralPanel.Size = new System.Drawing.Size(1667, 1436);
             this.centralPanel.TabIndex = 0;
@@ -84,7 +84,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(1691, 1504);
+            this.ClientSize = new System.Drawing.Size(1914, 1504);
             this.Controls.Add(this.armControlButton);
             this.Controls.Add(this.templateViewButton);
             this.Controls.Add(this.userModeButton);
