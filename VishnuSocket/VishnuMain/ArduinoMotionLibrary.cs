@@ -15,7 +15,7 @@ namespace VishnuMain
 
         public ArduinoMotionLibrary()
         {
-            ArdPort.BaudRate = 74880;
+            ArdPort.BaudRate = 115200;
         }
         
         //shift is " i know where I am, move offset with these coords"
