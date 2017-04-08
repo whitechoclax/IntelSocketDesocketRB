@@ -108,7 +108,7 @@ void Navigate(){ //Moves to new positions
       for(int j=0;j<Z;++j){
         serialEvent();
         digitalWrite(Step[ZMOTOR], LOW);
-        delay(3);
+        delay(1);
         digitalWrite(Step[ZMOTOR], HIGH);
         delay(1);
       }
@@ -156,7 +156,7 @@ void Navigate(){ //Moves to new positions
     if(deltaRadius > 0.01){
       digitalWrite(Enable[RADMOTOR], LOW);
       digitalWrite(Step[RADMOTOR], LOW);
-      delay(3);
+      delay(1);
       digitalWrite(Step[RADMOTOR], HIGH);
       delay(1);
       deltaRadius -= 1/float(RAD);
@@ -208,7 +208,7 @@ void Navigate(){ //Moves to new positions
       for(int j=0;j<Z;++j){
         serialEvent();
         digitalWrite(Step[ZMOTOR], LOW);
-        delay(3);
+        delay(1);
         digitalWrite(Step[ZMOTOR], HIGH);
         delay(1);
       }
