@@ -12,8 +12,8 @@
 
 //power settings: .5 A , 12v 
 //Motor Mappings
-#define RADMOTOR 2
-#define THETAMOTOR 0
+#define RADMOTOR 0
+#define THETAMOTOR 2
 #define ZMOTOR 4
 #define ANGLEMOTOR 3
 #define RIGHT true

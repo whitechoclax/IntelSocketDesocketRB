@@ -148,6 +148,7 @@ void Navigate(){ //Moves to new positions
     }
     if(deltaTheta <= .4){
       doneTheta = true;
+      delay(300);
       digitalWrite(Enable[THETAMOTOR], HIGH);
     }  
   }
