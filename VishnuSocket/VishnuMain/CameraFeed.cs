@@ -108,7 +108,7 @@ namespace VishnuMain
                     //stop the capture
                     captureButton.Text = "Start Capture"; //Change text on button
                     
-                    _capture.Pause(); //Pause the capture
+                    _capture.Dispose(); //Pause the capture
                     _captureInProgress = false; //Flag the state of the camera
                 }
                 else
@@ -119,7 +119,7 @@ namespace VishnuMain
                         SetupCapture(Camera_Selection.SelectedIndex); //Setup capture with the new device
                     }
 
-                    RetrieveCaptureInformation(); //Get Camera information
+                    //RetrieveCaptureInformation(); //Get Camera information
                     captureButton.Text = "Stop"; //Change text on button
                  
                     _capture.Start(); //Start the capture

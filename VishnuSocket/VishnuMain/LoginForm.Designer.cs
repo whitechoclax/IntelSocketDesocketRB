@@ -48,7 +48,7 @@
             this.Controls.Add(this.centralTab);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "LoginMain";
-            this.Text = "Vishnu 2017";
+            this.Text = "Vishnu 2017 0.4a";
             this.Load += new System.EventHandler(this.LoginMain_Load_1);
             this.ResumeLayout(false);
 

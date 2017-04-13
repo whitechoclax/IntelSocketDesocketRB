@@ -59,12 +59,19 @@ namespace VishnuMain
                 portListBox.AppendText(Environment.NewLine);
             }
 
-            if (portList[0] != null)
+            try
             {
-                portName = portList[0];
-                groupBox1.Enabled = true;
+                if (portList[0] != null)
+                {
+                    portName = portList[0];
+                    groupBox1.Enabled = true;
+                }
             }
-
+            catch
+            {
+                MessageBox.Show("No serial devices connected");
+            }
+               
         }
 
         private void openPort_Click(object sender, EventArgs e)
