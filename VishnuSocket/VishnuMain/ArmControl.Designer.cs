@@ -253,7 +253,6 @@
             this.findPorts.TabIndex = 3;
             this.findPorts.Text = "Find Ports";
             this.findPorts.UseVisualStyleBackColor = true;
-            this.findPorts.Click += new System.EventHandler(this.findPorts_Click);
             // 
             // portListBox
             // 
