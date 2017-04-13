@@ -62,13 +62,16 @@ void Navigate(){ //Moves to new positions
       radDirection = IN;
     }
   }
+  float delayFactor = 0;
   if(thetaNew != theta){
     if(thetaNew > theta){
+      delayFactor = thetaNew/theta;
       digitalWrite(Dir[THETAMOTOR], HIGH);
       deltaTheta = thetaNew - theta;
       thetaDirection = RIGHT;
     }
     else{
+      delayFactor = theta/thetaNew;
       digitalWrite(Dir[THETAMOTOR], LOW);
       deltaTheta = theta - thetaNew;
       thetaDirection = LEFT;
@@ -130,13 +133,28 @@ void Navigate(){ //Moves to new positions
   boolean doneRad = false;
   boolean doneTheta = false;
   boolean doneAngle = false;
+
+  int thetaOriginal = theta;
   while(!doneTheta){
     if(deltaTheta > .4){  //Theta Section
       digitalWrite(Enable[THETAMOTOR], LOW);
       digitalWrite(Step[THETAMOTOR], LOW);
       delay(3);
       digitalWrite(Step[THETAMOTOR], HIGH);
-      delay(25);  
+      int addDelay = 0;
+      if(thetaDirection == RIGHT){
+        if(theta > ((thetaNew + thetaOriginal)/2))
+          addDelay = abs(map(theta, thetaOriginal, ((thetaNew + thetaOriginal)/2), 25, 0));
+        else
+          addDelay = map(theta, ((thetaNew + thetaOriginal)/2), thetaOriginal, 0, 25);
+      }
+      if(thetaDirection == LEFT){
+        if(theta < ((thetaNew + thetaOriginal)/2))
+          addDelay = abs(map(theta, thetaOriginal, ((thetaNew + thetaOriginal)/2), 25, 0));
+        else
+          addDelay = map(theta, ((thetaNew + thetaOriginal)/2), thetaOriginal, 0, 25);
+      }
+      delay(12 + 2*addDelay);
       deltaTheta -= 1/float(THETA);
       if(thetaDirection == LEFT){
         theta -= 1/float(THETA);
@@ -226,6 +244,7 @@ void EmergencyStop(){ //We're going to have to make this an interrupt later
 
 void serialEvent()
 { //Catch chars coming in
+  
   while (Serial.available()) 
   {
     char inChar = (char)Serial.read();
