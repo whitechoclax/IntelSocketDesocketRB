@@ -20,6 +20,7 @@ namespace VishnuMain
 
         public void CameraReadQR()
         {
+            //might need some fancy API here
         }
 
         //mark tray

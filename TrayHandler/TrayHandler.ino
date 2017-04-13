@@ -6,45 +6,26 @@
 */
 
 //Millimeter to step mappings
-# define RAD 100
-# define THETA 2 //to one degree
-# define Z 100
 
 //power settings: .5 A , 12v 
 //Motor Mappings
-#define RADMOTOR 0
-#define THETAMOTOR 2
-#define ZMOTOR 4
-#define ANGLEMOTOR 3
+#define Z 100
+#define TRAYMOTOR 0
+#define ZMOTOR 2
 #define RIGHT true
 #define LEFT false
 #define OUT true
 #define IN false
 
-
 boolean DEBUG = false; 
 
 //Current position
-double xpos = 0;
-double ypos = 0;
+byte traypos = 0;
 int zpos = 0;
-double angle = 0; //Angle for end effector
-
-double theta = 0; //angle of robot
-double radius = 0; //extension of arm
-
-volatile double thetaNew = 0;
-volatile double radiusNew = 0;
-volatile float deltaZ = 0;
-volatile float deltaTheta = 0;
-volatile float deltaRadius = 0;
-volatile float deltaAngle = 0;
 
 //Desired Positions
-double xposNew = 0;
-double yposNew = 0;
+byte trayposNew = 0;
 int zposNew = 0;
-double angleNew = 0;
 
 //Pin Mappings to Stepper Drivers based on shield
 // z motor:   pins 2,5,6
@@ -70,7 +51,7 @@ void setup() {
     digitalWrite(Dir[i], LOW);
   }
   delay(250);
-  Serial.println("MAINROBOTARM");
+  Serial.println("TRAYHANDLER");
 }
 
 void loop() {

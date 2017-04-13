@@ -47,7 +47,6 @@ namespace VishnuMain
         public CameraFeed()
         {
             InitializeComponent();
-            Slider_Enable(false);
             //find cameras on system using DirectShow.net dll
             DsDevice[] _SystemCameras = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice);
             WebCams = new CameraStructures[_SystemCameras.Length];
@@ -66,22 +65,16 @@ namespace VishnuMain
         private void ProcessFrame(object sender, EventArgs arg)
         {
             //***If you want to access the image data the use the following method call***/
-            
-            if (RetrieveBgrFrame.Checked)
-            {
                 _capture.Retrieve(frame);
 
                 //because we are using an autosize picturebox we need to do a thread safe update
                 DisplayImage(frame.Bitmap);
                 //_capture.Dispose();     if we have dispose this shit never works lol
-            }
-            else if (RetrieveGrayFrame.Checked)
-            {
-                _capture.Retrieve(frame);
-                CvInvoke.CvtColor(frame, grayFrame, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
+                //_capture.Retrieve(frame);
+                //CvInvoke.CvtColor(frame, grayFrame, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
                 //because we are using an autosize picturebox we need to do a thread safe update
-                DisplayImage(grayFrame.Bitmap);
-            }
+               // DisplayImage(grayFrame.Bitmap);
+            
         }
 
         private delegate void DisplayImageDelegate(Bitmap Image);
@@ -106,24 +99,6 @@ namespace VishnuMain
             }
         }
 
-
-        private void Slider_Enable(bool State)
-        {
-            Brightness_SLD.Enabled = State;
-            Contrast_SLD.Enabled = State;
-            Sharpness_SLD.Enabled = State;
-        }
-
-        private void flipVerticalButton_Click(object sender, EventArgs e)
-        {
-            if (_capture != null) _capture.FlipVertical = !_capture.FlipVertical;
-        }
-
-        private void flipHorizontalButton_Click(object sender, EventArgs e)
-        {
-            if (_capture != null) _capture.FlipHorizontal = !_capture.FlipHorizontal;
-        }
-
         private void captureButton_Click(object sender, EventArgs e)
         {
             if (_capture != null)
@@ -132,9 +107,10 @@ namespace VishnuMain
                 {
                     //stop the capture
                     captureButton.Text = "Start Capture"; //Change text on button
-                    Slider_Enable(false);
-                    _capture.Pause(); //Pause the capture
+                    
+                    _capture.Dispose(); //Pause the capture
                     _captureInProgress = false; //Flag the state of the camera
+                    _capture = null;        //assign null, rebuild next go.
                 }
                 else
                 {
@@ -146,8 +122,7 @@ namespace VishnuMain
 
                     RetrieveCaptureInformation(); //Get Camera information
                     captureButton.Text = "Stop"; //Change text on button
-                    StoreCameraSettings(); //Save Camera Settings
-                    Slider_Enable(true);  //Enable User Controls
+                 
                     _capture.Start(); //Start the capture
                     _captureInProgress = true; //Flag the state of the camera
                 }
@@ -188,18 +163,14 @@ namespace VishnuMain
 
             //Brightness
             richTextBox1.AppendText("Brightness: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Brightness).ToString() + "\n"); //get the value and add it to richtextbox
-            Brightness_SLD.Value = (int)_capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Brightness);  //Set the slider value
-            Brigthness_LBL.Text = Brightness_SLD.Value.ToString(); //set the slider text
-
+           
             //Contrast
             richTextBox1.AppendText("Contrast: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Contrast).ToString() + "\n");//get the value and add it to richtextbox
-            Contrast_SLD.Value = (int)_capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Contrast);  //Set the slider value
-            Contrast_LBL.Text = Contrast_SLD.Value.ToString(); //set the slider text
+            
 
             //Sharpness
             richTextBox1.AppendText("Sharpness: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Sharpness).ToString() + "\n");
-            Sharpness_SLD.Value = (int)_capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Sharpness);  //Set the slider value
-            Sharpness_LBL.Text = Sharpness_SLD.Value.ToString(); //set the slider text
+            
 
             //TODO: ALL These need sliders setting up on main form
             richTextBox1.AppendText("Convert RGB : " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.ConvertRgb).ToString() + "\n");
@@ -222,48 +193,11 @@ namespace VishnuMain
             richTextBox1.AppendText("Rectification : " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Rectification).ToString() + "\n");
             richTextBox1.AppendText("Preview (tricky property, returns cpnst char* indeed ): " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.SupportedPreviewSizesString).ToString() + "\n");
 
-            #region Unused
-            /*
-            //OpenNI
-            richTextBox1.AppendText("\nOpen NI specific devices: \n");
-            richTextBox1.AppendText("OpenNI map generators : " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_OPENNI_DEPTH_GENERATOR).ToString() + "\n");
-            richTextBox1.AppendText("Depth generator baseline, in mm: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_OPENNI_DEPTH_GENERATOR_BASELINE).ToString() + "\n");
-            richTextBox1.AppendText("Depth generator focal length, in pixels: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_OPENNI_DEPTH_GENERATOR_FOCAL_LENGTH).ToString() + "\n");
-            richTextBox1.AppendText("OpenNI map generators: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_OPENNI_GENERATORS_MASK).ToString() + "\n");
-            richTextBox1.AppendText("CV_CAP_OPENNI_IMAGE_GENERATOR: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_OPENNI_IMAGE_GENERATOR).ToString() + "\n");
-            richTextBox1.AppendText("Image generator output mode : " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_OPENNI_IMAGE_GENERATOR_OUTPUT_MODE).ToString() + "\n");
-            richTextBox1.AppendText("OpenNI Baseline mm: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_OPENNI_BASELINE).ToString() + "\n");
-            richTextBox1.AppendText("OpenNI Focal Length, pixels: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_OPENNI_FOCAL_LENGTH).ToString() + "\n");
-            richTextBox1.AppendText("OpenNI Max Depth mm: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_OPENNI_FRAME_MAX_DEPTH).ToString() + "\n");
-            richTextBox1.AppendText("OpenNI Oputput Mode: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_OPENNI_OUTPUT_MODE).ToString() + "\n");
-             
-            //Android
-            richTextBox1.AppendText("\nAndroid Only: \n");
-            richTextBox1.AppendText("property for highgui class: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_AUTOGRAB).ToString() + "\n");
-             
-            //Video File
-            richTextBox1.AppendText("\nVideo Files: \n");
-            richTextBox1.AppendText("Format: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_FORMAT).ToString() + "\n");
-            richTextBox1.AppendText("4-character code of codec : " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_FOURCC).ToString() + "\n");
-            richTextBox1.AppendText("Frame rate : " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_FPS).ToString() + "\n");
-            richTextBox1.AppendText("Number of frames in video file : " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_FRAME_COUNT).ToString() + "\n");
-            richTextBox1.AppendText(" Relative position of the video file (0 - start of the film, 1 - end of the film): " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_POS_AVI_RATIO).ToString() + "\n");
-            richTextBox1.AppendText("0-based index of the frame to be decoded/captured next: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_POS_FRAMES).ToString() + "\n");
-            richTextBox1.AppendText("Film current position in milliseconds or video capture timestamp: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_POS_MSEC).ToString() + "\n");
-
-            //GStreamer Device
-            richTextBox1.AppendText("\nGStreamer: \n");
-            richTextBox1.AppendText("Properties of cameras available through GStreamer interface: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_GSTREAMER_QUEUE_LENGTH).ToString() + "\n");*/
-            #endregion
+           
 
         }
 
-        private void StoreCameraSettings()
-        {
-            Brightness_Store = Brightness_SLD.Value;
-            Contrast_Store = Contrast_SLD.Value;
-            Sharpness_Store = Sharpness_SLD.Value;
-        }
+        
 
         private void Refresh_BTN_Click(object sender, EventArgs e)
         {
@@ -285,23 +219,7 @@ namespace VishnuMain
             }
         }
 
-        private void Brigtness_SLD_Scroll(object sender, EventArgs e)
-        {
-            Brigthness_LBL.Text = Brightness_SLD.Value.ToString();
-            if (_capture != null) _capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Contrast, Brightness_SLD.Value);
-        }
-
-        private void Contrast_SLD_Scroll(object sender, EventArgs e)
-        {
-            Contrast_LBL.Text = Contrast_SLD.Value.ToString();
-            if (_capture != null) _capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Contrast, Contrast_SLD.Value);
-        }
-
-        private void Sharpness_SLD_Scroll(object sender, EventArgs e)
-        {
-            Sharpness_LBL.Text = Sharpness_SLD.Value.ToString();
-            if (_capture != null) _capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Sharpness, Sharpness_SLD.Value);
-        }
+        
 
         protected void OnFormClosing(CancelEventArgs e)
         {
@@ -313,23 +231,8 @@ namespace VishnuMain
 
         }
         
-        
-        //both boxes cant be checked!
-        private void RetrieveBgrFrame_CheckedChanged(object sender, EventArgs e)
-        {
-            if (RetrieveBgrFrame.Checked)
-            {
-                RetrieveGrayFrame.Checked = !RetrieveBgrFrame.Checked;
-            }
-        }
-
-        private void RetrieveGrayFrame_CheckedChanged(object sender, EventArgs e)
-        {
-            if (RetrieveGrayFrame.Checked)
-            {
-                RetrieveBgrFrame.Checked = !RetrieveGrayFrame.Checked;
-            }
-        }
+     
+       
 
     
     }
