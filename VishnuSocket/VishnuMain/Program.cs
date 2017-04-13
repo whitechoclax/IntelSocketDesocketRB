@@ -18,6 +18,8 @@ namespace VishnuMain
                 SetProcessDPIAware();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            //load some sort of pre boot ops here like XML file loading and stuff
+
             Application.Run(new LoginMain());
         }
 
