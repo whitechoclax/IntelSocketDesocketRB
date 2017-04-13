@@ -108,8 +108,9 @@ namespace VishnuMain
                     //stop the capture
                     captureButton.Text = "Start Capture"; //Change text on button
                     
-                    _capture.Pause(); //Pause the capture
+                    _capture.Dispose(); //Pause the capture
                     _captureInProgress = false; //Flag the state of the camera
+                    _capture = null;        //assign null, rebuild next go.
                 }
                 else
                 {
