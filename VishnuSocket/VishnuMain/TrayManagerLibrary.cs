@@ -10,20 +10,20 @@ namespace VishnuMain
     //and how we move those trays around.
     class TrayManagerLibrary
     {
-        private int emptyTrayCount;
-        private int goodTrayCount;
-        private int badTrayCount;
+       // private int emptyTrayCount;
+       // private int goodTrayCount;
+       // private int badTrayCount;
 
         //Dimensions are length, width, and stack height in # of trays
-        public int[] trayDimensions = new int[3];
+       // public int[] trayDimensions = new int[3];
 
         //count of cpus in each good and bad trays
-        private int cpuFilledGood;
-        private int cpuFilledBad;
-        private int cpuRemainingUntested;
+       // private int cpuFilledGood;
+       // private int cpuFilledBad;
+       // private int cpuRemainingUntested;
 
-        public int trayGrabberPosition;
-        public int WhichTrayPresented; 
+        //public int trayGrabberPosition;
+        //public int WhichTrayPresented; 
 
         //constructor
         public TrayManagerLibrary()

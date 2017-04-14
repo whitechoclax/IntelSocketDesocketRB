@@ -17,54 +17,55 @@ namespace VishnuMain
         public LoginMain()
         {
             InitializeComponent();
-            
-          
-           
         }
-       
 
-        private void armControlButton_Click(object sender, EventArgs e)
+        //set the load order here for all tabs
+        private void LoginMain_Load_1(object sender, EventArgs e)
         {
-            if (!centralPanel.Controls.Contains(ArmControl.Instance))
-            {
-                centralPanel.Controls.Add(ArmControl.Instance);
-                ArmControl.Instance.Dock = DockStyle.Fill;
-                ArmControl.Instance.BringToFront();
-
-            }
-            else
-            {
-                ArmControl.Instance.BringToFront();
-            }
+            LoadMainViewerTab();        //tabindex 0
+            LoadArmControlTab();        //tabindex 1
+            LoadSettingsTab();          //tabindex 2
         }
 
-        private void templateViewButton_Click(object sender, EventArgs e)
+        //load tab pages here
+
+        //Load main viewer tab
+        private void LoadMainViewerTab()
         {
-            if (!centralPanel.Controls.Contains(TemplateMatchView.Instance))
-            {
-                centralPanel.Controls.Add(TemplateMatchView.Instance);
-                TemplateMatchView.Instance.Dock = DockStyle.Fill;
-                TemplateMatchView.Instance.BringToFront();
-
-            }
-            else
-            {
-                TemplateMatchView.Instance.BringToFront();
-            }
+            TabPage page = new TabPage();
+            page.Text = "Main Viewer";
+            CameraFeed cam = new VishnuMain.CameraFeed();
+            page.Controls.Add(cam);
+            centralTab.TabPages.Add(page);
         }
 
-        private void userModeButton_Click(object sender, EventArgs e)
+        //load tab page for Arm handler controls
+        private void LoadArmControlTab()
         {
-            if (!centralPanel.Controls.Contains(CameraFeed.Instance))
-            {
-                centralPanel.Controls.Add(CameraFeed.Instance);
-                CameraFeed.Instance.Dock = DockStyle.Fill;
-                CameraFeed.Instance.BringToFront();
-            }
-            else
-            {
-                CameraFeed.Instance.BringToFront();
-            }
+            TabPage page = new TabPage();
+            page.Text = "Manual Arm Control";
+            ArmControl Arm = new VishnuMain.ArmControl();
+            page.Controls.Add(Arm);
+            centralTab.TabPages.Add(page);
         }
+
+        //load settings tab
+        private void LoadSettingsTab()
+        {
+            TabPage page = new TabPage();
+            page.Text = "Settings";
+            SettingsMenu Menu = new VishnuMain.SettingsMenu();
+            page.Controls.Add(Menu);
+            centralTab.TabPages.Add(page);
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
+
     }
 }
+
