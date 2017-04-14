@@ -37,10 +37,18 @@
             this.trayLengthValue = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.invManagerBox = new System.Windows.Forms.GroupBox();
+            this.xmlPathTextBox = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.invPathTextBox = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.inventorySaveFileButton = new System.Windows.Forms.Button();
+            this.xmlSaveFileButton = new System.Windows.Forms.Button();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trayStackValue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trayWidthValue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trayLengthValue)).BeginInit();
+            this.invManagerBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -54,7 +62,7 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(16, 39);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(373, 892);
+            this.groupBox1.Size = new System.Drawing.Size(373, 485);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Tray Properties";
@@ -162,12 +170,70 @@
             // 
             // invManagerBox
             // 
+            this.invManagerBox.Controls.Add(this.xmlSaveFileButton);
+            this.invManagerBox.Controls.Add(this.inventorySaveFileButton);
+            this.invManagerBox.Controls.Add(this.xmlPathTextBox);
+            this.invManagerBox.Controls.Add(this.label6);
+            this.invManagerBox.Controls.Add(this.invPathTextBox);
+            this.invManagerBox.Controls.Add(this.label5);
             this.invManagerBox.Location = new System.Drawing.Point(396, 39);
             this.invManagerBox.Name = "invManagerBox";
-            this.invManagerBox.Size = new System.Drawing.Size(490, 438);
+            this.invManagerBox.Size = new System.Drawing.Size(673, 485);
             this.invManagerBox.TabIndex = 1;
             this.invManagerBox.TabStop = false;
             this.invManagerBox.Text = "Inventory Management";
+            // 
+            // xmlPathTextBox
+            // 
+            this.xmlPathTextBox.Location = new System.Drawing.Point(24, 177);
+            this.xmlPathTextBox.Name = "xmlPathTextBox";
+            this.xmlPathTextBox.Size = new System.Drawing.Size(407, 26);
+            this.xmlPathTextBox.TabIndex = 3;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(20, 137);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(191, 20);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "Settings Save file location";
+            // 
+            // invPathTextBox
+            // 
+            this.invPathTextBox.Location = new System.Drawing.Point(24, 87);
+            this.invPathTextBox.Name = "invPathTextBox";
+            this.invPathTextBox.Size = new System.Drawing.Size(407, 26);
+            this.invPathTextBox.TabIndex = 1;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(16, 39);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(182, 20);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Inventory Folder location";
+            // 
+            // inventorySaveFileButton
+            // 
+            this.inventorySaveFileButton.Location = new System.Drawing.Point(474, 81);
+            this.inventorySaveFileButton.Name = "inventorySaveFileButton";
+            this.inventorySaveFileButton.Size = new System.Drawing.Size(152, 38);
+            this.inventorySaveFileButton.TabIndex = 4;
+            this.inventorySaveFileButton.Text = "Browse";
+            this.inventorySaveFileButton.UseVisualStyleBackColor = true;
+            this.inventorySaveFileButton.Click += new System.EventHandler(this.inventorySaveFileButton_Click);
+            // 
+            // xmlSaveFileButton
+            // 
+            this.xmlSaveFileButton.Location = new System.Drawing.Point(474, 171);
+            this.xmlSaveFileButton.Name = "xmlSaveFileButton";
+            this.xmlSaveFileButton.Size = new System.Drawing.Size(152, 38);
+            this.xmlSaveFileButton.TabIndex = 5;
+            this.xmlSaveFileButton.Text = "Browse";
+            this.xmlSaveFileButton.UseVisualStyleBackColor = true;
+            this.xmlSaveFileButton.Click += new System.EventHandler(this.xmlSaveFileButton_Click);
             // 
             // SettingsMenu
             // 
@@ -182,6 +248,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.trayStackValue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trayWidthValue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trayLengthValue)).EndInit();
+            this.invManagerBox.ResumeLayout(false);
+            this.invManagerBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -197,5 +265,12 @@
         private System.Windows.Forms.NumericUpDown trayLengthValue;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox invManagerBox;
+        private System.Windows.Forms.TextBox xmlPathTextBox;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox invPathTextBox;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button xmlSaveFileButton;
+        private System.Windows.Forms.Button inventorySaveFileButton;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
     }
 }

@@ -135,6 +135,7 @@
       <DependentUpon>TemplateMatchView.cs</DependentUpon>
     </Compile>
     <Compile Include="TrayManagerLibrary.cs" />
+    <Compile Include="xmlSaveLoad.cs" />
     <EmbeddedResource Include="ArmControl.resx">
       <DependentUpon>ArmControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -153,6 +154,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Settings.resx">
+      <DependentUpon>Settings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TemplateMatchView.resx">
       <DependentUpon>TemplateMatchView.cs</DependentUpon>
     </EmbeddedResource>
