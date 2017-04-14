@@ -44,6 +44,8 @@
             this.inventorySaveFileButton = new System.Windows.Forms.Button();
             this.xmlSaveFileButton = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.xmlSaveButton = new System.Windows.Forms.Button();
+            this.loadxmlButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trayStackValue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trayWidthValue)).BeginInit();
@@ -235,10 +237,32 @@
             this.xmlSaveFileButton.UseVisualStyleBackColor = true;
             this.xmlSaveFileButton.Click += new System.EventHandler(this.xmlSaveFileButton_Click);
             // 
+            // xmlSaveButton
+            // 
+            this.xmlSaveButton.Location = new System.Drawing.Point(16, 545);
+            this.xmlSaveButton.Name = "xmlSaveButton";
+            this.xmlSaveButton.Size = new System.Drawing.Size(174, 74);
+            this.xmlSaveButton.TabIndex = 2;
+            this.xmlSaveButton.Text = "SAVE TO FILE";
+            this.xmlSaveButton.UseVisualStyleBackColor = true;
+            this.xmlSaveButton.Click += new System.EventHandler(this.xmlSaveButton_Click);
+            // 
+            // loadxmlButton
+            // 
+            this.loadxmlButton.Location = new System.Drawing.Point(224, 545);
+            this.loadxmlButton.Name = "loadxmlButton";
+            this.loadxmlButton.Size = new System.Drawing.Size(174, 74);
+            this.loadxmlButton.TabIndex = 3;
+            this.loadxmlButton.Text = "LOAD FROM FILE";
+            this.loadxmlButton.UseVisualStyleBackColor = true;
+            this.loadxmlButton.Click += new System.EventHandler(this.loadxmlButton_Click);
+            // 
             // SettingsMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.loadxmlButton);
+            this.Controls.Add(this.xmlSaveButton);
             this.Controls.Add(this.invManagerBox);
             this.Controls.Add(this.groupBox1);
             this.Name = "SettingsMenu";
@@ -272,5 +296,7 @@
         private System.Windows.Forms.Button xmlSaveFileButton;
         private System.Windows.Forms.Button inventorySaveFileButton;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.Button xmlSaveButton;
+        private System.Windows.Forms.Button loadxmlButton;
     }
 }

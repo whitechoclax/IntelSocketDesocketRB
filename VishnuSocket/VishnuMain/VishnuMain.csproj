@@ -135,7 +135,6 @@
       <DependentUpon>TemplateMatchView.cs</DependentUpon>
     </Compile>
     <Compile Include="TrayManagerLibrary.cs" />
-    <Compile Include="xmlSaveLoad.cs" />
     <EmbeddedResource Include="ArmControl.resx">
       <DependentUpon>ArmControl.cs</DependentUpon>
     </EmbeddedResource>
