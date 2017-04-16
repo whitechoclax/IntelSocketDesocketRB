@@ -37,14 +37,17 @@
             this.centralTab.Location = new System.Drawing.Point(12, 12);
             this.centralTab.Name = "centralTab";
             this.centralTab.SelectedIndex = 0;
-            this.centralTab.Size = new System.Drawing.Size(1813, 892);
+            this.centralTab.Size = new System.Drawing.Size(1920, 1080);
             this.centralTab.TabIndex = 0;
             // 
             // LoginMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1837, 980);
+            this.AutoScroll = true;
+            this.AutoSize = true;
+            this.BackColor = System.Drawing.SystemColors.Menu;
+            this.ClientSize = new System.Drawing.Size(1898, 1024);
             this.Controls.Add(this.centralTab);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "LoginMain";

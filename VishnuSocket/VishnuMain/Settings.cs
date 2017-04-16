@@ -20,16 +20,17 @@ namespace VishnuMain
         int trayStack;
 
         //intertraydimensions
-        //distance between chips (center to center)
-        //distance top to bottom rows (center to center)
-        //distance from origin to center of first cpu
-        //tray height (10.2mm)
+        
+        double trayOrigin2Center;
+        double trayCenter2Center;
+        double trayHeight;
 
         public SettingsMenu()
         {
             InitializeComponent();
         }
 
+        //UI changes section
         private void trayLengthValue_ValueChanged(object sender, EventArgs e)
         {
             trayLength = (int)trayLengthValue.Value;
@@ -45,10 +46,26 @@ namespace VishnuMain
             trayStack = (int)trayStackValue.Value;
         }
 
+        private void trayOr2CenterValue_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trayCenter2CenterValue_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trayHeightValue_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+        //load button handler
         private void inventorySaveFileButton_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog folderDialog = new FolderBrowserDialog();
             folderDialog.ShowNewFolderButton = true;
+            
             DialogResult result = folderDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -59,6 +76,7 @@ namespace VishnuMain
             }
         }
 
+        //save button handler
         private void xmlSaveFileButton_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog folderDialog_xml = new FolderBrowserDialog();
@@ -75,7 +93,7 @@ namespace VishnuMain
 
         public void loadFromXML()
         {
-            XDocument settingsmenu = XDocument.Load(xmlPathString + "\\settings.xml");
+            XDocument settingsmenu = XDocument.Load("..\\..\\..\\..\\Common\\Settings\\settings.xml");
 
             //use NULL COALESCING with ?? to set default if not found
             var groupEl = from setting in settingsmenu.Nodes()
@@ -87,7 +105,10 @@ namespace VishnuMain
                 //UI variable to update = (type?) setting.element("xmlnodename" ?? default value
                 trayLength = (int?)setting.Element("TrayLength") ?? 11;
                 trayWidth = (int?)setting.Element("TrayWidth") ?? 2;
-                trayStack = (int?)setting.Element("TrayHeight") ?? 10;
+                trayStack = (int?)setting.Element("TrayStack") ?? 10;
+                trayOrigin2Center = (double?)setting.Element("TrayOR2Center") ?? 15.5;
+                trayCenter2Center = (double?)setting.Element("TrayCenter2Center") ?? 25.5;
+                trayHeight = (double?)setting.Element("TrayHeight") ?? 12.00;
                 invPathString = (string)setting.Element("inventoryPath") ?? string.Empty;
             }
 
@@ -95,6 +116,11 @@ namespace VishnuMain
             trayLengthValue.Value = trayLength;
             trayWidthValue.Value = trayWidth;
             trayStackValue.Value = trayStack;
+
+            //tray dimensions
+            trayHeightValue.Value = (decimal)trayHeight;
+            trayCenter2CenterValue.Value = (decimal)trayCenter2Center;
+            trayOr2CenterValue.Value = (decimal)trayOrigin2Center;
             invPathTextBox.Text = invPathString;
         }
 
@@ -108,13 +134,17 @@ namespace VishnuMain
             new XElement("Root",
                 new XElement("TrayLength", trayLengthValue.Value.ToString()),
                 new XElement("TrayWidth", trayWidthValue.Value.ToString()),
-                new XElement("TrayHeight", trayStackValue.Value.ToString()),
-                new XElement("inventoryPath", invPathString)
+                new XElement("TrayStack", trayStackValue.Value.ToString()),
+                new XElement("inventoryPath", invPathString),
+                new XElement("TrayOR2Center", trayOr2CenterValue.Value.ToString()),
+                new XElement("TrayCenter2Center", trayCenter2CenterValue.Value.ToString()),
+                new XElement("TrayHeight", trayHeightValue.Value.ToString())
+
                 )
             );
 
             //save to file
-            settings.Save(xmlPathString+"\\settings.xml");
+            settings.Save("..\\..\\..\\..\\Common\\Settings\\settings.xml");
             return;
         }
 
@@ -128,5 +158,7 @@ namespace VishnuMain
         {
             loadFromXML();
         }
+
+        
     }
 }
