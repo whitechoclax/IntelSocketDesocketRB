@@ -64,9 +64,18 @@ namespace VishnuMain
 
         public void OpenPorts()
         {
-            ArdPorts[0].Open();
-            ArdPorts[1].Open();
+            try
+            {
+                ArdPorts[0].Open();
+                ArdPorts[1].Open();
+            }
+            catch (System.IO.IOException e)
+            {
+                Error(-1);
+                return;
+            }
             string inputline = "QUERY\r";
+
             ArdPorts[0].WriteLine(inputline);
             ArdPorts[1].WriteLine(inputline);         
             Task.Delay(30);
@@ -162,7 +171,7 @@ namespace VishnuMain
 
         public void Error(int status)
         {
-
+            return;
         }
         
     }
