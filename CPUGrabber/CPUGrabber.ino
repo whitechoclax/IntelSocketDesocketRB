@@ -35,6 +35,10 @@ double radius = 0; //extension of arm
 
 double thetaNew = 0;
 double radiusNew = 0;
+double deltaZ = 0;
+double deltaTheta = 0;
+double deltaRadius = 0;
+double deltaAngle = 0;
 
 //Desired Positions
 double xposNew = 0;

@@ -42,17 +42,17 @@ namespace VishnuMain
             findPorts.Enabled = true;
             groupBox1.Enabled = false;
 
-            if (!Arduino.ArdPort.IsOpen)
-            {
-                Arduino.ArdPort.DataReceived += ArdPort_DataReceived; ;
-            }
+            //if (!Arduino.ArdPort.IsOpen)
+            //{
+            //    Arduino.ArdPort.DataReceived += ArdPort_DataReceived; ;
+            //}
 
 
         }
 
         private void findPorts_Click(object sender, EventArgs e)
         {
-            string [] portList = Arduino.FindPortsAvailable();
+            /*string [] portList = Arduino.FindPortsAvailable();
             foreach (string line in portList)
             {
                 portListBox.AppendText(line);
@@ -70,7 +70,7 @@ namespace VishnuMain
             catch
             {
                 MessageBox.Show("ARDUINO not found! Please connect.");
-            }
+            }*/
 
         }
 
@@ -82,12 +82,12 @@ namespace VishnuMain
 
         private void ArdPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            string data = Arduino.ArdPort.ReadTo("\n");
+            //string data = Arduino.ArdPort.ReadTo("\n");
             //portListBox.AppendText(data);
 
             this.Invoke((MethodInvoker)delegate
             {
-                portListBox.AppendText(data);
+                //portListBox.AppendText(data);
             });
         }
 
@@ -122,17 +122,17 @@ namespace VishnuMain
 
         private void redefineButton_Click(object sender, EventArgs e)
         {
-            Arduino.RedefinePosition(portName, XcoordinateValue, YcoordinateValue, ZcoodrinateValue, RotationVal);
+            //Arduino.RedefinePosition(portName, XcoordinateValue, YcoordinateValue, ZcoodrinateValue, RotationVal);
         }
 
         private void moveButton_Click(object sender, EventArgs e)
         {
-            Arduino.MovePosition(portName, XcoordinateValue, YcoordinateValue, ZcoodrinateValue, RotationVal);
+            //Arduino.MovePosition(portName, XcoordinateValue, YcoordinateValue, ZcoodrinateValue, RotationVal);
         }
 
         private void ShiftButton_Click(object sender, EventArgs e)
         {
-            Arduino.ShiftPosition(portName, XcoordinateValue, YcoordinateValue, ZcoodrinateValue, RotationVal);
+            //Arduino.ShiftPosition(portName, XcoordinateValue, YcoordinateValue, ZcoodrinateValue, RotationVal);
         }
     }
 }
