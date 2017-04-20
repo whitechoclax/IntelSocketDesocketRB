@@ -23,7 +23,7 @@ namespace VishnuMain
             ArdPorts[0] = new SerialPort();
             ArdPorts[1] = new SerialPort();
             ArdPorts[0].BaudRate = 115200;
-            ArdPorts[1].BaudRate =115200;
+            ArdPorts[1].BaudRate = 115200;
             int status = findAvailiblePorts();
             if(status != 2)
             {
@@ -77,10 +77,14 @@ namespace VishnuMain
             string inputline = "QUERY\r";
 
             ArdPorts[0].WriteLine(inputline);
-            ArdPorts[1].WriteLine(inputline);         
+            ArdPorts[1].WriteLine(inputline);
+
+            //wait, then send a auto read( dont need event handlers)
             Task.Delay(30);
             string data = ArdPorts[0].ReadLine();
-            if(data == "TRAYHANDLER\r")
+
+            //if arduino returns trayhandler arm
+            if (data == "TRAYHANDLER\r")
             {
                 Arduinos[1] = 0;
             }
