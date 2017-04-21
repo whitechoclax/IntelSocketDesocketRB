@@ -26,7 +26,7 @@ namespace VishnuMain
             ArdPorts[0] = new SerialPort();
             ArdPorts[1] = new SerialPort();
             ArdPorts[0].BaudRate = 115200;
-            ArdPorts[1].BaudRate =115200;
+            ArdPorts[1].BaudRate = 115200;
             int status = findAvailiblePorts();
             if(status == 0)
             {
@@ -79,7 +79,21 @@ namespace VishnuMain
                 Error(0);
                 return;
             }
+<<<<<<< HEAD
             catch (System.UnauthorizedAccessException e)
+=======
+            string inputline = "QUERY\r";
+
+            ArdPorts[0].WriteLine(inputline);
+            ArdPorts[1].WriteLine(inputline);
+
+            //wait, then send a auto read( dont need event handlers)
+            Task.Delay(30);
+            string data = ArdPorts[0].ReadLine();
+
+            //if arduino returns trayhandler arm
+            if (data == "TRAYHANDLER\r")
+>>>>>>> 5af0768d188f4ae0df4405d12ff8ca4ddbeb3f49
             {
                 Error(0);
                 return;

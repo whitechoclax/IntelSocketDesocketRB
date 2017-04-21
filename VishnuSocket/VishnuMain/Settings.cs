@@ -48,17 +48,17 @@ namespace VishnuMain
 
         private void trayOr2CenterValue_ValueChanged(object sender, EventArgs e)
         {
-
+            trayOrigin2Center = (double)trayOr2CenterValue.Value;
         }
 
         private void trayCenter2CenterValue_ValueChanged(object sender, EventArgs e)
         {
-
+            trayCenter2Center = (double)trayCenter2CenterValue.Value;
         }
 
         private void trayHeightValue_ValueChanged(object sender, EventArgs e)
         {
-
+            trayHeight = (double)trayHeightValue.Value;
         }
         //load button handler
         private void inventorySaveFileButton_Click(object sender, EventArgs e)
