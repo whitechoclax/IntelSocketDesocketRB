@@ -25,12 +25,11 @@ namespace VishnuMain
             }
         }
 
-        //
         ArduinoMotionLibrary Arduino = new ArduinoMotionLibrary();
         delegate void SetTextCallback(string text);
         private BackgroundWorker hardworker;
-        string portName;
-        int ZcoodrinateValue;
+        int portID = 0;
+        int ZcoordinateValue;
         int RotationVal;
         int XcoordinateValue;
         int YcoordinateValue;
@@ -41,17 +40,18 @@ namespace VishnuMain
             hardworker = new BackgroundWorker();
             findPorts.Enabled = true;
             groupBox1.Enabled = false;
-
-            //if (!Arduino.ArdPort.IsOpen)
-            //{
-            //    Arduino.ArdPort.DataReceived += ArdPort_DataReceived; ;
-            //}
-
-
         }
 
         private void findPorts_Click(object sender, EventArgs e)
         {
+            if(Arduino.Arduinos[0] != 2)
+            {
+                MessageBox.Show("Main Robot Arm Connected");
+            }
+            if(Arduino.Arduinos[1] != 2)
+            {
+                MessageBox.Show("Tray Handler Connected");
+            }
             /*string [] portList = Arduino.FindPortsAvailable();
             foreach (string line in portList)
             {
@@ -76,8 +76,8 @@ namespace VishnuMain
 
         private void openPort_Click(object sender, EventArgs e)
         { 
-            portListBox.AppendText(portName + " opened.");
-            //MessageBox.Show("COM PORT not found, Have you checked Arduino Connection?");
+            portListBox.AppendText(portID + " opened.");
+            MessageBox.Show("COM PORT not found, Have you checked Arduino Connection?");
         }
 
         private void ArdPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -100,7 +100,7 @@ namespace VishnuMain
 
         private void moveZval_ValueChanged(object sender, EventArgs e)
         {
-            ZcoodrinateValue = (int)moveZval.Value;
+            ZcoordinateValue = (int)moveZval.Value;
         }
 
         private void moveYval_ValueChanged(object sender, EventArgs e)
@@ -117,22 +117,22 @@ namespace VishnuMain
         //Run motor functions
         private void stopButton_Click(object sender, EventArgs e)
         {
-            //Arduino.StopMotor();
+            Arduino.StopMotor(portID);
         }
 
         private void redefineButton_Click(object sender, EventArgs e)
         {
-            //Arduino.RedefinePosition(portName, XcoordinateValue, YcoordinateValue, ZcoodrinateValue, RotationVal);
+            Arduino.ArdPosition("REDEF", portID, XcoordinateValue, YcoordinateValue, ZcoordinateValue, RotationVal);
         }
 
         private void moveButton_Click(object sender, EventArgs e)
         {
-            //Arduino.MovePosition(portName, XcoordinateValue, YcoordinateValue, ZcoodrinateValue, RotationVal);
+            Arduino.ArdPosition("MOVE", portID, XcoordinateValue, YcoordinateValue, ZcoordinateValue, RotationVal);
         }
 
         private void ShiftButton_Click(object sender, EventArgs e)
         {
-            //Arduino.ShiftPosition(portName, XcoordinateValue, YcoordinateValue, ZcoodrinateValue, RotationVal);
+            Arduino.ArdPosition("SHIFT", portID, XcoordinateValue, YcoordinateValue, ZcoordinateValue, RotationVal);
         }
     }
 }

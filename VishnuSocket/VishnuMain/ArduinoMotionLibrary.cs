@@ -13,10 +13,10 @@ namespace VishnuMain
         //public SerialPort ArdPort = new SerialPort();
         public List<SerialPort> ArdPorts = new List<SerialPort>();
         string[] portName;
-        byte[] Arduinos = { 2, 2 };      //0 is Main Arm, 1 is Tray handler
-        double[] ArmCoordinates = { 0.0, 0.0, 0.0, 0.0 };
-        double TrayZ = 0.0;
-        int TrayPresented = 0;
+        public byte[] Arduinos = { 2, 2 };      //0 is Main Arm, 1 is Tray handler
+        public double[] ArmCoordinates = { 0.0, 0.0, 0.0, 0.0 };
+        public double TrayZ = 0.0;
+        public int TrayPresented = 0;
 
         public ArduinoMotionLibrary()
         {
@@ -36,12 +36,12 @@ namespace VishnuMain
             {
                 OpenPorts();
             }
-            ArdPosition("MOVE", 0, 50, 10, 10, 0);
-            StopMotor(0);
+            //ArdPosition("MOVE", 0, 50, 10, 10, 0);
+            //StopMotor(0);
 
         }
 
-        public int findAvailiblePorts()
+        private int findAvailiblePorts()
         {
             string[] portList = SerialPort.GetPortNames();
 
@@ -67,7 +67,7 @@ namespace VishnuMain
                 return 0;
         }
 
-        public void OpenPorts()
+        private void OpenPorts() //Find the connected Arduinos
         {
             int numArduinos = 2;
             try
@@ -75,7 +75,7 @@ namespace VishnuMain
                 ArdPorts[0].Open();
             }
             catch (System.IO.IOException e)
-            {
+            {//If there's an exception on the first one we have a problem
                 Error(0);
                 return;
             }
@@ -89,7 +89,7 @@ namespace VishnuMain
                 ArdPorts[1].Open();
             }
             catch (System.IO.IOException e)
-            {
+            {//If there's an exception on the second one we just have one connected
                 numArduinos = 1;
             }
             catch (System.UnauthorizedAccessException e)
@@ -100,7 +100,7 @@ namespace VishnuMain
             string data = null;
             bool checkedYet = false;
             while (checkedYet == false)
-            {
+            { //Assign arduinos to ports
                 ArdPorts[0].WriteLine("QUERY\r");
                 Task.Delay(30);
                 data = ArdPorts[0].ReadLine();
@@ -115,18 +115,18 @@ namespace VishnuMain
                     checkedYet = true;
                 }
                 else if (data != null)
-                {
+                {//Sometimes there's junk in the buffer and we need to try again
                     checkedYet = true;
                 }
                 else
-                {
+                {//If we try twice and nothing happens, we're dead in the water
                     Error(4);
                     return;
                 }
             }
 
             if (numArduinos == 2)
-            {
+            {//If we have two arduinos and they both work, we're in business
                 checkedYet = false;
                 data = null;
                 while (checkedYet == false)
@@ -158,18 +158,12 @@ namespace VishnuMain
             return;
         }
 
-        //shift is " i know where I am, move offset with these coords"
-        //move is "i dont care where I am, I am moving to this absolute location
-        //format is COMMAND:X:Y:Z:THETA/n
-        //REDEF dont move, heres where I am.
-
         public int ArdPosition(string command, int portID, double Xval, double Yval, double Zval, double thetaVal)
-        {
+        {//Inputs a command and values, and a desired arduino (0 or 1)
             if (Arduinos[portID] == 2)
             {
                 return -1;
             }
-
 
             string inputLine = null;
             if (portID == 0) //Going to CPU Main arm
