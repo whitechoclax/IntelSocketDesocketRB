@@ -14,7 +14,10 @@ namespace VishnuMain
         public List<SerialPort> ArdPorts = new List<SerialPort>();
         string[] portName;
         byte[] Arduinos = { 2, 2 };      //0 is Main Arm, 1 is Tray handler
-
+        double[] ArmCoordinates = { 0.0, 0.0, 0.0, 0.0 };
+        double TrayZ = 0.0;
+        int TrayPresented = 0;
+        
         public ArduinoMotionLibrary()
         {
             ArdPorts.Add(new SerialPort());
@@ -25,7 +28,7 @@ namespace VishnuMain
             ArdPorts[0].BaudRate = 115200;
             ArdPorts[1].BaudRate =115200;
             int status = findAvailiblePorts();
-            if(status != 2)
+            if(status == 0)
             {
                 Error(status);
             }
@@ -33,6 +36,8 @@ namespace VishnuMain
             {
                 OpenPorts();
             }
+            ArdPosition("MOVE",0, 50, 10, 10, 0);
+            StopMotor(0);
 
         }
 
@@ -64,50 +69,92 @@ namespace VishnuMain
 
         public void OpenPorts()
         {
+            int numArduinos = 2;
             try
             {
                 ArdPorts[0].Open();
+            }
+            catch (System.IO.IOException e)
+            {
+                Error(0);
+                return;
+            }
+            catch (System.UnauthorizedAccessException e)
+            {
+                Error(0);
+                return;
+            }
+            try
+            {
                 ArdPorts[1].Open();
             }
             catch (System.IO.IOException e)
             {
-                Error(-1);
-                return;
-            }
-            string inputline = "QUERY\r";
-
-            ArdPorts[0].WriteLine(inputline);
-            ArdPorts[1].WriteLine(inputline);         
-            Task.Delay(30);
-            string data = ArdPorts[0].ReadLine();
-            if(data == "TRAYHANDLER\r")
+                numArduinos = 1;
+            }     
+            catch(System.UnauthorizedAccessException e)
             {
-                Arduinos[1] = 0;
-            }
-            else if(data == "MAINROBOTARM\r")
-            {
-                Arduinos[0] = 0;
-            }
-            else
-            {
-                Error(4);
-            }
-            data = ArdPorts[1].ReadLine();
-            if (data == "TRAYHANDLER\r")
-            {
-                Arduinos[1] = 1;
-            }
-            else if (data == "MAINROBOTARM\r")
-            {
-                Arduinos[0] = 1;
-            }
-            else
-            {
-                Error(4);
+                numArduinos = 1;
             }
 
-
-
+            string data = null;
+            bool checkedYet = false;
+            while (checkedYet == false)
+            {
+                ArdPorts[0].WriteLine("QUERY\r");
+                Task.Delay(30);
+                data = ArdPorts[0].ReadLine();
+                if (data == "TRAYHANDLER\r")
+                {
+                    Arduinos[1] = 0;
+                    checkedYet = true;
+                }
+                else if (data == "MAINROBOTARM\r")
+                {
+                    Arduinos[0] = 0;
+                    checkedYet = true;
+                }
+                else if (data != null)
+                {
+                    checkedYet = true;
+                }
+                else
+                {
+                    Error(4);
+                    return;
+                }
+            }
+            
+            if (numArduinos == 2)
+            {
+                checkedYet = false;
+                data = null;
+                while (checkedYet == false)
+                {
+                    ArdPorts[1].WriteLine("QUERY\r");
+                    Task.Delay(30);
+                    data = ArdPorts[1].ReadLine();
+                    if (data == "TRAYHANDLER\r")
+                    {
+                        Arduinos[1] = 1;
+                        checkedYet = true;
+                    }
+                    else if (data == "MAINROBOTARM\r")
+                    {
+                        Arduinos[0] = 1;
+                        checkedYet = true;
+                    }
+                    else if (data != null)
+                    {
+                        checkedYet = true;
+                    }
+                    else
+                    {
+                        Error(4);
+                        return;
+                    }
+                }
+            }
             return;
         }
 
@@ -116,61 +163,133 @@ namespace VishnuMain
         //format is COMMAND:X:Y:Z:THETA/n
         //REDEF dont move, heres where I am.
 
-        //public void ShiftPosition(string portID, int Xval, int Yval, int Zval, int thetaVal)
-        //{
-        //    if (ArdPorts.PortName != portID)
-        //        ArdPorts.PortName = portID;
+        public int ArdPosition(string command, int portID, double Xval, double Yval, double Zval, double thetaVal)
+        {
+            if (Arduinos[portID] == 2)
+            {
+                return -1;
+            }
 
-        //    if (!ArdPorts.IsOpen)
-        //    {
-        //        OpenPorts(portID);
-        //    }
 
-        //    string inputline = "SHIFT:" + Xval + ":" + Yval + ":" + Zval + ":" + thetaVal + "\r";
-        //    ArdPorts.WriteLine(inputline);
-        
-        //}
+            string inputLine = null;
+            if (portID == 0) //Going to CPU Main arm
+            {
+                inputLine = command + ":" + Xval + ":" + Yval + ":" + Zval + ":" + thetaVal + "\r";
+            }
+            else if (portID == 1) //Going to Tray handler, Yval is tray position
+            {
+                inputLine = command + ":" + Xval + ":" + Yval + "\r";
+            }
+            else
+            {
+                return -1;
+            }
 
-        //Use this is directly move to a certain position.  
-        //public void MovePosition(string portID, int Xval, int Yval, int Zval, int thetaVal)
-        //{
-        //    if (ArdPorts.PortName != portID)
-        //        ArdPorts.PortName = portID;
+            ArdPorts[portID].WriteLine(inputLine);
+            Task.Delay(30); //Waiting for navigation message
+            string data = ArdPorts[portID].ReadLine();
+            if (data != "NAVIGATING\r")
+            {
 
-        //    if (!ArdPorts.IsOpen)
-        //    {
-        //        OpenPorts(portID);
-        //    }
+            }
+            bool done = false;
+            while (!done)
+            {
+                Task.Delay(50);
+                if (ArdPorts[portID].BytesToRead > 0)
+                {
+                    data = ArdPorts[portID].ReadLine();
+                }
+                if (data == "DONE\r")
+                {
+                    Task.Delay(50);
+                    if (ArdPorts[portID].BytesToRead > 0)
+                    {
+                        data = ArdPorts[portID].ReadLine();
+                    }
+                    //Check COOR
+                    if (data.StartsWith("COOR"))
+                    {
+                        string[] pieces = data.Split(':');
+                        if (portID == 0)
+                        {
+                            ArmCoordinates[0] = double.Parse(pieces[1]);
+                            ArmCoordinates[1] = double.Parse(pieces[2]);
+                            ArmCoordinates[2] = double.Parse(pieces[3]);
+                            ArmCoordinates[3] = double.Parse(pieces[4]);
+                        }
+                        else if (portID == 1)
+                        {
+                            TrayZ = double.Parse(pieces[1]);
+                            TrayPresented = int.Parse(pieces[2]);
+                        }
+                    }
+                    else
+                        return -1;
+                    done = true;
+                }
+            }
 
-        //    string inputline = "MOVE:" + Xval + ":" + Yval + ":" + Zval + ":" + thetaVal+"\r";
-        //    ArdPorts.WriteLine(inputline);
-        //}
-
-        //Update the coordinate data if we are off, this is usually some type of command that will be 
-        //triggered by the failure/ innacuracy of another in certain cases.
-        //public void RedefinePosition(string portID, int Xval, int Yval, int Zval, int thetaVal)
-        //{
-        //    if (ArdPorts.PortName != portID)
-        //        ArdPorts.PortName = portID;
-
-        //    if (!ArdPorts.IsOpen)
-        //    {
-        //        OpenPorts(portID);
-        //    }
-
-        //    string inputline = "REDEF:" + Xval + ":" + Yval + ":" + Zval + ":" + thetaVal + "\r";
-        //    ArdPorts.WriteLine(inputline);
-        //}
-
+            return 0;
+        }
 
         //Send STOP command to Arduino.  
-        public void StopMotor()
+        public int StopMotor(int portID)
         {
-           // ArdPorts.WriteLine("STOP\r");
+            if (Arduinos[portID] == 2)
+            {
+                return -1;
+            }
+
+            string inputLine = "STOP\r";
+
+            ArdPorts[portID].WriteLine(inputLine);
+            Task.Delay(30); //Waiting for navigation message
+            string data = ArdPorts[portID].ReadLine();
+            if (data != "STOPPING\r")
+            {
+
+            }
+            bool done = false;
+            while (!done)
+            {
+                Task.Delay(50);
+                if (ArdPorts[portID].BytesToRead > 0)
+                {
+                    data = ArdPorts[portID].ReadLine();
+                }
+                Task.Delay(50);
+                if (ArdPorts[portID].BytesToRead > 0)
+                {
+                    data = ArdPorts[portID].ReadLine();
+                }
+                //Check COOR
+                if (data.StartsWith("COOR"))
+                {
+                    string[] pieces = data.Split(':');
+                    if(portID == 0)
+                    {
+                        ArmCoordinates[0] = double.Parse(pieces[1]);
+                        ArmCoordinates[1] = double.Parse(pieces[2]);
+                        ArmCoordinates[2] = double.Parse(pieces[3]);
+                        ArmCoordinates[3] = double.Parse(pieces[4]);
+                    }
+                    else if(portID == 1)
+                    {
+                        TrayZ = double.Parse(pieces[1]);
+                        TrayPresented = int.Parse(pieces[2]);
+                    }
+                }
+                else
+                    return -1;
+                done = true;
+            }
+
+            return 0;
         }
 
         public void Error(int status)
-        {
+        { //Error 0, nothing connected, 
             return;
         }
         
