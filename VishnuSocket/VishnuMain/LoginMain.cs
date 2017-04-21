@@ -22,6 +22,7 @@ namespace VishnuMain
         //set the load order here for all tabs
         private void LoginMain_Load_1(object sender, EventArgs e)
         {
+            ArduinoMotionLibrary.ArduinoMotionLibraryBoot();
             LoadMainViewerTab();        //tabindex 0
             LoadArmControlTab();        //tabindex 1
             LoadSettingsTab();          //tabindex 2

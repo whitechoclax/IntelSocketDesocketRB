@@ -10,15 +10,14 @@ namespace VishnuMain
     class ArduinoMotionLibrary
     {
         //SerialPort object declaration
-        //public SerialPort ArdPort = new SerialPort();
-        public List<SerialPort> ArdPorts = new List<SerialPort>();
-        string[] portName;
-        public byte[] Arduinos = { 2, 2 };      //0 is Main Arm, 1 is Tray handler
-        public double[] ArmCoordinates = { 0.0, 0.0, 0.0, 0.0 };
-        public double TrayZ = 0.0;
-        public int TrayPresented = 0;
+        //public static SerialPort ArdPort = new SerialPort();
+        public static List<SerialPort> ArdPorts = new List<SerialPort>();
+        public static byte[] Arduinos = { 2, 2 };      //0 is Main Arm, 1 is Tray handler
+        public static double[] ArmCoordinates = { 0.0, 0.0, 0.0, 0.0 };
+        public static double TrayZ = 0.0;
+        public static int TrayPresented = 0;
 
-        public ArduinoMotionLibrary()
+        public static void ArduinoMotionLibraryBoot()
         {
             ArdPorts.Add(new SerialPort());
             ArdPorts.Add(new SerialPort());
@@ -36,12 +35,11 @@ namespace VishnuMain
             {
                 OpenPorts();
             }
-            //ArdPosition("MOVE", 0, 50, 10, 10, 0);
-            //StopMotor(0);
+            
 
         }
 
-        private int findAvailiblePorts()
+        private static int findAvailiblePorts()
         {
             string[] portList = SerialPort.GetPortNames();
 
@@ -67,9 +65,10 @@ namespace VishnuMain
                 return 0;
         }
 
-        private void OpenPorts() //Find the connected Arduinos
+        private static void OpenPorts() //Find the connected Arduinos
         {
             int numArduinos = 2;
+            //try to see if any are connected
             try
             {
                 ArdPorts[0].Open();
@@ -84,6 +83,8 @@ namespace VishnuMain
                 Error(0);
                 return;
             }
+
+            //we have at least one connected, see if both are connected
             try
             {
                 ArdPorts[1].Open();
@@ -115,11 +116,11 @@ namespace VishnuMain
                     checkedYet = true;
                 }
                 else if (data != null)
-                {//Sometimes there's junk in the buffer and we need to try again
+                {                                               //Sometimes there's junk in the buffer and we need to try again
                     checkedYet = true;
                 }
                 else
-                {//If we try twice and nothing happens, we're dead in the water
+                {                                               //If we try twice and nothing happens, we're dead in the water
                     Error(4);
                     return;
                 }
@@ -158,7 +159,8 @@ namespace VishnuMain
             return;
         }
 
-        public int ArdPosition(string command, int portID, double Xval, double Yval, double Zval, double thetaVal)
+        //positional commands.  send command type (shift, move, redef, the port number 0 or 1, and the four coords.
+        public static int ArdPosition(string command, int portID, double Xval, double Yval, double Zval, double thetaVal)
         {//Inputs a command and values, and a desired arduino (0 or 1)
             if (Arduinos[portID] == 2)
             {
@@ -182,10 +184,12 @@ namespace VishnuMain
             ArdPorts[portID].WriteLine(inputLine);
             Task.Delay(30); //Waiting for navigation message
             string data = ArdPorts[portID].ReadLine();
+
             if (data != "NAVIGATING\r")
             {
 
             }
+
             bool done = false;
             while (!done)
             {
@@ -228,7 +232,7 @@ namespace VishnuMain
         }
 
         //Send STOP command to Arduino.  
-        public int StopMotor(int portID)
+        public static int StopMotor(int portID)
         {
             if (Arduinos[portID] == 2)
             {
@@ -263,10 +267,10 @@ namespace VishnuMain
                     string[] pieces = data.Split(':');
                     if (portID == 0)
                     {
-                        ArmCoordinates[0] = double.Parse(pieces[1]);
-                        ArmCoordinates[1] = double.Parse(pieces[2]);
-                        ArmCoordinates[2] = double.Parse(pieces[3]);
-                        ArmCoordinates[3] = double.Parse(pieces[4]);
+                        ArmCoordinates[0] = double.Parse(pieces[1]);        //save x
+                        ArmCoordinates[1] = double.Parse(pieces[2]);        //save y
+                        ArmCoordinates[2] = double.Parse(pieces[3]);        //save z
+                        ArmCoordinates[3] = double.Parse(pieces[4]);        //save theta
                     }
                     else if (portID == 1)
                     {
@@ -282,7 +286,7 @@ namespace VishnuMain
             return 0;
         }
 
-        public void Error(int status)
+        public static void Error(int status)
         { //Error 0, nothing connected, 
             return;
         }

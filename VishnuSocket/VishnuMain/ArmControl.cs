@@ -13,7 +13,7 @@ namespace VishnuMain
 {
     public partial class ArmControl : UserControl
     {
-        //singletons
+        /*singletons
         private static ArmControl _instance;
         public static ArmControl Instance
         {
@@ -23,54 +23,48 @@ namespace VishnuMain
                     _instance = new ArmControl();
                 return _instance;
             }
-        }
+        }*/
 
-        ArduinoMotionLibrary Arduino = new ArduinoMotionLibrary();
+        
         delegate void SetTextCallback(string text);
-        private BackgroundWorker hardworker;
         int portID = 0;
         int ZcoordinateValue;
         int RotationVal;
         int XcoordinateValue;
         int YcoordinateValue;
+        int TrayChoiceValue;
        
         public ArmControl()
         {
             InitializeComponent();
-            hardworker = new BackgroundWorker();
+            BootMessages();
             findPorts.Enabled = true;
-            groupBox1.Enabled = false;
+            
         }
 
-        private void findPorts_Click(object sender, EventArgs e)
+        private void BootMessages()
         {
-            if(Arduino.Arduinos[0] != 2)
+            if(ArduinoMotionLibrary.Arduinos[0] != 2)
             {
-                MessageBox.Show("Main Robot Arm Connected");
+                portListBox.AppendText("Main Robot Arm Connected");
             }
-            if(Arduino.Arduinos[1] != 2)
+            else if (ArduinoMotionLibrary.Arduinos[0] == 2)
             {
-                MessageBox.Show("Tray Handler Connected");
+                portListBox.AppendText("Main Robot Arm is disconnected." + Environment.NewLine
+                    + "Have you checked your arduino connection or device manager?");
+                coordControl.Enabled = false;
             }
-            /*string [] portList = Arduino.FindPortsAvailable();
-            foreach (string line in portList)
+            //default 2 means not connected. 
+            if (ArduinoMotionLibrary.Arduinos[1] != 2)
             {
-                portListBox.AppendText(line);
-                portListBox.AppendText(Environment.NewLine);
+                portListBox.AppendText("Tray Handler Connected");
             }
-
-            try
+            else if (ArduinoMotionLibrary.Arduinos[1] == 2)
             {
-                if (portList[0] != null)
-                {
-                    portName = portList[0];
-                    groupBox1.Enabled = true;
-                }
+                portListBox.AppendText("Tray Handler Arm is disconnected." + Environment.NewLine 
+                    + "Have You checked your arduino connection or device manager?");
+                trayGroupBox.Enabled = false;
             }
-            catch
-            {
-                MessageBox.Show("ARDUINO not found! Please connect.");
-            }*/
 
         }
 
@@ -79,18 +73,6 @@ namespace VishnuMain
             portListBox.AppendText(portID + " opened.");
             MessageBox.Show("COM PORT not found, Have you checked Arduino Connection?");
         }
-
-        private void ArdPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
-        {
-            //string data = Arduino.ArdPort.ReadTo("\n");
-            //portListBox.AppendText(data);
-
-            this.Invoke((MethodInvoker)delegate
-            {
-                //portListBox.AppendText(data);
-            });
-        }
-
       
         //ALL coordinate values assignment functions
         private void moveXval_ValueChanged(object sender, EventArgs e)
@@ -117,22 +99,27 @@ namespace VishnuMain
         //Run motor functions
         private void stopButton_Click(object sender, EventArgs e)
         {
-            Arduino.StopMotor(portID);
+            ArduinoMotionLibrary.StopMotor(portID);
         }
 
         private void redefineButton_Click(object sender, EventArgs e)
         {
-            Arduino.ArdPosition("REDEF", portID, XcoordinateValue, YcoordinateValue, ZcoordinateValue, RotationVal);
+            ArduinoMotionLibrary.ArdPosition("REDEF", portID, XcoordinateValue, YcoordinateValue, ZcoordinateValue, RotationVal);
         }
 
         private void moveButton_Click(object sender, EventArgs e)
         {
-            Arduino.ArdPosition("MOVE", portID, XcoordinateValue, YcoordinateValue, ZcoordinateValue, RotationVal);
+            ArduinoMotionLibrary.ArdPosition("MOVE", portID, XcoordinateValue, YcoordinateValue, ZcoordinateValue, RotationVal);
         }
 
         private void ShiftButton_Click(object sender, EventArgs e)
         {
-            Arduino.ArdPosition("SHIFT", portID, XcoordinateValue, YcoordinateValue, ZcoordinateValue, RotationVal);
+            ArduinoMotionLibrary.ArdPosition("SHIFT", portID, XcoordinateValue, YcoordinateValue, ZcoordinateValue, RotationVal);
+        }
+
+        private void traySelectorBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            TrayChoiceValue = traySelectorBox.SelectedIndex;
         }
     }
 }
