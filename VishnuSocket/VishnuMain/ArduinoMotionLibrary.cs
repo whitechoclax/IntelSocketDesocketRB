@@ -7,7 +7,7 @@ using System.IO.Ports;
 
 namespace VishnuMain
 {
-    class ArduinoMotionLibrary
+    static class ArduinoMotionLibrary
     {
         //SerialPort object declaration
         //public static SerialPort ArdPort = new SerialPort();

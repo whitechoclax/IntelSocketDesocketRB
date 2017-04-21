@@ -35,6 +35,7 @@
             this.ShiftButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.trayGroupBox = new System.Windows.Forms.GroupBox();
+            this.traySelectorBox = new System.Windows.Forms.ComboBox();
             this.trayRedefine = new System.Windows.Forms.Button();
             this.trayMove = new System.Windows.Forms.Button();
             this.trayStop = new System.Windows.Forms.Button();
@@ -55,7 +56,6 @@
             this.findPorts = new System.Windows.Forms.Button();
             this.portListBox = new System.Windows.Forms.RichTextBox();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
-            this.traySelectorBox = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.trayGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trayZaxis)).BeginInit();
@@ -82,7 +82,7 @@
             // stopButton
             // 
             this.stopButton.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.stopButton.Location = new System.Drawing.Point(13, 320);
+            this.stopButton.Location = new System.Drawing.Point(13, 337);
             this.stopButton.Margin = new System.Windows.Forms.Padding(2);
             this.stopButton.Name = "stopButton";
             this.stopButton.Size = new System.Drawing.Size(353, 44);
@@ -150,6 +150,20 @@
             this.trayGroupBox.TabIndex = 16;
             this.trayGroupBox.TabStop = false;
             this.trayGroupBox.Text = "Tray Arm Coordinate";
+            // 
+            // traySelectorBox
+            // 
+            this.traySelectorBox.FormattingEnabled = true;
+            this.traySelectorBox.Items.AddRange(new object[] {
+            "Untested Tray",
+            "Good Tray",
+            "Empty Tray",
+            "Bad Tray"});
+            this.traySelectorBox.Location = new System.Drawing.Point(32, 42);
+            this.traySelectorBox.Name = "traySelectorBox";
+            this.traySelectorBox.Size = new System.Drawing.Size(121, 29);
+            this.traySelectorBox.TabIndex = 16;
+            this.traySelectorBox.SelectedIndexChanged += new System.EventHandler(this.traySelectorBox_SelectedIndexChanged);
             // 
             // trayRedefine
             // 
@@ -387,26 +401,14 @@
             // portListBox
             // 
             this.portListBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.portListBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.portListBox.Location = new System.Drawing.Point(47, 66);
             this.portListBox.Margin = new System.Windows.Forms.Padding(2);
             this.portListBox.Name = "portListBox";
+            this.portListBox.ReadOnly = true;
             this.portListBox.Size = new System.Drawing.Size(575, 316);
             this.portListBox.TabIndex = 2;
             this.portListBox.Text = "";
-            // 
-            // traySelectorBox
-            // 
-            this.traySelectorBox.FormattingEnabled = true;
-            this.traySelectorBox.Items.AddRange(new object[] {
-            "Good Tray",
-            "Bad Tray",
-            "Untested Tray",
-            "Empty Tray"});
-            this.traySelectorBox.Location = new System.Drawing.Point(32, 42);
-            this.traySelectorBox.Name = "traySelectorBox";
-            this.traySelectorBox.Size = new System.Drawing.Size(121, 29);
-            this.traySelectorBox.TabIndex = 16;
-            this.traySelectorBox.SelectedIndexChanged += new System.EventHandler(this.traySelectorBox_SelectedIndexChanged);
             // 
             // ArmControl
             // 
