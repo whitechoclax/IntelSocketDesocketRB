@@ -17,7 +17,7 @@ namespace VishnuMain
         double[] ArmCoordinates = { 0.0, 0.0, 0.0, 0.0 };
         double TrayZ = 0.0;
         int TrayPresented = 0;
-        
+
         public ArduinoMotionLibrary()
         {
             ArdPorts.Add(new SerialPort());
@@ -28,7 +28,7 @@ namespace VishnuMain
             ArdPorts[0].BaudRate = 115200;
             ArdPorts[1].BaudRate = 115200;
             int status = findAvailiblePorts();
-            if(status == 0)
+            if (status == 0)
             {
                 Error(status);
             }
@@ -36,7 +36,7 @@ namespace VishnuMain
             {
                 OpenPorts();
             }
-            ArdPosition("MOVE",0, 50, 10, 10, 0);
+            ArdPosition("MOVE", 0, 50, 10, 10, 0);
             StopMotor(0);
 
         }
@@ -79,21 +79,7 @@ namespace VishnuMain
                 Error(0);
                 return;
             }
-<<<<<<< HEAD
             catch (System.UnauthorizedAccessException e)
-=======
-            string inputline = "QUERY\r";
-
-            ArdPorts[0].WriteLine(inputline);
-            ArdPorts[1].WriteLine(inputline);
-
-            //wait, then send a auto read( dont need event handlers)
-            Task.Delay(30);
-            string data = ArdPorts[0].ReadLine();
-
-            //if arduino returns trayhandler arm
-            if (data == "TRAYHANDLER\r")
->>>>>>> 5af0768d188f4ae0df4405d12ff8ca4ddbeb3f49
             {
                 Error(0);
                 return;
@@ -105,8 +91,8 @@ namespace VishnuMain
             catch (System.IO.IOException e)
             {
                 numArduinos = 1;
-            }     
-            catch(System.UnauthorizedAccessException e)
+            }
+            catch (System.UnauthorizedAccessException e)
             {
                 numArduinos = 1;
             }
@@ -138,7 +124,7 @@ namespace VishnuMain
                     return;
                 }
             }
-            
+
             if (numArduinos == 2)
             {
                 checkedYet = false;
@@ -281,14 +267,14 @@ namespace VishnuMain
                 if (data.StartsWith("COOR"))
                 {
                     string[] pieces = data.Split(':');
-                    if(portID == 0)
+                    if (portID == 0)
                     {
                         ArmCoordinates[0] = double.Parse(pieces[1]);
                         ArmCoordinates[1] = double.Parse(pieces[2]);
                         ArmCoordinates[2] = double.Parse(pieces[3]);
                         ArmCoordinates[3] = double.Parse(pieces[4]);
                     }
-                    else if(portID == 1)
+                    else if (portID == 1)
                     {
                         TrayZ = double.Parse(pieces[1]);
                         TrayPresented = int.Parse(pieces[2]);
@@ -306,6 +292,6 @@ namespace VishnuMain
         { //Error 0, nothing connected, 
             return;
         }
-        
+
     }
 }
