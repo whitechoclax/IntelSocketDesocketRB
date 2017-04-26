@@ -36,7 +36,7 @@ namespace VishnuMain
                 {
                     return;
                 }
-
+                ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1], OriginLocation[2], OriginLocation[3]);
                 CPU = trayHandler.GetCPUPosition();
                 Loc[0] = (CPU % trayHandler.trayDimensions[0]) * centerToCenterL;
                 if (CPU > trayHandler.trayDimensions[0])
