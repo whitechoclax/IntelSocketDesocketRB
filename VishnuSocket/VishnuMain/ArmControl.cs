@@ -12,20 +12,7 @@ using System.IO.Ports;
 namespace VishnuMain
 {
     public partial class ArmControl : UserControl
-    {
-        /*singletons
-        private static ArmControl _instance;
-        public static ArmControl Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new ArmControl();
-                return _instance;
-            }
-        }*/
-
-        
+    {        
         delegate void SetTextCallback(string text);
         int portID = 0;
         int ZcoordinateValue;

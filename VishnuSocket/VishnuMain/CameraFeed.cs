@@ -331,6 +331,22 @@ namespace VishnuMain
             }
         }
 
-    
+        private void MainSequenceButton_Click(object sender, EventArgs e)
+        {
+            if (ArmHandlerLibrary.Running == false)
+            {
+                //stop the capture
+                MainSequenceButton.Text = "Stop Test"; //Change text on button
+                MainSequenceButton.BackColor = System.Drawing.Color.Red;
+                ArmHandlerLibrary.Running = true;
+                ArmHandlerLibrary.ArmHandlerLibraryMainSequence(); //Should be background worker
+            }
+            else
+            {
+                MainSequenceButton.Text = "Start Test Sequence"; //Change text on button
+                MainSequenceButton.BackColor = System.Drawing.Color.Blue;
+                ArmHandlerLibrary.Running = false;
+            }
+        }
     }
 }
