@@ -9,10 +9,11 @@ namespace VishnuMain
     static class ArmHandlerLibrary
     {
         public static bool Running = false;
-        public static int CPUsWidth = 0;
-        public static int CPUsLength = 0;
-        public static double centerToCenterW = 0.0; //Distance between left and right CPU
-        public static double centerToCenterL = 0.0; //Distance between top and bottom CPU
+        public static double[] OriginLocation = { 100.0, 0.0, 0.0, 0.0 }; //CPU0 location
+        public static double[] SocketLocation = { 0.0, 100.0, 0.0, 0.0 };
+        private static double centerToCenterL = 0.0; //Distance between left and right CPU
+        private static double centerToCenterW = 0.0; //Distance between top and bottom CPU
+        private static double centerToCenterZ = 0.0; //Distance between trays
         public static int CPUindex = 0; //Which CPU we're on
 
         
@@ -22,28 +23,66 @@ namespace VishnuMain
             //Find Socket, put CPU in socket, wait until done
             //Once done, tell tray if good or bad, wait for position
             //Place CPU in position, wait for next either next CPU or done signal
-            if(!Running)
-            {
-                return;
+
+            double[] Loc = { 0.0, 0.0, 0.0, 0.0 };
+            FetchInformation();
+            TrayManagerLibrary trayHandler = new TrayManagerLibrary(); //should be background worker
+            bool done = false;
+            int CPU;
+
+            while (!done)
+            { //Main Loop
+                if (!Running)
+                {
+                    return;
+                }
+
+                CPU = trayHandler.GetCPUPosition();
+                Loc[0] = (CPU % trayHandler.trayDimensions[0]) * centerToCenterL;
+                if (CPU > trayHandler.trayDimensions[0])
+                {
+                    Loc[1] += centerToCenterW;
+                }
+                Loc[2] -= (trayHandler.emptyTrayCount + trayHandler.goodTrayCount + trayHandler.badTrayCount) * centerToCenterZ;
+                ArduinoMotionLibrary.ArdPosition("MOVE", 0, Loc[0], Loc[1], Loc[2], Loc[3]); //Move to CPU
+                //Verify we're above a CPU
+                while(!CameraTestCPU())
+                {
+                    //Keep Navigating to next CPU and testing
+                }
+                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 0, 0); //Descend Z
+                //Grab CPU
+                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 0, 0); //Raise back up
+                //Move to Socket, calibration image later
+                ArduinoMotionLibrary.ArdPosition("MOVE", 0, SocketLocation[0], SocketLocation[1], SocketLocation[2], SocketLocation[3]);
+                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 0, 0); //Descend into socket
+                //Release CPU
+                //Wait for test
+                //Tell Tray to present good or bad
+
+                ArduinoMotionLibrary.ArdPosition("MOVE", 0, 0, 0, 0, 0); //Demo done, return to origin
+                done = true;
             }
-
-
             return;
         }
 
-        public static void NavigateToPosition()
-        {
-
+        private static void FetchInformation()
+        {//Get information from settings later
+            centerToCenterL = 15.0;
+            centerToCenterW = 30.0;
+            centerToCenterZ = 12.0;
+            return;
         }
 
         public static void CameraReadQR()
         {
+
         }
 
         //mark tray
-        public static void CameraTestCPU()
+        public static bool CameraTestCPU()
         {
-
+            return true;
         }
 
         //take a pic, bool is true if top, false when bottom
