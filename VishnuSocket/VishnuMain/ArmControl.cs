@@ -34,6 +34,7 @@ namespace VishnuMain
             if(ArduinoMotionLibrary.Arduinos[0] != 2)
             {
                 portListBox.AppendText("Main Robot Arm Connected");
+                coordControl.Enabled = true;
             }
             else if (ArduinoMotionLibrary.Arduinos[0] == 2)
             {
@@ -45,6 +46,7 @@ namespace VishnuMain
             if (ArduinoMotionLibrary.Arduinos[1] != 2)
             {
                 portListBox.AppendText("Tray Handler Connected");
+                trayGroupBox.Enabled = true;
             }
             else if (ArduinoMotionLibrary.Arduinos[1] == 2)
             {
@@ -109,6 +111,10 @@ namespace VishnuMain
             TrayChoiceValue = traySelectorBox.SelectedIndex;
         }
 
-        
+        private void findPorts_Click(object sender, EventArgs e)
+        {
+            ArduinoMotionLibrary.ArduinoMotionLibraryBoot();
+            BootMessages();
+        }
     }
 }

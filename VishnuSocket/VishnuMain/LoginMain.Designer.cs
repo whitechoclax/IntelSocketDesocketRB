@@ -34,22 +34,25 @@
             // 
             // centralTab
             // 
-            this.centralTab.Location = new System.Drawing.Point(12, 12);
+            this.centralTab.Location = new System.Drawing.Point(11, 10);
+            this.centralTab.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.centralTab.Name = "centralTab";
             this.centralTab.SelectedIndex = 0;
-            this.centralTab.Size = new System.Drawing.Size(1920, 1080);
+            this.centralTab.Size = new System.Drawing.Size(1707, 864);
             this.centralTab.TabIndex = 0;
             // 
             // LoginMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.Menu;
-            this.ClientSize = new System.Drawing.Size(1898, 1024);
+            this.ClientSize = new System.Drawing.Size(1417, 692);
             this.Controls.Add(this.centralTab);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "LoginMain";
             this.Text = "Vishnu 2017 0.4a";
             this.Load += new System.EventHandler(this.LoginMain_Load_1);
