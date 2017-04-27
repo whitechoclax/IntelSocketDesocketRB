@@ -22,12 +22,13 @@ namespace VishnuMain
             ArdPorts.Add(new SerialPort());
             ArdPorts.Add(new SerialPort());
 
-            ArdPorts[0] = new SerialPort();
-            ArdPorts[1] = new SerialPort();
-            ArdPorts[0].BaudRate = 115200;
-            ArdPorts[1].BaudRate = 115200;
-            ArdPorts[0].ReadTimeout = 3000;
-            ArdPorts[1].ReadTimeout = 3000;
+            for (int i = 0; i< 2; i++)
+            {
+                ArdPorts[i] = new SerialPort();
+                ArdPorts[i].BaudRate = 115200;
+                ArdPorts[i].ReadTimeout = 3000;
+            }
+
             int status = findAvailiblePorts();
             if (status == 0)
             {
