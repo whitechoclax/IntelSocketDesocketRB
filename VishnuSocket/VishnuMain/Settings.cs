@@ -13,14 +13,16 @@ namespace VishnuMain
 {
     public partial class SettingsMenu : UserControl
     {
+        //strings to save
         string xmlPathString;
         string invPathString;
+
+        //tray properties for different sizes
         int trayLength;
         int trayWidth;
         int trayStack;
 
         //intertraydimensions
-        
         double trayOrigin2Center;
         double trayCenter2Center;
         double trayHeight;
@@ -28,38 +30,52 @@ namespace VishnuMain
         public SettingsMenu()
         {
             InitializeComponent();
+            loadFromXML();
         }
 
         //UI changes section
         private void trayLengthValue_ValueChanged(object sender, EventArgs e)
         {
             trayLength = (int)trayLengthValue.Value;
+            SettingsLibrary.TrayLength = trayLength;
         }
 
         private void trayWidthValue_ValueChanged(object sender, EventArgs e)
         {
             trayWidth = (int)trayWidthValue.Value;
+            SettingsLibrary.TrayWidth = trayWidth;
         }
 
         private void trayStackValue_ValueChanged(object sender, EventArgs e)
         {
             trayStack = (int)trayStackValue.Value;
+            SettingsLibrary.TrayStack = trayStack;
         }
 
         private void trayOr2CenterValue_ValueChanged(object sender, EventArgs e)
         {
             trayOrigin2Center = (double)trayOr2CenterValue.Value;
+            SettingsLibrary.TrayOrigin2Center = trayOrigin2Center;
         }
 
         private void trayCenter2CenterValue_ValueChanged(object sender, EventArgs e)
         {
             trayCenter2Center = (double)trayCenter2CenterValue.Value;
+            SettingsLibrary.TrayCenter2Center = trayCenter2Center;
         }
 
         private void trayHeightValue_ValueChanged(object sender, EventArgs e)
         {
             trayHeight = (double)trayHeightValue.Value;
+            SettingsLibrary.TrayHeight = trayHeight;
         }
+
+        private void invPathTextBox_TextChanged(object sender, EventArgs e)
+        {
+            //var assignment is handled in inventorysave click event handler
+            SettingsLibrary.InvPathString = invPathString; 
+        }
+
         //load button handler
         private void inventorySaveFileButton_Click(object sender, EventArgs e)
         {

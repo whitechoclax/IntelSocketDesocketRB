@@ -128,6 +128,7 @@
     <Compile Include="Settings.Designer.cs">
       <DependentUpon>Settings.cs</DependentUpon>
     </Compile>
+    <Compile Include="SettingsLibrary.cs" />
     <Compile Include="TemplateMatchController.cs" />
     <Compile Include="TemplateMatchView.cs">
       <SubType>UserControl</SubType>

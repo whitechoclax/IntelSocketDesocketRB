@@ -326,6 +326,7 @@
             this.invPathTextBox.Name = "invPathTextBox";
             this.invPathTextBox.Size = new System.Drawing.Size(407, 26);
             this.invPathTextBox.TabIndex = 1;
+            this.invPathTextBox.TextChanged += new System.EventHandler(this.invPathTextBox_TextChanged);
             // 
             // label5
             // 

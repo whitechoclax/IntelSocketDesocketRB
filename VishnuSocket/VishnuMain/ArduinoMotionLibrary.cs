@@ -26,6 +26,8 @@ namespace VishnuMain
             ArdPorts[1] = new SerialPort();
             ArdPorts[0].BaudRate = 115200;
             ArdPorts[1].BaudRate = 115200;
+            ArdPorts[0].ReadTimeout = 3000;
+            ArdPorts[1].ReadTimeout = 3000;
             int status = findAvailiblePorts();
             if (status == 0)
             {
@@ -101,10 +103,22 @@ namespace VishnuMain
             string data = null;
             bool checkedYet = false;
             while (checkedYet == false)
-            { //Assign arduinos to ports
+            { 
+                //Assign arduinos to ports
+                
                 ArdPorts[0].WriteLine("QUERY\r");
                 Task.Delay(30);
-                data = ArdPorts[0].ReadLine();
+
+                try
+                {
+                    data = ArdPorts[0].ReadLine();
+                }
+                catch (TimeoutException e)
+                {
+                    numArduinos = 0;
+                    return;
+                }
+                
                 if (data == "TRAYHANDLER\r")
                 {
                     Arduinos[1] = 0;
