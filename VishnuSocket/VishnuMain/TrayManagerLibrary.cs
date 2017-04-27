@@ -28,13 +28,16 @@ namespace VishnuMain
         public TrayManagerLibrary()
         {
             //Fetch settings
+            trayDimensions[0] = 11;
+            trayDimensions[1] = 2;
+            trayDimensions[2] = 1;
 
         }
 
 
         public int GetCPUPosition()
         {
-            if(CPUpos > 0 && CPUpos < trayDimensions[0] * trayDimensions[1])
+            if(CPUpos >= 0 && CPUpos < trayDimensions[0] * trayDimensions[1])
             {
                 CPUpos = CPUpos + 1;
                 return CPUpos - 1;
