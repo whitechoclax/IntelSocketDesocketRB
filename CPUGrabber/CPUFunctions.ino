@@ -56,6 +56,7 @@ void CommandProcess(){//Parse command
       else{
         DEBUG = true;
         Serial.println("Debug on");
+        Serial.println("MESSAGE!!!");
       }
       inputString = "";
       stringComplete = false;
@@ -268,6 +269,7 @@ void Navigate(){ //Moves to new positions
   boolean doneAngle = false;
 
   int thetaOriginal = theta;
+  int whereWereGoing = thetaOriginal + deltaTheta;
   while(!doneTheta){
     serialEvent();
     if(deltaTheta > .4){  //Theta Section
@@ -287,6 +289,12 @@ void Navigate(){ //Moves to new positions
           addDelay = abs(map(theta, thetaOriginal, ((thetaNew + thetaOriginal)/2), 25, 0));
         else
           addDelay = map(theta, ((thetaNew + thetaOriginal)/2), thetaOriginal, 0, 25);
+      }
+      if(DEBUG){
+        //Serial.print("Add delay: ")Serial.println(addDelay);
+        int x = map(theta, thetaOriginal, whereWereGoing, 0, 2*PI);
+        int tDelay = 12.5*cos(x)+12.5;
+        Serial.print("tDelay: ");Serial.println(tDelay);
       }
       delay(12 + 2*addDelay);
       deltaTheta -= 1/float(THETA);
