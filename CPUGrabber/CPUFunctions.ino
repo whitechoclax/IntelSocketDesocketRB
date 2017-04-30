@@ -56,7 +56,6 @@ void CommandProcess(){//Parse command
       else{
         DEBUG = true;
         Serial.println("Debug on");
-        Serial.println("MESSAGE!!!");
       }
       inputString = "";
       stringComplete = false;
@@ -277,8 +276,9 @@ void Navigate(){ //Moves to new positions
       digitalWrite(Step[THETAMOTOR], LOW);
       delay(3);
       digitalWrite(Step[THETAMOTOR], HIGH);
-      int addDelay = 0;
-      if(thetaDirection == RIGHT){
+      double x = ((theta-thetaOriginal)*2*PI)/(whereWereGoing - thetaOriginal);
+      double tDelay = 12.5*cos(x)+12.5;
+      /*if(thetaDirection == RIGHT){
         if(theta > ((thetaNew + thetaOriginal)/2))
           addDelay = abs(map(theta, thetaOriginal, ((thetaNew + thetaOriginal)/2), 25, 0));
         else
@@ -289,23 +289,18 @@ void Navigate(){ //Moves to new positions
           addDelay = abs(map(theta, thetaOriginal, ((thetaNew + thetaOriginal)/2), 25, 0));
         else
           addDelay = map(theta, ((thetaNew + thetaOriginal)/2), thetaOriginal, 0, 25);
-      }
+      }*/
+      int addDelay = (4*tDelay) + 5;
       if(DEBUG){
-        //Serial.print("Add delay: ")Serial.println(addDelay);
-        int x = map(theta, thetaOriginal, whereWereGoing, 0, 2*PI);
-        int tDelay = 12.5*cos(x)+12.5;
-        Serial.print("tDelay: ");Serial.println(tDelay);
+        Serial.print("addDelay: ");Serial.println(addDelay);
       }
-      delay(12 + 2*addDelay);
+      delay(tDelay);
       deltaTheta -= 1/float(THETA);
       if(thetaDirection == LEFT){
         theta -= 1/float(THETA);
       }
       else
         theta += 1/float(THETA);
-      if(DEBUG){
-        //Serial.print("Theta position: ");Serial.println(theta);
-      }  
     }
     if(deltaTheta <= .4){
       doneTheta = true;
