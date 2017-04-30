@@ -290,7 +290,7 @@ void Navigate(){ //Moves to new positions
         else
           addDelay = map(theta, ((thetaNew + thetaOriginal)/2), thetaOriginal, 0, 25);
       }*/
-      int addDelay = (4*tDelay) + 5;
+      int addDelay = (5*tDelay) + 18;
       if(DEBUG){
         Serial.print("addDelay: ");Serial.println(addDelay);
       }
