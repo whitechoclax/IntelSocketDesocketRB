@@ -9,6 +9,7 @@ namespace VishnuMain
     static class ArmHandlerLibrary
     {
         public static bool Running = false;
+       
         public static double[] OriginLocation = { 50.0, 0.0, 0.0, 0.0 }; //CPU0 location
         public static double[] SocketLocation = { 0.0, 50.0, 0.0, 0.0 };
         private static double centerToCenterL = 0.0; //Distance between left and right CPU

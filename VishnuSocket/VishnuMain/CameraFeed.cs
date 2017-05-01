@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.Util;
@@ -18,19 +17,7 @@ namespace VishnuMain
 {
     public partial class CameraFeed : UserControl
     {
-        //singletons
-        private static CameraFeed _instance;
-        public static CameraFeed Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new CameraFeed();
-                return _instance;
-            }
-        }
-
-
+        
         #region Variables
         private Capture _capture = null;
         private bool _captureInProgress = false;
@@ -60,6 +47,13 @@ namespace VishnuMain
                 Camera_Selection.SelectedIndex = 0; //Set the selected device the default
                 captureButton.Enabled = true; //Enable the start
             }
+
+
+            backWorker.WorkerReportsProgress = true;
+            backWorker.WorkerSupportsCancellation = true;
+            backWorker.DoWork += new DoWorkEventHandler(backWorker_DoWork);
+            backWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backWorker_RunWorkerCompleted);
+
         }
 
         private void ProcessFrame(object sender, EventArgs arg)
@@ -217,23 +211,68 @@ namespace VishnuMain
             }
 
         }
-        
+
+        private void backWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+            while (ArmHandlerLibrary.Running)
+            { 
+                if (worker.CancellationPending == true)
+                {
+                    e.Cancel = true;
+
+                }
+
+                else
+                {
+                    //peform our time consuming op
+                    //IM A FOOOL TO DO YER DIRTY WORK
+                    ArmHandlerLibrary.ArmHandlerLibraryMainSequence();
+                }
+            }
+        }
        
         private void MainSequenceButton_Click(object sender, EventArgs e)
         {
-            if (ArmHandlerLibrary.Running == false)
+            if (backWorker.IsBusy != true)
             {
-                //stop the capture
-                MainSequenceButton.Text = "Stop Test"; //Change text on button
-                MainSequenceButton.BackColor = System.Drawing.Color.Red;
-                ArmHandlerLibrary.Running = true;
-                ArmHandlerLibrary.ArmHandlerLibraryMainSequence(); //Should be background worker
+                //start async op for our main handler library running var might be redundant
+                
+
+                if (ArmHandlerLibrary.Running == false)
+                {
+                    //stop the capture
+                    MainSequenceButton.Text = "Stop Test"; //Change text on button
+                    MainSequenceButton.BackColor = System.Drawing.Color.Red;
+                    ArmHandlerLibrary.Running = true;
+                    backWorker.RunWorkerAsync();
+                    //Should be background worker
+                }
             }
-            else
+            else if (backWorker.IsBusy == true && backWorker.WorkerSupportsCancellation == true)
             {
+                backWorker.CancelAsync();
                 MainSequenceButton.Text = "Start Test Sequence"; //Change text on button
                 MainSequenceButton.BackColor = System.Drawing.Color.Blue;
                 ArmHandlerLibrary.Running = false;
+            }
+        }
+        
+        private void backWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Cancelled == true)
+            {
+                richTextBox1.AppendText("Operation was Cancelled");
+            }
+
+            else if (e.Error != null)
+            {
+                richTextBox1.AppendText("Error: " + e.Error.Message);
+            }
+
+            else
+            {
+                richTextBox1.AppendText("All trays completed.  Please unload and reconfigure settings to run another batch");
             }
         }
 

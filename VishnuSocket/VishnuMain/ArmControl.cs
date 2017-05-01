@@ -33,13 +33,13 @@ namespace VishnuMain
         {
             if(ArduinoMotionLibrary.Arduinos[0] != 2)
             {
-                portListBox.AppendText("Main Robot Arm Connected");
+                portListBox.AppendText("Main Robot Arm Connected" + Environment.NewLine);
                 coordControl.Enabled = true;
             }
             else if (ArduinoMotionLibrary.Arduinos[0] == 2)
             {
                 portListBox.AppendText("Main Robot Arm is disconnected." + Environment.NewLine
-                    + "Have you checked your arduino connection or device manager?");
+                    + "Have you checked your arduino connection or device manager?" + Environment.NewLine);
                 coordControl.Enabled = false;
             }
             //default 2 means not connected. 
@@ -51,7 +51,7 @@ namespace VishnuMain
             else if (ArduinoMotionLibrary.Arduinos[1] == 2)
             {
                 portListBox.AppendText("Tray Handler Arm is disconnected." + Environment.NewLine 
-                    + "Have You checked your arduino connection or device manager?");
+                    + "Have You checked your arduino connection or device manager?" + Environment.NewLine);
                 trayGroupBox.Enabled = false;
             }
 
@@ -60,7 +60,7 @@ namespace VishnuMain
         private void openPort_Click(object sender, EventArgs e)
         { 
             portListBox.AppendText(portID + " opened.");
-            MessageBox.Show("COM PORT not found, Have you checked Arduino Connection?");
+            MessageBox.Show("COM PORT not found, Have you checked Arduino Connection?" + Environment.NewLine);
         }
       
         //ALL coordinate values assignment functions
