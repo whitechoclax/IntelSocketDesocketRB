@@ -1,6 +1,6 @@
 ﻿namespace VishnuMain
 {
-    partial class TemplateMatchView
+    partial class ComputerVision_Tab
     {
         /// <summary>
         /// Required designer variable.

@@ -66,7 +66,7 @@ namespace VishnuMain
         {
             TabPage page = new TabPage();
             page.Text = "Object Detection";
-            TemplateMatchView Match = new VishnuMain.TemplateMatchView();
+            ComputerVision_Tab Match = new VishnuMain.ComputerVision_Tab();
             page.Controls.Add(Match);
             centralTab.TabPages.Add(page);
         }

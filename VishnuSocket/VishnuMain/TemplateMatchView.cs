@@ -15,7 +15,7 @@ namespace VishnuMain
 {
 
 
-    public partial class TemplateMatchView : UserControl
+    public partial class ComputerVision_Tab : UserControl
     {
 
 
@@ -32,10 +32,9 @@ namespace VishnuMain
 
 
 
-
         /* Initialziation for camera feed */
 
-        public TemplateMatchView() {
+        public ComputerVision_Tab() {
             InitializeComponent();
             Camera_frame = StartCapture();           //start camera feed loading the UI
         }
