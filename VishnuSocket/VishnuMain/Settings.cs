@@ -29,8 +29,8 @@ namespace VishnuMain
 
         public SettingsMenu()
         {
-            InitializeComponent();
-            loadFromXML();
+            //InitializeComponent();
+            //loadFromXML();
         }
 
         //UI changes section

@@ -57,6 +57,9 @@
     <ApplicationIcon>Industry-Robot-icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DataMatrix.net">
+      <HintPath>..\Common\DataMatrix API\DataMatrix.net.dll</HintPath>
+    </Reference>
     <Reference Include="DirectShowLib-2005">
       <HintPath>..\Common\DirectShow\lib\DirectShowLib-2005.dll</HintPath>
     </Reference>

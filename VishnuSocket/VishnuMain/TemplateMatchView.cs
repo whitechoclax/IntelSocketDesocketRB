@@ -13,33 +13,28 @@ using Emgu.Util;
 
 namespace VishnuMain
 {
-    public partial class TemplateMatchView : UserControl
-    {
-        //UI specific Variables
-        private Capture Camera_frame = null;
-        List<Mat> UI_images = new List<Mat>();
-        private bool snap_on;                       
-        public bool isLoaded;                       //is image loaded
 
+
+    public partial class ComputerVision_Tab : UserControl
+    {
+
+
+        /* Variables & Objects */
+
+        private Capture Camera_frame = null;
+        private bool capturing;                       
+        public bool isLoaded;                       
         String[] templateList;
         Mat source_img = new Mat();
+        Mat img_holder = new Mat();
+        CvFunctions _Template = new CvFunctions();
 
-        //singletons
-        private static TemplateMatchView _instance;
-        public static TemplateMatchView Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new TemplateMatchView();
-                return _instance;
-            }
-        }
 
-        //declare object for class TemplateMatchController
-        TemplateMatchController _Template = new TemplateMatchController();
-        public TemplateMatchView()
-        {
+
+
+        /* Initialziation for camera feed */
+
+        public ComputerVision_Tab() {
             InitializeComponent();
             Camera_frame = StartCapture();           //start camera feed loading the UI
         }
@@ -49,53 +44,53 @@ namespace VishnuMain
             try
             {
                 Camera_frame = new Capture();
-                Camera_frame.ImageGrabbed += CaptureFeed; //live stream image cap
+                Camera_frame.SetCaptureProperty(CapProp.FrameHeight, 1080);
+                Camera_frame.SetCaptureProperty(CapProp.FrameWidth, 1920);
+                Camera_frame.ImageGrabbed += videoFeed_refresher; //live stream image cap
                 return Camera_frame;         //return the capture value parameter, 
             }
-            catch (System.Exception except)
+            catch (System.Exception)
             {
                 MessageBox.Show("Camera Feed could not be started - Check camera conections");
                 return Camera_frame = null;
             }
         }
 
-        private void takepicture_Click(object sender, EventArgs e)
-        {
-            //click take a pciture, grab source image from the testbox file, 
-            captured_imgbox.Image = _Template.SnapPicture(Camera_frame); //declare object matchtemplatecontroller so we can use it
-        }
-
-        private void startCaptureButton_Click(object sender, EventArgs e)
-        {
-            //start capture of images
-            
-            if (Camera_frame != null)
-                {
-                    if (snap_on)
-                    {
-                        startCaptureButton.Text = "Start Capture";
-                        Camera_frame.Pause();
-                    }
-                    else
-                    {
-                        startCaptureButton.Text = "Stop";
-                        Camera_frame.Start();
-                    }
-                    snap_on = !snap_on;
-                }
-            
-        }
-
-        //code that handles output to camera feed, 
-        private void CaptureFeed(object sender, EventArgs arg)
+        private void videoFeed_refresher(object sender, EventArgs arg)
         {
             Mat frame = new Mat();
             Camera_frame.Retrieve(frame, 0);
-            imageBox4.Image = frame;
+            video_imgbox.Image = frame;
         }
 
 
-        private void loadSource_Click(object sender, EventArgs e)
+
+
+
+        /* Clicking functions on windows form */
+
+        private void captureImg_Click(object sender, EventArgs e) {
+            //SnapPicture has various modes
+            img_holder = _Template.SnapPicture(Camera_frame, 3);
+            captured_imgbox.Image = img_holder;
+        }
+
+        private void startCameraFeed_Click(object sender, EventArgs e) {
+
+            if (Camera_frame != null) {
+                if (capturing) {
+                    startCaptureButton.Text = "Start Capture";
+                    Camera_frame.Pause();
+                }
+                else {
+                    startCaptureButton.Text = "Stop";
+                    Camera_frame.Start();
+                }
+                capturing = !capturing;
+            }
+        }
+
+        private void loadImg_Click(object sender, EventArgs e)
         {
             DialogResult result = openFileDialog1.ShowDialog();
             if (result == DialogResult.OK || result == DialogResult.Yes)
@@ -118,24 +113,22 @@ namespace VishnuMain
 
         private void findMatch_Click(object sender, EventArgs e)
         {
+            //loads image taken from capture and does templatedetection
+            Mat res = new Mat();   
+            //source_img = new Mat(sourceimg_textbox.Text, LoadImageType.Grayscale);
 
-            source_img = new Mat(sourceimg_textbox.Text, LoadImageType.Grayscale);
             //grab images from UI, run templ detection and retrieve images.  
-            UI_images = _Template.TemplateDetection(templateList, source_img, templateList.Length);
-
-            if (UI_images.Count > 0)
-            { 
-                captured_imgbox.Image = UI_images.ElementAt(1);
-                template_imgbox.Image = UI_images.ElementAt(2);
-                tracked_imgbox.Image = UI_images.ElementAt(3);
-            }
-
+            res =_Template.TemplateDetection(templateList, img_holder);
+            tracked_imgbox.Image = res;
         }
 
-        private void ReleaseData()
-        {
-            if (Camera_frame != null)
-                Camera_frame.Dispose();
+        private void savePicture_Click(object sender, EventArgs e) {
+
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            
+            _Template.SaveImg(img_holder, path + "/" + "EMGU.jpg");
+
         }
+            
     }
 }

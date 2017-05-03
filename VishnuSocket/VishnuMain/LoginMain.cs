@@ -26,6 +26,7 @@ namespace VishnuMain
             LoadMainViewerTab();        //tabindex 0
             LoadArmControlTab();        //tabindex 1
             LoadSettingsTab();          //tabindex 2
+            LoadCvDetectionTab();       //tabindex 3
         }
 
         //load tab pages here
@@ -57,6 +58,16 @@ namespace VishnuMain
             page.Text = "Settings";
             SettingsMenu Menu = new VishnuMain.SettingsMenu();
             page.Controls.Add(Menu);
+            centralTab.TabPages.Add(page);
+        }
+
+        //template detection
+        private void LoadCvDetectionTab() 
+        {
+            TabPage page = new TabPage();
+            page.Text = "Object Detection";
+            ComputerVision_Tab Match = new VishnuMain.ComputerVision_Tab();
+            page.Controls.Add(Match);
             centralTab.TabPages.Add(page);
         }
 
