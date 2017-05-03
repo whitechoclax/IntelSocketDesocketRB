@@ -141,8 +141,7 @@ namespace VishnuMain
                 trayCenter2CenterCol = (double?)setting.Element("TrayCenter2CenterCol") ?? 25.5;
                 trayHeight = (double?)setting.Element("TrayHeight") ?? 12.00;
                 invPathString = (string)setting.Element("inventoryPath") ?? string.Empty;
-                //Need to change origin distance to origin distance x/y
-                //Add center to center for different rows
+                //Need to add origin to tray location and for socket location (XYZ)
             }
 
             //update UI
