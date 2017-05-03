@@ -1,116 +1,142 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
-using System.Drawing;
+using Emgu.CV.Util;
+using DataMatrix.net;
+
 
 
 namespace VishnuMain
 {
-    public class TemplateMatchController
-    {
-        //local vars to namespace
-        Capture camera_feed = null;
-        Mat camera_img = new Mat();
-        Mat gray_frame = new Mat();
-        Mat Overlay = new Mat();
-        Mat Load_Img = new Mat();
-        Mat Comp_Img = new Mat();
-        //public bool isCapturing;
+    public class CvFunctions {
+
+        public Mat SnapPicture(Capture camera_feed, int mode) { 
+
+            Mat color_frame = new Mat();
+            Mat gray_frame = new Mat();
+            Mat binary_frame = new Mat();
+            Mat[] rgb_frame;
+
+            camera_feed.SetCaptureProperty(CapProp.FrameHeight, 1080);
+            camera_feed.SetCaptureProperty(CapProp.FrameWidth, 1920);
+            camera_feed.Retrieve(color_frame);
+            CvInvoke.CvtColor(color_frame, gray_frame, ColorConversion.Bgr2Gray);
 
 
-        //take picture with capture button.  Retreive feed data from caller.  NEEDS 
-        // a camera stream as an argument
-        public Mat SnapPicture(Capture camera_feed)
-        { 
-            Mat frame = new Mat();
-            
-            camera_feed.Retrieve(frame, 0);
-            CvInvoke.CvtColor(frame, camera_img, ColorConversion.Bgr2Gray);
-            return camera_img;
-     
+            switch (mode) {
+
+                case 1: //case for just grayscale img
+                    return gray_frame;
+
+                case 2://case for barcode scanning
+                    rgb_frame = color_frame.Split();
+                    CvInvoke.Threshold(rgb_frame[2], rgb_frame[2], 150, 255, ThresholdType.Binary);
+                    return binary_frame;
+
+                case 3: //case for calibration x.y
+                    CvInvoke.Threshold(gray_frame, binary_frame, 100, 255, ThresholdType.Binary);
+                    return binary_frame;
+
+                default:
+                    return color_frame;
+            }
         }
 
-        //Main templete detection.  Uses a list of images (choosen by user in this case, 
-        public List<Mat> TemplateDetection(String[] templatelist, Mat sourceImg, int template_length)
-        {
+        public void SaveImg(Mat Img, string filename) {
+       
+            Img.Save(filename);
+        }
+
+        public String BarcodeScanner(Mat barcode_img) {
+
+            //creates decorder object
+            DmtxImageDecoder decoder = new DmtxImageDecoder();
+
+            //decode barcode img
+            List<string> codes = decoder.DecodeImage(barcode_img.Bitmap, 1, new TimeSpan(0, 0, 2));
+
+            //return barcode string
+            if (codes.Count > 0)
+                return codes[0];
+            else {
+                return "Nothing found";
+            }
+
+        }
+
+        public Mat TemplateDetection(String[] templatelist, Mat sourceImg) { //takes in list of template images, source img
 
             Mat ResultMat = new Mat(); //mat data holds template matches coordinates
             Mat result_img = sourceImg.Clone(); //image with rectangles
+            int template_length = templatelist.Length;
 
-            //declare new list of Mat objects
-            List<Mat> template_imageArray = new List<Mat>();
+            //requirement for template detection
+            double minValues = 0;
+            double maxValues = 0;
+            Point minLocations = new Point { X = 0, Y = 0 };
+            Point maxLocations = new Point { X = 0, Y = 0 };
 
+            for (int i = 0; i < template_length; ++i) { //loop used to go through all template images
 
-            for (int i = 0; i < template_length; ++i)
-            { //loop used to go through all template images
+                while (true) { //loop to mark all matches
 
-                Mat templateImg = new Mat(templatelist[i], LoadImageType.Grayscale);
-                CvInvoke.MatchTemplate(sourceImg, templateImg, ResultMat, TemplateMatchingType.CcoeffNormed);
-
-                while (true)
-                { //loop to mark all matches
-
-                    //requirement for Floodfill
-                    double minValues = 0;
-                    double maxValues = 0;
-                    Point minLocations = new Point { X = 0, Y = 0 };
-                    Point maxLocations = new Point { X = 0, Y = 0 };
+                    Mat templateImg = CvInvoke.Imread(templatelist[i], LoadImageType.Grayscale); //creates image from list
+                    CvInvoke.MatchTemplate(sourceImg, templateImg, ResultMat, TemplateMatchingType.CcoeffNormed); //does template matching
 
                     //finds best matching location
                     CvInvoke.MinMaxLoc(ResultMat, ref minValues, ref maxValues, ref minLocations, ref maxLocations);
 
                     //accpetance check
-                    if (maxValues > 0.8)
-                    {
-                        //draw a rectangle around matched template location
+                    if (maxValues > 0.8) {
+
+                        //creates rectangle 
                         Rectangle match = new Rectangle(maxLocations, templateImg.Size);
-                        CvInvoke.Rectangle(result_img, match, new MCvScalar(0, 255, 0), 2);
+
+                        double offset_x;
+                        double offset_y;
+                        double x_cm = 1920 / 23;
+                        double y_cm = 1080 / 13;
+                        //23x13 @ 16.5 cm
+                        //20x10 @ 12.5 cm
+                        //12.1x6.8 @ 8.3 cm 
+
+                        offset_x = Math.Round((960 - (match.X + (match.Width / 2))) / x_cm, 2);
+                        offset_y = Math.Round((540 - (match.Y + (match.Height / 2))) / y_cm, 2);
+
+                        MessageBox.Show("Left/Right:" + offset_x + "\n" + "Up/Down:" + offset_y, "Coordinates");
+
+                        //draws rectangle match onto source img
+                        CvInvoke.Rectangle(sourceImg, match, new Bgr(Color.Black).MCvScalar, 20);
 
                         //section to compelte floodfill function
-                        Rectangle outRect;
-                        Mat mask = ResultMat.Clone();
-                        int width = mask.Width;
-                        int height = mask.Height;
-                        Image<Gray, Byte> fillMasks = new Image<Gray, Byte>(width + 2, height + 2);
+                        //Rectangle outRect;
+
+                        Mat mask = new Mat(sourceImg.Height + 2, sourceImg.Width + 2, DepthType.Cv8U, 1);
+
                         MCvScalar lo = new MCvScalar(0);
                         MCvScalar up = new MCvScalar(255);
 
                         //method to fill in all rectagles so there will be no redundant detection
-                        CvInvoke.FloodFill(ResultMat,
-                            fillMasks, maxLocations,
-                            new MCvScalar(0), out outRect,
-                            lo, up,
-                            Connectivity.FourConnected,
-                            FloodFillType.Default);
+                        //CvInvoke.FloodFill(sourceImg,
+                        //    mask, maxLocations,
+                        //    new MCvScalar(0), out outRect,
+                        //    lo, up,
+                        //    Connectivity.FourConnected,
+                        //    FloodFillType.Default);
+
                     }
                     else
                         break;
-                }
+                } //loops template matching
             }
-            
 
-            //Add items to list
-            template_imageArray.Add(sourceImg);
-            template_imageArray.Add(Comp_Img);
-            template_imageArray.Add(result_img);
-
-            return template_imageArray;
+            //show pictures on console
+            return sourceImg;
         }
-
-       
-
-
-
-        //load img and comp img are given by frames from top of this class function, overlay is a clone
-        //captured_imgbox.Image = Load_Img;
-        //template_imgbox.Image = Comp_Img;
-        //tracked_imgbox.Image = Overlay;
 
     }
 }
