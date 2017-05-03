@@ -69,9 +69,9 @@ namespace VishnuMain
 
         private static void FetchInformation()
         {//Get information from settings later
-            centerToCenterL = 15.0;
-            centerToCenterW = 30.0;
-            centerToCenterZ = 12.0;
+            centerToCenterL = SettingsLibrary.TrayCenter2CenterCol;
+            centerToCenterZ = SettingsLibrary.TrayHeight;
+            centerToCenterW = SettingsLibrary.TrayCenter2CenterRow;
             return;
         }
 
