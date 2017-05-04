@@ -14,29 +14,30 @@ using Emgu.Util;
 namespace VishnuMain
 {
 
-
     public partial class ComputerVision_Tab : UserControl
     {
 
-
-        /* Variables & Objects */
-
+        /* Variables  */
+    
         private Capture Camera_frame = null;
-        private bool capturing;                       
-        public bool isLoaded;                       
+        private bool videoFeed;        
+        public bool userImgLoaded;      
         String[] templateList;
         Mat source_img = new Mat();
-        Mat img_holder = new Mat();
+
+
+        /* Calling Object CvFunctions */
         CvFunctions _Template = new CvFunctions();
-
-
 
 
         /* Initialziation for camera feed */
 
         public ComputerVision_Tab() {
+            /* Initilize winforms */
             InitializeComponent();
-            Camera_frame = StartCapture();           //start camera feed loading the UI
+
+            /* start camera feed loading the UI */
+            Camera_frame = StartCapture();
         }
 
         public Capture StartCapture()
@@ -64,21 +65,18 @@ namespace VishnuMain
         }
 
 
-
-
-
         /* Clicking functions on windows form */
 
         private void captureImg_Click(object sender, EventArgs e) {
+
             //SnapPicture has various modes
-            img_holder = _Template.SnapPicture(Camera_frame, 3);
-            captured_imgbox.Image = img_holder;
+            captured_imgbox.Image = _Template.SnapPicture(3);
         }
 
         private void startCameraFeed_Click(object sender, EventArgs e) {
 
             if (Camera_frame != null) {
-                if (capturing) {
+                if (videoFeed) {
                     startCaptureButton.Text = "Start Capture";
                     Camera_frame.Pause();
                 }
@@ -86,7 +84,7 @@ namespace VishnuMain
                     startCaptureButton.Text = "Stop";
                     Camera_frame.Start();
                 }
-                capturing = !capturing;
+                videoFeed = !videoFeed;
             }
         }
 
@@ -96,7 +94,7 @@ namespace VishnuMain
             if (result == DialogResult.OK || result == DialogResult.Yes)
             {
                 sourceimg_textbox.Text = openFileDialog1.FileName;
-                isLoaded = true;
+                userImgLoaded = true;
             }
         }
 
@@ -113,21 +111,20 @@ namespace VishnuMain
 
         private void findMatch_Click(object sender, EventArgs e)
         {
+            double[] xy = { 0, 0 };
+
             //loads image taken from capture and does templatedetection
             Mat res = new Mat();   
             //source_img = new Mat(sourceimg_textbox.Text, LoadImageType.Grayscale);
 
             //grab images from UI, run templ detection and retrieve images.  
-            res =_Template.TemplateDetection(templateList, img_holder);
+            res =_Template.TemplateDetection(templateList, _Template.SnapPicture(3), xy);
             tracked_imgbox.Image = res;
         }
 
         private void savePicture_Click(object sender, EventArgs e) {
 
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            
-            _Template.SaveImg(img_holder, path + "/" + "EMGU.jpg");
-
+            _Template.SaveImg(_Template.SnapPicture(3), Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/" + "EMGU.jpg");
         }
             
     }
