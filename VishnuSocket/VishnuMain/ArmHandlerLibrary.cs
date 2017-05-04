@@ -41,11 +41,11 @@ namespace VishnuMain
                 }
                 ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1], OriginLocation[2], OriginLocation[3]);
                 CPU = trayHandler.GetCPUPosition();
-                Loc[0] = (CPU % trayHandler.trayDimensions[0]) * centerToCenterL;
+                Loc[0] = (CPU % trayHandler.trayDimensions[0]) * centerToCenterL; //Move x CPU's over
                 if (CPU > trayHandler.trayDimensions[0])
                 {
                     Loc[1] += centerToCenterW;
-                }
+                } //Adding the y offset to the tray
                 Loc[2] -= (trayHandler.emptyTrayCount + trayHandler.goodTrayCount + trayHandler.badTrayCount) * centerToCenterZ;
                 ArduinoMotionLibrary.ArdPosition("MOVE", 0, Loc[0], Loc[1], Loc[2], Loc[3]); //Move to CPU
                 //Verify we're above a CPU
@@ -74,9 +74,9 @@ namespace VishnuMain
 
         private static void FetchInformation()
         {//Get information from settings later
-            centerToCenterL = 15.0;
-            centerToCenterW = 30.0;
-            centerToCenterZ = 12.0;
+            centerToCenterL = SettingsLibrary.TrayCenter2CenterCol;
+            centerToCenterZ = SettingsLibrary.TrayHeight;
+            centerToCenterW = SettingsLibrary.TrayCenter2CenterRow;
             return;
         }
 
