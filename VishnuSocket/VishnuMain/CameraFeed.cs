@@ -179,6 +179,8 @@ namespace VishnuMain
 
         }
 
+       
+
         private void Refresh_BTN_Click(object sender, EventArgs e)
         {
             if (_capture != null)
@@ -198,6 +200,7 @@ namespace VishnuMain
                 RetrieveCaptureInformation(); // This will refresh the settings
             }
         }
+
 
         protected void OnFormClosing(CancelEventArgs e)
         {
@@ -254,7 +257,7 @@ namespace VishnuMain
                 ArmHandlerLibrary.Running = false;
             }
         }
-       
+        
         private void backWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (e.Cancelled == true)

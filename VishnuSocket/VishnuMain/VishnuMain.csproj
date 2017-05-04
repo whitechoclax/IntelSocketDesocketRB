@@ -57,9 +57,6 @@
     <ApplicationIcon>Industry-Robot-icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DataMatrix.net">
-      <HintPath>..\..\..\..\..\..\Desktop\DataMatrix.net.dll</HintPath>
-    </Reference>
     <Reference Include="DirectShowLib-2005">
       <HintPath>..\Common\DirectShow\lib\DirectShowLib-2005.dll</HintPath>
     </Reference>
@@ -132,12 +129,12 @@
       <DependentUpon>Settings.cs</DependentUpon>
     </Compile>
     <Compile Include="SettingsLibrary.cs" />
-    <Compile Include="Camera Functions.cs" />
-    <Compile Include="ObjectDetection.cs">
+    <Compile Include="TemplateMatchController.cs" />
+    <Compile Include="TemplateMatchView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ObjectDetection.Designer.cs">
-      <DependentUpon>ObjectDetection.cs</DependentUpon>
+    <Compile Include="TemplateMatchView.Designer.cs">
+      <DependentUpon>TemplateMatchView.cs</DependentUpon>
     </Compile>
     <Compile Include="TrayManagerLibrary.cs" />
     <EmbeddedResource Include="ArmControl.resx">
@@ -161,8 +158,8 @@
     <EmbeddedResource Include="Settings.resx">
       <DependentUpon>Settings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ObjectDetection.resx">
-      <DependentUpon>ObjectDetection.cs</DependentUpon>
+    <EmbeddedResource Include="TemplateMatchView.resx">
+      <DependentUpon>TemplateMatchView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
