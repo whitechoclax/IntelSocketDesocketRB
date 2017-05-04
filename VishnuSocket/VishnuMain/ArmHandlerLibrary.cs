@@ -10,7 +10,7 @@ namespace VishnuMain
     {
         public static bool Running = false;
        
-        public static double[] OriginLocation = { 50.0, 0.0, 0.0, 0.0 }; //CPU0 location
+        public static double[] OriginLocation = { 50.0, 0.0, 20.0, 0.0 }; //CPU0 location
         public static double[] SocketLocation = { 0.0, 50.0, 0.0, 0.0 };
         private static double centerToCenterL = 0.0; //Distance between left and right CPU
         private static double centerToCenterW = 0.0; //Distance between top and bottom CPU
@@ -31,14 +31,21 @@ namespace VishnuMain
             bool done = false;
             int CPU;
 
+
+            ArduinoMotionLibrary.ArdPosition("REDEF", 0, 0, 100, 0, 0); //
+            ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1], OriginLocation[2], OriginLocation[3]);
             while (!done)
             { //Main Loop
+                CPU = trayHandler.GetCPUPosition();
+                if (CPU == -1)
+                {
+                    Running = false;
+                    done = true;
+                }
                 if (!Running)
                 {
                     return;
                 }
-                ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1], OriginLocation[2], OriginLocation[3]);
-                CPU = trayHandler.GetCPUPosition();
                 Loc[0] = (CPU % trayHandler.trayDimensions[0]) * centerToCenterL; //Move x CPU's over
                 if (CPU > trayHandler.trayDimensions[0])
                 {
@@ -51,18 +58,19 @@ namespace VishnuMain
                 {
                     //Keep Navigating to next CPU and testing
                 }
-                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 0, 0); //Descend Z
-                //Grab CPU
-                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 0, 0); //Raise back up
-                //Move to Socket, calibration image later
+                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, -20, 0, 0); //Descend Z
+                ArduinoMotionLibrary.ArdPosition("GRAB", 0, 0, 0, 0, 0); //Grab CPU
+                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 20, 0, 0); //Raise back up
+                //Move to Calibration image, verify it's there in the right spot
+                CameraTestImg();
                 ArduinoMotionLibrary.ArdPosition("MOVE", 0, SocketLocation[0], SocketLocation[1], SocketLocation[2], SocketLocation[3]);
                 ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 0, 0); //Descend into socket
+                ArduinoMotionLibrary.ArdPosition("RELEASE", 0, 0, 0, 0, 0); //Release CPU
                 //Release CPU
                 //Wait for test
                 //Tell Tray to present good or bad
 
                 ArduinoMotionLibrary.ArdPosition("MOVE", 0, 0, 0, 0, 0); //Demo done, return to origin
-                done = true;
             }
             return;
         }
@@ -75,7 +83,7 @@ namespace VishnuMain
             return;
         }
 
-        public static void CameraReadQR()
+        public static void CameraTestImg()
         {
 
         }

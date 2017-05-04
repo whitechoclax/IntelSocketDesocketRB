@@ -28,10 +28,9 @@ namespace VishnuMain
         public TrayManagerLibrary()
         {
             //Fetch settings
-            trayDimensions[0] = 11;
-            trayDimensions[1] = 2;
-            trayDimensions[2] = 1;
-
+            trayDimensions[0] = SettingsLibrary.TrayLength;
+            trayDimensions[1] = SettingsLibrary.TrayWidth;
+            trayDimensions[2] = SettingsLibrary.TrayStack;
         }
 
 
@@ -73,9 +72,9 @@ namespace VishnuMain
 
         }
 
-        public void ParseResult()
+        public void PresentTray()
         {
-
+            return;
         }
     }
 }
