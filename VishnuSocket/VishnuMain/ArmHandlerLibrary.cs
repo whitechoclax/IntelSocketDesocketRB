@@ -18,6 +18,7 @@ namespace VishnuMain
         public static int CPUindex = 0; //Which CPU we're on
 
         
+        
         public static void ArmHandlerLibraryMainSequence()
         {   //Start at Origin, find next CPU, Take picture
             //Pick Up requested CPU, Move to Calibration Image
@@ -34,6 +35,7 @@ namespace VishnuMain
 
             ArduinoMotionLibrary.ArdPosition("REDEF", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[3]); //Say we're resting, eventually calibrate
             ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1], OriginLocation[2], OriginLocation[3]); //Move to CPU 0 spot to start
+
             while (!done)
             { //Main Loop
                 CPU = trayHandler.GetCPUPosition();
@@ -71,6 +73,9 @@ namespace VishnuMain
                 //Wait for test
                 //Tell Tray to present good or bad
 
+                //Runing Template detection code
+                CameraReadQR();
+
                 ArduinoMotionLibrary.ArdPosition("MOVE", 0, 0, 0, 0, 0); //Demo done, return to origin
             }
             return;
@@ -86,7 +91,13 @@ namespace VishnuMain
 
         public static void CameraTestImg()
         {
+            //value from templateDetection
+            double[] template_xy = { 0, 0 };
+            string[] fileloc = { "C:/Users/Thuan/Desktop/TestImage/123145.jpg" };
 
+            CvFunctions imgFx = new CvFunctions();
+            imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3), template_xy);
+            
         }
 
         //mark tray
