@@ -23,8 +23,10 @@ namespace VishnuMain
         int trayStack;
 
         //intertraydimensions
-        double trayOrigin2Center;
-        double trayCenter2Center;
+        double trayOrigin2CenterX;
+        double trayOrigin2CenterY;
+        double trayCenter2CenterRow;
+        double trayCenter2CenterCol;
         double trayHeight;
 
         public SettingsMenu()
@@ -54,20 +56,31 @@ namespace VishnuMain
 
         private void trayOr2CenterValue_ValueChanged(object sender, EventArgs e)
         {
-            trayOrigin2Center = (double)trayOr2CenterValue.Value;
-            SettingsLibrary.TrayOrigin2Center = trayOrigin2Center;
+            trayOrigin2CenterX = (double)trayOr2CenterValueX.Value;
+            SettingsLibrary.TrayOrigin2CenterX = trayOrigin2CenterX;
         }
 
         private void trayCenter2CenterValue_ValueChanged(object sender, EventArgs e)
         {
-            trayCenter2Center = (double)trayCenter2CenterValue.Value;
-            SettingsLibrary.TrayCenter2Center = trayCenter2Center;
+            trayCenter2CenterRow = (double)trayCenter2CenterValueRow.Value;
+            SettingsLibrary.TrayCenter2CenterRow = trayCenter2CenterRow;
         }
 
         private void trayHeightValue_ValueChanged(object sender, EventArgs e)
         {
             trayHeight = (double)trayHeightValue.Value;
             SettingsLibrary.TrayHeight = trayHeight;
+        }
+        private void trayCenter2CenterValueCol_ValueChanged(object sender, EventArgs e)
+        {
+            trayCenter2CenterCol = (double)trayCenter2CenterValueCol.Value;
+            SettingsLibrary.TrayCenter2CenterCol = trayCenter2CenterCol;
+        }
+
+        private void trayOr2CenterValueY_ValueChanged(object sender, EventArgs e)
+        {
+            trayOrigin2CenterY = (double)trayOr2CenterValueY.Value;
+            SettingsLibrary.TrayOrigin2CenterY = trayOrigin2CenterY;
         }
 
         private void invPathTextBox_TextChanged(object sender, EventArgs e)
@@ -122,10 +135,13 @@ namespace VishnuMain
                 trayLength = (int?)setting.Element("TrayLength") ?? 11;
                 trayWidth = (int?)setting.Element("TrayWidth") ?? 2;
                 trayStack = (int?)setting.Element("TrayStack") ?? 10;
-                trayOrigin2Center = (double?)setting.Element("TrayOR2Center") ?? 15.5;
-                trayCenter2Center = (double?)setting.Element("TrayCenter2Center") ?? 25.5;
+                trayOrigin2CenterX = (double?)setting.Element("TrayOR2CenterX") ?? 15.5;
+                trayOrigin2CenterY = (double?)setting.Element("TrayOR2CenterY") ?? 15.5;
+                trayCenter2CenterRow = (double?)setting.Element("TrayCenter2CenterRow") ?? 25.5;
+                trayCenter2CenterCol = (double?)setting.Element("TrayCenter2CenterCol") ?? 25.5;
                 trayHeight = (double?)setting.Element("TrayHeight") ?? 12.00;
                 invPathString = (string)setting.Element("inventoryPath") ?? string.Empty;
+                //Need to add origin to tray location and for socket location (XYZ)
             }
 
             //update UI
@@ -135,8 +151,10 @@ namespace VishnuMain
 
             //tray dimensions
             trayHeightValue.Value = (decimal)trayHeight;
-            trayCenter2CenterValue.Value = (decimal)trayCenter2Center;
-            trayOr2CenterValue.Value = (decimal)trayOrigin2Center;
+            trayCenter2CenterValueRow.Value = (decimal)trayCenter2CenterRow;
+            trayCenter2CenterValueCol.Value = (decimal)trayCenter2CenterCol;
+            trayOr2CenterValueX.Value = (decimal)trayOrigin2CenterX;
+            trayOr2CenterValueY.Value = (decimal)trayOrigin2CenterY;
             invPathTextBox.Text = invPathString;
         }
 
@@ -152,8 +170,10 @@ namespace VishnuMain
                 new XElement("TrayWidth", trayWidthValue.Value.ToString()),
                 new XElement("TrayStack", trayStackValue.Value.ToString()),
                 new XElement("inventoryPath", invPathString),
-                new XElement("TrayOR2Center", trayOr2CenterValue.Value.ToString()),
-                new XElement("TrayCenter2Center", trayCenter2CenterValue.Value.ToString()),
+                new XElement("TrayOR2CenterX", trayOr2CenterValueX.Value.ToString()),
+                new XElement("TrayOR2CenterY", trayOr2CenterValueY.Value.ToString()),
+                new XElement("TrayCenter2CenterRow", trayCenter2CenterValueRow.Value.ToString()),
+                new XElement("TrayCenter2CenterCol", trayCenter2CenterValueCol.Value.ToString()),
                 new XElement("TrayHeight", trayHeightValue.Value.ToString())
 
                 )
@@ -174,7 +194,5 @@ namespace VishnuMain
         {
             loadFromXML();
         }
-
-        
     }
 }

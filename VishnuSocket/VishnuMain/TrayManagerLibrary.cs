@@ -10,7 +10,7 @@ namespace VishnuMain
     //and how we move those trays around.
     class TrayManagerLibrary
     {
-        public int emptyTrayCount = 0;
+        public int emptyTrayCount = 1;
         public int goodTrayCount = 0;
         public int badTrayCount = 0;
 
@@ -28,22 +28,27 @@ namespace VishnuMain
         public TrayManagerLibrary()
         {
             //Fetch settings
-            trayDimensions[0] = 11;
-            trayDimensions[1] = 2;
-            trayDimensions[2] = 1;
-
+            trayDimensions[0] = SettingsLibrary.TrayLength;
+            trayDimensions[1] = SettingsLibrary.TrayWidth;
+            trayDimensions[2] = SettingsLibrary.TrayStack;
         }
 
 
         public int GetCPUPosition()
         {
-            if(CPUpos >= 0 && CPUpos < trayDimensions[0] * trayDimensions[1])
+            if (CPUpos >= 0 && CPUpos < trayDimensions[0] * trayDimensions[1])
             {
                 CPUpos = CPUpos + 1;
                 return CPUpos - 1;
             }
-            else
-                return -1;
+            else //If we're not out of untested trays
+            { //Move to next tray
+                //In the future, we need to say is good/ bad tray full?
+                //If so, move the empty tray to those
+                //If not, move the empty tray to empties spot
+                //Add one to the empties trays
+                return -1; //We're out of CPU's
+            }
         }
 
         //A function that takes a good/bad result from the OSV
@@ -73,9 +78,9 @@ namespace VishnuMain
 
         }
 
-        public void ParseResult()
+        public void PresentTray()
         {
-
+            return;
         }
     }
 }

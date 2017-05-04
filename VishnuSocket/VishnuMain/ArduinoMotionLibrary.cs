@@ -13,7 +13,7 @@ namespace VishnuMain
         //public static SerialPort ArdPort = new SerialPort();
         public static List<SerialPort> ArdPorts = new List<SerialPort>();
         public static byte[] Arduinos = { 2, 2 };      //0 is Main Arm, 1 is Tray handler
-        public static double[] ArmCoordinates = { 0.0, 0.0, 0.0, 0.0 };
+        public static double[] ArmCoordinates = { 0.0, 0.0, 0.0, 0.0, 0.0 }; //X,Y,Z, end eff., theta
         public static double TrayZ = 0.0;
         public static int TrayPresented = 0;
 
@@ -230,6 +230,7 @@ namespace VishnuMain
                             ArmCoordinates[1] = double.Parse(pieces[2]);
                             ArmCoordinates[2] = double.Parse(pieces[3]);
                             ArmCoordinates[3] = double.Parse(pieces[4]);
+                            ArmCoordinates[4] = double.Parse(pieces[5]);
                         }
                         else if (portID == 1)
                         {
@@ -252,49 +253,51 @@ namespace VishnuMain
 
             string inputLine = "STOP\r";
 
-            ArdPorts[0].WriteLine(inputLine);
-            ArdPorts[1].WriteLine(inputLine);
             Task.Delay(30); //Waiting for navigation message
             for (int portID = 0; portID < 2; ++portID)
             {
-                string data = ArdPorts[portID].ReadLine();
-                if (data != "STOPPING\r")
+                if (Arduinos[portID] != 2)
                 {
-
-                }
-                bool done = false;
-                while (!done)
-                {
-                    Task.Delay(50);
-                    if (ArdPorts[portID].BytesToRead > 0)
+                    ArdPorts[portID].WriteLine(inputLine);
+                    string data = ArdPorts[portID].ReadLine();
+                    if (data != "STOPPING\r")
                     {
-                        data = ArdPorts[portID].ReadLine();
+                        Task.Delay(15); //Should probably have an error counter
                     }
-                    Task.Delay(50);
-                    if (ArdPorts[portID].BytesToRead > 0)
+                    bool done = false;
+                    while (!done)
                     {
-                        data = ArdPorts[portID].ReadLine();
-                    }
-                    //Check COOR
-                    if (data.StartsWith("COOR"))
-                    {
-                        string[] pieces = data.Split(':');
-                        if (portID == 0)
+                        Task.Delay(50);
+                        if (ArdPorts[portID].BytesToRead > 0)
                         {
-                            ArmCoordinates[0] = double.Parse(pieces[1]);        //save x
-                            ArmCoordinates[1] = double.Parse(pieces[2]);        //save y
-                            ArmCoordinates[2] = double.Parse(pieces[3]);        //save z
-                            ArmCoordinates[3] = double.Parse(pieces[4]);        //save theta
+                            data = ArdPorts[portID].ReadLine();
                         }
-                        else if (portID == 1)
+                        Task.Delay(50);
+                        if (ArdPorts[portID].BytesToRead > 0)
                         {
-                            TrayZ = double.Parse(pieces[1]);
-                            TrayPresented = int.Parse(pieces[2]);
+                            data = ArdPorts[portID].ReadLine();
                         }
+                        //Check COOR
+                        if (data.StartsWith("COOR"))
+                        {
+                            string[] pieces = data.Split(':');
+                            if (portID == 0)
+                            {
+                                ArmCoordinates[0] = double.Parse(pieces[1]);        //save x
+                                ArmCoordinates[1] = double.Parse(pieces[2]);        //save y
+                                ArmCoordinates[2] = double.Parse(pieces[3]);        //save z
+                                ArmCoordinates[3] = double.Parse(pieces[4]);        //save theta
+                            }
+                            else if (portID == 1)
+                            {
+                                TrayZ = double.Parse(pieces[1]);
+                                TrayPresented = int.Parse(pieces[2]);
+                            }
+                        }
+                        else
+                            return -1;
+                        done = true;
                     }
-                    else
-                        return -1;
-                    done = true;
                 }
             }
 

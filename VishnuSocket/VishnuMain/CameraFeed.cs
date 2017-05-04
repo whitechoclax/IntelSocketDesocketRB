@@ -277,8 +277,8 @@ namespace VishnuMain
         private void showStats_Click(object sender, EventArgs e)
         {
             richTextBox1.AppendText(SettingsLibrary.InvPathString + Environment.NewLine);
-            richTextBox1.AppendText(SettingsLibrary.TrayCenter2Center.ToString() + Environment.NewLine);
-            richTextBox1.AppendText(SettingsLibrary.TrayOrigin2Center.ToString() + Environment.NewLine);
+            richTextBox1.AppendText(SettingsLibrary.TrayCenter2CenterRow.ToString() + Environment.NewLine);
+            richTextBox1.AppendText(SettingsLibrary.TrayOrigin2CenterY.ToString() + Environment.NewLine);
             richTextBox1.AppendText(SettingsLibrary.TrayStack.ToString() + Environment.NewLine);
             richTextBox1.AppendText(SettingsLibrary.TrayWidth.ToString() + Environment.NewLine);
             richTextBox1.AppendText(SettingsLibrary.TrayLength.ToString() + Environment.NewLine);

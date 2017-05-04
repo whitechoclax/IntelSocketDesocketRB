@@ -49,6 +49,28 @@ void CommandProcess(){//Parse command
       stringComplete = false;
       return;
     }
+    else if(inputString.startsWith("GRAB")){//Send coordinates
+      digitalWrite(GRABBER, HIGH);
+      Serial.println("NAVIGATING");
+      Serial.println("DONE");
+      RelayCoordinates();
+      if(DEBUG)
+        Serial.println("Grabbing");
+      inputString = "";
+      stringComplete = false;
+      return;
+    }
+    else if(inputString.startsWith("RELEASE")){//Send coordinates
+      digitalWrite(GRABBER, LOW);
+      Serial.println("NAVIGATING");
+      Serial.println("DONE");
+      RelayCoordinates();
+      if(DEBUG)
+        Serial.println("Releasing");
+      inputString = "";
+      stringComplete = false;
+      return;
+    }
     else if(inputString.startsWith("DEBUG")){//send debug messages
       if(DEBUG){
         DEBUG = false;
@@ -172,7 +194,8 @@ void RelayCoordinates(){ //Send back coordinates
   Serial.print(xTmp);Serial.print(':');
   Serial.print(yTmp);Serial.print(':');
   Serial.print(zTmp);Serial.print(':');
-  Serial.println(angle,1);
+  Serial.print(angle,1);Serial.print(':');
+  Serial.println(theta,2);
   return;
 }
 
@@ -278,18 +301,6 @@ void Navigate(){ //Moves to new positions
       digitalWrite(Step[THETAMOTOR], HIGH);
       double x = ((theta-thetaOriginal)*2*PI)/(whereWereGoing - thetaOriginal);
       double tDelay = 12.5*cos(x)+12.5;
-      /*if(thetaDirection == RIGHT){
-        if(theta > ((thetaNew + thetaOriginal)/2))
-          addDelay = abs(map(theta, thetaOriginal, ((thetaNew + thetaOriginal)/2), 25, 0));
-        else
-          addDelay = map(theta, ((thetaNew + thetaOriginal)/2), thetaOriginal, 0, 25);
-      }
-      if(thetaDirection == LEFT){
-        if(theta < ((thetaNew + thetaOriginal)/2))
-          addDelay = abs(map(theta, thetaOriginal, ((thetaNew + thetaOriginal)/2), 25, 0));
-        else
-          addDelay = map(theta, ((thetaNew + thetaOriginal)/2), thetaOriginal, 0, 25);
-      }*/
       int addDelay = (5*tDelay) + 18;
       if(DEBUG){
         Serial.print("addDelay: ");Serial.println(addDelay);
@@ -331,7 +342,7 @@ void Navigate(){ //Moves to new positions
       digitalWrite(Enable[RADMOTOR], HIGH);
     }
   }
-  while(!doneAngle){ //Angle Section
+  while(!doneAngle){ //Angle Section, might need to be a servo
     serialEvent();
     if(deltaAngle > 0){
       digitalWrite(Enable[ANGLEMOTOR], LOW);

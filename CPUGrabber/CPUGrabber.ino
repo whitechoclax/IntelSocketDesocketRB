@@ -20,6 +20,9 @@
 #define LEFT false
 #define OUT true
 #define IN false
+//Grabber solenoid and Servo pins
+#define GRABBER 26
+#define SERVO 8
 
 
 boolean DEBUG = false; 
@@ -69,6 +72,8 @@ void setup() {
     pinMode(Dir[i], OUTPUT);
     digitalWrite(Dir[i], LOW);
   }
+  pinMode(GRABBER, OUTPUT);
+  digitalWrite(GRABBER, LOW);
   Serial.println("MAINROBOTARM");
 }
 
