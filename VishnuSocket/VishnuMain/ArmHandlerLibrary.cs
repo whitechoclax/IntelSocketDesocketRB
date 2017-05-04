@@ -74,7 +74,7 @@ namespace VishnuMain
                 //Tell Tray to present good or bad
 
                 //Runing Template detection code
-                CameraReadQR();
+                CameraTestImg();
 
                 ArduinoMotionLibrary.ArdPosition("MOVE", 0, 0, 0, 0, 0); //Demo done, return to origin
             }
@@ -93,7 +93,7 @@ namespace VishnuMain
         {
             //value from templateDetection
             double[] template_xy = { 0, 0 };
-            string[] fileloc = { "C:/Users/Thuan/Desktop/TestImage/123145.jpg" };
+            string[] fileloc = { "../../../../Common/TestImage/123145.jpg" };
 
             CvFunctions imgFx = new CvFunctions();
             imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3), template_xy);
