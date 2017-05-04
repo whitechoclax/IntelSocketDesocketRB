@@ -93,7 +93,7 @@ namespace VishnuMain
         {
             //value from templateDetection
             double[] template_xy = { 0, 0 };
-            string[] fileloc = { "../../../../Common/TestImage/123145.jpg" };
+            string[] fileloc = { "../../../../Common/TempImg/CIRCLE_TEMP.jpg" };
 
             CvFunctions imgFx = new CvFunctions();
             imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3), template_xy);
