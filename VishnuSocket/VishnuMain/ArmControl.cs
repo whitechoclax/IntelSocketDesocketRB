@@ -88,7 +88,11 @@ namespace VishnuMain
         //Run motor functions
         private void stopButton_Click(object sender, EventArgs e)
         {
+
+            //ArduinoMotionLibrary.StopMotor(portID);
+
             ArduinoMotionLibrary.StopMotor();
+
         }
 
         private void redefineButton_Click(object sender, EventArgs e)
