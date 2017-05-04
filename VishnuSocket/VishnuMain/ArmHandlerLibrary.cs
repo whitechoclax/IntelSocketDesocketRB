@@ -9,9 +9,9 @@ namespace VishnuMain
     static class ArmHandlerLibrary
     {
         public static bool Running = false;
-       
-        public static double[] OriginLocation = { 50.0, 0.0, 20.0, 0.0 }; //CPU0 location
-        public static double[] SocketLocation = { 0.0, 50.0, 0.0, 0.0 };
+        public static double[] RestLocation = { 50.0, 0.0, 100.0, 0.0 };
+        public static double[] OriginLocation = { 50.0, 20.0, 80.0, 0.0 }; //CPU0 location
+        public static double[] SocketLocation = { 0.0, 50.0, 75.0, 0.0 }; //Socket center point
         private static double centerToCenterL = 0.0; //Distance between left and right CPU
         private static double centerToCenterW = 0.0; //Distance between top and bottom CPU
         private static double centerToCenterZ = 0.0; //Distance between trays
@@ -32,8 +32,8 @@ namespace VishnuMain
             int CPU;
 
 
-            ArduinoMotionLibrary.ArdPosition("REDEF", 0, 0, 100, 0, 0); //
-            ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1], OriginLocation[2], OriginLocation[3]);
+            ArduinoMotionLibrary.ArdPosition("REDEF", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[3]); //Say we're resting, eventually calibrate
+            ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1], OriginLocation[2], OriginLocation[3]); //Move to CPU 0 spot to start
             while (!done)
             { //Main Loop
                 CPU = trayHandler.GetCPUPosition();
@@ -44,23 +44,24 @@ namespace VishnuMain
                 }
                 if (!Running)
                 {
+                    //Return to Origin
                     return;
                 }
-                Loc[0] = (CPU % trayHandler.trayDimensions[0]) * centerToCenterL; //Move x CPU's over
-                if (CPU > trayHandler.trayDimensions[0])
+                Loc[0] = ((CPU % trayHandler.trayDimensions[0]) * centerToCenterL) + OriginLocation[0]; //Move x CPU's over
+                if (CPU >= trayHandler.trayDimensions[0])
                 {
-                    Loc[1] += centerToCenterW;
+                    Loc[1] = centerToCenterW + OriginLocation[1];
                 } //Adding the y offset to the tray
-                Loc[2] -= (trayHandler.emptyTrayCount + trayHandler.goodTrayCount + trayHandler.badTrayCount) * centerToCenterZ;
+                Loc[2] = ((trayHandler.emptyTrayCount-1 + trayHandler.goodTrayCount + trayHandler.badTrayCount) * centerToCenterZ) + OriginLocation[2];
                 ArduinoMotionLibrary.ArdPosition("MOVE", 0, Loc[0], Loc[1], Loc[2], Loc[3]); //Move to CPU
                 //Verify we're above a CPU
                 while(!CameraTestCPU())
                 {
                     //Keep Navigating to next CPU and testing
                 }
-                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, -20, 0, 0); //Descend Z
+                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, -20, 0); //Descend Z
                 ArduinoMotionLibrary.ArdPosition("GRAB", 0, 0, 0, 0, 0); //Grab CPU
-                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 20, 0, 0); //Raise back up
+                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 20, 0); //Raise back up
                 //Move to Calibration image, verify it's there in the right spot
                 CameraTestImg();
                 ArduinoMotionLibrary.ArdPosition("MOVE", 0, SocketLocation[0], SocketLocation[1], SocketLocation[2], SocketLocation[3]);

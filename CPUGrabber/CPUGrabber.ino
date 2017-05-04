@@ -72,6 +72,8 @@ void setup() {
     pinMode(Dir[i], OUTPUT);
     digitalWrite(Dir[i], LOW);
   }
+  pinMode(GRABBER, OUTPUT);
+  digitalWrite(GRABBER, LOW);
   Serial.println("MAINROBOTARM");
 }
 

@@ -50,8 +50,10 @@ void CommandProcess(){//Parse command
       return;
     }
     else if(inputString.startsWith("GRAB")){//Send coordinates
-      RelayCoordinates();
       digitalWrite(GRABBER, HIGH);
+      Serial.println("NAVIGATING");
+      Serial.println("DONE");
+      RelayCoordinates();
       if(DEBUG)
         Serial.println("Grabbing");
       inputString = "";
@@ -59,8 +61,10 @@ void CommandProcess(){//Parse command
       return;
     }
     else if(inputString.startsWith("RELEASE")){//Send coordinates
-      RelayCoordinates();
       digitalWrite(GRABBER, LOW);
+      Serial.println("NAVIGATING");
+      Serial.println("DONE");
+      RelayCoordinates();
       if(DEBUG)
         Serial.println("Releasing");
       inputString = "";
