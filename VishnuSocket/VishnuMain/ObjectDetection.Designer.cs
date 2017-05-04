@@ -134,7 +134,7 @@
             // 
             // startCaptureButton
             // 
-            this.startCaptureButton.Location = new System.Drawing.Point(1059, 118);
+            this.startCaptureButton.Location = new System.Drawing.Point(1024, 99);
             this.startCaptureButton.Name = "startCaptureButton";
             this.startCaptureButton.Size = new System.Drawing.Size(100, 34);
             this.startCaptureButton.TabIndex = 31;
@@ -145,7 +145,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(1056, 384);
+            this.label5.Location = new System.Drawing.Point(1021, 365);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(51, 13);
             this.label5.TabIndex = 30;
@@ -154,7 +154,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(1056, 335);
+            this.label4.Location = new System.Drawing.Point(1021, 316);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(36, 13);
             this.label4.TabIndex = 29;
@@ -162,14 +162,14 @@
             // 
             // template_textbox
             // 
-            this.template_textbox.Location = new System.Drawing.Point(1059, 400);
+            this.template_textbox.Location = new System.Drawing.Point(1024, 381);
             this.template_textbox.Name = "template_textbox";
             this.template_textbox.Size = new System.Drawing.Size(81, 20);
             this.template_textbox.TabIndex = 28;
             // 
             // findMatch
             // 
-            this.findMatch.Location = new System.Drawing.Point(1059, 238);
+            this.findMatch.Location = new System.Drawing.Point(1024, 219);
             this.findMatch.Name = "findMatch";
             this.findMatch.Size = new System.Drawing.Size(100, 34);
             this.findMatch.TabIndex = 27;
@@ -179,7 +179,7 @@
             // 
             // loadTemplate
             // 
-            this.loadTemplate.Location = new System.Drawing.Point(1146, 400);
+            this.loadTemplate.Location = new System.Drawing.Point(1111, 381);
             this.loadTemplate.Name = "loadTemplate";
             this.loadTemplate.Size = new System.Drawing.Size(25, 22);
             this.loadTemplate.TabIndex = 26;
@@ -189,7 +189,7 @@
             // 
             // capturePicture
             // 
-            this.capturePicture.Location = new System.Drawing.Point(1059, 158);
+            this.capturePicture.Location = new System.Drawing.Point(1024, 139);
             this.capturePicture.Name = "capturePicture";
             this.capturePicture.Size = new System.Drawing.Size(100, 34);
             this.capturePicture.TabIndex = 25;
@@ -199,14 +199,14 @@
             // 
             // sourceimg_textbox
             // 
-            this.sourceimg_textbox.Location = new System.Drawing.Point(1059, 351);
+            this.sourceimg_textbox.Location = new System.Drawing.Point(1024, 332);
             this.sourceimg_textbox.Name = "sourceimg_textbox";
             this.sourceimg_textbox.Size = new System.Drawing.Size(81, 20);
             this.sourceimg_textbox.TabIndex = 24;
             // 
             // loadSource
             // 
-            this.loadSource.Location = new System.Drawing.Point(1146, 351);
+            this.loadSource.Location = new System.Drawing.Point(1111, 332);
             this.loadSource.Name = "loadSource";
             this.loadSource.Size = new System.Drawing.Size(25, 20);
             this.loadSource.TabIndex = 23;
@@ -224,7 +224,7 @@
             // 
             // SavePicture
             // 
-            this.SavePicture.Location = new System.Drawing.Point(1059, 198);
+            this.SavePicture.Location = new System.Drawing.Point(1024, 179);
             this.SavePicture.Name = "SavePicture";
             this.SavePicture.Size = new System.Drawing.Size(100, 34);
             this.SavePicture.TabIndex = 32;
@@ -232,7 +232,7 @@
             this.SavePicture.UseVisualStyleBackColor = true;
             this.SavePicture.Click += new System.EventHandler(this.savePicture_Click);
             // 
-            // TemplateMatchView
+            // ComputerVision_Tab
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.AutoScroll = true;
@@ -255,8 +255,8 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.video_imgbox);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.Name = "TemplateMatchView";
+            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Name = "ComputerVision_Tab";
             this.Size = new System.Drawing.Size(1354, 618);
             ((System.ComponentModel.ISupportInitialize)(this.video_imgbox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.template_imgbox)).EndInit();

@@ -9,24 +9,39 @@ using Emgu.CV.Util;
 using DataMatrix.net;
 
 
-
 namespace VishnuMain
 {
     public class CvFunctions {
 
-        public Mat SnapPicture(Capture camera_feed, int mode) { 
+
+        /*CAMERA CAPTURE CLASS*/
+        private Capture camera_feed;
+
+        /*CONSTURCTOR: INTIALIZE CAMERA CAPTURE*/
+        public CvFunctions() {
+
+            /*CAMERA SETTINGS*/
+            camera_feed = new Capture(); 
+            camera_feed.SetCaptureProperty(CapProp.FrameHeight, 1080);
+            camera_feed.SetCaptureProperty(CapProp.FrameWidth, 1920);
+        }
+
+
+        /*METHODS BELOW*/
+
+        ///<summary>
+        /// Returns image, various modes: 1.grayscale 2.redbinary 3.binary
+        ///</summary>
+        public Mat SnapPicture(int mode) { 
 
             Mat color_frame = new Mat();
             Mat gray_frame = new Mat();
             Mat binary_frame = new Mat();
             Mat[] rgb_frame;
 
-            camera_feed.SetCaptureProperty(CapProp.FrameHeight, 1080);
-            camera_feed.SetCaptureProperty(CapProp.FrameWidth, 1920);
             camera_feed.Retrieve(color_frame);
             CvInvoke.CvtColor(color_frame, gray_frame, ColorConversion.Bgr2Gray);
-
-
+            
             switch (mode) {
 
                 case 1: //case for just grayscale img
@@ -34,7 +49,7 @@ namespace VishnuMain
 
                 case 2://case for barcode scanning
                     rgb_frame = color_frame.Split();
-                    CvInvoke.Threshold(rgb_frame[2], rgb_frame[2], 150, 255, ThresholdType.Binary);
+                    CvInvoke.Threshold(rgb_frame[2], binary_frame, 150, 255, ThresholdType.Binary);
                     return binary_frame;
 
                 case 3: //case for calibration x.y
@@ -46,29 +61,10 @@ namespace VishnuMain
             }
         }
 
-        public void SaveImg(Mat Img, string filename) {
-       
-            Img.Save(filename);
-        }
-
-        public String BarcodeScanner(Mat barcode_img) {
-
-            //creates decorder object
-            DmtxImageDecoder decoder = new DmtxImageDecoder();
-
-            //decode barcode img
-            List<string> codes = decoder.DecodeImage(barcode_img.Bitmap, 1, new TimeSpan(0, 0, 2));
-
-            //return barcode string
-            if (codes.Count > 0)
-                return codes[0];
-            else {
-                return "Nothing found";
-            }
-
-        }
-
-        public Mat TemplateDetection(String[] templatelist, Mat sourceImg) { //takes in list of template images, source img
+        ///<summary>
+        ///Return coordinate offset for correcton
+        ///</summary>
+        public Mat TemplateDetection(string[] templatelist, Mat sourceImg, double[] xy_Coord ) { //takes in list of template images, source img
 
             Mat ResultMat = new Mat(); //mat data holds template matches coordinates
             Mat result_img = sourceImg.Clone(); //image with rectangles
@@ -103,9 +99,14 @@ namespace VishnuMain
                         //23x13 @ 16.5 cm
                         //20x10 @ 12.5 cm
                         //12.1x6.8 @ 8.3 cm 
+                        //30 x 15.5 @ 21 cm
 
-                        offset_x = Math.Round((960 - (match.X + (match.Width / 2))) / x_cm, 2);
-                        offset_y = Math.Round((540 - (match.Y + (match.Height / 2))) / y_cm, 2);
+
+                        offset_x = Math.Round((960 - (match.X + (match.Width / 2))) / x_cm, 2) * 10;
+                        offset_y = Math.Round((540 - (match.Y + (match.Height / 2))) / y_cm, 2) * 10;
+
+                        xy_Coord[0] = offset_x;
+                        xy_Coord[1] = offset_y;
 
                         MessageBox.Show("Left/Right:" + offset_x + "\n" + "Up/Down:" + offset_y, "Coordinates");
 
@@ -133,9 +134,31 @@ namespace VishnuMain
                         break;
                 } //loops template matching
             }
-
-            //show pictures on console
             return sourceImg;
+        }
+
+        ///<summary>
+        ///Scans 2D-DataMatrix Barcode and returns value
+        ///</summary>
+        public string BarcodeScanner(Mat barcode_img) {
+
+            //creates decorder object
+            DmtxImageDecoder decoder = new DmtxImageDecoder();
+
+            //decode barcode img
+            List<string> codes = decoder.DecodeImage(barcode_img.Bitmap, 1, new TimeSpan(0, 0, 2));
+
+            //return barcode string
+            if (codes.Count > 0)
+                return codes[0];
+            else {
+                return "Nothing found";
+            }
+
+        }
+
+        public void SaveImg(Mat Img, string filename) {
+            Img.Save(filename);
         }
 
     }
