@@ -29,6 +29,12 @@ namespace VishnuMain
         double trayCenter2CenterCol;
         double trayHeight;
 
+        //socket dimensions
+        int socketDimX;
+        int socketDimY;
+        int socketDimZ;
+
+        //load menu
         public SettingsMenu()
         {
             InitializeComponent();
@@ -83,11 +89,31 @@ namespace VishnuMain
             SettingsLibrary.TrayOrigin2CenterY = trayOrigin2CenterY;
         }
 
+        private void socketDimXValue_ValueChanged(object sender, EventArgs e)
+        {
+            socketDimX = (int)socketDimXValue.Value;
+            SettingsLibrary.SocketDimX = socketDimX;
+        }
+
+        private void socketDimYValue_ValueChanged(object sender, EventArgs e)
+        {
+            socketDimY = (int)socketDimYValue.Value;
+            SettingsLibrary.SocketDimY = socketDimY;
+        }
+
+        private void socketDimZValue_ValueChanged(object sender, EventArgs e)
+        {
+            socketDimZ = (int)socketDimZValue.Value;
+            SettingsLibrary.SocketDimZ = socketDimZ;
+        }
+
         private void invPathTextBox_TextChanged(object sender, EventArgs e)
         {
             //var assignment is handled in inventorysave click event handler
             SettingsLibrary.InvPathString = invPathString; 
         }
+
+
 
         //load button handler
         private void inventorySaveFileButton_Click(object sender, EventArgs e)
@@ -130,7 +156,7 @@ namespace VishnuMain
 
             foreach(XElement setting in groupEl)
             {
-
+                //format:
                 //UI variable to update = (type?) setting.element("xmlnodename" ?? default value
                 trayLength = (int?)setting.Element("TrayLength") ?? 11;
                 trayWidth = (int?)setting.Element("TrayWidth") ?? 2;
@@ -140,8 +166,10 @@ namespace VishnuMain
                 trayCenter2CenterRow = (double?)setting.Element("TrayCenter2CenterRow") ?? 25.5;
                 trayCenter2CenterCol = (double?)setting.Element("TrayCenter2CenterCol") ?? 25.5;
                 trayHeight = (double?)setting.Element("TrayHeight") ?? 12.00;
+                socketDimX = (int?)setting.Element("SocketDimX") ?? 100;
+                socketDimY = (int?)setting.Element("SocketDimY") ?? 100;
+                socketDimZ = (int?)setting.Element("SocketDimZ") ?? 100;
                 invPathString = (string)setting.Element("inventoryPath") ?? string.Empty;
-                //Need to add origin to tray location and for socket location (XYZ)
             }
 
             //update UI
@@ -155,6 +183,12 @@ namespace VishnuMain
             trayCenter2CenterValueCol.Value = (decimal)trayCenter2CenterCol;
             trayOr2CenterValueX.Value = (decimal)trayOrigin2CenterX;
             trayOr2CenterValueY.Value = (decimal)trayOrigin2CenterY;
+
+            //socket coords
+            socketDimXValue.Value = (decimal)socketDimX;
+            socketDimYValue.Value = (decimal)socketDimY;
+            socketDimZValue.Value = (decimal)socketDimZ;
+
             invPathTextBox.Text = invPathString;
         }
 
@@ -169,12 +203,15 @@ namespace VishnuMain
                 new XElement("TrayLength", trayLengthValue.Value.ToString()),
                 new XElement("TrayWidth", trayWidthValue.Value.ToString()),
                 new XElement("TrayStack", trayStackValue.Value.ToString()),
-                new XElement("inventoryPath", invPathString),
                 new XElement("TrayOR2CenterX", trayOr2CenterValueX.Value.ToString()),
                 new XElement("TrayOR2CenterY", trayOr2CenterValueY.Value.ToString()),
                 new XElement("TrayCenter2CenterRow", trayCenter2CenterValueRow.Value.ToString()),
                 new XElement("TrayCenter2CenterCol", trayCenter2CenterValueCol.Value.ToString()),
-                new XElement("TrayHeight", trayHeightValue.Value.ToString())
+                new XElement("TrayHeight", trayHeightValue.Value.ToString()),
+                new XElement("SocketDimX", socketDimXValue.Value.ToString()),
+                new XElement("SocketDimY", socketDimYValue.Value.ToString()),
+                new XElement("SocketDimZ", socketDimZValue.Value.ToString()),
+                new XElement("inventoryPath", invPathString)
 
                 )
             );
@@ -194,5 +231,7 @@ namespace VishnuMain
         {
             loadFromXML();
         }
+
+        
     }
 }

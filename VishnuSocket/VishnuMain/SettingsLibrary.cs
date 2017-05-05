@@ -8,15 +8,20 @@ namespace VishnuMain
 {
     public static class SettingsLibrary
     {
+        //inter tray dimensions
         static double _trayOrigin2CenterX;
         static double _trayOrigin2CenterY;
         static double _trayCenter2CenterRow;
         static double _trayCenter2CenterCol;
-
+        //basic tray allotment properties
         static double _trayHeight;
         static int _trayLength;
         static int _trayWidth;
         static int _trayStack;
+        //socket properties
+        static int _socketDimX;
+        static int _socketDimY;
+        static int _socketDimZ;
 
         static string _invPathString;
 
@@ -31,7 +36,10 @@ namespace VishnuMain
         public static int TrayWidth { get { return _trayWidth; } set { _trayWidth = value; } }
         public static int TrayStack { get { return _trayStack; } set { _trayStack = value; } }
         
+        public static int SocketDimX { get { return _socketDimX; } set { _socketDimX = value; } }
+        public static int SocketDimY { get { return _socketDimY; } set { _socketDimY = value; } }
+        public static int SocketDimZ { get { return _socketDimZ; } set { _socketDimZ = value; } }
+
         public static string InvPathString { get { return _invPathString; } set { _invPathString = value; } }
-        
     }
 }
