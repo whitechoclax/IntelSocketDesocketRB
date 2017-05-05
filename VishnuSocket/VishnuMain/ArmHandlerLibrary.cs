@@ -32,7 +32,6 @@ namespace VishnuMain
             bool done = false;
             int CPU;
 
-
             ArduinoMotionLibrary.ArdPosition("REDEF", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[3]); //Say we're resting, eventually calibrate
             ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1], OriginLocation[2], OriginLocation[3]); //Move to CPU 0 spot to start
 
@@ -57,7 +56,7 @@ namespace VishnuMain
                 Loc[2] = ((trayHandler.emptyTrayCount-1 + trayHandler.goodTrayCount + trayHandler.badTrayCount) * centerToCenterZ) + OriginLocation[2];
                 ArduinoMotionLibrary.ArdPosition("MOVE", 0, Loc[0], Loc[1], Loc[2], Loc[3]); //Move to CPU
                 //Verify we're above a CPU
-                while(!CameraTestCPU())
+                while(!CameraTestCPU())  
                 {
                     //Keep Navigating to next CPU and testing
                 }
@@ -89,15 +88,19 @@ namespace VishnuMain
             return;
         }
 
-        public static void CameraTestImg()
+        public static bool CameraTestImg()
         {
             //value from templateDetection
-            double[] template_xy = { 0, 0 };
+            double[] template_xy = { 1000, 1000 };
             string[] fileloc = { "../../../../Common/TempImg/CIRCLE_TEMP.jpg" };
 
-            CvFunctions imgFx = new CvFunctions();
-            imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3), template_xy);
-            
+            while(Math.Abs(template_xy[0]) > 2 && Math.Abs(template_xy[1]) > 2)
+            {
+                CvFunctions imgFx = new CvFunctions();
+                imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3), template_xy);
+                //Shift by the template_xy
+            }
+            return true;
         }
 
         //mark tray
