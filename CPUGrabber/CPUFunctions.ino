@@ -142,7 +142,7 @@ void CommandProcess(){//Parse command
       angleNew = 0;
     }
 
-    if(xposNew >= 0 && yposNew >= 0 && zposNew >= 0 && angleNew >=0 && xposNew < 1000 && yposNew < 1000 && zposNew < 1000 && angleNew < 360){
+    if(xposNew >= 0 && yposNew >= -250 && zposNew >= 0 && angleNew >=0 && xposNew < 250 && yposNew < 250 && zposNew < 250 && angleNew < 360){
        Serial.println("NAVIGATING");
        MapCoordinates(false);
        Navigate();
@@ -167,7 +167,20 @@ void MapCoordinates(boolean cartesian){ //Converts cart -> cyl and back
     radiusNew = sqrt(pow(xposNew,2)+pow(yposNew,2));
     x = double(xpos);
     y = double(ypos);
-    theta = atan2(x,y)*57.2958;
+    theta = abs(atan2(x,y)*57.2958);
+    if(theta > 179.99){
+      theta = 179.99;
+    }
+    if(theta < 0){
+      theta = 0.01;
+    }
+    if(theta > 180){
+      if(DEBUG){
+        Serial.println("Theta calculation error");
+      }
+      thetaNew = theta;
+      Serial.println("ERROR:EOB");
+    }
     radius = sqrt(pow(xpos,2)+pow(ypos,2));
   }
   else{ //Convert to cart. coor
@@ -207,25 +220,31 @@ void Navigate(){ //Moves to new positions
   
   if(radiusNew != radius){ //These determine direction
     if(radiusNew > radius){
-      digitalWrite(Dir[RADMOTOR], HIGH);
+      digitalWrite(Dir[RADMOTOR], LOW);
       deltaRadius =  radiusNew - radius;
       radDirection = OUT;
     }
     else{
-      digitalWrite(Dir[RADMOTOR], LOW);
+      digitalWrite(Dir[RADMOTOR], HIGH);
       deltaRadius = radius - radiusNew;
       radDirection = IN;
     }
   }
   float delayFactor = 0;
   if(thetaNew != theta){
-    if(thetaNew > theta){
+    if(abs(thetaNew) > abs(theta)){
+      if(DEBUG){
+        Serial.println("    Moving clockwise");
+      }
       delayFactor = thetaNew/theta;
       digitalWrite(Dir[THETAMOTOR], HIGH);
       deltaTheta = thetaNew - theta;
       thetaDirection = RIGHT;
     }
     else{
+      if(DEBUG){
+        Serial.println("    Moving counter-clockwise");
+      }
       delayFactor = theta/thetaNew;
       digitalWrite(Dir[THETAMOTOR], LOW);
       deltaTheta = theta - thetaNew;
@@ -300,12 +319,12 @@ void Navigate(){ //Moves to new positions
       delay(3);
       digitalWrite(Step[THETAMOTOR], HIGH);
       double x = ((theta-thetaOriginal)*2*PI)/(whereWereGoing - thetaOriginal);
-      double tDelay = 12.5*cos(x)+12.5;
-      int addDelay = (5*tDelay) + 18;
+      double tDelay = 5*cos(x)+5;
+      int addDelay = (4*tDelay) + 15;
       if(DEBUG){
         Serial.print("addDelay: ");Serial.println(addDelay);
       }
-      delay(tDelay);
+      delay(addDelay);
       deltaTheta -= 1/float(THETA);
       if(thetaDirection == LEFT){
         theta -= 1/float(THETA);
@@ -315,7 +334,7 @@ void Navigate(){ //Moves to new positions
     }
     if(deltaTheta <= .4){
       doneTheta = true;
-      delay(300);
+      delay(1500);
       digitalWrite(Enable[THETAMOTOR], HIGH);
     }  
   }
