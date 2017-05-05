@@ -37,7 +37,7 @@ namespace VishnuMain
             InitializeComponent();
 
             /* start camera feed loading the UI */
-            Camera_frame = StartCapture();
+            //Camera_frame = StartCapture();
         }
 
         public Capture StartCapture()
@@ -75,6 +75,7 @@ namespace VishnuMain
 
         private void startCameraFeed_Click(object sender, EventArgs e) {
 
+            Camera_frame = StartCapture();
             if (Camera_frame != null) {
                 if (videoFeed) {
                     startCaptureButton.Text = "Start Capture";
