@@ -11,28 +11,29 @@ using DataMatrix.net;
 
 namespace VishnuMain
 {
-    public class CvFunctions {
+    static class CvFunctions {
 
 
         /*CAMERA CAPTURE CLASS*/
-        private Capture camera_feed;
+        public static Capture camera_feed = null;
+        //public static int FrameHeight;
+        //public static int FrameWidth;
 
-        /*CONSTURCTOR: INTIALIZE CAMERA CAPTURE*/
-        public CvFunctions() {
-
+        public static void CvFunctionsCamera()
+        {
+            
             /*CAMERA SETTINGS*/
-            camera_feed = new Capture(); 
-            camera_feed.SetCaptureProperty(CapProp.FrameHeight, 1080);
-            camera_feed.SetCaptureProperty(CapProp.FrameWidth, 1920);
+                camera_feed = new Capture(); 
+                camera_feed.SetCaptureProperty(CapProp.FrameHeight, 480);
+                camera_feed.SetCaptureProperty(CapProp.FrameWidth, 640);
         }
-
 
         /*METHODS BELOW*/
 
         ///<summary>
         /// Returns image, various modes: 1.grayscale 2.redbinary 3.binary
         ///</summary>
-        public Mat SnapPicture(int mode) { 
+        public static Mat SnapPicture(int mode) { 
 
             Mat color_frame = new Mat();
             Mat gray_frame = new Mat();
@@ -64,7 +65,7 @@ namespace VishnuMain
         ///<summary>
         ///Return coordinate offset for correcton
         ///</summary>
-        public Mat TemplateDetection(string[] templatelist, Mat sourceImg, double[] xy_Coord ) { //takes in list of template images, source img
+        public static Mat TemplateDetection(string[] templatelist, Mat sourceImg, double[] xy_Coord ) { //takes in list of template images, source img
 
             Mat ResultMat = new Mat(); //mat data holds template matches coordinates
             Mat result_img = sourceImg.Clone(); //image with rectangles
@@ -140,7 +141,7 @@ namespace VishnuMain
         ///<summary>
         ///Scans 2D-DataMatrix Barcode and returns value
         ///</summary>
-        public string BarcodeScanner(Mat barcode_img) {
+        public static string BarcodeScanner(Mat barcode_img) {
 
             //creates decorder object
             DmtxImageDecoder decoder = new DmtxImageDecoder();
@@ -157,7 +158,10 @@ namespace VishnuMain
 
         }
 
-        public void SaveImg(Mat Img, string filename) {
+        ///<summary>
+        ///Saves image to specified file path given from settings
+        ///</summary>
+        public static  void SaveImg(Mat Img, string filename) {
             Img.Save(filename);
         }
 

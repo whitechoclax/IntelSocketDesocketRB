@@ -102,11 +102,13 @@ namespace VishnuMain
 
             while (Math.Abs(xShift) > 4 || Math.Abs(yShift) > 4)
             {
+                CvFunctions.TemplateDetection(fileloc, CvFunctions.SnapPicture(3), template_xy);
                 if (xShift < 100 && yShift < 100)
                 {
+                
                     ArduinoMotionLibrary.ArdPosition("SHIFT", 0, Math.Round(xShift, 0), Math.Round(yShift, 0), 0, 0);
                 }
-                imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3), template_xy);
+				CvFunctions.TemplateDetection(fileloc, CvFunctions.SnapPicture(3), template_xy);
                 xShift = -1 * template_xy[0] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
                     + template_xy[1] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
                 yShift = template_xy[0] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)

@@ -8,6 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
+using Emgu.CV;
+using Emgu.CV.CvEnum;
+using Emgu.Util;
+using Emgu.CV.Structure;
 
 namespace VishnuMain
 {
@@ -20,12 +24,44 @@ namespace VishnuMain
         int XcoordinateValue;
         int YcoordinateValue;
         int TrayChoiceValue;
+
+        //camerafeed properties
+        private bool videoFeed;
        
+
         public ArmControl()
         {
             InitializeComponent();
             BootMessages();
             findPorts.Enabled = true;
+            cameraBox.Paint += new System.Windows.Forms.PaintEventHandler(this.cameraBox_Paint_1);
+            
+        }
+
+        public Capture StartCapture()
+        {
+            if (CvFunctions.camera_feed == null)
+            {
+                CvFunctions.CvFunctionsCamera();
+                CvFunctions.camera_feed.ImageGrabbed += armFeed_Refresher;
+                return CvFunctions.camera_feed;
+            }
+            else
+            {
+                CvFunctions.camera_feed.ImageGrabbed += armFeed_Refresher;
+                return CvFunctions.camera_feed;
+            }
+
+        }
+
+        private void armFeed_Refresher(object sender, EventArgs arg)
+        {
+           
+            Mat frame = new Mat();
+            CvFunctions.camera_feed.Retrieve(frame);
+
+            cameraBox.Image = frame;
+            //cameraBox.Dispose();
             
         }
 
@@ -117,6 +153,41 @@ namespace VishnuMain
         {
             ArduinoMotionLibrary.ArduinoMotionLibraryBoot();
             BootMessages();
+        }
+
+        private void captureButton_Click(object sender, EventArgs e)
+        {
+            if (CvFunctions.camera_feed != null)
+            {
+                if (videoFeed)
+                {
+                    captureButton.Text = "Start Capture";
+                    CvFunctions.camera_feed.Pause();
+                }
+                else
+                {
+
+                    captureButton.Text = "Stop";
+                    CvFunctions.camera_feed.Start();
+                }
+                videoFeed = !videoFeed;
+            }
+
+            else
+            {
+                CvFunctions.camera_feed = StartCapture();
+                CvFunctions.camera_feed.Start();
+            }
+        }
+
+
+        private void cameraBox_Paint_1(object sender, PaintEventArgs e)
+        {
+            Graphics G = e.Graphics;
+            e.Graphics.DrawLine(new Pen(Color.Red,2), 160, 240, 480, 240);
+            e.Graphics.DrawLine(new Pen(Color.Red,2), 320, 120, 320, 360);
+            e.Graphics.DrawEllipse(new Pen(Color.Red, 1), new RectangleF(280.0F, 200.0F, 80.0F, 80.0F));
+            e.Dispose();
         }
     }
 }
