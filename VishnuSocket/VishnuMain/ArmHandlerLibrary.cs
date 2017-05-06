@@ -98,7 +98,7 @@ namespace VishnuMain
             string[] fileloc = { "../../../../Common/TempImg/CIRCLE_TEMP.jpg" };
             double xShift = 1000;
             double yShift = 1000;
-            CvFunctions imgFx = new CvFunctions();
+            
 
             while (Math.Abs(xShift) > 4 || Math.Abs(yShift) > 4)
             {
