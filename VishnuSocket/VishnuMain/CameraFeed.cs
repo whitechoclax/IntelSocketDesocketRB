@@ -91,15 +91,15 @@ namespace VishnuMain
                     //Check to see if the selected device has changed
                     if (Camera_Selection.SelectedIndex != CameraDevice)
                     {
-                        SetupCapture(Camera_Selection.SelectedIndex); //Setup capture with the new device
+                        SetupCapture(Camera_Selection.SelectedIndex);               //Setup capture with the new device
                     }
 
-                    RetrieveCaptureInformation(); //Get Camera information
-                    captureButton.Text = "Stop"; //Change text on button
+                    RetrieveCaptureInformation();                                   //Get Camera information
+                    captureButton.Text = "Stop";                                    //Change text on button
 
                     CvFunctions.camera_feed = StartCapture();
-                    CvFunctions.camera_feed.Start(); //Start the capture
-                    _captureInProgress = true; //Flag the state of the camera
+                    CvFunctions.camera_feed.Start();                                //Start the capture
+                    _captureInProgress = true;                                      //Flag the state of the camera
                 }
 
             }

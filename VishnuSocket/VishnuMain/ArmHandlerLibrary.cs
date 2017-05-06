@@ -102,7 +102,7 @@ namespace VishnuMain
 
             while (Math.Abs(xShift) > 4 || Math.Abs(yShift) > 4)
             {
-                CvFunctions.TemplateDetection(fileloc, CvFunctions.SnapPicture(3), template_xy);
+                //CvFunctions.TemplateDetection(fileloc, CvFunctions.SnapPicture(3), template_xy);
                 if (xShift < 100 && yShift < 100)
                 {
                 

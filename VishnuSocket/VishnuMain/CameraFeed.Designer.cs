@@ -209,6 +209,7 @@
             // 
             // mainFeedBox
             // 
+            this.mainFeedBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.mainFeedBox.Location = new System.Drawing.Point(3, 35);
             this.mainFeedBox.Name = "mainFeedBox";
             this.mainFeedBox.Size = new System.Drawing.Size(607, 511);
