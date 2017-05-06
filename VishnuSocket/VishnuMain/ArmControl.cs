@@ -11,6 +11,7 @@ using System.IO.Ports;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.Util;
+using Emgu.CV.Structure;
 
 namespace VishnuMain
 {
@@ -26,12 +27,16 @@ namespace VishnuMain
 
         //camerafeed properties
         private bool videoFeed;
+        
+        Bitmap DrawArea;
+       
 
         public ArmControl()
         {
             InitializeComponent();
             BootMessages();
             findPorts.Enabled = true;
+            cameraBox.Paint += new System.Windows.Forms.PaintEventHandler(this.cameraBox_Paint);
             
         }
 
@@ -53,9 +58,13 @@ namespace VishnuMain
 
         private void armFeed_Refresher(object sender, EventArgs arg)
         {
+            //Image<Bgr, Byte> sourceimage = CvFunctions.camera_feed.QueryFrame().ToImage<Bgr, byte>();
+            //sourceimage.Draw(new Cross2DF(new PointF(markx, marky), CvFunctions.FrameWidth / 2, CvFunctions.FrameHeight / 2), new Bgr(Color.Red), 1);
             Mat frame = new Mat();
             CvFunctions.camera_feed.Retrieve(frame);
-            cameraBox.Image = frame;
+
+            cameraBox.Image = frame.Bitmap;
+            //cameraBox.Dispose();
             
         }
 
@@ -172,6 +181,14 @@ namespace VishnuMain
                 CvFunctions.camera_feed = StartCapture();
                 CvFunctions.camera_feed.Start();
             }
+        }
+
+        private void cameraBox_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics G = e.Graphics;
+            e.Graphics.DrawLine(new Pen(Color.Red), 0, 240, 640, 240);
+            e.Graphics.DrawLine(new Pen(Color.Red), 320, 0, 320, 480);
+            e.Dispose();
         }
     }
 }

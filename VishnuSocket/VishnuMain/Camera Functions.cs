@@ -16,6 +16,8 @@ namespace VishnuMain
 
         /*CAMERA CAPTURE CLASS*/
         public static Capture camera_feed = null;
+        public static int FrameHeight;
+        public static int FrameWidth;
 
         public static void CvFunctionsCamera()
         {

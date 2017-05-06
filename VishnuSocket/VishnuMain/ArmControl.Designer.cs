@@ -56,8 +56,9 @@
             this.findPorts = new System.Windows.Forms.Button();
             this.portListBox = new System.Windows.Forms.RichTextBox();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
-            this.cameraBox = new Emgu.CV.UI.ImageBox();
             this.captureButton = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cameraBox = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             this.trayGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trayZaxis)).BeginInit();
@@ -159,10 +160,10 @@
             "Good Tray",
             "Empty Tray",
             "Bad Tray"});
-            this.traySelectorBox.Location = new System.Drawing.Point(32, 42);
+            this.traySelectorBox.Location = new System.Drawing.Point(27, 42);
             this.traySelectorBox.Margin = new System.Windows.Forms.Padding(2);
             this.traySelectorBox.Name = "traySelectorBox";
-            this.traySelectorBox.Size = new System.Drawing.Size(120, 29);
+            this.traySelectorBox.Size = new System.Drawing.Size(125, 29);
             this.traySelectorBox.TabIndex = 16;
             this.traySelectorBox.SelectedIndexChanged += new System.EventHandler(this.traySelectorBox_SelectedIndexChanged);
             // 
@@ -235,7 +236,7 @@
             // trayZaxis
             // 
             this.trayZaxis.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.trayZaxis.Location = new System.Drawing.Point(52, 90);
+            this.trayZaxis.Location = new System.Drawing.Point(27, 90);
             this.trayZaxis.Margin = new System.Windows.Forms.Padding(2);
             this.trayZaxis.Maximum = new decimal(new int[] {
             1000,
@@ -243,7 +244,7 @@
             0,
             0});
             this.trayZaxis.Name = "trayZaxis";
-            this.trayZaxis.Size = new System.Drawing.Size(91, 29);
+            this.trayZaxis.Size = new System.Drawing.Size(125, 29);
             this.trayZaxis.TabIndex = 5;
             // 
             // coordControl
@@ -435,15 +436,6 @@
             this.portListBox.TabIndex = 2;
             this.portListBox.Text = "";
             // 
-            // cameraBox
-            // 
-            this.cameraBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.cameraBox.Location = new System.Drawing.Point(1121, 64);
-            this.cameraBox.Name = "cameraBox";
-            this.cameraBox.Size = new System.Drawing.Size(640, 480);
-            this.cameraBox.TabIndex = 2;
-            this.cameraBox.TabStop = false;
-            // 
             // captureButton
             // 
             this.captureButton.Location = new System.Drawing.Point(1121, 561);
@@ -454,12 +446,31 @@
             this.captureButton.UseVisualStyleBackColor = true;
             this.captureButton.Click += new System.EventHandler(this.captureButton_Click);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(1122, 16);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(133, 28);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "Camera Feed";
+            // 
+            // cameraBox
+            // 
+            this.cameraBox.Location = new System.Drawing.Point(1127, 64);
+            this.cameraBox.Name = "cameraBox";
+            this.cameraBox.Size = new System.Drawing.Size(640, 480);
+            this.cameraBox.TabIndex = 8;
+            this.cameraBox.TabStop = false;
+            // 
             // ArmControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.Controls.Add(this.captureButton);
             this.Controls.Add(this.cameraBox);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.captureButton);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Margin = new System.Windows.Forms.Padding(2);
@@ -478,6 +489,7 @@
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.cameraBox)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -510,7 +522,8 @@
         private System.Windows.Forms.NumericUpDown trayZaxis;
         private System.Windows.Forms.ComboBox traySelectorBox;
         public System.Windows.Forms.GroupBox trayGroupBox;
-        private Emgu.CV.UI.ImageBox cameraBox;
         private System.Windows.Forms.Button captureButton;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.PictureBox cameraBox;
     }
 }
