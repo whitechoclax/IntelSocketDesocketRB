@@ -58,7 +58,7 @@
             // video_imgbox
             // 
             this.video_imgbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.video_imgbox.Location = new System.Drawing.Point(16, 25);
+            this.video_imgbox.Location = new System.Drawing.Point(17, 47);
             this.video_imgbox.Name = "video_imgbox";
             this.video_imgbox.Size = new System.Drawing.Size(480, 270);
             this.video_imgbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -68,18 +68,18 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(13, 9);
+            this.label6.Location = new System.Drawing.Point(14, 9);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(61, 13);
+            this.label6.Size = new System.Drawing.Size(91, 20);
             this.label6.TabIndex = 16;
             this.label6.Text = "Video Feed";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(14, 298);
+            this.label3.Location = new System.Drawing.Point(14, 381);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(83, 13);
+            this.label3.Size = new System.Drawing.Size(124, 20);
             this.label3.TabIndex = 17;
             this.label3.Text = "Template Image";
             // 
@@ -87,7 +87,7 @@
             // 
             this.template_imgbox.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.template_imgbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.template_imgbox.Location = new System.Drawing.Point(17, 314);
+            this.template_imgbox.Location = new System.Drawing.Point(18, 416);
             this.template_imgbox.Name = "template_imgbox";
             this.template_imgbox.Size = new System.Drawing.Size(480, 270);
             this.template_imgbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -99,14 +99,14 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(519, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(82, 13);
+            this.label1.Size = new System.Drawing.Size(124, 20);
             this.label1.TabIndex = 19;
             this.label1.Text = "Captured Image";
             // 
             // captured_imgbox
             // 
             this.captured_imgbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.captured_imgbox.Location = new System.Drawing.Point(522, 25);
+            this.captured_imgbox.Location = new System.Drawing.Point(523, 47);
             this.captured_imgbox.Name = "captured_imgbox";
             this.captured_imgbox.Size = new System.Drawing.Size(480, 270);
             this.captured_imgbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -116,16 +116,16 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(519, 298);
+            this.label2.Location = new System.Drawing.Point(519, 381);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(86, 13);
+            this.label2.Size = new System.Drawing.Size(124, 20);
             this.label2.TabIndex = 21;
             this.label2.Text = "Tracked Objects";
             // 
             // tracked_imgbox
             // 
             this.tracked_imgbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tracked_imgbox.Location = new System.Drawing.Point(522, 314);
+            this.tracked_imgbox.Location = new System.Drawing.Point(522, 416);
             this.tracked_imgbox.Name = "tracked_imgbox";
             this.tracked_imgbox.Size = new System.Drawing.Size(480, 270);
             this.tracked_imgbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -145,26 +145,26 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(1021, 365);
+            this.label5.Location = new System.Drawing.Point(1021, 497);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(51, 13);
+            this.label5.Size = new System.Drawing.Size(75, 20);
             this.label5.TabIndex = 30;
             this.label5.Text = "Template";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(1021, 316);
+            this.label4.Location = new System.Drawing.Point(1021, 416);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(36, 13);
+            this.label4.Size = new System.Drawing.Size(54, 20);
             this.label4.TabIndex = 29;
             this.label4.Text = "Image";
             // 
             // template_textbox
             // 
-            this.template_textbox.Location = new System.Drawing.Point(1024, 381);
+            this.template_textbox.Location = new System.Drawing.Point(1024, 520);
             this.template_textbox.Name = "template_textbox";
-            this.template_textbox.Size = new System.Drawing.Size(81, 20);
+            this.template_textbox.Size = new System.Drawing.Size(81, 26);
             this.template_textbox.TabIndex = 28;
             // 
             // findMatch
@@ -179,9 +179,9 @@
             // 
             // loadTemplate
             // 
-            this.loadTemplate.Location = new System.Drawing.Point(1111, 381);
+            this.loadTemplate.Location = new System.Drawing.Point(1122, 522);
             this.loadTemplate.Name = "loadTemplate";
-            this.loadTemplate.Size = new System.Drawing.Size(25, 22);
+            this.loadTemplate.Size = new System.Drawing.Size(57, 22);
             this.loadTemplate.TabIndex = 26;
             this.loadTemplate.Text = "...";
             this.loadTemplate.UseVisualStyleBackColor = true;
@@ -199,16 +199,16 @@
             // 
             // sourceimg_textbox
             // 
-            this.sourceimg_textbox.Location = new System.Drawing.Point(1024, 332);
+            this.sourceimg_textbox.Location = new System.Drawing.Point(1025, 450);
             this.sourceimg_textbox.Name = "sourceimg_textbox";
-            this.sourceimg_textbox.Size = new System.Drawing.Size(81, 20);
+            this.sourceimg_textbox.Size = new System.Drawing.Size(81, 26);
             this.sourceimg_textbox.TabIndex = 24;
             // 
             // loadSource
             // 
-            this.loadSource.Location = new System.Drawing.Point(1111, 332);
+            this.loadSource.Location = new System.Drawing.Point(1122, 456);
             this.loadSource.Name = "loadSource";
-            this.loadSource.Size = new System.Drawing.Size(25, 20);
+            this.loadSource.Size = new System.Drawing.Size(57, 20);
             this.loadSource.TabIndex = 23;
             this.loadSource.Text = "...";
             this.loadSource.UseVisualStyleBackColor = true;
@@ -257,7 +257,7 @@
             this.Controls.Add(this.video_imgbox);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ComputerVision_Tab";
-            this.Size = new System.Drawing.Size(1354, 618);
+            this.Size = new System.Drawing.Size(1354, 905);
             ((System.ComponentModel.ISupportInitialize)(this.video_imgbox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.template_imgbox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.captured_imgbox)).EndInit();
