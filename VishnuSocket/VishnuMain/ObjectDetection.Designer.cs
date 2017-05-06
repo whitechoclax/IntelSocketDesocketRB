@@ -64,6 +64,7 @@
             this.video_imgbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.video_imgbox.TabIndex = 3;
             this.video_imgbox.TabStop = false;
+            this.video_imgbox.Paint += new System.Windows.Forms.PaintEventHandler(this.video_imgbox_Paint);
             // 
             // label6
             // 

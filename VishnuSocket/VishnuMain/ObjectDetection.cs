@@ -35,7 +35,7 @@ namespace VishnuMain
         public ComputerVision_Tab() {
             /* Initilize winforms */
             InitializeComponent();
-
+            video_imgbox.Paint += new System.Windows.Forms.PaintEventHandler(this.video_imgbox_Paint);
             /* start camera feed loading the UI */
             
         }
@@ -129,6 +129,13 @@ namespace VishnuMain
 
             CvFunctions.SaveImg(CvFunctions.SnapPicture(3), Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/" + "EMGU.jpg");
         }
-            
+
+        private void video_imgbox_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics G = e.Graphics;
+            e.Graphics.DrawLine(new Pen(Color.Red), 160, 240, 480, 240);
+            e.Graphics.DrawLine(new Pen(Color.Red), 320, 120, 320, 360);
+            e.Dispose();
+        }
     }
 }
