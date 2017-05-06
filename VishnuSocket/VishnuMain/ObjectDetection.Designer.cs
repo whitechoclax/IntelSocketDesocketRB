@@ -58,29 +58,33 @@
             // video_imgbox
             // 
             this.video_imgbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.video_imgbox.Location = new System.Drawing.Point(17, 47);
+            this.video_imgbox.Location = new System.Drawing.Point(26, 70);
+            this.video_imgbox.Margin = new System.Windows.Forms.Padding(4);
             this.video_imgbox.Name = "video_imgbox";
             this.video_imgbox.Size = new System.Drawing.Size(640, 480);
             this.video_imgbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.video_imgbox.TabIndex = 3;
             this.video_imgbox.TabStop = false;
+            this.video_imgbox.Click += new System.EventHandler(this.video_imgbox_Click);
             this.video_imgbox.Paint += new System.Windows.Forms.PaintEventHandler(this.video_imgbox_Paint);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(14, 9);
+            this.label6.Location = new System.Drawing.Point(21, 14);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(61, 13);
+            this.label6.Size = new System.Drawing.Size(91, 20);
             this.label6.TabIndex = 16;
             this.label6.Text = "Video Feed";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(14, 568);
+            this.label3.Location = new System.Drawing.Point(21, 852);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(83, 13);
+            this.label3.Size = new System.Drawing.Size(124, 20);
             this.label3.TabIndex = 17;
             this.label3.Text = "Template Image";
             // 
@@ -88,9 +92,10 @@
             // 
             this.template_imgbox.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.template_imgbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.template_imgbox.Location = new System.Drawing.Point(17, 605);
+            this.template_imgbox.Location = new System.Drawing.Point(26, 908);
+            this.template_imgbox.Margin = new System.Windows.Forms.Padding(4);
             this.template_imgbox.Name = "template_imgbox";
-            this.template_imgbox.Size = new System.Drawing.Size(480, 270);
+            this.template_imgbox.Size = new System.Drawing.Size(719, 404);
             this.template_imgbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.template_imgbox.TabIndex = 18;
             this.template_imgbox.TabStop = false;
@@ -98,18 +103,20 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(734, 209);
+            this.label1.Location = new System.Drawing.Point(888, 92);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(82, 13);
+            this.label1.Size = new System.Drawing.Size(124, 20);
             this.label1.TabIndex = 19;
             this.label1.Text = "Captured Image";
             // 
             // captured_imgbox
             // 
             this.captured_imgbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.captured_imgbox.Location = new System.Drawing.Point(738, 257);
+            this.captured_imgbox.Location = new System.Drawing.Point(892, 146);
+            this.captured_imgbox.Margin = new System.Windows.Forms.Padding(4);
             this.captured_imgbox.Name = "captured_imgbox";
-            this.captured_imgbox.Size = new System.Drawing.Size(480, 270);
+            this.captured_imgbox.Size = new System.Drawing.Size(719, 404);
             this.captured_imgbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.captured_imgbox.TabIndex = 20;
             this.captured_imgbox.TabStop = false;
@@ -117,27 +124,30 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(528, 568);
+            this.label2.Location = new System.Drawing.Point(792, 852);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(86, 13);
+            this.label2.Size = new System.Drawing.Size(124, 20);
             this.label2.TabIndex = 21;
             this.label2.Text = "Tracked Objects";
             // 
             // tracked_imgbox
             // 
             this.tracked_imgbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tracked_imgbox.Location = new System.Drawing.Point(532, 605);
+            this.tracked_imgbox.Location = new System.Drawing.Point(798, 908);
+            this.tracked_imgbox.Margin = new System.Windows.Forms.Padding(4);
             this.tracked_imgbox.Name = "tracked_imgbox";
-            this.tracked_imgbox.Size = new System.Drawing.Size(480, 270);
+            this.tracked_imgbox.Size = new System.Drawing.Size(719, 404);
             this.tracked_imgbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.tracked_imgbox.TabIndex = 22;
             this.tracked_imgbox.TabStop = false;
             // 
             // startCaptureButton
             // 
-            this.startCaptureButton.Location = new System.Drawing.Point(1274, 33);
+            this.startCaptureButton.Location = new System.Drawing.Point(1911, 50);
+            this.startCaptureButton.Margin = new System.Windows.Forms.Padding(4);
             this.startCaptureButton.Name = "startCaptureButton";
-            this.startCaptureButton.Size = new System.Drawing.Size(100, 34);
+            this.startCaptureButton.Size = new System.Drawing.Size(150, 51);
             this.startCaptureButton.TabIndex = 31;
             this.startCaptureButton.Text = "Start Camera";
             this.startCaptureButton.UseVisualStyleBackColor = true;
@@ -146,33 +156,37 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(1038, 652);
+            this.label5.Location = new System.Drawing.Point(1557, 978);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(51, 13);
+            this.label5.Size = new System.Drawing.Size(75, 20);
             this.label5.TabIndex = 30;
             this.label5.Text = "Template";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(1038, 571);
+            this.label4.Location = new System.Drawing.Point(1557, 856);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(36, 13);
+            this.label4.Size = new System.Drawing.Size(54, 20);
             this.label4.TabIndex = 29;
             this.label4.Text = "Image";
             // 
             // template_textbox
             // 
-            this.template_textbox.Location = new System.Drawing.Point(1042, 688);
+            this.template_textbox.Location = new System.Drawing.Point(1563, 1032);
+            this.template_textbox.Margin = new System.Windows.Forms.Padding(4);
             this.template_textbox.Name = "template_textbox";
-            this.template_textbox.Size = new System.Drawing.Size(81, 20);
+            this.template_textbox.Size = new System.Drawing.Size(120, 26);
             this.template_textbox.TabIndex = 28;
             // 
             // findMatch
             // 
-            this.findMatch.Location = new System.Drawing.Point(1274, 213);
+            this.findMatch.Location = new System.Drawing.Point(1911, 320);
+            this.findMatch.Margin = new System.Windows.Forms.Padding(4);
             this.findMatch.Name = "findMatch";
-            this.findMatch.Size = new System.Drawing.Size(100, 34);
+            this.findMatch.Size = new System.Drawing.Size(150, 51);
             this.findMatch.TabIndex = 27;
             this.findMatch.Text = "Find";
             this.findMatch.UseVisualStyleBackColor = true;
@@ -180,9 +194,10 @@
             // 
             // loadTemplate
             // 
-            this.loadTemplate.Location = new System.Drawing.Point(1139, 688);
+            this.loadTemplate.Location = new System.Drawing.Point(1708, 1032);
+            this.loadTemplate.Margin = new System.Windows.Forms.Padding(4);
             this.loadTemplate.Name = "loadTemplate";
-            this.loadTemplate.Size = new System.Drawing.Size(57, 22);
+            this.loadTemplate.Size = new System.Drawing.Size(86, 33);
             this.loadTemplate.TabIndex = 26;
             this.loadTemplate.Text = "...";
             this.loadTemplate.UseVisualStyleBackColor = true;
@@ -190,9 +205,10 @@
             // 
             // capturePicture
             // 
-            this.capturePicture.Location = new System.Drawing.Point(1274, 89);
+            this.capturePicture.Location = new System.Drawing.Point(1911, 134);
+            this.capturePicture.Margin = new System.Windows.Forms.Padding(4);
             this.capturePicture.Name = "capturePicture";
-            this.capturePicture.Size = new System.Drawing.Size(100, 34);
+            this.capturePicture.Size = new System.Drawing.Size(150, 51);
             this.capturePicture.TabIndex = 25;
             this.capturePicture.Text = "Capture Picture";
             this.capturePicture.UseVisualStyleBackColor = true;
@@ -200,16 +216,18 @@
             // 
             // sourceimg_textbox
             // 
-            this.sourceimg_textbox.Location = new System.Drawing.Point(1042, 605);
+            this.sourceimg_textbox.Location = new System.Drawing.Point(1563, 908);
+            this.sourceimg_textbox.Margin = new System.Windows.Forms.Padding(4);
             this.sourceimg_textbox.Name = "sourceimg_textbox";
-            this.sourceimg_textbox.Size = new System.Drawing.Size(81, 20);
+            this.sourceimg_textbox.Size = new System.Drawing.Size(120, 26);
             this.sourceimg_textbox.TabIndex = 24;
             // 
             // loadSource
             // 
-            this.loadSource.Location = new System.Drawing.Point(1139, 611);
+            this.loadSource.Location = new System.Drawing.Point(1708, 916);
+            this.loadSource.Margin = new System.Windows.Forms.Padding(4);
             this.loadSource.Name = "loadSource";
-            this.loadSource.Size = new System.Drawing.Size(57, 20);
+            this.loadSource.Size = new System.Drawing.Size(86, 30);
             this.loadSource.TabIndex = 23;
             this.loadSource.Text = "...";
             this.loadSource.UseVisualStyleBackColor = true;
@@ -225,9 +243,10 @@
             // 
             // SavePicture
             // 
-            this.SavePicture.Location = new System.Drawing.Point(1274, 151);
+            this.SavePicture.Location = new System.Drawing.Point(1911, 226);
+            this.SavePicture.Margin = new System.Windows.Forms.Padding(4);
             this.SavePicture.Name = "SavePicture";
-            this.SavePicture.Size = new System.Drawing.Size(100, 34);
+            this.SavePicture.Size = new System.Drawing.Size(150, 51);
             this.SavePicture.TabIndex = 32;
             this.SavePicture.Text = "Save Image";
             this.SavePicture.UseVisualStyleBackColor = true;
@@ -235,7 +254,7 @@
             // 
             // ComputerVision_Tab
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.AutoSize = true;
@@ -258,9 +277,8 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.video_imgbox);
-            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ComputerVision_Tab";
-            this.Size = new System.Drawing.Size(1431, 987);
+            this.Size = new System.Drawing.Size(2065, 1316);
             ((System.ComponentModel.ISupportInitialize)(this.video_imgbox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.template_imgbox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.captured_imgbox)).EndInit();

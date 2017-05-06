@@ -138,5 +138,10 @@ namespace VishnuMain
             e.Graphics.DrawEllipse(new Pen(Color.Red,2), new RectangleF(280.0F, 200.0F, 80.0F, 80.0F));
             e.Dispose();
         }
+
+        private void video_imgbox_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
