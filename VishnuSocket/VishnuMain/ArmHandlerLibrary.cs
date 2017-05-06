@@ -9,9 +9,9 @@ namespace VishnuMain
     static class ArmHandlerLibrary
     {
         public static bool Running = false;
-        public static double[] RestLocation = { 50.0, 0.0, 100.0, 0.0 };
-        public static double[] OriginLocation = { 50.0, 20.0, 80.0, 0.0 }; //CPU0 location
-        public static double[] SocketLocation = { 0.0, 50.0, 75.0, 0.0 }; //Socket center point
+        public static double[] RestLocation = { 0.0, 150.0, 200.0, 0.0 };
+        public static double[] OriginLocation = { 220.0, 120.0, 200.0, 0.0 }; //CPU0 location
+        public static double[] SocketLocation = { 20.0, -250.0, 200.0, 0.0 }; //Socket center point
         private static double centerToCenterL = 0.0; //Distance between left and right CPU
         private static double centerToCenterW = 0.0; //Distance between top and bottom CPU
         private static double centerToCenterZ = 0.0; //Distance between trays
@@ -53,6 +53,10 @@ namespace VishnuMain
                 {
                     Loc[1] = centerToCenterW + OriginLocation[1];
                 } //Adding the y offset to the tray
+                else
+                {
+                    Loc[1] = OriginLocation[1];
+                }
                 Loc[2] = ((trayHandler.emptyTrayCount-1 + trayHandler.goodTrayCount + trayHandler.badTrayCount) * centerToCenterZ) + OriginLocation[2];
                 ArduinoMotionLibrary.ArdPosition("MOVE", 0, Loc[0], Loc[1], Loc[2], Loc[3]); //Move to CPU
                 //Verify we're above a CPU
@@ -60,9 +64,9 @@ namespace VishnuMain
                 {
                     //Keep Navigating to next CPU and testing
                 }
-                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, -20, 0); //Descend Z
+                //ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, -20, 0); //Descend Z
                 ArduinoMotionLibrary.ArdPosition("GRAB", 0, 0, 0, 0, 0); //Grab CPU
-                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 20, 0); //Raise back up
+                //ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 20, 0); //Raise back up
                 //Move to Calibration image, verify it's there in the right spot
                 CameraTestImg();
                 ArduinoMotionLibrary.ArdPosition("MOVE", 0, SocketLocation[0], SocketLocation[1], SocketLocation[2], SocketLocation[3]);
@@ -73,9 +77,8 @@ namespace VishnuMain
                 //Tell Tray to present good or bad
 
                 //Runing Template detection code
-                CameraTestImg();
 
-                ArduinoMotionLibrary.ArdPosition("MOVE", 0, 0, 0, 0, 0); //Demo done, return to origin
+                ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1], OriginLocation[2], OriginLocation[3]); //Demo done, return to origin
             }
             return;
         }
@@ -93,10 +96,23 @@ namespace VishnuMain
             //value from templateDetection
             double[] template_xy = { 1000, 1000 };
             string[] fileloc = { "../../../../Common/TempImg/CIRCLE_TEMP.jpg" };
+            double xShift = 1000;
+            double yShift = 1000;
 
-            while(Math.Abs(template_xy[0]) > 2 && Math.Abs(template_xy[1]) > 2)
+            while (Math.Abs(template_xy[0]) > 3 && Math.Abs(template_xy[1]) > 3)
             {
                 CvFunctions imgFx = new CvFunctions();
+                imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3), template_xy);
+                xShift = -1*template_xy[0] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
+                    + template_xy[1] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
+                yShift = template_xy[0] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
+                    - template_xy[1] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
+                xShift = xShift * (180 / ArduinoMotionLibrary.ArmCoordinates[2]);
+                yShift = yShift * (180 / ArduinoMotionLibrary.ArmCoordinates[2]);
+                if (xShift < 100 && yShift < 100)
+                {
+                    ArduinoMotionLibrary.ArdPosition("SHIFT", 0, Math.Round(xShift, 0), Math.Round(yShift, 0), 0, 0);
+                }
                 imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3), template_xy);
                 //Shift by the template_xy
             }

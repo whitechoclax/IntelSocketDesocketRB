@@ -29,12 +29,12 @@ boolean DEBUG = false;
 
 //Current position
 double xpos = 0;
-double ypos = 0;
-int zpos = 0;
+double ypos = 150;
+int zpos = 100;
 double angle = 0; //Angle for end effector
 
 double theta = 0; //angle of robot
-double radius = 0; //extension of arm
+double radius = 150; //extension of arm
 
 double thetaNew = 0;
 double radiusNew = 0;

@@ -142,9 +142,13 @@ void CommandProcess(){//Parse command
       angleNew = 0;
     }
 
-    if(xposNew >= 0 && yposNew >= -250 && zposNew >= 0 && angleNew >=0 && xposNew < 250 && yposNew < 250 && zposNew < 250 && angleNew < 360){
-       Serial.println("NAVIGATING");
+    if(xposNew >= 0 && yposNew >= -600 && zposNew >= 0 && angleNew >=0 && xposNew < 600 && yposNew < 600 && zposNew < 600 && angleNew < 360){
        MapCoordinates(false);
+       if(radiusNew < 149){
+        Serial.println("ERROR:CRASH");
+        return;
+       }
+       Serial.println("NAVIGATING");
        Navigate();
        Serial.println("DONE");
        RelayCoordinates();

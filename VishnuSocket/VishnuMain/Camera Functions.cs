@@ -82,7 +82,7 @@ namespace VishnuMain
 
                     Mat templateImg = CvInvoke.Imread(templatelist[i], LoadImageType.Grayscale); //creates image from list
                     CvInvoke.MatchTemplate(sourceImg, templateImg, ResultMat, TemplateMatchingType.CcoeffNormed); //does template matching
-
+                    //UNHANDLED EXCEPTION HERE!! ^^
                     //finds best matching location
                     CvInvoke.MinMaxLoc(ResultMat, ref minValues, ref maxValues, ref minLocations, ref maxLocations);
 

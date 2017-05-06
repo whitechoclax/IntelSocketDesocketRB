@@ -61,7 +61,7 @@ namespace VishnuMain
         {
             Mat frame = new Mat();
             Camera_frame.Retrieve(frame, 0);
-            video_imgbox.Image = frame;
+            video_imgbox.Image = frame; //<<UNHANDLED EXECEPTION
         }
 
 
