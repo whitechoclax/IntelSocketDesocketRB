@@ -36,7 +36,7 @@ namespace VishnuMain
             InitializeComponent();
             BootMessages();
             findPorts.Enabled = true;
-            cameraBox.Paint += new System.Windows.Forms.PaintEventHandler(this.cameraBox_Paint);
+            cameraBox.Paint += new System.Windows.Forms.PaintEventHandler(this.cameraBox_Paint_1);
             
         }
 
@@ -63,7 +63,7 @@ namespace VishnuMain
             Mat frame = new Mat();
             CvFunctions.camera_feed.Retrieve(frame);
 
-            cameraBox.Image = frame.Bitmap;
+            cameraBox.Image = frame;
             //cameraBox.Dispose();
             
         }
@@ -183,7 +183,8 @@ namespace VishnuMain
             }
         }
 
-        private void cameraBox_Paint(object sender, PaintEventArgs e)
+
+        private void cameraBox_Paint_1(object sender, PaintEventArgs e)
         {
             Graphics G = e.Graphics;
             e.Graphics.DrawLine(new Pen(Color.Red), 0, 240, 640, 240);

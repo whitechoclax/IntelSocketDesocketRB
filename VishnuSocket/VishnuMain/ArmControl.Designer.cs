@@ -58,7 +58,7 @@
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.captureButton = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.cameraBox = new System.Windows.Forms.PictureBox();
+            this.cameraBox = new Emgu.CV.UI.ImageBox();
             this.groupBox1.SuspendLayout();
             this.trayGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trayZaxis)).BeginInit();
@@ -458,11 +458,12 @@
             // 
             // cameraBox
             // 
-            this.cameraBox.Location = new System.Drawing.Point(1127, 64);
+            this.cameraBox.Location = new System.Drawing.Point(1127, 58);
             this.cameraBox.Name = "cameraBox";
             this.cameraBox.Size = new System.Drawing.Size(640, 480);
-            this.cameraBox.TabIndex = 8;
+            this.cameraBox.TabIndex = 2;
             this.cameraBox.TabStop = false;
+            this.cameraBox.Paint += new System.Windows.Forms.PaintEventHandler(this.cameraBox_Paint_1);
             // 
             // ArmControl
             // 
@@ -524,6 +525,6 @@
         public System.Windows.Forms.GroupBox trayGroupBox;
         private System.Windows.Forms.Button captureButton;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.PictureBox cameraBox;
+        private Emgu.CV.UI.ImageBox cameraBox;
     }
 }
