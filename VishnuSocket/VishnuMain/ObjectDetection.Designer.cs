@@ -70,7 +70,7 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(14, 9);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(91, 20);
+            this.label6.Size = new System.Drawing.Size(61, 13);
             this.label6.TabIndex = 16;
             this.label6.Text = "Video Feed";
             // 
@@ -79,7 +79,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(14, 381);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(124, 20);
+            this.label3.Size = new System.Drawing.Size(83, 13);
             this.label3.TabIndex = 17;
             this.label3.Text = "Template Image";
             // 
@@ -99,7 +99,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(519, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(124, 20);
+            this.label1.Size = new System.Drawing.Size(82, 13);
             this.label1.TabIndex = 19;
             this.label1.Text = "Captured Image";
             // 
@@ -118,7 +118,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(519, 381);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(124, 20);
+            this.label2.Size = new System.Drawing.Size(86, 13);
             this.label2.TabIndex = 21;
             this.label2.Text = "Tracked Objects";
             // 
@@ -138,7 +138,7 @@
             this.startCaptureButton.Name = "startCaptureButton";
             this.startCaptureButton.Size = new System.Drawing.Size(100, 34);
             this.startCaptureButton.TabIndex = 31;
-            this.startCaptureButton.Text = "Start Capture";
+            this.startCaptureButton.Text = "Start Camera";
             this.startCaptureButton.UseVisualStyleBackColor = true;
             this.startCaptureButton.Click += new System.EventHandler(this.startCameraFeed_Click);
             // 
@@ -147,7 +147,7 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(1021, 497);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(75, 20);
+            this.label5.Size = new System.Drawing.Size(51, 13);
             this.label5.TabIndex = 30;
             this.label5.Text = "Template";
             // 
@@ -156,7 +156,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(1021, 416);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(54, 20);
+            this.label4.Size = new System.Drawing.Size(36, 13);
             this.label4.TabIndex = 29;
             this.label4.Text = "Image";
             // 
@@ -164,7 +164,7 @@
             // 
             this.template_textbox.Location = new System.Drawing.Point(1024, 520);
             this.template_textbox.Name = "template_textbox";
-            this.template_textbox.Size = new System.Drawing.Size(81, 26);
+            this.template_textbox.Size = new System.Drawing.Size(81, 20);
             this.template_textbox.TabIndex = 28;
             // 
             // findMatch
@@ -201,7 +201,7 @@
             // 
             this.sourceimg_textbox.Location = new System.Drawing.Point(1025, 450);
             this.sourceimg_textbox.Name = "sourceimg_textbox";
-            this.sourceimg_textbox.Size = new System.Drawing.Size(81, 26);
+            this.sourceimg_textbox.Size = new System.Drawing.Size(81, 20);
             this.sourceimg_textbox.TabIndex = 24;
             // 
             // loadSource
@@ -234,9 +234,11 @@
             // 
             // ComputerVision_Tab
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.SavePicture);
             this.Controls.Add(this.startCaptureButton);
             this.Controls.Add(this.label5);
@@ -257,7 +259,7 @@
             this.Controls.Add(this.video_imgbox);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ComputerVision_Tab";
-            this.Size = new System.Drawing.Size(1354, 905);
+            this.Size = new System.Drawing.Size(1182, 689);
             ((System.ComponentModel.ISupportInitialize)(this.video_imgbox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.template_imgbox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.captured_imgbox)).EndInit();
