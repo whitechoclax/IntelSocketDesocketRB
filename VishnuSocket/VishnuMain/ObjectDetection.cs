@@ -60,8 +60,8 @@ namespace VishnuMain
         private void videoFeed_refresher(object sender, EventArgs arg)
         {
             Mat frame = new Mat();
-            Camera_frame.Retrieve(frame, 0);
-            video_imgbox.Image = frame; //<<UNHANDLED EXECEPTION
+            Camera_frame.Retrieve(frame, 0); //<<Memory exception, something about corrupt
+            video_imgbox.Image = frame; //<<UNHANDLED EXECEPTION perameter is not valid
         }
 
 

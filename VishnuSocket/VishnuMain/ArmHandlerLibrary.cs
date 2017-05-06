@@ -98,22 +98,21 @@ namespace VishnuMain
             string[] fileloc = { "../../../../Common/TempImg/CIRCLE_TEMP.jpg" };
             double xShift = 1000;
             double yShift = 1000;
+            CvFunctions imgFx = new CvFunctions();
 
-            while (Math.Abs(template_xy[0]) > 3 && Math.Abs(template_xy[1]) > 3)
+            while (Math.Abs(xShift) > 4 || Math.Abs(yShift) > 4)
             {
-                CvFunctions imgFx = new CvFunctions();
-                imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3), template_xy);
-                xShift = -1*template_xy[0] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
-                    + template_xy[1] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
-                yShift = template_xy[0] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
-                    - template_xy[1] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
-                xShift = xShift * (180 / ArduinoMotionLibrary.ArmCoordinates[2]);
-                yShift = yShift * (180 / ArduinoMotionLibrary.ArmCoordinates[2]);
                 if (xShift < 100 && yShift < 100)
                 {
                     ArduinoMotionLibrary.ArdPosition("SHIFT", 0, Math.Round(xShift, 0), Math.Round(yShift, 0), 0, 0);
                 }
                 imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3), template_xy);
+                xShift = -1 * template_xy[0] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
+                    + template_xy[1] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
+                yShift = template_xy[0] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
+                    - template_xy[1] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
+                xShift = xShift * (150 / ArduinoMotionLibrary.ArmCoordinates[2]);
+                yShift = yShift * (150 / ArduinoMotionLibrary.ArmCoordinates[2]);
                 //Shift by the template_xy
             }
             return true;
