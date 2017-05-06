@@ -96,8 +96,8 @@ namespace VishnuMain
 
             while(Math.Abs(template_xy[0]) > 2 && Math.Abs(template_xy[1]) > 2)
             {
-                CvFunctions imgFx = new CvFunctions();
-                imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3), template_xy);
+                //CvFunctions imgFx = new CvFunctions();
+                CvFunctions.TemplateDetection(fileloc, CvFunctions.SnapPicture(3), template_xy);
                 //Shift by the template_xy
             }
             return true;

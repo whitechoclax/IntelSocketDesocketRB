@@ -26,9 +26,7 @@ namespace VishnuMain
         int CameraDevice = 0; //Variable to track camera device selected
         CameraStructures[] WebCams; //List containing all the camera available
 
-        int Brightness_Store = 0;
-        int Contrast_Store = 0;
-        int Sharpness_Store = 0;
+        
         #endregion
 
         public CameraFeed()
@@ -187,23 +185,11 @@ namespace VishnuMain
             }
         }
 
-        private void Reset_Cam_Settings_Click(object sender, EventArgs e)
-        {
-
-            if (_capture != null)
-            {
-                _capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Brightness, Brightness_Store);
-                _capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Contrast, Contrast_Store);
-                _capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Sharpness, Sharpness_Store);
-                RetrieveCaptureInformation(); // This will refresh the settings
-            }
-        }
 
         protected void OnFormClosing(CancelEventArgs e)
         {
             if (Capture != null)
             {
-                Reset_Cam_Settings_Click(null, null);
                 _capture.Dispose();
             }
 

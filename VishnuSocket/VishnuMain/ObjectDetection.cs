@@ -19,7 +19,7 @@ namespace VishnuMain
 
         /* Variabless  */
     
-        private Capture Camera_frame = null;
+        //private Capture Camera_frame = null;
         private bool videoFeed;        
         public bool userImgLoaded;      
         String[] templateList;
@@ -27,7 +27,7 @@ namespace VishnuMain
 
 
         /* Calling Object CvFunctions */
-        CvFunctions _Template = new CvFunctions();
+        //CvFunctions _Template = new CvFunctions();
 
 
         /* Initialziation for camera feed */
@@ -37,30 +37,32 @@ namespace VishnuMain
             InitializeComponent();
 
             /* start camera feed loading the UI */
-            //Camera_frame = StartCapture();
+            
         }
 
         public Capture StartCapture()
         {
             try
             {
-                Camera_frame = new Capture();
-                Camera_frame.SetCaptureProperty(CapProp.FrameHeight, 1080);
-                Camera_frame.SetCaptureProperty(CapProp.FrameWidth, 1920);
-                Camera_frame.ImageGrabbed += videoFeed_refresher; //live stream image cap
-                return Camera_frame;         //return the capture value parameter, 
+                
+                CvFunctions.CvFunctionsCamera();
+
+                CvFunctions.camera_feed.ImageGrabbed += videoFeed_refresher; //live stream image cap
+                return CvFunctions.camera_feed;       //return the capture value parameter, 
             }
             catch (System.Exception)
             {
                 MessageBox.Show("Camera Feed could not be started - Check camera conections");
-                return Camera_frame = null;
+                return CvFunctions.camera_feed = null;
+                
             }
         }
 
         private void videoFeed_refresher(object sender, EventArgs arg)
         {
             Mat frame = new Mat();
-            Camera_frame.Retrieve(frame, 0);
+            CvFunctions.camera_feed.Retrieve(frame);
+             
             video_imgbox.Image = frame;
         }
 
@@ -70,20 +72,20 @@ namespace VishnuMain
         private void captureImg_Click(object sender, EventArgs e) {
 
             //SnapPicture has various modes
-            captured_imgbox.Image = _Template.SnapPicture(3);
+            captured_imgbox.Image = CvFunctions.SnapPicture(3);
         }
 
         private void startCameraFeed_Click(object sender, EventArgs e) {
 
-            Camera_frame = StartCapture();
-            if (Camera_frame != null) {
+            CvFunctions.camera_feed = StartCapture();
+            if (CvFunctions.camera_feed != null) {
                 if (videoFeed) {
                     startCaptureButton.Text = "Start Capture";
-                    Camera_frame.Pause();
+                    CvFunctions.camera_feed.Pause();
                 }
                 else {
                     startCaptureButton.Text = "Stop";
-                    Camera_frame.Start();
+                    CvFunctions.camera_feed.Start();
                 }
                 videoFeed = !videoFeed;
             }
@@ -119,13 +121,13 @@ namespace VishnuMain
             //source_img = new Mat(sourceimg_textbox.Text, LoadImageType.Grayscale);
 
             //grab images from UI, run templ detection and retrieve images.  
-            res =_Template.TemplateDetection(templateList, _Template.SnapPicture(3), xy);
+            res = CvFunctions.TemplateDetection(templateList, CvFunctions.SnapPicture(3), xy);
             tracked_imgbox.Image = res;
         }
 
         private void savePicture_Click(object sender, EventArgs e) {
 
-            _Template.SaveImg(_Template.SnapPicture(3), Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/" + "EMGU.jpg");
+            CvFunctions.SaveImg(CvFunctions.SnapPicture(3), Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/" + "EMGU.jpg");
         }
             
     }

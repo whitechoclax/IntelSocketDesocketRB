@@ -32,9 +32,9 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.Setting_lbl = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.showStats = new System.Windows.Forms.Button();
             this.MainSequenceButton = new System.Windows.Forms.Button();
-            this.Reset_Cam_Settings = new System.Windows.Forms.Button();
             this.Refresh_BTN = new System.Windows.Forms.Button();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -42,7 +42,6 @@
             this.Camera_Selection = new System.Windows.Forms.ComboBox();
             this.Cam_lbl = new System.Windows.Forms.Label();
             this.CaptureBox = new System.Windows.Forms.PictureBox();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.backWorker = new System.ComponentModel.BackgroundWorker();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -102,7 +101,6 @@
             this.panel1.Controls.Add(this.progressBar1);
             this.panel1.Controls.Add(this.showStats);
             this.panel1.Controls.Add(this.MainSequenceButton);
-            this.panel1.Controls.Add(this.Reset_Cam_Settings);
             this.panel1.Controls.Add(this.Refresh_BTN);
             this.panel1.Controls.Add(this.richTextBox1);
             this.panel1.Controls.Add(this.label2);
@@ -114,6 +112,13 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(606, 1032);
             this.panel1.TabIndex = 0;
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(27, 504);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(558, 35);
+            this.progressBar1.TabIndex = 27;
             // 
             // showStats
             // 
@@ -137,17 +142,6 @@
             this.MainSequenceButton.Text = "Start Test Sequence";
             this.MainSequenceButton.UseVisualStyleBackColor = false;
             this.MainSequenceButton.Click += new System.EventHandler(this.MainSequenceButton_Click);
-            // 
-            // Reset_Cam_Settings
-            // 
-            this.Reset_Cam_Settings.Location = new System.Drawing.Point(446, 730);
-            this.Reset_Cam_Settings.Margin = new System.Windows.Forms.Padding(4);
-            this.Reset_Cam_Settings.Name = "Reset_Cam_Settings";
-            this.Reset_Cam_Settings.Size = new System.Drawing.Size(153, 34);
-            this.Reset_Cam_Settings.TabIndex = 17;
-            this.Reset_Cam_Settings.Text = "Reset";
-            this.Reset_Cam_Settings.UseVisualStyleBackColor = true;
-            this.Reset_Cam_Settings.Click += new System.EventHandler(this.Reset_Cam_Settings_Click);
             // 
             // Refresh_BTN
             // 
@@ -220,13 +214,6 @@
             this.CaptureBox.TabIndex = 3;
             this.CaptureBox.TabStop = false;
             // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(27, 504);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(558, 35);
-            this.progressBar1.TabIndex = 27;
-            // 
             // CameraFeed
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
@@ -257,7 +244,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Button Refresh_BTN;
-        private System.Windows.Forms.Button Reset_Cam_Settings;
         private System.Windows.Forms.PictureBox CaptureBox;
         private System.Windows.Forms.Button MainSequenceButton;
         private System.Windows.Forms.Button showStats;
