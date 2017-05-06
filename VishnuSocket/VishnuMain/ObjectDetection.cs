@@ -118,7 +118,6 @@ namespace VishnuMain
 
             //loads image taken from capture and does templatedetection
             Mat res = new Mat();   
-            //source_img = new Mat(sourceimg_textbox.Text, LoadImageType.Grayscale);
 
             //grab images from UI, run templ detection and retrieve images.  
             res = CvFunctions.TemplateDetection(templateList, CvFunctions.SnapPicture(3), xy);
@@ -130,11 +129,13 @@ namespace VishnuMain
             CvFunctions.SaveImg(CvFunctions.SnapPicture(3), Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/" + "EMGU.jpg");
         }
 
+        //Paint overlay of crosshair
         private void video_imgbox_Paint(object sender, PaintEventArgs e)
         {
             Graphics G = e.Graphics;
-            e.Graphics.DrawLine(new Pen(Color.Red), 160, 240, 480, 240);
-            e.Graphics.DrawLine(new Pen(Color.Red), 320, 120, 320, 360);
+            e.Graphics.DrawLine(new Pen(Color.Red,2), 160, 240, 480, 240);
+            e.Graphics.DrawLine(new Pen(Color.Red,2), 320, 120, 320, 360);
+            e.Graphics.DrawEllipse(new Pen(Color.Red,2), new RectangleF(280.0F, 200.0F, 80.0F, 80.0F));
             e.Dispose();
         }
     }

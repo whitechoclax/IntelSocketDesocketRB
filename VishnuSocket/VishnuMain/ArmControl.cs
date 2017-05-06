@@ -184,8 +184,9 @@ namespace VishnuMain
         private void cameraBox_Paint_1(object sender, PaintEventArgs e)
         {
             Graphics G = e.Graphics;
-            e.Graphics.DrawLine(new Pen(Color.Red), 160, 240, 480, 240);
-            e.Graphics.DrawLine(new Pen(Color.Red), 320, 120, 320, 360);
+            e.Graphics.DrawLine(new Pen(Color.Red,2), 160, 240, 480, 240);
+            e.Graphics.DrawLine(new Pen(Color.Red,2), 320, 120, 320, 360);
+            e.Graphics.DrawEllipse(new Pen(Color.Red, 1), new RectangleF(280.0F, 200.0F, 80.0F, 80.0F));
             e.Dispose();
         }
     }
