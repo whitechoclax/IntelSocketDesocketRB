@@ -23,8 +23,8 @@ namespace VishnuMain
         private bool _captureInProgress = false;
         Mat frame = new Mat();
         Mat grayFrame = new Mat();
-        int CameraDevice = 0; //Variable to track camera device selected
-        CameraStructures[] WebCams; //List containing all the camera available
+        int CameraDevice = 0;                           //Variable to track camera device selected
+        CameraStructures[] WebCams;                     //List containing all the camera available
 
         
         #endregion
@@ -53,41 +53,26 @@ namespace VishnuMain
             backWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backWorker_RunWorkerCompleted);
 
         }
+        
 
-        private void ProcessFrame(object sender, EventArgs arg)
+        public Capture StartCapture()
         {
-            //***If you want to access the image data the use the following method call***/
+            if (CvFunctions.camera_feed == null)
+            {
+                CvFunctions.CvFunctionsCamera();
+            }
             
-                _capture.Retrieve(frame);
-                DisplayImage(frame.Bitmap);
-                //_capture.Dispose();     if we have dispose this shit never works lol
-                //CvInvoke.CvtColor(frame, grayFrame, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
+            CvFunctions.camera_feed.ImageGrabbed += mainFeed_Refresher;
+            return CvFunctions.camera_feed;
         }
 
-        private delegate void DisplayImageDelegate(Bitmap Image);
-
-        private void DisplayImage(Bitmap Image)
+        private void mainFeed_Refresher(object sender, EventArgs arg)
         {
-            if (CaptureBox.InvokeRequired)
-            {
-                try
-                {
-                    DisplayImageDelegate DI = new DisplayImageDelegate(DisplayImage);
-                    this.BeginInvoke(DI, new object[] { Image });
-                }
-                catch (Exception ex)
-                {
-                }
-            }
-            else
-            {
-                
-                CaptureBox.Image = Image;
-            }
+            Mat frame = new Mat();
+            CvFunctions.camera_feed.Retrieve(frame);
+            mainFeedBox.Image = frame;
+
         }
-
-
-      
 
         private void captureButton_Click(object sender, EventArgs e)
         {
@@ -98,7 +83,7 @@ namespace VishnuMain
                     //stop the capture
                     captureButton.Text = "Start Capture"; //Change text on button
                    
-                    _capture.Pause(); //Pause the capture
+                    CvFunctions.camera_feed.Pause(); //Pause the capture
                     _captureInProgress = false; //Flag the state of the camera
                 }
                 else
@@ -111,9 +96,9 @@ namespace VishnuMain
 
                     RetrieveCaptureInformation(); //Get Camera information
                     captureButton.Text = "Stop"; //Change text on button
-                    
-                  
-                    _capture.Start(); //Start the capture
+
+                    CvFunctions.camera_feed = StartCapture();
+                    CvFunctions.camera_feed.Start(); //Start the capture
                     _captureInProgress = true; //Flag the state of the camera
                 }
 
@@ -138,7 +123,7 @@ namespace VishnuMain
             {
                 //Set up capture device
                 _capture = new Capture(CameraDevice);
-                _capture.ImageGrabbed += ProcessFrame;
+               // _capture.ImageGrabbed += ProcessFrame;
             }
             catch (NullReferenceException excpt)
             {
