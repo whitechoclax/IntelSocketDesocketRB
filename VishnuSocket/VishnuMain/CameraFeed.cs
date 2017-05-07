@@ -57,19 +57,19 @@ namespace VishnuMain
 
         public Capture StartCapture()
         {
-            if (CvFunctions.camera_feed == null)
+            if (CameraFeedUnified.camera_feed == null)
             {
-                CvFunctions.CvFunctionsCamera();
+                _capture = CameraFeedUnified.EnableCameraFeed();
             }
             
-            CvFunctions.camera_feed.ImageGrabbed += mainFeed_Refresher;
-            return CvFunctions.camera_feed;
+            _capture.ImageGrabbed += mainFeed_Refresher;
+            return CameraFeedUnified.camera_feed;
         }
 
         private void mainFeed_Refresher(object sender, EventArgs arg)
         {
             Mat frame = new Mat();
-            CvFunctions.camera_feed.Retrieve(frame);
+            _capture.Retrieve(frame);
             mainFeedBox.Image = frame;
 
         }
@@ -83,8 +83,7 @@ namespace VishnuMain
                     //stop the capture
                     captureButton.Text = "Start Capture"; //Change text on button
                    
-                    CvFunctions.camera_feed.Pause(); //Pause the capture
-                    _captureInProgress = false; //Flag the state of the camera
+                    _capture.Pause(); //Pause the capture
                 }
                 else
                 {
@@ -97,11 +96,11 @@ namespace VishnuMain
                     RetrieveCaptureInformation();                                   //Get Camera information
                     captureButton.Text = "Stop";                                    //Change text on button
 
-                    CvFunctions.camera_feed = StartCapture();
-                    CvFunctions.camera_feed.Start();                                //Start the capture
-                    _captureInProgress = true;                                      //Flag the state of the camera
+                    _capture = StartCapture();
+                    _capture.Start();                                //Start the capture
+                                                          //Flag the state of the camera
                 }
-
+                _captureInProgress = !_captureInProgress;
             }
             else
             {
@@ -193,9 +192,11 @@ namespace VishnuMain
 
                 else
                 {
-                    //peform our time consuming op
-                    //IM A FOOOL TO DO YER DIRTY WORK
-                    ArmHandlerLibrary.ArmHandlerLibraryMainSequence();
+                    if (_capture != null)
+                        //IM A FOOOL TO DO YER DIRTY WORK
+                        ArmHandlerLibrary.ArmHandlerLibraryMainSequence(_capture);
+                    else
+                        e.Cancel = true; 
                 }
             }
         }

@@ -116,6 +116,7 @@
     <Compile Include="CameraFeed.Designer.cs">
       <DependentUpon>CameraFeed.cs</DependentUpon>
     </Compile>
+    <Compile Include="CameraFeedUnified.cs" />
     <Compile Include="CameraStructures.cs" />
     <Compile Include="LoginMain.cs">
       <SubType>Form</SubType>

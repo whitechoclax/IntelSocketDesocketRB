@@ -26,8 +26,8 @@ namespace VishnuMain
         int TrayChoiceValue;
 
         //camerafeed properties
-        private bool videoFeed;
-       
+        private bool _captureInProgress;
+        private Capture _armFeed = null;
 
         public ArmControl()
         {
@@ -40,29 +40,22 @@ namespace VishnuMain
 
         public Capture StartCapture()
         {
-            if (CvFunctions.camera_feed == null)
+            //if there is no camera feed collecting, start it up.  
+            if (CameraFeedUnified.camera_feed == null)
             {
-                CvFunctions.CvFunctionsCamera();
-                CvFunctions.camera_feed.ImageGrabbed += armFeed_Refresher;
-                return CvFunctions.camera_feed;
+                _armFeed = CameraFeedUnified.EnableCameraFeed(); 
             }
-            else
-            {
-                CvFunctions.camera_feed.ImageGrabbed += armFeed_Refresher;
-                return CvFunctions.camera_feed;
-            }
-
+            //create event
+            _armFeed.ImageGrabbed += armFeed_Refresher;
+            return CameraFeedUnified.camera_feed;
         }
 
         private void armFeed_Refresher(object sender, EventArgs arg)
         {
            
             Mat frame = new Mat();
-            CvFunctions.camera_feed.Retrieve(frame);
-
+            _armFeed.Retrieve(frame);
             cameraBox.Image = frame;
-            //cameraBox.Dispose();
-            
         }
 
         private void BootMessages()
@@ -157,26 +150,27 @@ namespace VishnuMain
 
         private void captureButton_Click(object sender, EventArgs e)
         {
-            if (CvFunctions.camera_feed != null)
+            if (_armFeed != null)
             {
-                if (videoFeed)
+                if (_captureInProgress)
                 {
                     captureButton.Text = "Start Capture";
-                    CvFunctions.camera_feed.Pause();
+                    _armFeed.Pause();
+                    _captureInProgress = false;
                 }
                 else
                 {
-
                     captureButton.Text = "Stop";
-                    CvFunctions.camera_feed.Start();
+                    _armFeed.Start();
+                    _captureInProgress = true;
                 }
-                videoFeed = !videoFeed;
+
             }
 
             else
             {
-                CvFunctions.camera_feed = StartCapture();
-                CvFunctions.camera_feed.Start();
+                _armFeed = StartCapture();
+                _armFeed.Start();
             }
         }
 

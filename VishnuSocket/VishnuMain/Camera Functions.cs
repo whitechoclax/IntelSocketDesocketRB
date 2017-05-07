@@ -11,29 +11,23 @@ using DataMatrix.net;
 
 namespace VishnuMain
 {
-    static class CvFunctions {
+    public class CvFunctions {
 
 
         /*CAMERA CAPTURE CLASS*/
-        public static Capture camera_feed = null;
-        //public static int FrameHeight;
-        //public static int FrameWidth;
-
-        public static void CvFunctionsCamera()
+        //public static Capture camera_feed = null;
+        public CvFunctions()
         {
-            
-            /*CAMERA SETTINGS*/
-                camera_feed = new Capture(); 
-                camera_feed.SetCaptureProperty(CapProp.FrameHeight, 480);
-                camera_feed.SetCaptureProperty(CapProp.FrameWidth, 640);
+
         }
+        
 
         /*METHODS BELOW*/
 
         ///<summary>
         /// Returns image, various modes: 1.grayscale 2.redbinary 3.binary
         ///</summary>
-        public static Mat SnapPicture(int mode) { 
+        public Mat SnapPicture(int mode, Capture camera_feed) { 
 
             Mat color_frame = new Mat();
             Mat gray_frame = new Mat();
@@ -65,7 +59,7 @@ namespace VishnuMain
         ///<summary>
         ///Return coordinate offset for correcton
         ///</summary>
-        public static Mat TemplateDetection(string[] templatelist, Mat sourceImg, double[] xy_Coord ) { //takes in list of template images, source img
+        public Mat TemplateDetection(string[] templatelist, Mat sourceImg, double[] xy_Coord ) { //takes in list of template images, source img
 
             Mat ResultMat = new Mat(); //mat data holds template matches coordinates
             Mat result_img = sourceImg.Clone(); //image with rectangles
@@ -141,7 +135,7 @@ namespace VishnuMain
         ///<summary>
         ///Scans 2D-DataMatrix Barcode and returns value
         ///</summary>
-        public static string BarcodeScanner(Mat barcode_img) {
+        public string BarcodeScanner(Mat barcode_img) {
 
             //creates decorder object
             DmtxImageDecoder decoder = new DmtxImageDecoder();
@@ -161,7 +155,7 @@ namespace VishnuMain
         ///<summary>
         ///Saves image to specified file path given from settings
         ///</summary>
-        public static  void SaveImg(Mat Img, string filename) {
+        public void SaveImg(Mat Img, string filename) {
             Img.Save(filename);
         }
 

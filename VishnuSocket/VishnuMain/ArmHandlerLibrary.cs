@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Emgu.CV;
 
 namespace VishnuMain
 {
@@ -16,10 +17,8 @@ namespace VishnuMain
         private static double centerToCenterW = 0.0; //Distance between top and bottom CPU
         private static double centerToCenterZ = 0.0; //Distance between trays
         public static int CPUindex = 0; //Which CPU we're on
-
-        
-        
-        public static void ArmHandlerLibraryMainSequence()
+    
+        public static void ArmHandlerLibraryMainSequence(Capture CameraFeed)
         {   //Start at Origin, find next CPU, Take picture
             //Pick Up requested CPU, Move to Calibration Image
             //Find Socket, put CPU in socket, wait until done
@@ -68,7 +67,7 @@ namespace VishnuMain
                 ArduinoMotionLibrary.ArdPosition("GRAB", 0, 0, 0, 0, 0); //Grab CPU
                 //ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 20, 0); //Raise back up
                 //Move to Calibration image, verify it's there in the right spot
-                CameraTestImg();
+                CameraTestImg(CameraFeed);
                 ArduinoMotionLibrary.ArdPosition("MOVE", 0, SocketLocation[0], SocketLocation[1], SocketLocation[2], SocketLocation[3]);
                 ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 0, 0); //Descend into socket
                 ArduinoMotionLibrary.ArdPosition("RELEASE", 0, 0, 0, 0, 0); //Release CPU
@@ -91,9 +90,10 @@ namespace VishnuMain
             return;
         }
 
-        public static bool CameraTestImg()
+        public static bool CameraTestImg(Capture CameraFeed)
         {
             //value from templateDetection
+            CvFunctions _cameraMethods = new CvFunctions();
             double[] template_xy = { 1000, 1000 };
             string[] fileloc = { "../../../../Common/TempImg/CIRCLE_TEMP.jpg" };
             double xShift = 1000;
@@ -108,7 +108,7 @@ namespace VishnuMain
                 
                     ArduinoMotionLibrary.ArdPosition("SHIFT", 0, Math.Round(xShift, 0), Math.Round(yShift, 0), 0, 0);
                 }
-				CvFunctions.TemplateDetection(fileloc, CvFunctions.SnapPicture(3), template_xy);
+				_cameraMethods.TemplateDetection(fileloc, _cameraMethods.SnapPicture(3, CameraFeed), template_xy);
                 xShift = -1 * template_xy[0] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
                     + template_xy[1] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
                 yShift = template_xy[0] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
