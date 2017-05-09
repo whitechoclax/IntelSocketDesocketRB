@@ -297,6 +297,10 @@ void Navigate(){ //Moves to new positions
         delayMicroseconds(500);
       }
       ++zpos;
+
+      if(DEBUG){
+        Serial.print("Z position: ");Serial.println(zpos);
+      }
     }
     digitalWrite(Enable[ZMOTOR], HIGH);
   }
@@ -311,14 +315,6 @@ void Navigate(){ //Moves to new positions
 
   int thetaOriginal = theta;
   int whereWereGoing = thetaOriginal + deltaTheta;
-  int difference = whereWereGoing - theta;
-  bool micro = false;
-  if(difference < 9){
-    micro = true;
-  }
-  if(DEBUG){
-    Serial.print("Theta difference: ");Serial.println(abs(difference));
-  }
   while(!doneTheta){
     serialEvent();
     if(deltaTheta > .4){  //Theta Section
@@ -329,15 +325,10 @@ void Navigate(){ //Moves to new positions
       double x = ((theta-thetaOriginal)*2*PI)/(whereWereGoing - thetaOriginal);
       double tDelay = 5*cos(x)+5;
       int addDelay = (4*tDelay) + 15;
-      if(!micro){
-        if(DEBUG){
-          Serial.print("addDelay: ");Serial.println(addDelay);
-        }
-        delay(addDelay);
+      if(DEBUG){
+        Serial.print("addDelay: ");Serial.println(addDelay);
       }
-      else{
-        delay(250);
-      }
+      delay(addDelay);
       deltaTheta -= 1/float(THETA);
       if(thetaDirection == LEFT){
         theta -= 1/float(THETA);
@@ -413,6 +404,9 @@ void Navigate(){ //Moves to new positions
         delayMicroseconds(500);
       }
       --zpos;
+      if(DEBUG){
+        Serial.print("Z position: ");Serial.println(zpos);
+      }
     }
     digitalWrite(Enable[ZMOTOR], HIGH);
   }
