@@ -113,7 +113,8 @@ namespace VishnuMain
                     - template_xy[1] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
                 xShift = xShift * (150 / ArduinoMotionLibrary.ArmCoordinates[2]);
                 yShift = yShift * (150 / ArduinoMotionLibrary.ArmCoordinates[2]);
-                //Shift by the template_xy
+                //Shift by the template_xy 
+
             }
             return true;
         }
