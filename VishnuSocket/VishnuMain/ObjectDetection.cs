@@ -54,9 +54,14 @@ namespace VishnuMain
         {
             Mat frame = new Mat();
 <<<<<<< HEAD
+<<<<<<< HEAD
             _objectFeed.Retrieve(frame);
              
             video_imgbox.Image = frame;
+=======
+            Camera_frame.Retrieve(frame, 0);
+            video_imgbox.Image = frame; //<<UNHANDLED EXECEPTION
+>>>>>>> parent of deaa424... Made some tweaks to improve the auto calibration accuracy, it's still slow, though
 =======
             Camera_frame.Retrieve(frame, 0);
             video_imgbox.Image = frame; //<<UNHANDLED EXECEPTION
