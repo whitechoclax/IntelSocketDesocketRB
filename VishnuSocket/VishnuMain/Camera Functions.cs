@@ -13,12 +13,12 @@ namespace VishnuMain
 {
     public class CvFunctions {
 
-
+        private Capture camera_feed = null;
         /*CAMERA CAPTURE CLASS*/
         //public static Capture camera_feed = null;
         public CvFunctions()
         {
-
+            
         }
         
 
@@ -27,7 +27,7 @@ namespace VishnuMain
         ///<summary>
         /// Returns image, various modes: 1.grayscale 2.redbinary 3.binary
         ///</summary>
-        public Mat SnapPicture(int mode, Capture camera_feed) { 
+        public Mat SnapPicture(int mode) { 
 
             Mat color_frame = new Mat();
             Mat gray_frame = new Mat();

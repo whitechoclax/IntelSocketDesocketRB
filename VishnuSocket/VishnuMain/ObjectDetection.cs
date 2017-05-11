@@ -19,7 +19,7 @@ namespace VishnuMain
 
         /* Variabless  */
     
-        private Capture _objectFeed = null;
+        private Capture Camera_frame = null;
         private bool _captureInprogress;        
         public bool userImgLoaded;      
         String[] templateList;
@@ -44,33 +44,20 @@ namespace VishnuMain
         {
             if (CameraFeedUnified.camera_feed == null)
             {
-                _objectFeed = CameraFeedUnified.EnableCameraFeed();
+                Camera_frame = CameraFeedUnified.EnableCameraFeed();
             }
-                _objectFeed.ImageGrabbed += videoFeed_refresher; //live stream image cap
+                Camera_frame.ImageGrabbed += videoFeed_refresher; //live stream image cap
                 return CameraFeedUnified.camera_feed;       //return the capture value parameter, 
         }
 
         private void videoFeed_refresher(object sender, EventArgs arg)
         {
             Mat frame = new Mat();
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-            _objectFeed.Retrieve(frame);
-             
-            video_imgbox.Image = frame;
-=======
-            Camera_frame.Retrieve(frame, 0);
+
+            Camera_frame.Retrieve(frame);
+            //needs fixing!
+            //CameraFeed.Retrieve(frame, 0);
             video_imgbox.Image = frame; //<<UNHANDLED EXECEPTION
->>>>>>> parent of deaa424... Made some tweaks to improve the auto calibration accuracy, it's still slow, though
-=======
-            Camera_frame.Retrieve(frame, 0);
-            video_imgbox.Image = frame; //<<UNHANDLED EXECEPTION
->>>>>>> parent of deaa424... Made some tweaks to improve the auto calibration accuracy, it's still slow, though
-=======
-            Camera_frame.Retrieve(frame, 0);
-            video_imgbox.Image = frame; //<<UNHANDLED EXECEPTION
->>>>>>> parent of deaa424... Made some tweaks to improve the auto calibration accuracy, it's still slow, though
         }
 
 
@@ -79,24 +66,24 @@ namespace VishnuMain
         private void captureImg_Click(object sender, EventArgs e) {
 
             //SnapPicture has various modes
-            captured_imgbox.Image = _cameraMethods.SnapPicture(3, _objectFeed);
+            captured_imgbox.Image = _cameraMethods.SnapPicture(3);
         }
 
         private void startCameraFeed_Click(object sender, EventArgs e) {
 
            
-            if (_objectFeed!= null)
+            if (Camera_frame!= null)
             {
                 if (_captureInprogress)
                 {
                     startCaptureButton.Text = "Start Capture";
-                    _objectFeed.Pause();
+                    Camera_frame.Pause();
                 }
                 else
                 {
-                    _objectFeed = StartCapture();
+                    Camera_frame = StartCapture();
                     startCaptureButton.Text = "Stop";
-                    _objectFeed.Start();
+                    Camera_frame.Start();
 
                 }
                 _captureInprogress = !_captureInprogress;
@@ -132,13 +119,13 @@ namespace VishnuMain
             Mat res = new Mat();   
 
             //grab images from UI, run templ detection and retrieve images.  
-            res = _cameraMethods.TemplateDetection(templateList, _cameraMethods.SnapPicture(3, _objectFeed), xy);
+            res = _cameraMethods.TemplateDetection(templateList, _cameraMethods.SnapPicture(3), xy);
             tracked_imgbox.Image = res;
         }
 
         private void savePicture_Click(object sender, EventArgs e) {
 
-            _cameraMethods.SaveImg(_cameraMethods.SnapPicture(3, _objectFeed), Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/" + "EMGU.jpg");
+            _cameraMethods.SaveImg(_cameraMethods.SnapPicture(3), Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/" + "EMGU.jpg");
         }
 
         //Paint overlay of crosshair

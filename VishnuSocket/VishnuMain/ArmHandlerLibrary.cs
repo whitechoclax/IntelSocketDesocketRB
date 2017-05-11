@@ -98,28 +98,12 @@ namespace VishnuMain
             string[] fileloc = { "../../../../Common/TempImg/CIRCLE_TEMP.jpg" };
             double xShift = 1000;
             double yShift = 1000;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+
             
-=======
->>>>>>> parent of deaa424... Made some tweaks to improve the auto calibration accuracy, it's still slow, though
-
             while (Math.Abs(template_xy[0]) > 3 && Math.Abs(template_xy[1]) > 3)
             {
-<<<<<<< HEAD
                 //CvFunctions.TemplateDetection(fileloc, CvFunctions.SnapPicture(3), template_xy);
-=======
-=======
 
-            while (Math.Abs(template_xy[0]) > 3 && Math.Abs(template_xy[1]) > 3)
-            {
->>>>>>> parent of deaa424... Made some tweaks to improve the auto calibration accuracy, it's still slow, though
-=======
-
-            while (Math.Abs(template_xy[0]) > 3 && Math.Abs(template_xy[1]) > 3)
-            {
->>>>>>> parent of deaa424... Made some tweaks to improve the auto calibration accuracy, it's still slow, though
                 CvFunctions imgFx = new CvFunctions();
                 imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3), template_xy);
                 xShift = -1*template_xy[0] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
@@ -128,38 +112,23 @@ namespace VishnuMain
                     - template_xy[1] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
                 xShift = xShift * (180 / ArduinoMotionLibrary.ArmCoordinates[2]);
                 yShift = yShift * (180 / ArduinoMotionLibrary.ArmCoordinates[2]);
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> parent of deaa424... Made some tweaks to improve the auto calibration accuracy, it's still slow, though
-=======
->>>>>>> parent of deaa424... Made some tweaks to improve the auto calibration accuracy, it's still slow, though
-=======
->>>>>>> parent of deaa424... Made some tweaks to improve the auto calibration accuracy, it's still slow, though
+
                 if (xShift < 100 && yShift < 100)
                 {
                 
                     ArduinoMotionLibrary.ArdPosition("SHIFT", 0, Math.Round(xShift, 0), Math.Round(yShift, 0), 0, 0);
                 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-				_cameraMethods.TemplateDetection(fileloc, _cameraMethods.SnapPicture(3, CameraFeed), template_xy);
+
+				_cameraMethods.TemplateDetection(fileloc, _cameraMethods.SnapPicture(3), template_xy);
                 xShift = -1 * template_xy[0] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
                     + template_xy[1] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
                 yShift = template_xy[0] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
                     - template_xy[1] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
                 xShift = xShift * (150 / ArduinoMotionLibrary.ArmCoordinates[2]);
                 yShift = yShift * (150 / ArduinoMotionLibrary.ArmCoordinates[2]);
-=======
+
                 imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3), template_xy);
->>>>>>> parent of deaa424... Made some tweaks to improve the auto calibration accuracy, it's still slow, though
-=======
-                imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3), template_xy);
->>>>>>> parent of deaa424... Made some tweaks to improve the auto calibration accuracy, it's still slow, though
-=======
-                imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3), template_xy);
->>>>>>> parent of deaa424... Made some tweaks to improve the auto calibration accuracy, it's still slow, though
-                //Shift by the template_xy
+               
             }
             return true;
         }
