@@ -10,7 +10,7 @@ namespace VishnuMain
     {
         public static bool Running = false;
         public static double[] RestLocation = { 0.0, 150.0, 200.0, 0.0 };
-        public static double[] OriginLocation = { 220.0, 120.0, 200.0, 0.0 }; //CPU0 location
+        public static double[] OriginLocation = { 150.0, 150.0, 200.0, 0.0 }; //CPU0 location
         public static double[] SocketLocation = { 40.0, -250.0, 200.0, 0.0 }; //Socket center point
         private static double centerToCenterL = 0.0; //Distance between left and right CPU
         private static double centerToCenterW = 0.0; //Distance between top and bottom CPU
@@ -57,7 +57,10 @@ namespace VishnuMain
                 {
                     Loc[1] = OriginLocation[1];
                 }
-                Loc[2] = ((trayHandler.emptyTrayCount-1 + trayHandler.goodTrayCount + trayHandler.badTrayCount) * centerToCenterZ) + OriginLocation[2];
+                Loc[2] = ((trayHandler.emptyTrayCount - 1 + trayHandler.goodTrayCount + trayHandler.badTrayCount) * centerToCenterZ) + OriginLocation[2];
+                ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1]-60, OriginLocation[2], OriginLocation[3]);
+                CameraTestImg();
+                ArduinoMotionLibrary.ArdPosition("REDEF", 0, OriginLocation[0], OriginLocation[1] - 60, OriginLocation[2], OriginLocation[3]);
                 ArduinoMotionLibrary.ArdPosition("MOVE", 0, Loc[0], Loc[1], Loc[2], Loc[3]); //Move to CPU
                 //Verify we're above a CPU
                 while(!CameraTestCPU())  
@@ -68,7 +71,9 @@ namespace VishnuMain
                 ArduinoMotionLibrary.ArdPosition("GRAB", 0, 0, 0, 0, 0); //Grab CPU
                 //ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 20, 0); //Raise back up
                 //Move to Calibration image, verify it's there in the right spot
-                CameraTestImg();
+                ArduinoMotionLibrary.ArdPosition("MOVE", 0, SocketLocation[0], SocketLocation[1]+60, SocketLocation[2], SocketLocation[3]); //Calibration spot
+                //CameraTestImg(); //Calibrate Socket
+                ArduinoMotionLibrary.ArdPosition("REDEF", 0, SocketLocation[0], SocketLocation[1] + 60, SocketLocation[2], SocketLocation[3]); //Calibration 
                 ArduinoMotionLibrary.ArdPosition("MOVE", 0, SocketLocation[0], SocketLocation[1], SocketLocation[2], SocketLocation[3]);
                 ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 0, 0); //Descend into socket
                 ArduinoMotionLibrary.ArdPosition("RELEASE", 0, 0, 0, 0, 0); //Release CPU

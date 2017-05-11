@@ -179,7 +179,7 @@ namespace VishnuMain
         {//Inputs a command and values, and a desired arduino (0 or 1)
             if (Arduinos[portID] == 2)
             {
-                return -1;
+                return -1; //Not connected
             }
 
             string inputLine = null;
@@ -241,6 +241,33 @@ namespace VishnuMain
                     else
                         return -1;
                     done = true;
+                }
+                else if (data.StartsWith("ERROR"))
+                {
+                    string[] pieces = data.Split(':');
+                    if (portID == 0)
+                    {
+                        if(pieces[1] == "CRASH\r") //Radius will crash
+                        {
+
+                        }
+                        if (pieces[1] == "EOB\r") //Exceeds operation boundary
+                        {
+
+                        }
+                    }
+                    else if (portID == 1)
+                    {
+                        if (pieces[1] == "CRASH\r") //Radius will crash
+                        {
+
+                        }
+                        if (pieces[1] == "EOB\r") //Exceeds operation boundary
+                        {
+
+                        }
+                    }
+                    return -2;//Command didn't work
                 }
             }
 
