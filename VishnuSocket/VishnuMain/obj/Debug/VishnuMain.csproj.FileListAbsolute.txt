@@ -1,0 +1,7 @@
+C:\GitHub\ComputerCV\VishnuSocket\VishnuMain\obj\Debug\VishnuMain.ArmControl.resources
+C:\GitHub\ComputerCV\VishnuSocket\VishnuMain\obj\Debug\VishnuMain.CameraFeed.resources
+C:\GitHub\ComputerCV\VishnuSocket\VishnuMain\obj\Debug\VishnuMain.LoginMain.resources
+C:\GitHub\ComputerCV\VishnuSocket\VishnuMain\obj\Debug\VishnuMain.Properties.Resources.resources
+C:\GitHub\ComputerCV\VishnuSocket\VishnuMain\obj\Debug\VishnuMain.SettingsMenu.resources
+C:\GitHub\ComputerCV\VishnuSocket\VishnuMain\obj\Debug\VishnuMain.ComputerVision_Tab.resources
+C:\GitHub\ComputerCV\VishnuSocket\VishnuMain\obj\Debug\VishnuMain.csproj.GenerateResource.Cache

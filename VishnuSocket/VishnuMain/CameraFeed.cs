@@ -23,10 +23,12 @@ namespace VishnuMain
         private bool _captureInProgress = false;
         Mat frame = new Mat();
         Mat grayFrame = new Mat();
-        int CameraDevice = 0;                           //Variable to track camera device selected
-        CameraStructures[] WebCams;                     //List containing all the camera available
+        int CameraDevice = 0; //Variable to track camera device selected
+        CameraStructures[] WebCams; //List containing all the camera available
 
-        
+        int Brightness_Store = 0;
+        int Contrast_Store = 0;
+        int Sharpness_Store = 0;
         #endregion
 
         public CameraFeed()
@@ -53,26 +55,41 @@ namespace VishnuMain
             backWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backWorker_RunWorkerCompleted);
 
         }
-        
 
-        public Capture StartCapture()
+        private void ProcessFrame(object sender, EventArgs arg)
         {
-            if (CameraFeedUnified.camera_feed == null)
-            {
-                _capture = CameraFeedUnified.EnableCameraFeed();
-            }
+            //***If you want to access the image data the use the following method call***/
             
-            _capture.ImageGrabbed += mainFeed_Refresher;
-            return CameraFeedUnified.camera_feed;
+                _capture.Retrieve(frame);
+                DisplayImage(frame.Bitmap);
+                //_capture.Dispose();     if we have dispose this shit never works lol
+                //CvInvoke.CvtColor(frame, grayFrame, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
         }
 
-        private void mainFeed_Refresher(object sender, EventArgs arg)
+        private delegate void DisplayImageDelegate(Bitmap Image);
+
+        private void DisplayImage(Bitmap Image)
         {
-            Mat frame = new Mat();
-            _capture.Retrieve(frame);
-            mainFeedBox.Image = frame;
-
+            if (CaptureBox.InvokeRequired)
+            {
+                try
+                {
+                    DisplayImageDelegate DI = new DisplayImageDelegate(DisplayImage);
+                    this.BeginInvoke(DI, new object[] { Image });
+                }
+                catch (Exception ex)
+                {
+                }
+            }
+            else
+            {
+                
+                CaptureBox.Image = Image;
+            }
         }
+
+
+      
 
         private void captureButton_Click(object sender, EventArgs e)
         {
@@ -84,23 +101,24 @@ namespace VishnuMain
                     captureButton.Text = "Start Capture"; //Change text on button
                    
                     _capture.Pause(); //Pause the capture
+                    _captureInProgress = false; //Flag the state of the camera
                 }
                 else
                 {
                     //Check to see if the selected device has changed
                     if (Camera_Selection.SelectedIndex != CameraDevice)
                     {
-                        SetupCapture(Camera_Selection.SelectedIndex);               //Setup capture with the new device
+                        SetupCapture(Camera_Selection.SelectedIndex); //Setup capture with the new device
                     }
 
-                    RetrieveCaptureInformation();                                   //Get Camera information
-                    captureButton.Text = "Stop";                                    //Change text on button
-
-                    _capture = StartCapture();
-                    _capture.Start();                                //Start the capture
-                                                          //Flag the state of the camera
+                    RetrieveCaptureInformation(); //Get Camera information
+                    captureButton.Text = "Stop"; //Change text on button
+                    
+                  
+                    _capture.Start(); //Start the capture
+                    _captureInProgress = true; //Flag the state of the camera
                 }
-                _captureInProgress = !_captureInProgress;
+
             }
             else
             {
@@ -122,7 +140,7 @@ namespace VishnuMain
             {
                 //Set up capture device
                 _capture = new Capture(CameraDevice);
-               // _capture.ImageGrabbed += ProcessFrame;
+                _capture.ImageGrabbed += ProcessFrame;
             }
             catch (NullReferenceException excpt)
             {
@@ -169,11 +187,23 @@ namespace VishnuMain
             }
         }
 
+        private void Reset_Cam_Settings_Click(object sender, EventArgs e)
+        {
+
+            if (_capture != null)
+            {
+                _capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Brightness, Brightness_Store);
+                _capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Contrast, Contrast_Store);
+                _capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Sharpness, Sharpness_Store);
+                RetrieveCaptureInformation(); // This will refresh the settings
+            }
+        }
 
         protected void OnFormClosing(CancelEventArgs e)
         {
             if (Capture != null)
             {
+                Reset_Cam_Settings_Click(null, null);
                 _capture.Dispose();
             }
 
@@ -192,11 +222,9 @@ namespace VishnuMain
 
                 else
                 {
-                    if (_capture != null)
-                        //IM A FOOOL TO DO YER DIRTY WORK
-                        ArmHandlerLibrary.ArmHandlerLibraryMainSequence(_capture);
-                    else
-                        e.Cancel = true; 
+                    //peform our time consuming op
+                    //IM A FOOOL TO DO YER DIRTY WORK
+                    ArmHandlerLibrary.ArmHandlerLibraryMainSequence();
                 }
             }
         }

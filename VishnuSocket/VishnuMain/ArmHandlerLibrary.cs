@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Emgu.CV;
 
 namespace VishnuMain
 {
@@ -17,8 +16,10 @@ namespace VishnuMain
         private static double centerToCenterW = 0.0; //Distance between top and bottom CPU
         private static double centerToCenterZ = 0.0; //Distance between trays
         public static int CPUindex = 0; //Which CPU we're on
-    
-        public static void ArmHandlerLibraryMainSequence(Capture CameraFeed)
+
+        
+        
+        public static void ArmHandlerLibraryMainSequence()
         {   //Start at Origin, find next CPU, Take picture
             //Pick Up requested CPU, Move to Calibration Image
             //Find Socket, put CPU in socket, wait until done
@@ -67,7 +68,7 @@ namespace VishnuMain
                 ArduinoMotionLibrary.ArdPosition("GRAB", 0, 0, 0, 0, 0); //Grab CPU
                 //ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 20, 0); //Raise back up
                 //Move to Calibration image, verify it's there in the right spot
-                CameraTestImg(CameraFeed);
+                CameraTestImg();
                 ArduinoMotionLibrary.ArdPosition("MOVE", 0, SocketLocation[0], SocketLocation[1], SocketLocation[2], SocketLocation[3]);
                 ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 0, 0); //Descend into socket
                 ArduinoMotionLibrary.ArdPosition("RELEASE", 0, 0, 0, 0, 0); //Release CPU
@@ -90,45 +91,32 @@ namespace VishnuMain
             return;
         }
 
-        public static bool CameraTestImg(Capture CameraFeed)
+        public static bool CameraTestImg()
         {
             //value from templateDetection
-            CvFunctions _cameraMethods = new CvFunctions();
             double[] template_xy = { 1000, 1000 };
             string[] fileloc = { "../../../../Common/TempImg/CIRCLE_TEMP.jpg" };
             double xShift = 1000;
             double yShift = 1000;
+            CvFunctions imgFx = new CvFunctions();
 
-            
-            while (Math.Abs(template_xy[0]) > 3 && Math.Abs(template_xy[1]) > 3)
+            while (Math.Abs(xShift) > 4 || Math.Abs(yShift) > 4)
             {
-                //CvFunctions.TemplateDetection(fileloc, CvFunctions.SnapPicture(3), template_xy);
-
-                CvFunctions imgFx = new CvFunctions();
-                imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3), template_xy);
-                xShift = -1*template_xy[0] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
-                    + template_xy[1] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
-                yShift = template_xy[0] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
-                    - template_xy[1] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
-                xShift = xShift * (180 / ArduinoMotionLibrary.ArmCoordinates[2]);
-                yShift = yShift * (180 / ArduinoMotionLibrary.ArmCoordinates[2]);
-
                 if (xShift < 100 && yShift < 100)
                 {
-                
                     ArduinoMotionLibrary.ArdPosition("SHIFT", 0, Math.Round(xShift, 0), Math.Round(yShift, 0), 0, 0);
+                    template_xy[0] = 1000;
+                    template_xy[1] = 1000;
                 }
-
-				_cameraMethods.TemplateDetection(fileloc, _cameraMethods.SnapPicture(3), template_xy);
+                imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3), template_xy);
                 xShift = -1 * template_xy[0] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
                     + template_xy[1] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
                 yShift = template_xy[0] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
                     - template_xy[1] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
                 xShift = xShift * (150 / ArduinoMotionLibrary.ArmCoordinates[2]);
                 yShift = yShift * (150 / ArduinoMotionLibrary.ArmCoordinates[2]);
+                //Shift by the template_xy 
 
-                imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3), template_xy);
-               
             }
             return true;
         }

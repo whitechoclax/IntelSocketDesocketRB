@@ -64,29 +64,29 @@
       <HintPath>..\Common\DirectShow\lib\DirectShowLib-2005.dll</HintPath>
     </Reference>
     <Reference Include="Emgu.CV">
-      <HintPath>..\Common\EMGU\bin\Emgu.CV.dll</HintPath>
+      <HintPath>..\..\..\IntelSocketDesocketRB\VishnuSocket\Common\EMGU\bin\Emgu.CV.dll</HintPath>
     </Reference>
     <Reference Include="Emgu.CV.ML">
-      <HintPath>..\Common\EMGU\bin\Emgu.CV.ML.dll</HintPath>
+      <HintPath>..\..\..\IntelSocketDesocketRB\VishnuSocket\Common\EMGU\bin\Emgu.CV.ML.dll</HintPath>
     </Reference>
     <Reference Include="Emgu.CV.OCR">
-      <HintPath>..\Common\EMGU\bin\Emgu.CV.OCR.dll</HintPath>
+      <HintPath>..\..\..\IntelSocketDesocketRB\VishnuSocket\Common\EMGU\bin\Emgu.CV.OCR.dll</HintPath>
     </Reference>
     <Reference Include="Emgu.CV.Shape">
-      <HintPath>..\Common\EMGU\bin\Emgu.CV.Shape.dll</HintPath>
+      <HintPath>..\..\..\IntelSocketDesocketRB\VishnuSocket\Common\EMGU\bin\Emgu.CV.Shape.dll</HintPath>
     </Reference>
     <Reference Include="Emgu.CV.Stitching">
-      <HintPath>..\Common\EMGU\bin\Emgu.CV.Stitching.dll</HintPath>
+      <HintPath>..\..\..\IntelSocketDesocketRB\VishnuSocket\Common\EMGU\bin\Emgu.CV.Stitching.dll</HintPath>
     </Reference>
     <Reference Include="Emgu.CV.Superres">
-      <HintPath>..\Common\EMGU\bin\Emgu.CV.Superres.dll</HintPath>
+      <HintPath>..\..\..\IntelSocketDesocketRB\VishnuSocket\Common\EMGU\bin\Emgu.CV.Superres.dll</HintPath>
     </Reference>
     <Reference Include="Emgu.CV.UI, Version=3.1.0.2504, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Common\EMGU\bin\Emgu.CV.UI.dll</HintPath>
+      <HintPath>..\..\..\IntelSocketDesocketRB\VishnuSocket\Common\EMGU\bin\Emgu.CV.UI.dll</HintPath>
     </Reference>
     <Reference Include="Emgu.Util">
-      <HintPath>..\Common\EMGU\bin\Emgu.Util.dll</HintPath>
+      <HintPath>..\..\..\IntelSocketDesocketRB\VishnuSocket\Common\EMGU\bin\Emgu.Util.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -116,7 +116,6 @@
     <Compile Include="CameraFeed.Designer.cs">
       <DependentUpon>CameraFeed.cs</DependentUpon>
     </Compile>
-    <Compile Include="CameraFeedUnified.cs" />
     <Compile Include="CameraStructures.cs" />
     <Compile Include="LoginMain.cs">
       <SubType>Form</SubType>
@@ -179,7 +178,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="cvextern.dll" />
+    <Content Include="cvextern_test.exe" />
     <Content Include="Industry-Robot-icon.ico" />
+    <Content Include="msvcp120.dll" />
+    <Content Include="msvcr120.dll" />
+    <Content Include="opencv_ffmpeg300_64.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

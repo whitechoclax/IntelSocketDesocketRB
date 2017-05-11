@@ -13,14 +13,26 @@ namespace VishnuMain
 {
     public class CvFunctions {
 
-        private Capture camera_feed = null;
+        Mat color_frame = new Mat();
+        Mat gray_frame = new Mat();
+        Mat binary_frame = new Mat();
+        Mat[] rgb_frame;
+
         /*CAMERA CAPTURE CLASS*/
-        //public static Capture camera_feed = null;
-        public CvFunctions()
-        {
-            
+        private Capture camera_feed;
+
+        /*CONSTURCTOR: INTIALIZE CAMERA CAPTURE*/
+        public CvFunctions() {
+
+            /*CAMERA SETTINGS*/
+            camera_feed = new Capture(); 
+            camera_feed.SetCaptureProperty(CapProp.FrameHeight, 1080);
+            camera_feed.SetCaptureProperty(CapProp.FrameWidth, 1920);
         }
-        
+
+        ~CvFunctions () {
+            camera_feed.Dispose();
+        }
 
         /*METHODS BELOW*/
 
@@ -29,17 +41,12 @@ namespace VishnuMain
         ///</summary>
         public Mat SnapPicture(int mode) { 
 
-            Mat color_frame = new Mat();
-            Mat gray_frame = new Mat();
-            Mat binary_frame = new Mat();
-            Mat[] rgb_frame;
-
             camera_feed.Retrieve(color_frame);
-            CvInvoke.CvtColor(color_frame, gray_frame, ColorConversion.Bgr2Gray);
-            
+
             switch (mode) {
 
                 case 1: //case for just grayscale img
+                    CvInvoke.CvtColor(color_frame, gray_frame, ColorConversion.Bgr2Gray);
                     return gray_frame;
 
                 case 2://case for barcode scanning
@@ -48,6 +55,7 @@ namespace VishnuMain
                     return binary_frame;
 
                 case 3: //case for calibration x.y
+                    CvInvoke.CvtColor(color_frame, gray_frame, ColorConversion.Bgr2Gray);
                     CvInvoke.Threshold(gray_frame, binary_frame, 100, 255, ThresholdType.Binary);
                     return binary_frame;
 
@@ -103,7 +111,7 @@ namespace VishnuMain
                         xy_Coord[0] = offset_x;
                         xy_Coord[1] = offset_y;
 
-                        MessageBox.Show("Left/Right:" + offset_x + "\n" + "Up/Down:" + offset_y, "Coordinates");
+                        //MessageBox.Show("Left/Right:" + offset_x + "\n" + "Up/Down:" + offset_y, "Coordinates");
 
                         //draws rectangle match onto source img
                         CvInvoke.Rectangle(sourceImg, match, new Bgr(Color.Black).MCvScalar, 20);
@@ -149,12 +157,9 @@ namespace VishnuMain
             else {
                 return "Nothing found";
             }
-            //a
+
         }
 
-        ///<summary>
-        ///Saves image to specified file path given from settings
-        ///</summary>
         public void SaveImg(Mat Img, string filename) {
             Img.Save(filename);
         }

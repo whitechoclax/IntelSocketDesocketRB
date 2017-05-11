@@ -18,16 +18,16 @@ namespace VishnuMain
     {
 
         /* Variabless  */
-    
         private Capture Camera_frame = null;
-        private bool _captureInprogress;        
-        public bool userImgLoaded;      
+        private bool videoFeed;        
+        public bool userImgLoaded;
+        Mat frame = new Mat();
         String[] templateList;
         Mat source_img = new Mat();
-        CvFunctions _cameraMethods = new CvFunctions();
+
 
         /* Calling Object CvFunctions */
-        //CvFunctions _Template = new CvFunctions();
+        CvFunctions _Template = new CvFunctions();
 
 
         /* Initialziation for camera feed */
@@ -35,62 +35,61 @@ namespace VishnuMain
         public ComputerVision_Tab() {
             /* Initilize winforms */
             InitializeComponent();
-            video_imgbox.Paint += new System.Windows.Forms.PaintEventHandler(this.video_imgbox_Paint);
+
             /* start camera feed loading the UI */
-            
+            Camera_frame = StartCapture();
         }
 
+        
         public Capture StartCapture()
         {
-            if (CameraFeedUnified.camera_feed == null)
+            try
             {
-                Camera_frame = CameraFeedUnified.EnableCameraFeed();
-            }
+                Camera_frame = new Capture();
+                Camera_frame.SetCaptureProperty(CapProp.FrameHeight, 1080);
+                Camera_frame.SetCaptureProperty(CapProp.FrameWidth, 1920);
                 Camera_frame.ImageGrabbed += videoFeed_refresher; //live stream image cap
-                return CameraFeedUnified.camera_feed;       //return the capture value parameter, 
+                return Camera_frame;         //return the capture value parameter, 
+            }
+            catch (System.Exception e)
+            {
+                MessageBox.Show(e.StackTrace);
+                return Camera_frame = null;
+            }
         }
 
-        private void videoFeed_refresher(object sender, EventArgs arg)
+        void videoFeed_refresher(object sender, EventArgs arg)
         {
-            Mat frame = new Mat();
-
-            Camera_frame.Retrieve(frame);
-            //needs fixing!
-            //CameraFeed.Retrieve(frame, 0);
-            video_imgbox.Image = frame; //<<UNHANDLED EXECEPTION
+            Camera_frame.Retrieve(frame); //<<Memory exception, something about corrupt
+            video_imgbox.Image = frame; //<<UNHANDLED EXECEPTION perameter is not valid
         }
-
 
         /* Clicking functions on windows form */
+        void startCameraFeed_Click(object sender, EventArgs e) {
 
-        private void captureImg_Click(object sender, EventArgs e) {
-
-            //SnapPicture has various modes
-            captured_imgbox.Image = _cameraMethods.SnapPicture(3);
-        }
-
-        private void startCameraFeed_Click(object sender, EventArgs e) {
-
-           
-            if (Camera_frame!= null)
-            {
-                if (_captureInprogress)
-                {
+            if (Camera_frame != null) {
+                if (videoFeed) {
                     startCaptureButton.Text = "Start Capture";
                     Camera_frame.Pause();
                 }
-                else
-                {
-                    Camera_frame = StartCapture();
+                else {
                     startCaptureButton.Text = "Stop";
                     Camera_frame.Start();
-
                 }
-                _captureInprogress = !_captureInprogress;
+                videoFeed = !videoFeed;
             }
         }
 
-        private void loadImg_Click(object sender, EventArgs e)
+
+
+
+        void captureImg_Click(object sender, EventArgs e) {
+
+            //SnapPicture has various modes
+           captured_imgbox.Image = _Template.SnapPicture(3);
+        }
+
+        void loadImg_Click(object sender, EventArgs e)
         {
             DialogResult result = openFileDialog1.ShowDialog();
             if (result == DialogResult.OK || result == DialogResult.Yes)
@@ -100,7 +99,7 @@ namespace VishnuMain
             }
         }
 
-        private void loadTemplate_Click(object sender, EventArgs e)
+        void loadTemplate_Click(object sender, EventArgs e)
         {
             DialogResult result = openFileDialog2.ShowDialog();
             if (result == DialogResult.OK || result == DialogResult.Yes)
@@ -111,36 +110,22 @@ namespace VishnuMain
             }
         }
 
-        private void findMatch_Click(object sender, EventArgs e)
+        void findMatch_Click(object sender, EventArgs e)
         {
             double[] xy = { 0, 0 };
 
             //loads image taken from capture and does templatedetection
             Mat res = new Mat();   
+            //source_img = new Mat(sourceimg_textbox.Text, LoadImageType.Grayscale);
 
             //grab images from UI, run templ detection and retrieve images.  
-            res = _cameraMethods.TemplateDetection(templateList, _cameraMethods.SnapPicture(3), xy);
+            res =_Template.TemplateDetection(templateList, _Template.SnapPicture(3), xy);
             tracked_imgbox.Image = res;
         }
 
-        private void savePicture_Click(object sender, EventArgs e) {
-
-            _cameraMethods.SaveImg(_cameraMethods.SnapPicture(3), Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/" + "EMGU.jpg");
+        void savePicture_Click(object sender, EventArgs e) {
+            _Template.SaveImg(_Template.SnapPicture(3), Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/" + "EMGU.jpg");
         }
-
-        //Paint overlay of crosshair
-        private void video_imgbox_Paint(object sender, PaintEventArgs e)
-        {
-            Graphics G = e.Graphics;
-            e.Graphics.DrawLine(new Pen(Color.Red,2), 160, 240, 480, 240);
-            e.Graphics.DrawLine(new Pen(Color.Red,2), 320, 120, 320, 360);
-            e.Graphics.DrawEllipse(new Pen(Color.Red,2), new RectangleF(280.0F, 200.0F, 80.0F, 80.0F));
-            e.Dispose();
-        }
-
-        private void video_imgbox_Click(object sender, EventArgs e)
-        {
-
-        }
+            
     }
 }

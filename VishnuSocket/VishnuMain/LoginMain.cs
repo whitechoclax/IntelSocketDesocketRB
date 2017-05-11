@@ -46,7 +46,7 @@ namespace VishnuMain
         {
             TabPage page = new TabPage();
             page.Text = "Manual Arm Control";
-            ArmControl Arm = new VishnuMain.ArmControl();
+            ArmControl Arm = new ArmControl();
             page.Controls.Add(Arm);
             centralTab.TabPages.Add(page);
         }
@@ -56,7 +56,7 @@ namespace VishnuMain
         {
             TabPage page = new TabPage();
             page.Text = "Settings";
-            SettingsMenu Menu = new VishnuMain.SettingsMenu();
+            SettingsMenu Menu = new SettingsMenu();
             page.Controls.Add(Menu);
             centralTab.TabPages.Add(page);
         }
@@ -66,7 +66,8 @@ namespace VishnuMain
         {
             TabPage page = new TabPage();
             page.Text = "Object Detection";
-            ComputerVision_Tab Match = new VishnuMain.ComputerVision_Tab();
+            
+            ComputerVision_Tab Match = new ComputerVision_Tab();
             page.Controls.Add(Match);
             centralTab.TabPages.Add(page);
         }
