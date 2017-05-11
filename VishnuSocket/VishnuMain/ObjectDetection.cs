@@ -46,10 +46,10 @@ namespace VishnuMain
         {
             try
             {
-                Camera_frame = new Capture();
-                Camera_frame.SetCaptureProperty(CapProp.FrameHeight, 1080);
-                Camera_frame.SetCaptureProperty(CapProp.FrameWidth, 1920);
-                Camera_frame.ImageGrabbed += videoFeed_refresher; //live stream image cap
+                //Camera_frame = new Capture();
+                //Camera_frame.SetCaptureProperty(CapProp.FrameHeight, 1080);
+                //Camera_frame.SetCaptureProperty(CapProp.FrameWidth, 1920);
+                //Camera_frame.ImageGrabbed += videoFeed_refresher; //live stream image cap
                 return Camera_frame;         //return the capture value parameter, 
             }
             catch (System.Exception e)
