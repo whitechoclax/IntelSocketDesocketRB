@@ -62,12 +62,12 @@
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.98039F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.01961F));
             this.tableLayoutPanel1.Controls.Add(this.Setting_lbl, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.Cam_lbl, 0, 0);
@@ -77,14 +77,14 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 21F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(818, 715);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(971, 481);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // Setting_lbl
             // 
             this.Setting_lbl.AutoSize = true;
             this.Setting_lbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Setting_lbl.Location = new System.Drawing.Point(412, 0);
+            this.Setting_lbl.Location = new System.Drawing.Point(498, 0);
             this.Setting_lbl.Name = "Setting_lbl";
             this.Setting_lbl.Size = new System.Drawing.Size(64, 16);
             this.Setting_lbl.TabIndex = 2;
@@ -92,8 +92,8 @@
             // 
             // panel1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.AutoScroll = true;
             this.panel1.Controls.Add(this.progressBar1);
@@ -106,23 +106,23 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.Camera_Selection);
             this.panel1.Controls.Add(this.captureButton);
-            this.panel1.Location = new System.Drawing.Point(412, 24);
+            this.panel1.Location = new System.Drawing.Point(498, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(403, 688);
+            this.panel1.Size = new System.Drawing.Size(470, 454);
             this.panel1.TabIndex = 0;
             // 
             // progressBar1
             // 
             this.progressBar1.Location = new System.Drawing.Point(18, 192);
-            this.progressBar1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.progressBar1.Margin = new System.Windows.Forms.Padding(2);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(372, 23);
             this.progressBar1.TabIndex = 27;
             // 
             // showStats
             // 
-            this.showStats.Location = new System.Drawing.Point(18, 257);
-            this.showStats.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.showStats.Location = new System.Drawing.Point(69, 417);
+            this.showStats.Margin = new System.Windows.Forms.Padding(2);
             this.showStats.Name = "showStats";
             this.showStats.Size = new System.Drawing.Size(89, 23);
             this.showStats.TabIndex = 26;
@@ -144,9 +144,9 @@
             // 
             // Reset_Cam_Settings
             // 
-            this.Reset_Cam_Settings.Location = new System.Drawing.Point(288, 257);
+            this.Reset_Cam_Settings.Location = new System.Drawing.Point(258, 417);
             this.Reset_Cam_Settings.Name = "Reset_Cam_Settings";
-            this.Reset_Cam_Settings.Size = new System.Drawing.Size(102, 23);
+            this.Reset_Cam_Settings.Size = new System.Drawing.Size(89, 22);
             this.Reset_Cam_Settings.TabIndex = 17;
             this.Reset_Cam_Settings.Text = "Reset";
             this.Reset_Cam_Settings.UseVisualStyleBackColor = true;
@@ -154,9 +154,9 @@
             // 
             // Refresh_BTN
             // 
-            this.Refresh_BTN.Location = new System.Drawing.Point(146, 257);
+            this.Refresh_BTN.Location = new System.Drawing.Point(163, 417);
             this.Refresh_BTN.Name = "Refresh_BTN";
-            this.Refresh_BTN.Size = new System.Drawing.Size(102, 23);
+            this.Refresh_BTN.Size = new System.Drawing.Size(89, 22);
             this.Refresh_BTN.TabIndex = 12;
             this.Refresh_BTN.Text = "Refresh";
             this.Refresh_BTN.UseVisualStyleBackColor = true;
@@ -174,7 +174,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(15, 288);
+            this.label2.Location = new System.Drawing.Point(19, 288);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(33, 16);
             this.label2.TabIndex = 10;
@@ -212,9 +212,10 @@
             // 
             this.CaptureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.CaptureBox.Location = new System.Drawing.Point(2, 23);
-            this.CaptureBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CaptureBox.Margin = new System.Windows.Forms.Padding(2);
             this.CaptureBox.Name = "CaptureBox";
-            this.CaptureBox.Size = new System.Drawing.Size(405, 361);
+            this.CaptureBox.Size = new System.Drawing.Size(480, 270);
+            this.CaptureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.CaptureBox.TabIndex = 3;
             this.CaptureBox.TabStop = false;
             // 
@@ -225,7 +226,7 @@
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "CameraFeed";
-            this.Size = new System.Drawing.Size(842, 740);
+            this.Size = new System.Drawing.Size(1002, 506);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -255,4 +256,4 @@
         private System.ComponentModel.BackgroundWorker backWorker;
     }
 }
- 
+
