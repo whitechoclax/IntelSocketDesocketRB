@@ -11,7 +11,7 @@ namespace VishnuMain
         public static bool Running = false;
         public static double[] RestLocation = { 0.0, 150.0, 200.0, 0.0 };
         public static double[] OriginLocation = { 220.0, 120.0, 200.0, 0.0 }; //CPU0 location
-        public static double[] SocketLocation = { 20.0, -250.0, 200.0, 0.0 }; //Socket center point
+        public static double[] SocketLocation = { 40.0, -250.0, 200.0, 0.0 }; //Socket center point
         private static double centerToCenterL = 0.0; //Distance between left and right CPU
         private static double centerToCenterW = 0.0; //Distance between top and bottom CPU
         private static double centerToCenterZ = 0.0; //Distance between trays
