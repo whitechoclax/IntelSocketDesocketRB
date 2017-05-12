@@ -53,24 +53,26 @@ namespace VishnuMain
             backWorker.WorkerSupportsCancellation = true;
             backWorker.DoWork += new DoWorkEventHandler(backWorker_DoWork);
             backWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backWorker_RunWorkerCompleted);
+            CameraFeedBox.Paint += new System.Windows.Forms.PaintEventHandler(this.CameraFeedBox_Paint);
 
         }
 
         private void ProcessFrame(object sender, EventArgs arg)
         {
             //***If you want to access the image data the use the following method call***/
-            
-                _capture.Retrieve(frame);
-                DisplayImage(frame.Bitmap);
+
+            Mat PFrame = new Mat();
+            _capture.Retrieve(PFrame);
+            DisplayImage(PFrame);
                 //_capture.Dispose();     if we have dispose this shit never works lol
                 //CvInvoke.CvtColor(frame, grayFrame, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
         }
 
-        private delegate void DisplayImageDelegate(Bitmap Image);
+        private delegate void DisplayImageDelegate(Mat Image);
 
-        private void DisplayImage(Bitmap Image)
+        private void DisplayImage(Mat Image)
         {
-            if (CaptureBox.InvokeRequired)
+            if (CameraFeedBox.InvokeRequired)
             {
                 try
                 {
@@ -79,12 +81,14 @@ namespace VishnuMain
                 }
                 catch (Exception ex)
                 {
+                    MessageBox.Show("Thread Unssafe operation");
                 }
+
             }
             else
             {
                 
-                CaptureBox.Image = Image;
+                CameraFeedBox.Image = Image;
             }
         }
 
@@ -187,23 +191,11 @@ namespace VishnuMain
             }
         }
 
-        private void Reset_Cam_Settings_Click(object sender, EventArgs e)
-        {
-
-            if (_capture != null)
-            {
-                _capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Brightness, Brightness_Store);
-                _capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Contrast, Contrast_Store);
-                _capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Sharpness, Sharpness_Store);
-                RetrieveCaptureInformation(); // This will refresh the settings
-            }
-        }
 
         protected void OnFormClosing(CancelEventArgs e)
         {
-            if (Capture != null)
+            if (Capture != false)
             {
-                Reset_Cam_Settings_Click(null, null);
                 _capture.Dispose();
             }
 
@@ -283,6 +275,15 @@ namespace VishnuMain
             richTextBox1.AppendText(SettingsLibrary.TrayWidth.ToString() + Environment.NewLine);
             richTextBox1.AppendText(SettingsLibrary.TrayLength.ToString() + Environment.NewLine);
 
+        }
+
+        private void CameraFeedBox_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics G = e.Graphics;
+            e.Graphics.DrawLine(new Pen(Color.Red), 160, 240, 480, 240);
+            e.Graphics.DrawLine(new Pen(Color.Red), 320, 120, 320, 360);
+            e.Graphics.DrawEllipse(new Pen(Color.Red, 2), new RectangleF(280.0F, 200.0F, 80.0F, 80.0F));
+            e.Dispose();
         }
     }
 }
