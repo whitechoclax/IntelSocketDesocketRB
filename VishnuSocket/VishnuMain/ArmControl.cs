@@ -26,7 +26,10 @@ namespace VishnuMain
             InitializeComponent();
             BootMessages();
             findPorts.Enabled = true;
-            
+            upButton.Text = char.ConvertFromUtf32(0x2191);
+            downButton.Text = char.ConvertFromUtf32(0x2193);
+            leftButton.Text = char.ConvertFromUtf32(0x2190);
+            rightButton.Text = char.ConvertFromUtf32(0x2192);
         }
 
         private void BootMessages()
@@ -156,6 +159,21 @@ namespace VishnuMain
         {
             ArduinoMotionLibrary.ArduinoMotionLibraryBoot();
             BootMessages();
+        }
+
+        private void grabButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void releaseButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolTip1_Popup(object sender, PopupEventArgs e)
+        {
+
         }
     }
 }
