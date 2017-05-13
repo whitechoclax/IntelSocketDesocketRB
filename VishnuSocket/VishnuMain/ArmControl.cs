@@ -88,24 +88,63 @@ namespace VishnuMain
         //Run motor functions
         private void stopButton_Click(object sender, EventArgs e)
         {
-
-            ArduinoMotionLibrary.StopMotor();
+            var BWS = new BackgroundWorker();
+            BWS.DoWork += delegate
+            {
+                ArduinoMotionLibrary.StopMotor();
+            };
+            BWS.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("EMERGENCY STOP ASYNC");
+            };
+            BWS.RunWorkerAsync();
 
         }
+        //ASYNC TASKS
+        
 
         private void redefineButton_Click(object sender, EventArgs e)
         {
-            ArduinoMotionLibrary.ArdPosition("REDEF", portID, XcoordinateValue, YcoordinateValue, ZcoordinateValue, RotationVal);
+            var BWR = new BackgroundWorker();
+            BWR.DoWork += delegate
+            {
+                ArduinoMotionLibrary.ArdPosition("REDEF", portID, XcoordinateValue, YcoordinateValue, ZcoordinateValue, RotationVal);
+            };
+            BWR.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("REDEF" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + ZcoordinateValue.ToString() + RotationVal.ToString());
+            };
+            BWR.RunWorkerAsync();
+
         }
 
         private void moveButton_Click(object sender, EventArgs e)
         {
-            ArduinoMotionLibrary.ArdPosition("MOVE", portID, XcoordinateValue, YcoordinateValue, ZcoordinateValue, RotationVal);
+            var BWM = new BackgroundWorker();
+            BWM.DoWork += delegate
+            {
+                ArduinoMotionLibrary.ArdPosition("MOVE", portID, XcoordinateValue, YcoordinateValue, ZcoordinateValue, RotationVal);
+            };
+            BWM.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("MOVE" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + ZcoordinateValue.ToString() + RotationVal.ToString());
+            };
+            BWM.RunWorkerAsync();
+
         }
 
         private void ShiftButton_Click(object sender, EventArgs e)
         {
-            ArduinoMotionLibrary.ArdPosition("SHIFT", portID, XcoordinateValue, YcoordinateValue, ZcoordinateValue, RotationVal);
+            var BWR = new BackgroundWorker();
+            BWR.DoWork += delegate
+            {
+                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, XcoordinateValue, YcoordinateValue, ZcoordinateValue, RotationVal);
+            };
+            BWR.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("SHIFT" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + ZcoordinateValue.ToString() + RotationVal.ToString());
+            };
+            BWR.RunWorkerAsync();
         }
 
         private void traySelectorBox_SelectedIndexChanged(object sender, EventArgs e)

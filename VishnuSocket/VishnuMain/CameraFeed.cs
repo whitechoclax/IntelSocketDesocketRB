@@ -26,9 +26,6 @@ namespace VishnuMain
         int CameraDevice = 0; //Variable to track camera device selected
         CameraStructures[] WebCams; //List containing all the camera available
 
-        int Brightness_Store = 0;
-        int Contrast_Store = 0;
-        int Sharpness_Store = 0;
         #endregion
 
         public CameraFeed()
