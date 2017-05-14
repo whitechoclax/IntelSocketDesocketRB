@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
+using Emgu.CV;
 
 namespace VishnuMain
 {
@@ -20,6 +21,8 @@ namespace VishnuMain
         int XcoordinateValue;
         int YcoordinateValue;
         int TrayChoiceValue;
+        private Capture _capture;
+        private bool _captureInProgress;
        
         public ArmControl()
         {
@@ -30,8 +33,93 @@ namespace VishnuMain
             downButton.Text = char.ConvertFromUtf32(0x2193);
             leftButton.Text = char.ConvertFromUtf32(0x2190);
             rightButton.Text = char.ConvertFromUtf32(0x2192);
+            DownLeftButton.Text = char.ConvertFromUtf32(0x2199);
+            DownRightButton.Text = char.ConvertFromUtf32(0x2198);
+            UpLeftButton.Text = char.ConvertFromUtf32(0x2196);
+            UpRightButton.Text = char.ConvertFromUtf32(0x2197);
+        }
+        //Camera feed related functions
+
+        private delegate void DisplayImageDelegate(Mat Image);
+
+        private void DisplayImage(Mat Image)
+        {
+            if (ArmFeedBox.InvokeRequired)
+            {
+                try
+                {
+                    DisplayImageDelegate DI = new DisplayImageDelegate(DisplayImage);
+                    this.BeginInvoke(DI, new object[] { Image });
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Thread Unsafe operation" + ex.ToString());
+                }
+
+            }
+            else
+            {
+
+                ArmFeedBox.Image = Image;
+            }
         }
 
+        private void captureButton_Click(object sender, EventArgs e)
+        {
+            if (_capture != null)
+            {
+                if (_captureInProgress)
+                {
+                    //stop the capture
+                    captureButton.Text = "Start Capture"; //Change text on button
+                    _capture.Pause(); //Pause the capture
+                    _captureInProgress = false; //Flag the state of the camera
+                }
+                else
+                {
+                    captureButton.Text = "Stop"; //Change text on button
+                    _capture.Start(); //Start the capture
+                    _captureInProgress = true; //Flag the state of the camera
+                }
+
+            }
+            else
+            {
+                //set up capture with selected device
+                SetupCapture();
+                //Be lazy and Recall this method to start camera
+                captureButton_Click(null, null);
+            }
+        }
+
+        //create cpature class iof not already,
+        private void SetupCapture()
+        {
+            //Dispose of Capture if it was created before
+            if (_capture != null) _capture.Dispose();
+            try
+            {
+                //Set up capture device
+                _capture = new Capture();
+                _capture.ImageGrabbed += _capture_ImageGrabbed;
+            }
+            catch (NullReferenceException excpt)
+            {
+                MessageBox.Show(excpt.Message);
+            }
+
+        }
+
+        //image process update imagebox
+        private void _capture_ImageGrabbed(object sender, EventArgs e)
+        {
+            Mat Frame = new Mat();
+            _capture.Retrieve(Frame);
+            DisplayImage(Frame);
+        }
+
+
+        //arduino messages/connections
         private void BootMessages()
         {
             if(ArduinoMotionLibrary.Arduinos[0] != 2)
@@ -163,17 +251,37 @@ namespace VishnuMain
 
         private void grabButton_Click(object sender, EventArgs e)
         {
-
+            var BWG = new BackgroundWorker();
+            BWG.DoWork += delegate
+            {
+                ArduinoMotionLibrary.ArdPosition("GRAB", portID, 0,0,0,0);
+            };
+            BWG.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("GRABBED");
+            };
+            BWG.RunWorkerAsync();
         }
 
         private void releaseButton_Click(object sender, EventArgs e)
         {
-
+            var BWRE = new BackgroundWorker();
+            BWRE.DoWork += delegate
+            {
+                ArduinoMotionLibrary.ArdPosition("RELEASE", portID, 0,0,0,0);
+            };
+            BWRE.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("RELEASE");
+            };
+            BWRE.RunWorkerAsync();
         }
 
         private void toolTip1_Popup(object sender, PopupEventArgs e)
         {
 
         }
+
+        
     }
 }
