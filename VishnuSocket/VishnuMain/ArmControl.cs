@@ -29,10 +29,7 @@ namespace VishnuMain
             InitializeComponent();
             BootMessages();
             findPorts.Enabled = true;
-            upButton.Text = char.ConvertFromUtf32(0x2191);
-            downButton.Text = char.ConvertFromUtf32(0x2193);
-            leftButton.Text = char.ConvertFromUtf32(0x2190);
-            rightButton.Text = char.ConvertFromUtf32(0x2192);
+            //set unicode vlaues for the buttons
             DownLeftButton.Text = char.ConvertFromUtf32(0x2199);
             DownRightButton.Text = char.ConvertFromUtf32(0x2198);
             UpLeftButton.Text = char.ConvertFromUtf32(0x2196);
@@ -203,7 +200,7 @@ namespace VishnuMain
             };
             BWR.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("REDEF" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + ZcoordinateValue.ToString() + RotationVal.ToString());
+                portListBox.AppendText("REDEF" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + ZcoordinateValue.ToString() + RotationVal.ToString() + Environment.NewLine);
             };
             BWR.RunWorkerAsync();
 
@@ -218,7 +215,7 @@ namespace VishnuMain
             };
             BWM.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("MOVE" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + ZcoordinateValue.ToString() + RotationVal.ToString());
+                portListBox.AppendText("MOVE" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + ZcoordinateValue.ToString() + RotationVal.ToString() + Environment.NewLine);
             };
             BWM.RunWorkerAsync();
 
@@ -233,7 +230,7 @@ namespace VishnuMain
             };
             BWR.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("SHIFT" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + ZcoordinateValue.ToString() + RotationVal.ToString());
+                portListBox.AppendText("SHIFT" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + ZcoordinateValue.ToString() + RotationVal.ToString() + Environment.NewLine);
             };
             BWR.RunWorkerAsync();
         }
@@ -258,7 +255,7 @@ namespace VishnuMain
             };
             BWG.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("GRABBED");
+                portListBox.AppendText("GRABBED" + Environment.NewLine);
             };
             BWG.RunWorkerAsync();
         }
@@ -272,16 +269,102 @@ namespace VishnuMain
             };
             BWRE.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("RELEASE");
+                portListBox.AppendText("RELEASED" + Environment.NewLine);
             };
             BWRE.RunWorkerAsync();
         }
 
+       
+        //raise and lower
+        private void raiseZButton_Click(object sender, EventArgs e)
+        {
+            var BWR = new BackgroundWorker();
+            BWR.DoWork += delegate
+            {
+                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, 0 , 0, ZcoordinateValue, 0);
+            };
+            BWR.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("SHIFTZ from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+            };
+            BWR.RunWorkerAsync();
+        }
+
+        private void lowerZButton_Click(object sender, EventArgs e)
+        {
+            var BWR = new BackgroundWorker();
+            BWR.DoWork += delegate
+            {
+                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, 0, 0, ZcoordinateValue, 0);
+            };
+            BWR.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("SHIFTZ from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+            };
+            BWR.RunWorkerAsync();
+        }
+
+        //directional arrow button pad
+        private void upButton_Click(object sender, EventArgs e)
+        {
+            var BWR = new BackgroundWorker();
+            BWR.DoWork += delegate
+            {
+                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, XcoordinateValue, YcoordinateValue, 0, 0);
+            };
+            BWR.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("SHIFTY from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+            };
+            BWR.RunWorkerAsync();
+        }
+
+        private void downButton_Click(object sender, EventArgs e)
+        {
+            var BWR = new BackgroundWorker();
+            BWR.DoWork += delegate
+            {
+                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, XcoordinateValue, YcoordinateValue, 0, 0);
+            };
+            BWR.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("SHIFTY from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+            };
+            BWR.RunWorkerAsync();
+        }
+
+        private void leftButton_Click(object sender, EventArgs e)
+        {
+            var BWR = new BackgroundWorker();
+            BWR.DoWork += delegate
+            {
+                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, XcoordinateValue, YcoordinateValue, 0, 0);
+            };
+            BWR.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("SHIFTX from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+            };
+            BWR.RunWorkerAsync();
+        }
+
+        private void rightButton_Click(object sender, EventArgs e)
+        {
+            var BWR = new BackgroundWorker();
+            BWR.DoWork += delegate
+            {
+                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, XcoordinateValue, YcoordinateValue, 0, 0);
+            };
+            BWR.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("SHIFTX from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+            };
+            BWR.RunWorkerAsync();
+        }
+
+        //popup
         private void toolTip1_Popup(object sender, PopupEventArgs e)
         {
 
         }
-
-        
     }
 }

@@ -65,14 +65,14 @@
             this.grabButton = new System.Windows.Forms.Button();
             this.releaseButton = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.lowerZButton = new System.Windows.Forms.Button();
+            this.raiseZButton = new System.Windows.Forms.Button();
             this.captureButton = new System.Windows.Forms.Button();
             this.UpRightButton = new System.Windows.Forms.Button();
             this.UpLeftButton = new System.Windows.Forms.Button();
             this.DownLeftButton = new System.Windows.Forms.Button();
             this.DownRightButton = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.trayGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trayZaxis)).BeginInit();
@@ -439,7 +439,9 @@
             this.upButton.Name = "upButton";
             this.upButton.Size = new System.Drawing.Size(75, 75);
             this.upButton.TabIndex = 6;
+            this.upButton.Text = "↑";
             this.upButton.UseVisualStyleBackColor = true;
+            this.upButton.Click += new System.EventHandler(this.upButton_Click);
             // 
             // leftButton
             // 
@@ -448,7 +450,9 @@
             this.leftButton.Name = "leftButton";
             this.leftButton.Size = new System.Drawing.Size(75, 75);
             this.leftButton.TabIndex = 7;
+            this.leftButton.Text = "←";
             this.leftButton.UseVisualStyleBackColor = true;
+            this.leftButton.Click += new System.EventHandler(this.leftButton_Click);
             // 
             // rightButton
             // 
@@ -457,7 +461,9 @@
             this.rightButton.Name = "rightButton";
             this.rightButton.Size = new System.Drawing.Size(75, 75);
             this.rightButton.TabIndex = 8;
+            this.rightButton.Text = "→";
             this.rightButton.UseVisualStyleBackColor = true;
+            this.rightButton.Click += new System.EventHandler(this.rightButton_Click);
             // 
             // downButton
             // 
@@ -466,7 +472,9 @@
             this.downButton.Name = "downButton";
             this.downButton.Size = new System.Drawing.Size(75, 75);
             this.downButton.TabIndex = 9;
+            this.downButton.Text = "↓";
             this.downButton.UseVisualStyleBackColor = true;
+            this.downButton.Click += new System.EventHandler(this.downButton_Click);
             // 
             // grabButton
             // 
@@ -493,6 +501,40 @@
             // toolTip1
             // 
             this.toolTip1.Popup += new System.Windows.Forms.PopupEventHandler(this.toolTip1_Popup);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.lowerZButton);
+            this.groupBox3.Controls.Add(this.raiseZButton);
+            this.groupBox3.Location = new System.Drawing.Point(1195, 490);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(328, 365);
+            this.groupBox3.TabIndex = 17;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Main arm Manual Control Pad";
+            this.toolTip1.SetToolTip(this.groupBox3, resources.GetString("groupBox3.ToolTip"));
+            // 
+            // lowerZButton
+            // 
+            this.lowerZButton.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lowerZButton.Location = new System.Drawing.Point(125, 200);
+            this.lowerZButton.Name = "lowerZButton";
+            this.lowerZButton.Size = new System.Drawing.Size(75, 50);
+            this.lowerZButton.TabIndex = 1;
+            this.lowerZButton.Text = "LOWER";
+            this.lowerZButton.UseVisualStyleBackColor = true;
+            this.lowerZButton.Click += new System.EventHandler(this.lowerZButton_Click);
+            // 
+            // raiseZButton
+            // 
+            this.raiseZButton.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.raiseZButton.Location = new System.Drawing.Point(125, 144);
+            this.raiseZButton.Name = "raiseZButton";
+            this.raiseZButton.Size = new System.Drawing.Size(75, 50);
+            this.raiseZButton.TabIndex = 0;
+            this.raiseZButton.Text = "RAISE";
+            this.raiseZButton.UseVisualStyleBackColor = true;
+            this.raiseZButton.Click += new System.EventHandler(this.raiseZButton_Click);
             // 
             // captureButton
             // 
@@ -540,38 +582,6 @@
             this.DownRightButton.Size = new System.Drawing.Size(75, 75);
             this.DownRightButton.TabIndex = 16;
             this.DownRightButton.UseVisualStyleBackColor = true;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.button2);
-            this.groupBox3.Controls.Add(this.button1);
-            this.groupBox3.Location = new System.Drawing.Point(1195, 490);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(328, 365);
-            this.groupBox3.TabIndex = 17;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Main arm Manual Control Pad";
-            this.toolTip1.SetToolTip(this.groupBox3, resources.GetString("groupBox3.ToolTip"));
-            // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(125, 144);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 50);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "RAISE";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(125, 200);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 50);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "LOWER";
-            this.button2.UseVisualStyleBackColor = true;
             // 
             // ArmControl
             // 
@@ -655,7 +665,7 @@
         private System.Windows.Forms.Button DownLeftButton;
         private System.Windows.Forms.Button DownRightButton;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button lowerZButton;
+        private System.Windows.Forms.Button raiseZButton;
     }
 }
