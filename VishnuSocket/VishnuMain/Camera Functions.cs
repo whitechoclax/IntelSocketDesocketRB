@@ -28,7 +28,7 @@ namespace VishnuMain
 
             /*CAMERA SETTINGS*/
 
-            //camera_feed = new Capture(); 
+            camera_feed = new Capture(); 
             //camera_feed.SetCaptureProperty(CapProp.FrameHeight, 1080);
             //camera_feed.SetCaptureProperty(CapProp.FrameWidth, 1920);
         }
