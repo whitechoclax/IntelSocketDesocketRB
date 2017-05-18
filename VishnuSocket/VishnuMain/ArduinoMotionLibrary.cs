@@ -38,8 +38,8 @@ namespace VishnuMain
             {
                 OpenPorts();
             }
-            
 
+            ArdPosition("RELAY", 0, 0, 0, 0, 0);
         }
 
         private static int findAvailiblePorts()
@@ -200,23 +200,18 @@ namespace VishnuMain
             Task.Delay(30); //Waiting for navigation message
             string data = ArdPorts[portID].ReadLine();
 
-            if (data != "NAVIGATING\r")
-            {
-
-            }
-
             bool done = false;
             while (!done)
             {
                 Task.Delay(50);
-                if (ArdPorts[portID].BytesToRead > 0)
+                if (ArdPorts[portID].BytesToRead > 0 && !(data.StartsWith("COOR")))
                 {
                     data = ArdPorts[portID].ReadLine();
                 }
-                if (data == "DONE\r")
+                if (data == "DONE\r" || data.StartsWith("COOR"))
                 {
                     Task.Delay(50);
-                    if (ArdPorts[portID].BytesToRead > 0)
+                    if (ArdPorts[portID].BytesToRead > 0 && data == "DONE\r")
                     {
                         data = ArdPorts[portID].ReadLine();
                     }

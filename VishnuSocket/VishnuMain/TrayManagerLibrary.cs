@@ -15,7 +15,7 @@ namespace VishnuMain
         public int badTrayCount = 0;
 
         //Dimensions are length, width, and stack height in # of trays
-        public int[] trayDimensions = new int[3];
+        public int[] trayDimensions = new int[3]; //Length, width, # of trays in stack
 
         //count of cpus in each good and bad trays
         private int cpuFilledGood = 0;

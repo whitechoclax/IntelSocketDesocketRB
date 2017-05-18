@@ -37,8 +37,8 @@ boolean DEBUG = false;
 //Current position
 double xpos = 0;
 double ypos = 150;
-double zpos = EEPROM.readDouble(ZMEM);
-double angle = EEPROM.readDouble(ENDMEM); //Angle for end effector
+double zpos = EEPROM.readDouble(ZMEM); //3cm from table
+double angle = EEPROM.readDouble(ENDMEM); //Angle for end effector, recommended is 85 starting
 
 double theta = EEPROM.readDouble(THETAMEM); //angle of robot
 double radius = EEPROM.readDouble(RADMEM); //extension of arm

@@ -9,9 +9,11 @@ namespace VishnuMain
     static class ArmHandlerLibrary
     {
         public static bool Running = false;
-        public static double[] RestLocation = { 0.0, 150.0, 200.0, 0.0 };
-        public static double[] OriginLocation = { 150.0, 150.0, 200.0, 0.0 }; //CPU0 location
-        public static double[] SocketLocation = { 40.0, -250.0, 200.0, 0.0 }; //Socket center point
+        public static double[] RestLocation = { 0.0, 150.0, 200.0, 84 }; //Change to calibration image
+        // Calibrate image at: "COOR:176.00:339.00:60.00:84.0:27.50"
+        public static double[] OriginLocation = { 0.0, 183.0, 38.0, 84.0 }; //CPU0 location
+        //"COOR:0.00:183.00:38.00:0.0:0.00\r" , z = 52 for last one,
+        public static double[] SocketLocation = { 40.0, -250.0, 200.0, 0.0 }; //Socket center point 
         private static double centerToCenterL = 0.0; //Distance between left and right CPU
         private static double centerToCenterW = 0.0; //Distance between top and bottom CPU
         private static double centerToCenterZ = 0.0; //Distance between trays
@@ -32,7 +34,20 @@ namespace VishnuMain
             bool done = false;
             int CPU;
 
-            ArduinoMotionLibrary.ArdPosition("REDEF", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[3]); //Say we're resting, eventually calibrate
+            //Test procedure:
+            //Calibrate on rest postion
+            //Redifine arduino position on test img coordinates
+            //Move to CPU
+            //Pick up CPU
+            //Calibrate again
+            //Move CPU to wherever (watch end effector)
+            //Go back and pick up next CPU (account for z change, 14mm / 10)
+
+
+
+
+
+            ArduinoMotionLibrary.ArdPosition("REDEF", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[3]); //Calibrate now
             ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1], OriginLocation[2], OriginLocation[3]); //Move to CPU 0 spot to start
 
             while (!done)
