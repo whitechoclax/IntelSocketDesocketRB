@@ -26,7 +26,7 @@ Servo effector;
 #define IN false
 //Grabber solenoid and Servo pins
 #define GRABBER 29
-#define SERVO 8
+#define SERVO 6
 #define RADMEM 0
 #define THETAMEM 4
 #define ZMEM 8
