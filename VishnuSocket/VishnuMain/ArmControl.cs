@@ -273,7 +273,13 @@ namespace VishnuMain
             BWR.RunWorkerCompleted += delegate
             {
                 portListBox.AppendText("SHIFT" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + ZcoordinateValue.ToString() + RotationVal.ToString() + Environment.NewLine);
+                portListBox.AppendText("Coordinates: X: " + ArduinoMotionLibrary.ArmCoordinates[0]
+                    + " Y: "  + ArduinoMotionLibrary.ArmCoordinates[1] + " "
+                    + " Z: " + ArduinoMotionLibrary.ArmCoordinates[2] + " "
+                    + " theta: " + ArduinoMotionLibrary.ArmCoordinates[3] + " " + Environment.NewLine);
+
             };
+
             BWR.RunWorkerAsync();
         }
 
