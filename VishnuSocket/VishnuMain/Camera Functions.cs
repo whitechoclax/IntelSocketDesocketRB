@@ -121,7 +121,17 @@ namespace VishnuMain
                         xy_Coord[0] = offset_x;
                         xy_Coord[1] = offset_y;
 
+                        double xShift, yShift = 0.0;
+                        double[] template_xy = { offset_x, offset_y };
+
                         //MessageBox.Show("Left/Right:" + offset_x + "\n" + "Up/Down:" + offset_y, "Coordinates");
+                        xShift = -1 * template_xy[0] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
+                        + template_xy[1] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
+                        yShift = template_xy[0] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
+                            - template_xy[1] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
+                        xShift = xShift * (50 / ArduinoMotionLibrary.ArmCoordinates[2]);
+                        yShift = -1 * yShift * (50 / ArduinoMotionLibrary.ArmCoordinates[2]);
+                        MessageBox.Show("X Relative:" + xShift + "\n" + "Y Relative:" + yShift, "Coordinates");
 
                         //draws rectangle match onto source img
                         CvInvoke.Rectangle(sourceImg, match, new Bgr(Color.Black).MCvScalar, 20);
