@@ -50,19 +50,18 @@ namespace VishnuMain
             backWorker.WorkerSupportsCancellation = true;
             backWorker.DoWork += new DoWorkEventHandler(backWorker_DoWork);
             backWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backWorker_RunWorkerCompleted);
-            CameraFeedBox.Paint += new System.Windows.Forms.PaintEventHandler(this.CameraFeedBox_Paint);
 
         }
 
         private void ProcessFrame(object sender, EventArgs arg)
         {
             //***If you want to access the image data the use the following method call***/
-
             Mat PFrame = new Mat();
+            
             _capture.Retrieve(PFrame);
-            DisplayImage(PFrame);
-                //_capture.Dispose();     if we have dispose this shit never works lol
-                //CvInvoke.CvtColor(frame, grayFrame, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
+            CameraFeedBox.Image = PFrame;
+            
+
         }
 
         private delegate void DisplayImageDelegate(Mat Image);
@@ -89,21 +88,23 @@ namespace VishnuMain
             }
         }
 
-
-      
-
         private void captureButton_Click(object sender, EventArgs e)
         {
             if (_capture != null)
             {
+                //see if the current camera feed is running.  
                 if (_captureInProgress)
                 {
                     //stop the capture
-                    captureButton.Text = "Start Capture"; //Change text on button
-                   
-                    _capture.Pause(); //Pause the capture
-                    _captureInProgress = false; //Flag the state of the camera
+                    captureButton.Text = "Start Capture";   //Change text on button
+                    _capture.Pause();                     //Pause the capture
+                    _capture.Dispose();
+                    _captureInProgress = false;             //Flag the state of the camera
+                    _capture = null;                        //assign null, rebuild camera later.
+                    CameraFeedBox.Image = null;
+                    CameraFeedBox.Refresh();
                 }
+
                 else
                 {
                     //Check to see if the selected device has changed
@@ -111,13 +112,22 @@ namespace VishnuMain
                     {
                         SetupCapture(Camera_Selection.SelectedIndex); //Setup capture with the new device
                     }
-
                     RetrieveCaptureInformation(); //Get Camera information
-                    captureButton.Text = "Stop"; //Change text on button
-                    
-                  
-                    _capture.Start(); //Start the capture
-                    _captureInProgress = true; //Flag the state of the camera
+       
+                    //force check other camera feed
+                    using (ArmControl obj = new ArmControl())
+                    {
+                        if(obj._captureInProgress)
+                        {
+                            //superseeds arm control, turn off arm control.  
+                            obj.StopCapture();  
+                        }
+                    }//dispose object
+
+                    SetupCapture(Camera_Selection.SelectedIndex);
+                    captureButton.Text = "Stop";    //Change text on button
+                    _capture.Start();               //Start the capture
+                    _captureInProgress = true;      //Flag the state of the camera
                 }
 
             }
@@ -274,13 +284,13 @@ namespace VishnuMain
 
         }
 
-        private void CameraFeedBox_Paint(object sender, PaintEventArgs e)
+        /*private void CameraFeedBox_Paint(object sender, PaintEventArgs e)
         {
             Graphics G = e.Graphics;
             e.Graphics.DrawLine(new Pen(Color.Red), 160, 240, 480, 240);
             e.Graphics.DrawLine(new Pen(Color.Red), 320, 120, 320, 360);
             e.Graphics.DrawEllipse(new Pen(Color.Red, 2), new RectangleF(280.0F, 200.0F, 80.0F, 80.0F));
             e.Dispose();
-        }
+        }*/
     }
 }

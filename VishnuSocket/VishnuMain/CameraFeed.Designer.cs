@@ -214,7 +214,6 @@
             this.CameraFeedBox.Size = new System.Drawing.Size(607, 458);
             this.CameraFeedBox.TabIndex = 2;
             this.CameraFeedBox.TabStop = false;
-            this.CameraFeedBox.Paint += new System.Windows.Forms.PaintEventHandler(this.CameraFeedBox_Paint);
             // 
             // CameraFeed
             // 

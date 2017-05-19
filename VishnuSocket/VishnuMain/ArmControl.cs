@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
 using Emgu.CV;
+using Emgu.CV.CvEnum;
 
 namespace VishnuMain
 {
@@ -21,8 +22,8 @@ namespace VishnuMain
         int XcoordinateValue;
         int YcoordinateValue;
         int TrayChoiceValue;
-        private Capture _capture;
-        private bool _captureInProgress;
+        public Capture _capture;
+        public bool _captureInProgress;
        
         public ArmControl()
         {
@@ -41,24 +42,25 @@ namespace VishnuMain
 
         private void DisplayImage(Mat Image)
         {
-            if (ArmFeedBox.InvokeRequired)
-            {
-                try
+            
+                if (ArmFeedBox.InvokeRequired)
                 {
-                    DisplayImageDelegate DI = new DisplayImageDelegate(DisplayImage);
-                    this.BeginInvoke(DI, new object[] { Image });
+                    try
+                    {
+                        DisplayImageDelegate DI = new DisplayImageDelegate(DisplayImage);
+                        this.BeginInvoke(DI, new object[] { Image });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Thread Unsafe operation" + ex.ToString());
+                    }
+
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show("Thread Unsafe operation" + ex.ToString());
+                    ArmFeedBox.Image = Image;
+                    
                 }
-
-            }
-            else
-            {
-
-                ArmFeedBox.Image = Image;
-            }
         }
 
         private void captureButton_Click(object sender, EventArgs e)
@@ -68,9 +70,7 @@ namespace VishnuMain
                 if (_captureInProgress)
                 {
                     //stop the capture
-                    captureButton.Text = "Start Capture"; //Change text on button
-                    _capture.Pause(); //Pause the capture
-                    _captureInProgress = false; //Flag the state of the camera
+                    StopCapture();
                 }
                 else
                 {
@@ -89,6 +89,16 @@ namespace VishnuMain
             }
         }
 
+        //camera stop so we wont have more than one feed running at a time.
+        public void StopCapture()
+        {
+            captureButton.Text = "Start Capture"; //Change text on button
+            _capture.Dispose();
+            _captureInProgress = false;           //Flag the state of the camera
+            _capture = null;
+            ArmFeedBox.Image = null;              //reset picture in imagebox
+            ArmFeedBox.Refresh();
+        }
         //create cpature class iof not already,
         private void SetupCapture()
         {
@@ -98,6 +108,7 @@ namespace VishnuMain
             {
                 //Set up capture device
                 _capture = new Capture();
+                _capture.SetCaptureProperty(CapProp.Fps, 30);
                 _capture.ImageGrabbed += _capture_ImageGrabbed;
             }
             catch (NullReferenceException excpt)
@@ -111,8 +122,13 @@ namespace VishnuMain
         private void _capture_ImageGrabbed(object sender, EventArgs e)
         {
             Mat Frame = new Mat();
+            
+            //Mat Frame = new Mat();
             _capture.Retrieve(Frame);
+            //ArmFeedBox.Image = Frame;
             DisplayImage(Frame);
+            
+            
         }
 
 
@@ -361,10 +377,5 @@ namespace VishnuMain
             BWR.RunWorkerAsync();
         }
 
-        //popup
-        private void toolTip1_Popup(object sender, PopupEventArgs e)
-        {
-
-        }
     }
 }

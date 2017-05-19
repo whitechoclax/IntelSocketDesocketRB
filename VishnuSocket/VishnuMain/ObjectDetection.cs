@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.Util;
+using DirectShowLib;
 
 namespace VishnuMain
 {
@@ -18,12 +19,14 @@ namespace VishnuMain
     {
 
         /* Variabless  */
-        private Capture Camera_frame = null;
+        private Capture _capture = null;
         private bool videoFeed;
         public bool userImgLoaded;
         Mat frame = new Mat();
         String[] templateList;
         Mat source_img = new Mat();
+        int CameraDevice = 0; //Variable to track camera device selected
+        CameraStructures[] WebCams; //List containing all the camera available
 
 
         /* Calling Object CvFunctions */
@@ -36,13 +39,23 @@ namespace VishnuMain
         {
             /* Initilize winforms */
             InitializeComponent();
-
-            /* start camera feed loading the UI */
-            Camera_frame = StartCapture();
+            DsDevice[] _SystemCameras = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice);
+            WebCams = new CameraStructures[_SystemCameras.Length];
+            for (int i = 0; i < _SystemCameras.Length; i++)
+            {
+                WebCams[i] = new CameraStructures(i, _SystemCameras[i].Name, _SystemCameras[i].ClassID); //fill web cam array
+                Camera_Selection.Items.Add(WebCams[i].ToString());
+            }
+            if (Camera_Selection.Items.Count > 0)
+            {
+                Camera_Selection.SelectedIndex = 0; //Set the selected device the default
+                startCaptureButton.Enabled = true; //Enable the start
+            }
+            
         }
 
 
-        public Capture StartCapture()
+        /*public Capture StartCapture()
         {
             try
             {
@@ -50,47 +63,106 @@ namespace VishnuMain
                 //Camera_frame.SetCaptureProperty(CapProp.FrameHeight, 1080);
                 //Camera_frame.SetCaptureProperty(CapProp.FrameWidth, 1920);
                 //Camera_frame.ImageGrabbed += videoFeed_refresher; //live stream image cap
-                return Camera_frame;         //return the capture value parameter, 
+                return _capture;         //return the capture value parameter, 
             }
             catch (System.Exception e)
             {
                 MessageBox.Show(e.StackTrace);
-                return Camera_frame = null;
+                return _capture = null;
+            }
+        }*/
+
+        private delegate void DisplayImageDelegate(Mat Image);
+
+        private void DisplayImage(Mat Image)
+        {
+
+            if (video_imgbox.InvokeRequired)
+            {
+                try
+                {
+                    DisplayImageDelegate DI = new DisplayImageDelegate(DisplayImage);
+                    this.BeginInvoke(DI, new object[] { Image });
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Thread Unsafe operation" + ex.ToString());
+                }
+
+            }
+            else
+            {
+                //where the camera feed is displayed to UI
+                video_imgbox.Image = Image;
             }
         }
-
-        void videoFeed_refresher(object sender, EventArgs arg)
-        {
-            Camera_frame.Retrieve(frame); //<<Memory exception, something about corrupt
-            video_imgbox.Image = frame; //<<UNHANDLED EXECEPTION perameter is not valid
-        }
-
         /* Clicking functions on windows form */
         void startCameraFeed_Click(object sender, EventArgs e)
         {
 
-            if (Camera_frame != null)
+            if (_capture != null)
             {
                 if (videoFeed)
                 {
                     startCaptureButton.Text = "Start Capture";
-                    Camera_frame.Pause();
+                    _capture.Pause();
+                    _capture.Dispose();
+                    _capture = null;
+                    video_imgbox.Image = null;
+                    video_imgbox.Refresh();
+
                 }
                 else
                 {
+                    //Check to see if the selected device has changed
+                    if (Camera_Selection.SelectedIndex != CameraDevice)
+                    {
+                        SetupCapture(Camera_Selection.SelectedIndex); //Setup capture with the new device
+                    }
+
+                    SetupCapture(Camera_Selection.SelectedIndex);
                     startCaptureButton.Text = "Stop";
-                    Camera_frame.Start();
+                    _capture.Start();
                 }
                 videoFeed = !videoFeed;
             }
+
+            else
+            {
+                SetupCapture(Camera_Selection.SelectedIndex);
+                startCameraFeed_Click(null, null);
+            }
         }
 
+        private void SetupCapture(int Camera_Identifier)
+        {
+            //update the selected device
+            CameraDevice = Camera_Identifier;
+            
+            //Dispose of Capture if it was created before
+            if (_capture != null) _capture.Dispose();
+            try
+            {
+                //Set up capture device
+                _capture = new Capture(CameraDevice);
+                _capture.SetCaptureProperty(CapProp.Fps, 30);
+                _capture.ImageGrabbed += _capture_ImageGrabbed;
+            }
+            catch (NullReferenceException excpt)
+            {
+                MessageBox.Show(excpt.Message);
+            }
+        }
 
-
+        private void _capture_ImageGrabbed(object sender, EventArgs e)
+        {
+            Mat Frame = new Mat();
+            _capture.Retrieve(Frame);
+            DisplayImage(Frame);
+        }
 
         void captureImg_Click(object sender, EventArgs e)
         {
-
             //SnapPicture has various modes
             captured_imgbox.Image = _Template.SnapPicture(3);
         }

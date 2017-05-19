@@ -13,6 +13,10 @@ namespace VishnuMain
 {
     public partial class SettingsMenu : UserControl
     {
+        //To add a new varaible to the settings menu:  
+        //add appropriate control.  stick with the camelcaseing naming convention here
+        //   yourVariableName should suffice.
+        
         //strings to save
         string xmlPathString;
         string invPathString;
@@ -42,6 +46,8 @@ namespace VishnuMain
         }
 
         //UI changes section
+        //Step 2:  click on appropraite control to add event handler.  
+        //UI variables (stuff only in UI) are named yourVariableNameValue.
         private void trayLengthValue_ValueChanged(object sender, EventArgs e)
         {
             trayLength = (int)trayLengthValue.Value;
@@ -154,6 +160,8 @@ namespace VishnuMain
             var groupEl = from setting in settingsmenu.Nodes()
                     select setting;
 
+            //step 3: add your new varaible to the XML load.  remember to put in default value with the ?? operator
+            //
             foreach(XElement setting in groupEl)
             {
                 //format:
@@ -171,6 +179,8 @@ namespace VishnuMain
                 socketDimZ = (int?)setting.Element("SocketDimZ") ?? 100;
                 invPathString = (string)setting.Element("inventoryPath") ?? string.Empty;
             }
+            //step 4: update the UI.  it is yourVariableNameValue.value = yourVariableName
+            //you may need to cast it to decimal.  
 
             //update UI
             trayLengthValue.Value = trayLength;
@@ -194,7 +204,9 @@ namespace VishnuMain
 
         
 
-
+        //step 5: save to xml update. Add the key , in our case the var name we want to add as a string, followed by 
+        //the UI varaible *(the stuff saved in numeric boxes and buttons) as the contnet we are saving from user.
+        //next step go to settingslibrary.cs to add the encapsulated fields.
         public void savetoXML()
         {
             XDocument settings = new XDocument(

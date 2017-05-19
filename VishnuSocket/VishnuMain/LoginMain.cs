@@ -71,11 +71,6 @@ namespace VishnuMain
             centralTab.TabPages.Add(page);
         }
 
-        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
 
 
     }
