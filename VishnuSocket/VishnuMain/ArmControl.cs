@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO.Ports;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
+using DirectShowLib;
 
 namespace VishnuMain
 {
@@ -24,7 +25,9 @@ namespace VishnuMain
         int TrayChoiceValue;
         public Capture _capture;
         public bool _captureInProgress;
-       
+        int CameraDevice = 0; //Variable to track camera device selected
+        CameraStructures[] WebCams; //List containing all the camera available
+
         public ArmControl()
         {
             InitializeComponent();
@@ -35,6 +38,20 @@ namespace VishnuMain
             DownRightButton.Text = char.ConvertFromUtf32(0x2198);
             UpLeftButton.Text = char.ConvertFromUtf32(0x2196);
             UpRightButton.Text = char.ConvertFromUtf32(0x2197);
+
+            //find availible webcams
+            DsDevice[] _SystemCameras = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice);
+            WebCams = new CameraStructures[_SystemCameras.Length];
+            for (int i = 0; i < _SystemCameras.Length; i++)
+            {
+                WebCams[i] = new CameraStructures(i, _SystemCameras[i].Name, _SystemCameras[i].ClassID); //fill web cam array
+                Camera_Selection.Items.Add(WebCams[i].ToString());
+            }
+            if (Camera_Selection.Items.Count > 0)
+            {
+                Camera_Selection.SelectedIndex = 0; //Set the selected device the default
+                captureButton.Enabled = true; //Enable the start
+            }
         }
         //Camera feed related functions
 
@@ -74,6 +91,11 @@ namespace VishnuMain
                 }
                 else
                 {
+                    if (Camera_Selection.SelectedIndex != CameraDevice)
+                    {
+                        SetupCapture(Camera_Selection.SelectedIndex); //Setup capture with the new device
+                    }
+                    SetupCapture(Camera_Selection.SelectedIndex);
                     captureButton.Text = "Stop"; //Change text on button
                     _capture.Start(); //Start the capture
                     _captureInProgress = true; //Flag the state of the camera
@@ -82,8 +104,9 @@ namespace VishnuMain
             }
             else
             {
+               
                 //set up capture with selected device
-                SetupCapture();
+                SetupCapture(Camera_Selection.SelectedIndex);
                 //Be lazy and Recall this method to start camera
                 captureButton_Click(null, null);
             }
@@ -93,6 +116,7 @@ namespace VishnuMain
         public void StopCapture()
         {
             captureButton.Text = "Start Capture"; //Change text on button
+            _capture.Pause();
             _capture.Dispose();
             _captureInProgress = false;           //Flag the state of the camera
             _capture = null;
@@ -100,14 +124,16 @@ namespace VishnuMain
             ArmFeedBox.Refresh();
         }
         //create cpature class iof not already,
-        private void SetupCapture()
+        private void SetupCapture(int Camera_Identifier)
         {
+            //update the selected device
+            CameraDevice = Camera_Identifier;
             //Dispose of Capture if it was created before
             if (_capture != null) _capture.Dispose();
             try
             {
                 //Set up capture device
-                _capture = new Capture();
+                _capture = new Capture(CameraDevice);
                 _capture.SetCaptureProperty(CapProp.Fps, 30);
                 _capture.ImageGrabbed += _capture_ImageGrabbed;
             }

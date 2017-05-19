@@ -83,7 +83,6 @@ namespace VishnuMain
             }
             else
             {
-                
                 CameraFeedBox.Image = Image;
             }
         }
@@ -113,16 +112,6 @@ namespace VishnuMain
                         SetupCapture(Camera_Selection.SelectedIndex); //Setup capture with the new device
                     }
                     RetrieveCaptureInformation(); //Get Camera information
-       
-                    //force check other camera feed
-                    using (ArmControl obj = new ArmControl())
-                    {
-                        if(obj._captureInProgress)
-                        {
-                            //superseeds arm control, turn off arm control.  
-                            obj.StopCapture();  
-                        }
-                    }//dispose object
 
                     SetupCapture(Camera_Selection.SelectedIndex);
                     captureButton.Text = "Stop";    //Change text on button
