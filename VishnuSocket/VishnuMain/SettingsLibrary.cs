@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace VishnuMain
 {
+    //to add a new paramter/ field to the settings xml file:
+    //step 1: add variable here as a static type.  preface with an _ symbol
+    //so it appeears as _yourVariableName
+    //Step 2: encapsulate it, should now appear as YourVariableName
     public static class SettingsLibrary
     {
         //inter tray dimensions
@@ -25,7 +29,7 @@ namespace VishnuMain
 
         static string _invPathString;
 
-        //encapsulated stubs begin here
+        //encapsulated stubs begin here, from step 2 instructions.
         public static double TrayOrigin2CenterX { get { return _trayOrigin2CenterX; } set { _trayOrigin2CenterX = value; } }
         public static double TrayOrigin2CenterY { get { return _trayOrigin2CenterY; } set { _trayOrigin2CenterY = value; } }
         public static double TrayCenter2CenterRow { get { return _trayCenter2CenterRow; } set { _trayCenter2CenterRow = value; } }

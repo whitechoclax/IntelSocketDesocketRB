@@ -23,10 +23,9 @@ namespace VishnuMain
         private bool _captureInProgress = false;
         Mat frame = new Mat();
         Mat grayFrame = new Mat();
-        int CameraDevice = 0;                           //Variable to track camera device selected
-        CameraStructures[] WebCams;                     //List containing all the camera available
+        public int CameraDevice = 0; //Variable to track camera device selected
+        CameraStructures[] WebCams; //List containing all the camera available
 
-        
         #endregion
 
         public CameraFeed()
@@ -53,54 +52,73 @@ namespace VishnuMain
             backWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backWorker_RunWorkerCompleted);
 
         }
-        
 
-        public Capture StartCapture()
+        private void ProcessFrame(object sender, EventArgs arg)
         {
-            if (CameraFeedUnified.camera_feed == null)
-            {
-                _capture = CameraFeedUnified.EnableCameraFeed();
-            }
+            //***If you want to access the image data the use the following method call***/
+            Mat PFrame = new Mat();
             
-            _capture.ImageGrabbed += mainFeed_Refresher;
-            return CameraFeedUnified.camera_feed;
+            _capture.Retrieve(PFrame);
+            CameraFeedBox.Image = PFrame;
+            
+
         }
 
-        private void mainFeed_Refresher(object sender, EventArgs arg)
-        {
-            Mat frame = new Mat();
-            _capture.Retrieve(frame);
-            mainFeedBox.Image = frame;
+        private delegate void DisplayImageDelegate(Mat Image);
 
+        private void DisplayImage(Mat Image)
+        {
+            if (CameraFeedBox.InvokeRequired)
+            {
+                try
+                {
+                    DisplayImageDelegate DI = new DisplayImageDelegate(DisplayImage);
+                    this.BeginInvoke(DI, new object[] { Image });
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Thread Unssafe operation");
+                }
+
+            }
+            else
+            {
+                CameraFeedBox.Image = Image;
+            }
         }
 
         private void captureButton_Click(object sender, EventArgs e)
         {
             if (_capture != null)
             {
+                //see if the current camera feed is running.  
                 if (_captureInProgress)
                 {
                     //stop the capture
-                    captureButton.Text = "Start Capture"; //Change text on button
-                   
-                    _capture.Pause(); //Pause the capture
+                    captureButton.Text = "Start Capture";   //Change text on button
+                    _capture.Pause();                     //Pause the capture
+                    _capture.Dispose();
+                    _captureInProgress = false;             //Flag the state of the camera
+                    _capture = null;                        //assign null, rebuild camera later.
+                    CameraFeedBox.Image = null;
+                    CameraFeedBox.Refresh();
                 }
+
                 else
                 {
                     //Check to see if the selected device has changed
                     if (Camera_Selection.SelectedIndex != CameraDevice)
                     {
-                        SetupCapture(Camera_Selection.SelectedIndex);               //Setup capture with the new device
+                        SetupCapture(Camera_Selection.SelectedIndex); //Setup capture with the new device
                     }
+                    RetrieveCaptureInformation(); //Get Camera information
 
-                    RetrieveCaptureInformation();                                   //Get Camera information
-                    captureButton.Text = "Stop";                                    //Change text on button
-
-                    _capture = StartCapture();
-                    _capture.Start();                                //Start the capture
-                                                          //Flag the state of the camera
+                    SetupCapture(Camera_Selection.SelectedIndex);
+                    captureButton.Text = "Stop";    //Change text on button
+                    _capture.Start();               //Start the capture
+                    _captureInProgress = true;      //Flag the state of the camera
                 }
-                _captureInProgress = !_captureInProgress;
+
             }
             else
             {
@@ -122,7 +140,7 @@ namespace VishnuMain
             {
                 //Set up capture device
                 _capture = new Capture(CameraDevice);
-               // _capture.ImageGrabbed += ProcessFrame;
+                _capture.ImageGrabbed += ProcessFrame;
             }
             catch (NullReferenceException excpt)
             {
@@ -172,7 +190,7 @@ namespace VishnuMain
 
         protected void OnFormClosing(CancelEventArgs e)
         {
-            if (Capture != null)
+            if (Capture != false)
             {
                 _capture.Dispose();
             }
@@ -192,11 +210,9 @@ namespace VishnuMain
 
                 else
                 {
-                    if (_capture != null)
-                        //IM A FOOOL TO DO YER DIRTY WORK
-                        ArmHandlerLibrary.ArmHandlerLibraryMainSequence(_capture);
-                    else
-                        e.Cancel = true; 
+                    //peform our time consuming op
+                    //IM A FOOOL TO DO YER DIRTY WORK
+                    ArmHandlerLibrary.ArmHandlerLibraryMainSequence(_capture);
                 }
             }
         }
@@ -256,5 +272,14 @@ namespace VishnuMain
             richTextBox1.AppendText(SettingsLibrary.TrayLength.ToString() + Environment.NewLine);
 
         }
+
+        /*private void CameraFeedBox_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics G = e.Graphics;
+            e.Graphics.DrawLine(new Pen(Color.Red), 160, 240, 480, 240);
+            e.Graphics.DrawLine(new Pen(Color.Red), 320, 120, 320, 360);
+            e.Graphics.DrawEllipse(new Pen(Color.Red, 2), new RectangleF(280.0F, 200.0F, 80.0F, 80.0F));
+            e.Dispose();
+        }*/
     }
 }

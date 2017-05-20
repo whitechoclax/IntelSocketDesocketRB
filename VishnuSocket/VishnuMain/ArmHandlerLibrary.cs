@@ -10,15 +10,19 @@ namespace VishnuMain
     static class ArmHandlerLibrary
     {
         public static bool Running = false;
-        public static double[] RestLocation = { 0.0, 150.0, 200.0, 0.0 };
-        public static double[] OriginLocation = { 220.0, 120.0, 200.0, 0.0 }; //CPU0 location
-        public static double[] SocketLocation = { 20.0, -250.0, 200.0, 0.0 }; //Socket center point
+        public static double[] RestLocation = { 0.0, 150.0, 200.0, 84 }; //Change to calibration image
+        // Calibrate image at: "COOR:176.00:339.00:60.00:84.0:27.50"
+        public static double[] OriginLocation = { 0.0, 183.0, 38.0, 84.0 }; //CPU0 location
+        //"COOR:0.00:183.00:38.00:0.0:0.00\r" , z = 52 for last one,
+        public static double[] SocketLocation = { 40.0, -250.0, 200.0, 0.0 }; //Socket center point 
         private static double centerToCenterL = 0.0; //Distance between left and right CPU
         private static double centerToCenterW = 0.0; //Distance between top and bottom CPU
         private static double centerToCenterZ = 0.0; //Distance between trays
         public static int CPUindex = 0; //Which CPU we're on
-    
-        public static void ArmHandlerLibraryMainSequence(Capture CameraFeed)
+
+        
+        
+        public static void ArmHandlerLibraryMainSequence(Capture camera_feed)
         {   //Start at Origin, find next CPU, Take picture
             //Pick Up requested CPU, Move to Calibration Image
             //Find Socket, put CPU in socket, wait until done
@@ -31,7 +35,20 @@ namespace VishnuMain
             bool done = false;
             int CPU;
 
-            ArduinoMotionLibrary.ArdPosition("REDEF", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[3]); //Say we're resting, eventually calibrate
+            //Test procedure:
+            //Calibrate on rest postion
+            //Redifine arduino position on test img coordinates
+            //Move to CPU
+            //Pick up CPU
+            //Calibrate again
+            //Move CPU to wherever (watch end effector)
+            //Go back and pick up next CPU (account for z change, 14mm / 10)
+
+
+
+
+
+            ArduinoMotionLibrary.ArdPosition("REDEF", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[3]); //Calibrate now
             ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1], OriginLocation[2], OriginLocation[3]); //Move to CPU 0 spot to start
 
             while (!done)
@@ -56,7 +73,10 @@ namespace VishnuMain
                 {
                     Loc[1] = OriginLocation[1];
                 }
-                Loc[2] = ((trayHandler.emptyTrayCount-1 + trayHandler.goodTrayCount + trayHandler.badTrayCount) * centerToCenterZ) + OriginLocation[2];
+                Loc[2] = ((trayHandler.emptyTrayCount - 1 + trayHandler.goodTrayCount + trayHandler.badTrayCount) * centerToCenterZ) + OriginLocation[2];
+                ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1]-60, OriginLocation[2], OriginLocation[3]);
+                CameraTestImg(camera_feed);
+                ArduinoMotionLibrary.ArdPosition("REDEF", 0, OriginLocation[0], OriginLocation[1] - 60, OriginLocation[2], OriginLocation[3]);
                 ArduinoMotionLibrary.ArdPosition("MOVE", 0, Loc[0], Loc[1], Loc[2], Loc[3]); //Move to CPU
                 //Verify we're above a CPU
                 while(!CameraTestCPU())  
@@ -67,7 +87,9 @@ namespace VishnuMain
                 ArduinoMotionLibrary.ArdPosition("GRAB", 0, 0, 0, 0, 0); //Grab CPU
                 //ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 20, 0); //Raise back up
                 //Move to Calibration image, verify it's there in the right spot
-                CameraTestImg(CameraFeed);
+                ArduinoMotionLibrary.ArdPosition("MOVE", 0, SocketLocation[0], SocketLocation[1]+60, SocketLocation[2], SocketLocation[3]); //Calibration spot
+                //CameraTestImg(); //Calibrate Socket
+                ArduinoMotionLibrary.ArdPosition("REDEF", 0, SocketLocation[0], SocketLocation[1] + 60, SocketLocation[2], SocketLocation[3]); //Calibration 
                 ArduinoMotionLibrary.ArdPosition("MOVE", 0, SocketLocation[0], SocketLocation[1], SocketLocation[2], SocketLocation[3]);
                 ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 0, 0); //Descend into socket
                 ArduinoMotionLibrary.ArdPosition("RELEASE", 0, 0, 0, 0, 0); //Release CPU
@@ -90,7 +112,7 @@ namespace VishnuMain
             return;
         }
 
-        public static bool CameraTestImg(Capture CameraFeed)
+        public static bool CameraTestImg(Capture camera_feed)
         {
             //value from templateDetection
             CvFunctions _cameraMethods = new CvFunctions();
@@ -117,18 +139,20 @@ namespace VishnuMain
                 {
                 
                     ArduinoMotionLibrary.ArdPosition("SHIFT", 0, Math.Round(xShift, 0), Math.Round(yShift, 0), 0, 0);
+                    template_xy[0] = 1000;
+                    template_xy[1] = 1000;
                 }
-
-				_cameraMethods.TemplateDetection(fileloc, _cameraMethods.SnapPicture(3), template_xy);
+               
+                imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3, camera_feed ), template_xy);
+                    
                 xShift = -1 * template_xy[0] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
                     + template_xy[1] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
                 yShift = template_xy[0] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
                     - template_xy[1] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
                 xShift = xShift * (150 / ArduinoMotionLibrary.ArmCoordinates[2]);
                 yShift = yShift * (150 / ArduinoMotionLibrary.ArmCoordinates[2]);
+                //Shift by the template_xy 
 
-                imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3), template_xy);
-               
             }
             return true;
         }

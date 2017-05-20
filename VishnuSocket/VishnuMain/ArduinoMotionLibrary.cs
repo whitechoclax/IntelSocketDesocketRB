@@ -38,8 +38,8 @@ namespace VishnuMain
             {
                 OpenPorts();
             }
-            
 
+            ArdPosition("RELAY", 0, 0, 0, 0, 0);
         }
 
         private static int findAvailiblePorts()
@@ -179,7 +179,7 @@ namespace VishnuMain
         {//Inputs a command and values, and a desired arduino (0 or 1)
             if (Arduinos[portID] == 2)
             {
-                return -1;
+                return -1; //Not connected
             }
 
             string inputLine = null;
@@ -200,23 +200,18 @@ namespace VishnuMain
             Task.Delay(30); //Waiting for navigation message
             string data = ArdPorts[portID].ReadLine();
 
-            if (data != "NAVIGATING\r")
-            {
-
-            }
-
             bool done = false;
             while (!done)
             {
                 Task.Delay(50);
-                if (ArdPorts[portID].BytesToRead > 0)
+                if (ArdPorts[portID].BytesToRead > 0 && !(data.StartsWith("COOR")))
                 {
                     data = ArdPorts[portID].ReadLine();
                 }
-                if (data == "DONE\r")
+                if (data == "DONE\r" || data.StartsWith("COOR"))
                 {
                     Task.Delay(50);
-                    if (ArdPorts[portID].BytesToRead > 0)
+                    if (ArdPorts[portID].BytesToRead > 0 && data == "DONE\r")
                     {
                         data = ArdPorts[portID].ReadLine();
                     }
@@ -241,6 +236,33 @@ namespace VishnuMain
                     else
                         return -1;
                     done = true;
+                }
+                else if (data.StartsWith("ERROR"))
+                {
+                    string[] pieces = data.Split(':');
+                    if (portID == 0)
+                    {
+                        if(pieces[1] == "CRASH\r") //Radius will crash
+                        {
+
+                        }
+                        if (pieces[1] == "EOB\r") //Exceeds operation boundary
+                        {
+
+                        }
+                    }
+                    else if (portID == 1)
+                    {
+                        if (pieces[1] == "CRASH\r") //Radius will crash
+                        {
+
+                        }
+                        if (pieces[1] == "EOB\r") //Exceeds operation boundary
+                        {
+
+                        }
+                    }
+                    return -2;//Command didn't work
                 }
             }
 

@@ -11,6 +11,9 @@ using System.IO.Ports;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.Util;
+using Emgu.CV;
+using Emgu.CV.CvEnum;
+using DirectShowLib;
 using Emgu.CV.Structure;
 
 namespace VishnuMain
@@ -24,40 +27,142 @@ namespace VishnuMain
         int XcoordinateValue;
         int YcoordinateValue;
         int TrayChoiceValue;
-
-        //camerafeed properties
-        private bool _captureInProgress;
-        private Capture _armFeed = null;
+        public Capture _capture;
+        public bool _captureInProgress;
+        int CameraDevice = 0; //Variable to track camera device selected
+        CameraStructures[] WebCams; //List containing all the camera available
 
         public ArmControl()
         {
             InitializeComponent();
             BootMessages();
             findPorts.Enabled = true;
-            cameraBox.Paint += new System.Windows.Forms.PaintEventHandler(this.cameraBox_Paint_1);
+            //set unicode vlaues for the buttons
+            DownLeftButton.Text = char.ConvertFromUtf32(0x2199);
+            DownRightButton.Text = char.ConvertFromUtf32(0x2198);
+            UpLeftButton.Text = char.ConvertFromUtf32(0x2196);
+            UpRightButton.Text = char.ConvertFromUtf32(0x2197);
+
+            //find availible webcams
+            DsDevice[] _SystemCameras = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice);
+            WebCams = new CameraStructures[_SystemCameras.Length];
+            for (int i = 0; i < _SystemCameras.Length; i++)
+            {
+                WebCams[i] = new CameraStructures(i, _SystemCameras[i].Name, _SystemCameras[i].ClassID); //fill web cam array
+                Camera_Selection.Items.Add(WebCams[i].ToString());
+            }
+            if (Camera_Selection.Items.Count > 0)
+            {
+                Camera_Selection.SelectedIndex = 0; //Set the selected device the default
+                captureButton.Enabled = true; //Enable the start
+            }
+        }
+        //Camera feed related functions
+
+        private delegate void DisplayImageDelegate(Mat Image);
+
+        private void DisplayImage(Mat Image)
+        {
+            
+                if (ArmFeedBox.InvokeRequired)
+                {
+                    try
+                    {
+                        DisplayImageDelegate DI = new DisplayImageDelegate(DisplayImage);
+                        this.BeginInvoke(DI, new object[] { Image });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Thread Unsafe operation" + ex.ToString());
+                    }
+
+                }
+                else
+                {
+                    ArmFeedBox.Image = Image;
+                    
+                }
+        }
+
+        private void captureButton_Click(object sender, EventArgs e)
+        {
+            if (_capture != null)
+            {
+                if (_captureInProgress)
+                {
+                    //stop the capture
+                    StopCapture();
+                }
+                else
+                {
+                    if (Camera_Selection.SelectedIndex != CameraDevice)
+                    {
+                        SetupCapture(Camera_Selection.SelectedIndex); //Setup capture with the new device
+                    }
+                    SetupCapture(Camera_Selection.SelectedIndex);
+                    captureButton.Text = "Stop"; //Change text on button
+                    _capture.Start(); //Start the capture
+                    _captureInProgress = true; //Flag the state of the camera
+                }
+
+            }
+            else
+            {
+               
+                //set up capture with selected device
+                SetupCapture(Camera_Selection.SelectedIndex);
+                //Be lazy and Recall this method to start camera
+                captureButton_Click(null, null);
+            }
+        }
+
+        //camera stop so we wont have more than one feed running at a time.
+        public void StopCapture()
+        {
+            captureButton.Text = "Start Capture"; //Change text on button
+            _capture.Pause();
+            _capture.Dispose();
+            _captureInProgress = false;           //Flag the state of the camera
+            _capture = null;
+            ArmFeedBox.Image = null;              //reset picture in imagebox
+            ArmFeedBox.Refresh();
+        }
+        //create cpature class iof not already,
+        private void SetupCapture(int Camera_Identifier)
+        {
+            //update the selected device
+            CameraDevice = Camera_Identifier;
+            //Dispose of Capture if it was created before
+            if (_capture != null) _capture.Dispose();
+            try
+            {
+                //Set up capture device
+                _capture = new Capture(CameraDevice);
+                _capture.SetCaptureProperty(CapProp.Fps, 30);
+                _capture.ImageGrabbed += _capture_ImageGrabbed;
+            }
+            catch (NullReferenceException excpt)
+            {
+                MessageBox.Show(excpt.Message);
+            }
+
+        }
+
+        //image process update imagebox
+        private void _capture_ImageGrabbed(object sender, EventArgs e)
+        {
+            Mat Frame = new Mat();
+            
+            //Mat Frame = new Mat();
+            _capture.Retrieve(Frame);
+            //ArmFeedBox.Image = Frame;
+            DisplayImage(Frame);
+            
             
         }
 
-        public Capture StartCapture()
-        {
-            //if there is no camera feed collecting, start it up.  
-            if (CameraFeedUnified.camera_feed == null)
-            {
-                _armFeed = CameraFeedUnified.EnableCameraFeed(); 
-            }
-            //create event
-            _armFeed.ImageGrabbed += armFeed_Refresher;
-            return CameraFeedUnified.camera_feed;
-        }
 
-        private void armFeed_Refresher(object sender, EventArgs arg)
-        {
-           
-            Mat frame = new Mat();
-            _armFeed.Retrieve(frame);
-            cameraBox.Image = frame;
-        }
-
+        //arduino messages/connections
         private void BootMessages()
         {
             if(ArduinoMotionLibrary.Arduinos[0] != 2)
@@ -117,24 +222,69 @@ namespace VishnuMain
         //Run motor functions
         private void stopButton_Click(object sender, EventArgs e)
         {
-
-            ArduinoMotionLibrary.StopMotor();
+            var BWS = new BackgroundWorker();
+            BWS.DoWork += delegate
+            {
+                ArduinoMotionLibrary.StopMotor();
+            };
+            BWS.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("EMERGENCY STOP ASYNC");
+            };
+            BWS.RunWorkerAsync();
 
         }
+        //ASYNC TASKS
+        
 
         private void redefineButton_Click(object sender, EventArgs e)
         {
-            ArduinoMotionLibrary.ArdPosition("REDEF", portID, XcoordinateValue, YcoordinateValue, ZcoordinateValue, RotationVal);
+            var BWR = new BackgroundWorker();
+            BWR.DoWork += delegate
+            {
+                ArduinoMotionLibrary.ArdPosition("REDEF", portID, XcoordinateValue, YcoordinateValue, ZcoordinateValue, RotationVal);
+            };
+            BWR.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("REDEF" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + ZcoordinateValue.ToString() + RotationVal.ToString() + Environment.NewLine);
+            };
+            BWR.RunWorkerAsync();
+
         }
 
         private void moveButton_Click(object sender, EventArgs e)
         {
-            ArduinoMotionLibrary.ArdPosition("MOVE", portID, XcoordinateValue, YcoordinateValue, ZcoordinateValue, RotationVal);
+            var BWM = new BackgroundWorker();
+            BWM.DoWork += delegate
+            {
+                ArduinoMotionLibrary.ArdPosition("MOVE", portID, XcoordinateValue, YcoordinateValue, ZcoordinateValue, RotationVal);
+            };
+            BWM.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("MOVE" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + ZcoordinateValue.ToString() + RotationVal.ToString() + Environment.NewLine);
+            };
+            BWM.RunWorkerAsync();
+
         }
 
         private void ShiftButton_Click(object sender, EventArgs e)
         {
-            ArduinoMotionLibrary.ArdPosition("SHIFT", portID, XcoordinateValue, YcoordinateValue, ZcoordinateValue, RotationVal);
+            var BWR = new BackgroundWorker();
+            BWR.DoWork += delegate
+            {
+                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, XcoordinateValue, YcoordinateValue, ZcoordinateValue, RotationVal);
+            };
+            BWR.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("SHIFT" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + ZcoordinateValue.ToString() + RotationVal.ToString() + Environment.NewLine);
+                portListBox.AppendText("Coordinates: X: " + ArduinoMotionLibrary.ArmCoordinates[0]
+                    + " Y: "  + ArduinoMotionLibrary.ArmCoordinates[1] + " "
+                    + " Z: " + ArduinoMotionLibrary.ArmCoordinates[2] + " "
+                    + " theta: " + ArduinoMotionLibrary.ArmCoordinates[3] + " " + Environment.NewLine);
+
+            };
+
+            BWR.RunWorkerAsync();
         }
 
         private void traySelectorBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -148,40 +298,120 @@ namespace VishnuMain
             BootMessages();
         }
 
-        private void captureButton_Click(object sender, EventArgs e)
+        private void grabButton_Click(object sender, EventArgs e)
         {
-            if (_armFeed != null)
+            var BWG = new BackgroundWorker();
+            BWG.DoWork += delegate
             {
-                if (_captureInProgress)
-                {
-                    captureButton.Text = "Start Capture";
-                    _armFeed.Pause();
-                    _captureInProgress = false;
-                }
-                else
-                {
-                    captureButton.Text = "Stop";
-                    _armFeed.Start();
-                    _captureInProgress = true;
-                }
-
-            }
-
-            else
+                ArduinoMotionLibrary.ArdPosition("GRAB", portID, 0,0,0,0);
+            };
+            BWG.RunWorkerCompleted += delegate
             {
-                _armFeed = StartCapture();
-                _armFeed.Start();
-            }
+                portListBox.AppendText("GRABBED" + Environment.NewLine);
+            };
+            BWG.RunWorkerAsync();
         }
 
-
-        private void cameraBox_Paint_1(object sender, PaintEventArgs e)
+        private void releaseButton_Click(object sender, EventArgs e)
         {
-            Graphics G = e.Graphics;
-            e.Graphics.DrawLine(new Pen(Color.Red,2), 160, 240, 480, 240);
-            e.Graphics.DrawLine(new Pen(Color.Red,2), 320, 120, 320, 360);
-            e.Graphics.DrawEllipse(new Pen(Color.Red, 1), new RectangleF(280.0F, 200.0F, 80.0F, 80.0F));
-            e.Dispose();
+            var BWRE = new BackgroundWorker();
+            BWRE.DoWork += delegate
+            {
+                ArduinoMotionLibrary.ArdPosition("RELEASE", portID, 0,0,0,0);
+            };
+            BWRE.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("RELEASED" + Environment.NewLine);
+            };
+            BWRE.RunWorkerAsync();
         }
+
+       
+        //raise and lower
+        private void raiseZButton_Click(object sender, EventArgs e)
+        {
+            var BWR = new BackgroundWorker();
+            BWR.DoWork += delegate
+            {
+                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, 0 , 0, ZcoordinateValue, 0);
+            };
+            BWR.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("SHIFTZ from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+            };
+            BWR.RunWorkerAsync();
+        }
+
+        private void lowerZButton_Click(object sender, EventArgs e)
+        {
+            var BWR = new BackgroundWorker();
+            BWR.DoWork += delegate
+            {
+                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, 0, 0, ZcoordinateValue, 0);
+            };
+            BWR.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("SHIFTZ from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+            };
+            BWR.RunWorkerAsync();
+        }
+
+        //directional arrow button pad
+        private void upButton_Click(object sender, EventArgs e)
+        {
+            var BWR = new BackgroundWorker();
+            BWR.DoWork += delegate
+            {
+                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, XcoordinateValue, YcoordinateValue, 0, 0);
+            };
+            BWR.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("SHIFTY from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+            };
+            BWR.RunWorkerAsync();
+        }
+
+        private void downButton_Click(object sender, EventArgs e)
+        {
+            var BWR = new BackgroundWorker();
+            BWR.DoWork += delegate
+            {
+                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, XcoordinateValue, YcoordinateValue, 0, 0);
+            };
+            BWR.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("SHIFTY from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+            };
+            BWR.RunWorkerAsync();
+        }
+
+        private void leftButton_Click(object sender, EventArgs e)
+        {
+            var BWR = new BackgroundWorker();
+            BWR.DoWork += delegate
+            {
+                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, XcoordinateValue, YcoordinateValue, 0, 0);
+            };
+            BWR.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("SHIFTX from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+            };
+            BWR.RunWorkerAsync();
+        }
+
+        private void rightButton_Click(object sender, EventArgs e)
+        {
+            var BWR = new BackgroundWorker();
+            BWR.DoWork += delegate
+            {
+                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, XcoordinateValue, YcoordinateValue, 0, 0);
+            };
+            BWR.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("SHIFTX from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+            };
+            BWR.RunWorkerAsync();
+        }
+
     }
 }

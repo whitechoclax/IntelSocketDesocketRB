@@ -144,7 +144,7 @@ void CommandProcess(){//Parse command
 
     if(xposNew >= 0 && yposNew >= -600 && zposNew >= 0 && angleNew >=0 && xposNew < 600 && yposNew < 600 && zposNew < 600 && angleNew < 360){
        MapCoordinates(false);
-       if(radiusNew < 149){
+       if(radiusNew < 159 || radiusNew > 490){
         Serial.println("ERROR:CRASH");
         return;
        }
@@ -207,6 +207,16 @@ void RelayCoordinates(){ //Send back coordinates
   float xTmp = round(xpos); //round the real values if error
   float yTmp = round(ypos); //is an issue later
   float zTmp = round(zpos);
+  EEPROM.updateDouble(THETAMEM, theta);
+  EEPROM.updateDouble(RADMEM, radius);
+  EEPROM.updateDouble(ZMEM, zpos);
+  EEPROM.updateDouble(ENDMEM, angle);
+  if(DEBUG){
+    Serial.println(EEPROM.readDouble(THETAMEM));
+    Serial.println(EEPROM.readDouble(RADMEM));
+    Serial.println(EEPROM.readDouble(ZMEM));
+    Serial.println(EEPROM.readDouble(ENDMEM));
+  }
   Serial.print("COOR:");
   Serial.print(xTmp);Serial.print(':');
   Serial.print(yTmp);Serial.print(':');
@@ -220,7 +230,6 @@ void Navigate(){ //Moves to new positions
   
   boolean radDirection;
   boolean thetaDirection;
-  boolean angleDirection;
   
   if(radiusNew != radius){ //These determine direction
     if(radiusNew > radius){
@@ -260,25 +269,13 @@ void Navigate(){ //Moves to new positions
       deltaZ = zposNew - zpos;
     else
       deltaZ = zpos - zposNew;
-  }
-  if(angleNew != angle){
-    if(angleNew > angle){
-      digitalWrite(Dir[ANGLEMOTOR], HIGH);
-      deltaAngle = angleNew - angle;
-    }
-    else{
-      digitalWrite(Dir[ANGLEMOTOR], LOW);
-      deltaAngle = angle - angleNew;
-    }
-  }  
+  } 
   
   if(DEBUG){
     Serial.println("\nDeltas are:");
     Serial.print("Theta: ");Serial.println(deltaTheta,2);
     Serial.print("Radius: ");Serial.println(deltaRadius,2);
-    Serial.print("Z: ");Serial.println(deltaZ,2);
-    Serial.print("Angle: ");Serial.println(deltaAngle,2);
-  
+    Serial.print("Z: ");Serial.println(deltaZ,2);  
   }
   
   //Do z chunk first if going up
@@ -365,30 +362,13 @@ void Navigate(){ //Moves to new positions
       digitalWrite(Enable[RADMOTOR], HIGH);
     }
   }
-  while(!doneAngle){ //Angle Section, might need to be a servo
-    serialEvent();
-    if(deltaAngle > 0){
-      digitalWrite(Enable[ANGLEMOTOR], LOW);
-      digitalWrite(Step[ANGLEMOTOR], LOW);
-      delay(3);
-      digitalWrite(Step[ANGLEMOTOR], HIGH);
-      delay(5);
-      deltaAngle -= 1.8;
-      if(angleDirection == LEFT){
-        angle -=1.8;
-      }
-      else
-        angle += 1.8;
-      if(DEBUG){
-        Serial.print("Angle position: ");Serial.println(angle);
-      }
-    }
-    if(deltaAngle <= 0){
-      doneAngle = true;
-      digitalWrite(Enable[ANGLEMOTOR], HIGH);
-    }
+  
+  effector.write(angleNew); //Angle Section
+  angle = angleNew;
+  if(DEBUG){
+    Serial.print("Angle position: ");Serial.println(angle);
   }
-
+  
   if(zpos > zposNew){ //Z going down, do last
     digitalWrite(Dir[ZMOTOR], LOW);
     if(DEBUG){
@@ -419,7 +399,6 @@ void EmergencyStop(){ //Resets movement information
   deltaZ = 0;
   deltaTheta = 0;
   deltaRadius = 0;
-  deltaAngle = 0;
   return;
 }
 

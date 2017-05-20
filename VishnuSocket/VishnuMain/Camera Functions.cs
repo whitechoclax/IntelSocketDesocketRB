@@ -11,35 +11,47 @@ using DataMatrix.net;
 
 namespace VishnuMain
 {
-    public class CvFunctions {
+    public class CvFunctions
+    {
 
-        private Capture camera_feed = null;
+        Mat color_frame = new Mat();
+        Mat gray_frame = new Mat();
+        Mat binary_frame = new Mat();
+        Mat[] rgb_frame;
+
         /*CAMERA CAPTURE CLASS*/
-        //public static Capture camera_feed = null;
+        private Capture camera_feed;
+
+        /*CONSTURCTOR: INTIALIZE CAMERA CAPTURE*/
         public CvFunctions()
         {
-            
+
+            /*CAMERA SETTINGS*/
+
+            //camera_feed = new Capture(); 
+            //camera_feed.SetCaptureProperty(CapProp.FrameHeight, 1080);
+            //camera_feed.SetCaptureProperty(CapProp.FrameWidth, 1920);
         }
-        
+
+        ~CvFunctions()
+        {
+            //camera_feed.Dispose();
+        }
 
         /*METHODS BELOW*/
 
         ///<summary>
         /// Returns image, various modes: 1.grayscale 2.redbinary 3.binary
         ///</summary>
-        public Mat SnapPicture(int mode) { 
-
-            Mat color_frame = new Mat();
-            Mat gray_frame = new Mat();
-            Mat binary_frame = new Mat();
-            Mat[] rgb_frame;
-
+        public Mat SnapPicture(int mode, Capture camera_feed)
+        {
             camera_feed.Retrieve(color_frame);
-            CvInvoke.CvtColor(color_frame, gray_frame, ColorConversion.Bgr2Gray);
-            
-            switch (mode) {
+
+            switch (mode)
+            {
 
                 case 1: //case for just grayscale img
+                    CvInvoke.CvtColor(color_frame, gray_frame, ColorConversion.Bgr2Gray);
                     return gray_frame;
 
                 case 2://case for barcode scanning
@@ -48,18 +60,21 @@ namespace VishnuMain
                     return binary_frame;
 
                 case 3: //case for calibration x.y
+                    CvInvoke.CvtColor(color_frame, gray_frame, ColorConversion.Bgr2Gray);
                     CvInvoke.Threshold(gray_frame, binary_frame, 100, 255, ThresholdType.Binary);
                     return binary_frame;
 
                 default:
                     return color_frame;
+            
             }
         }
 
         ///<summary>
         ///Return coordinate offset for correcton
         ///</summary>
-        public Mat TemplateDetection(string[] templatelist, Mat sourceImg, double[] xy_Coord ) { //takes in list of template images, source img
+        public Mat TemplateDetection(string[] templatelist, Mat sourceImg, double[] xy_Coord)
+        { //takes in list of template images, source img
 
             Mat ResultMat = new Mat(); //mat data holds template matches coordinates
             Mat result_img = sourceImg.Clone(); //image with rectangles
@@ -71,9 +86,11 @@ namespace VishnuMain
             Point minLocations = new Point { X = 0, Y = 0 };
             Point maxLocations = new Point { X = 0, Y = 0 };
 
-            for (int i = 0; i < template_length; ++i) { //loop used to go through all template images
+            for (int i = 0; i < template_length; ++i)
+            { //loop used to go through all template images
 
-                while (true) { //loop to mark all matches
+                while (true)
+                { //loop to mark all matches
 
                     Mat templateImg = CvInvoke.Imread(templatelist[i], LoadImageType.Grayscale); //creates image from list
                     CvInvoke.MatchTemplate(sourceImg, templateImg, ResultMat, TemplateMatchingType.CcoeffNormed); //does template matching
@@ -82,7 +99,8 @@ namespace VishnuMain
                     CvInvoke.MinMaxLoc(ResultMat, ref minValues, ref maxValues, ref minLocations, ref maxLocations);
 
                     //accpetance check
-                    if (maxValues > 0.8) {
+                    if (maxValues > 0.8)
+                    {
 
                         //creates rectangle 
                         Rectangle match = new Rectangle(maxLocations, templateImg.Size);
@@ -103,7 +121,17 @@ namespace VishnuMain
                         xy_Coord[0] = offset_x;
                         xy_Coord[1] = offset_y;
 
-                        MessageBox.Show("Left/Right:" + offset_x + "\n" + "Up/Down:" + offset_y, "Coordinates");
+                        double xShift, yShift = 0.0;
+                        double[] template_xy = { offset_x, offset_y };
+
+                        //MessageBox.Show("Left/Right:" + offset_x + "\n" + "Up/Down:" + offset_y, "Coordinates");
+                        xShift = -1 * template_xy[0] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
+                        + template_xy[1] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
+                        yShift = template_xy[0] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
+                            - template_xy[1] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
+                        xShift = xShift * (50 / ArduinoMotionLibrary.ArmCoordinates[2]);
+                        yShift = -1 * yShift * (50 / ArduinoMotionLibrary.ArmCoordinates[2]);
+                        MessageBox.Show("X Relative:" + xShift + "\n" + "Y Relative:" + yShift, "Coordinates");
 
                         //draws rectangle match onto source img
                         CvInvoke.Rectangle(sourceImg, match, new Bgr(Color.Black).MCvScalar, 20);
@@ -135,7 +163,8 @@ namespace VishnuMain
         ///<summary>
         ///Scans 2D-DataMatrix Barcode and returns value
         ///</summary>
-        public string BarcodeScanner(Mat barcode_img) {
+        public string BarcodeScanner(Mat barcode_img)
+        {
 
             //creates decorder object
             DmtxImageDecoder decoder = new DmtxImageDecoder();
@@ -146,16 +175,15 @@ namespace VishnuMain
             //return barcode string
             if (codes.Count > 0)
                 return codes[0];
-            else {
+            else
+            {
                 return "Nothing found";
             }
-            //a
+            
         }
 
-        ///<summary>
-        ///Saves image to specified file path given from settings
-        ///</summary>
-        public void SaveImg(Mat Img, string filename) {
+        public void SaveImg(Mat Img, string filename)
+        {
             Img.Save(filename);
         }
 
