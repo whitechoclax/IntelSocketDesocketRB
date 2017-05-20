@@ -120,21 +120,12 @@ namespace VishnuMain
             string[] fileloc = { "../../../../Common/TempImg/CIRCLE_TEMP.jpg" };
             double xShift = 1000;
             double yShift = 1000;
+            CvFunctions imgFx = new CvFunctions();
 
             
             while (Math.Abs(template_xy[0]) > 3 && Math.Abs(template_xy[1]) > 3)
             {
-                //CvFunctions.TemplateDetection(fileloc, CvFunctions.SnapPicture(3), template_xy);
-
-                CvFunctions imgFx = new CvFunctions();
-                imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3, camera_feed), template_xy);
-                xShift = -1*template_xy[0] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
-                    + template_xy[1] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
-                yShift = template_xy[0] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
-                    - template_xy[1] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
-                xShift = xShift * (180 / ArduinoMotionLibrary.ArmCoordinates[2]);
-                yShift = yShift * (180 / ArduinoMotionLibrary.ArmCoordinates[2]);
-
+                
                 if (xShift < 100 && yShift < 100)
                 {
                 
@@ -149,8 +140,8 @@ namespace VishnuMain
                     + template_xy[1] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
                 yShift = template_xy[0] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
                     - template_xy[1] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
-                xShift = xShift * (150 / ArduinoMotionLibrary.ArmCoordinates[2]);
-                yShift = yShift * (150 / ArduinoMotionLibrary.ArmCoordinates[2]);
+                xShift = xShift * ( ArduinoMotionLibrary.ArmCoordinates[2]/165);
+                yShift = yShift * ( ArduinoMotionLibrary.ArmCoordinates[2]/165);
                 //Shift by the template_xy 
 
             }
