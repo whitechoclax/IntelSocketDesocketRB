@@ -48,11 +48,29 @@ namespace VishnuMain
 
 
 
-            ArduinoMotionLibrary.ArdPosition("REDEF", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[3]); //Calibrate now
-            ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1], OriginLocation[2], OriginLocation[3]); //Move to CPU 0 spot to start
+            //ArduinoMotionLibrary.ArdPosition("REDEF", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[3]); //Calibrate now
+            //ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1], OriginLocation[2], OriginLocation[3]); //Move to CPU 0 spot to start
 
             while (!done)
             { //Main Loop
+                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, -20, 0); // Z down
+                Task.Delay(500);
+                ArduinoMotionLibrary.ArdPosition("GRAB", 0, 0, 0, 0, 0); //Grab CPU
+                Task.Delay(500);
+                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 20, 0); //Z up
+                Task.Delay(500);
+                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, centerToCenterW, 0, 0); //move to cpu1 y axis
+                Task.Delay(500);
+                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, -20, 0); //Z down
+                Task.Delay(500);
+                ArduinoMotionLibrary.ArdPosition("RELEASE", 0, 0, 0, 0, 0); //drop CPU
+                Task.Delay(500);
+                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 20, 0); //Z up
+                Task.Delay(500);
+                Running = false;
+                done = true;
+            }
+                /*
                 CPU = trayHandler.GetCPUPosition();
                 if (CPU == -1)
                 {
@@ -100,15 +118,15 @@ namespace VishnuMain
                 //Runing Template detection code
 
                 ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1], OriginLocation[2], OriginLocation[3]); //Demo done, return to origin
-            }
+            }*/
             return;
         }
 
         private static void FetchInformation()
         {//Get information from settings later
-            centerToCenterL = SettingsLibrary.TrayCenter2CenterCol;
-            centerToCenterZ = SettingsLibrary.TrayHeight;
-            centerToCenterW = SettingsLibrary.TrayCenter2CenterRow;
+            centerToCenterL = Math.Round(SettingsLibrary.TrayCenter2CenterCol,0);
+            centerToCenterZ = Math.Round(SettingsLibrary.TrayHeight,0);
+            centerToCenterW = Math.Round(SettingsLibrary.TrayCenter2CenterRow, 0);  // rounding added
             return;
         }
 
