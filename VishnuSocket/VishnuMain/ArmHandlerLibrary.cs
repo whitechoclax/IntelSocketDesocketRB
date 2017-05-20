@@ -127,7 +127,7 @@ namespace VishnuMain
                 //CvFunctions.TemplateDetection(fileloc, CvFunctions.SnapPicture(3), template_xy);
 
                 CvFunctions imgFx = new CvFunctions();
-                imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3), template_xy);
+                imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3, camera_feed), template_xy);
                 xShift = -1*template_xy[0] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
                     + template_xy[1] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
                 yShift = template_xy[0] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
