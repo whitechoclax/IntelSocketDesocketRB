@@ -23,7 +23,7 @@ namespace VishnuMain
         private bool _captureInProgress = false;
         Mat frame = new Mat();
         Mat grayFrame = new Mat();
-        int CameraDevice = 0; //Variable to track camera device selected
+        public int CameraDevice = 0; //Variable to track camera device selected
         CameraStructures[] WebCams; //List containing all the camera available
 
         #endregion
@@ -212,7 +212,7 @@ namespace VishnuMain
                 {
                     //peform our time consuming op
                     //IM A FOOOL TO DO YER DIRTY WORK
-                    ArmHandlerLibrary.ArmHandlerLibraryMainSequence();
+                    ArmHandlerLibrary.ArmHandlerLibraryMainSequence(_capture);
                 }
             }
         }

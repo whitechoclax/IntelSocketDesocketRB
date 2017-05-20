@@ -145,6 +145,7 @@ namespace VishnuMain
             {
                 //Set up capture device
                 _capture = new Capture(CameraDevice);
+                
                 _capture.SetCaptureProperty(CapProp.Fps, 30);
                 _capture.ImageGrabbed += _capture_ImageGrabbed;
             }
@@ -164,7 +165,7 @@ namespace VishnuMain
         void captureImg_Click(object sender, EventArgs e)
         {
             //SnapPicture has various modes
-            captured_imgbox.Image = _Template.SnapPicture(3);
+            captured_imgbox.Image = _Template.SnapPicture(3, _capture);
         }
 
         void loadImg_Click(object sender, EventArgs e)
@@ -197,13 +198,13 @@ namespace VishnuMain
             //source_img = new Mat(sourceimg_textbox.Text, LoadImageType.Grayscale);
 
             //grab images from UI, run templ detection and retrieve images.  
-            res = _Template.TemplateDetection(templateList, _Template.SnapPicture(3), xy);
+            res = _Template.TemplateDetection(templateList, _Template.SnapPicture(3, _capture), xy);
             tracked_imgbox.Image = res;
         }
 
         void savePicture_Click(object sender, EventArgs e)
         {
-            _Template.SaveImg(_Template.SnapPicture(3), Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/" + "EMGU.jpg");
+            _Template.SaveImg(_Template.SnapPicture(3, _capture), Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/" + "EMGU.jpg");
         }
 
     }

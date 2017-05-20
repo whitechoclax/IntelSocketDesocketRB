@@ -43,9 +43,8 @@ namespace VishnuMain
         ///<summary>
         /// Returns image, various modes: 1.grayscale 2.redbinary 3.binary
         ///</summary>
-        public Mat SnapPicture(int mode)
+        public Mat SnapPicture(int mode, Capture camera_feed)
         {
-
             camera_feed.Retrieve(color_frame);
 
             switch (mode)
@@ -67,6 +66,7 @@ namespace VishnuMain
 
                 default:
                     return color_frame;
+            
             }
         }
 

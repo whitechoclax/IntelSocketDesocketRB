@@ -117,7 +117,7 @@
             this.captured_imgbox.Margin = new System.Windows.Forms.Padding(6);
             this.captured_imgbox.Name = "captured_imgbox";
             this.captured_imgbox.Size = new System.Drawing.Size(958, 538);
-            this.captured_imgbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.captured_imgbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.captured_imgbox.TabIndex = 20;
             this.captured_imgbox.TabStop = false;
             // 

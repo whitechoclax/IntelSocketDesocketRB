@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Emgu.CV;
 
 namespace VishnuMain
 {
@@ -21,7 +22,7 @@ namespace VishnuMain
 
         
         
-        public static void ArmHandlerLibraryMainSequence()
+        public static void ArmHandlerLibraryMainSequence(Capture camera_feed)
         {   //Start at Origin, find next CPU, Take picture
             //Pick Up requested CPU, Move to Calibration Image
             //Find Socket, put CPU in socket, wait until done
@@ -74,7 +75,7 @@ namespace VishnuMain
                 }
                 Loc[2] = ((trayHandler.emptyTrayCount - 1 + trayHandler.goodTrayCount + trayHandler.badTrayCount) * centerToCenterZ) + OriginLocation[2];
                 ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1]-60, OriginLocation[2], OriginLocation[3]);
-                CameraTestImg();
+                CameraTestImg(camera_feed);
                 ArduinoMotionLibrary.ArdPosition("REDEF", 0, OriginLocation[0], OriginLocation[1] - 60, OriginLocation[2], OriginLocation[3]);
                 ArduinoMotionLibrary.ArdPosition("MOVE", 0, Loc[0], Loc[1], Loc[2], Loc[3]); //Move to CPU
                 //Verify we're above a CPU
@@ -111,7 +112,7 @@ namespace VishnuMain
             return;
         }
 
-        public static bool CameraTestImg()
+        public static bool CameraTestImg(Capture camera_feed)
         {
             //value from templateDetection
             double[] template_xy = { 1000, 1000 };
@@ -128,7 +129,9 @@ namespace VishnuMain
                     template_xy[0] = 1000;
                     template_xy[1] = 1000;
                 }
-                imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3), template_xy);
+               
+                imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3, camera_feed ), template_xy);
+                    
                 xShift = -1 * template_xy[0] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
                     + template_xy[1] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
                 yShift = template_xy[0] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
