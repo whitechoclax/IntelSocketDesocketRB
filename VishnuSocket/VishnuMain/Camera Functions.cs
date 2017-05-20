@@ -109,7 +109,7 @@ namespace VishnuMain
                         double offset_y;
                         double x_cm = 1920 / 23;
                         double y_cm = 1080 / 13;
-                        //23x13 @ 16.5 cm
+                        //23x13 @ 16.5 cm  use this z height for calibration
                         //20x10 @ 12.5 cm
                         //12.1x6.8 @ 8.3 cm 
                         //30 x 15.5 @ 21 cm
@@ -129,8 +129,8 @@ namespace VishnuMain
                         + template_xy[1] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
                         yShift = template_xy[0] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
                             - template_xy[1] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
-                        xShift = xShift * (50 / ArduinoMotionLibrary.ArmCoordinates[2]);
-                        yShift = -1 * yShift * (50 / ArduinoMotionLibrary.ArmCoordinates[2]);
+                        xShift = xShift * ( ArduinoMotionLibrary.ArmCoordinates[2] / 165);
+                        yShift = -1 * yShift * ( ArduinoMotionLibrary.ArmCoordinates[2] / 165);
                         MessageBox.Show("X Relative:" + xShift + "\n" + "Y Relative:" + yShift, "Coordinates");
 
                         //draws rectangle match onto source img
