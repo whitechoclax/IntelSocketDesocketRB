@@ -29,14 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.video_imgbox = new Emgu.CV.UI.ImageBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.template_imgbox = new Emgu.CV.UI.ImageBox();
             this.label1 = new System.Windows.Forms.Label();
             this.captured_imgbox = new Emgu.CV.UI.ImageBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.tracked_imgbox = new Emgu.CV.UI.ImageBox();
             this.startCaptureButton = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -51,27 +49,20 @@
             this.SavePicture = new System.Windows.Forms.Button();
             this.Camera_Selection = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.video_imgbox)).BeginInit();
+            this.tracked_imgbox = new Emgu.CV.UI.ImageBox();
+            this.videogroupBox = new System.Windows.Forms.GroupBox();
+            this.video_imgbox = new Emgu.CV.UI.ImageBox();
             ((System.ComponentModel.ISupportInitialize)(this.template_imgbox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.captured_imgbox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tracked_imgbox)).BeginInit();
+            this.videogroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.video_imgbox)).BeginInit();
             this.SuspendLayout();
-            // 
-            // video_imgbox
-            // 
-            this.video_imgbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.video_imgbox.Location = new System.Drawing.Point(34, 50);
-            this.video_imgbox.Margin = new System.Windows.Forms.Padding(6);
-            this.video_imgbox.Name = "video_imgbox";
-            this.video_imgbox.Size = new System.Drawing.Size(958, 538);
-            this.video_imgbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.video_imgbox.TabIndex = 3;
-            this.video_imgbox.TabStop = false;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(28, 18);
+            this.label6.Location = new System.Drawing.Point(-5, -4);
             this.label6.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(122, 25);
@@ -131,20 +122,9 @@
             this.label2.TabIndex = 21;
             this.label2.Text = "Tracked Objects";
             // 
-            // tracked_imgbox
-            // 
-            this.tracked_imgbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tracked_imgbox.Location = new System.Drawing.Point(1044, 672);
-            this.tracked_imgbox.Margin = new System.Windows.Forms.Padding(6);
-            this.tracked_imgbox.Name = "tracked_imgbox";
-            this.tracked_imgbox.Size = new System.Drawing.Size(958, 538);
-            this.tracked_imgbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.tracked_imgbox.TabIndex = 22;
-            this.tracked_imgbox.TabStop = false;
-            // 
             // startCaptureButton
             // 
-            this.startCaptureButton.Location = new System.Drawing.Point(2018, 106);
+            this.startCaptureButton.Location = new System.Drawing.Point(2038, 106);
             this.startCaptureButton.Margin = new System.Windows.Forms.Padding(6);
             this.startCaptureButton.Name = "startCaptureButton";
             this.startCaptureButton.Size = new System.Drawing.Size(200, 68);
@@ -156,7 +136,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(2022, 746);
+            this.label5.Location = new System.Drawing.Point(2038, 747);
             this.label5.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(101, 25);
@@ -166,7 +146,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(2022, 668);
+            this.label4.Location = new System.Drawing.Point(2038, 652);
             this.label4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(70, 25);
@@ -175,7 +155,7 @@
             // 
             // template_textbox
             // 
-            this.template_textbox.Location = new System.Drawing.Point(2028, 778);
+            this.template_textbox.Location = new System.Drawing.Point(2043, 778);
             this.template_textbox.Margin = new System.Windows.Forms.Padding(6);
             this.template_textbox.Name = "template_textbox";
             this.template_textbox.Size = new System.Drawing.Size(140, 31);
@@ -183,7 +163,7 @@
             // 
             // findMatch
             // 
-            this.findMatch.Location = new System.Drawing.Point(2018, 346);
+            this.findMatch.Location = new System.Drawing.Point(2038, 346);
             this.findMatch.Margin = new System.Windows.Forms.Padding(6);
             this.findMatch.Name = "findMatch";
             this.findMatch.Size = new System.Drawing.Size(200, 68);
@@ -194,7 +174,7 @@
             // 
             // loadTemplate
             // 
-            this.loadTemplate.Location = new System.Drawing.Point(2180, 778);
+            this.loadTemplate.Location = new System.Drawing.Point(2204, 778);
             this.loadTemplate.Margin = new System.Windows.Forms.Padding(6);
             this.loadTemplate.Name = "loadTemplate";
             this.loadTemplate.Size = new System.Drawing.Size(48, 40);
@@ -205,7 +185,7 @@
             // 
             // capturePicture
             // 
-            this.capturePicture.Location = new System.Drawing.Point(2018, 186);
+            this.capturePicture.Location = new System.Drawing.Point(2038, 186);
             this.capturePicture.Margin = new System.Windows.Forms.Padding(6);
             this.capturePicture.Name = "capturePicture";
             this.capturePicture.Size = new System.Drawing.Size(200, 68);
@@ -216,7 +196,7 @@
             // 
             // sourceimg_textbox
             // 
-            this.sourceimg_textbox.Location = new System.Drawing.Point(2028, 699);
+            this.sourceimg_textbox.Location = new System.Drawing.Point(2043, 694);
             this.sourceimg_textbox.Margin = new System.Windows.Forms.Padding(6);
             this.sourceimg_textbox.Name = "sourceimg_textbox";
             this.sourceimg_textbox.Size = new System.Drawing.Size(140, 31);
@@ -224,7 +204,7 @@
             // 
             // loadSource
             // 
-            this.loadSource.Location = new System.Drawing.Point(2180, 700);
+            this.loadSource.Location = new System.Drawing.Point(2204, 694);
             this.loadSource.Margin = new System.Windows.Forms.Padding(6);
             this.loadSource.Name = "loadSource";
             this.loadSource.Size = new System.Drawing.Size(48, 40);
@@ -243,7 +223,7 @@
             // 
             // SavePicture
             // 
-            this.SavePicture.Location = new System.Drawing.Point(2018, 266);
+            this.SavePicture.Location = new System.Drawing.Point(2038, 266);
             this.SavePicture.Margin = new System.Windows.Forms.Padding(6);
             this.SavePicture.Name = "SavePicture";
             this.SavePicture.Size = new System.Drawing.Size(200, 68);
@@ -255,7 +235,7 @@
             // Camera_Selection
             // 
             this.Camera_Selection.FormattingEnabled = true;
-            this.Camera_Selection.Location = new System.Drawing.Point(2013, 50);
+            this.Camera_Selection.Location = new System.Drawing.Point(2027, 50);
             this.Camera_Selection.Margin = new System.Windows.Forms.Padding(5);
             this.Camera_Selection.Name = "Camera_Selection";
             this.Camera_Selection.Size = new System.Drawing.Size(250, 33);
@@ -269,6 +249,40 @@
             this.label7.Size = new System.Drawing.Size(182, 25);
             this.label7.TabIndex = 34;
             this.label7.Text = "Camera Selection";
+            // 
+            // tracked_imgbox
+            // 
+            this.tracked_imgbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tracked_imgbox.Location = new System.Drawing.Point(1044, 672);
+            this.tracked_imgbox.Margin = new System.Windows.Forms.Padding(6);
+            this.tracked_imgbox.Name = "tracked_imgbox";
+            this.tracked_imgbox.Size = new System.Drawing.Size(958, 538);
+            this.tracked_imgbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.tracked_imgbox.TabIndex = 22;
+            this.tracked_imgbox.TabStop = false;
+            // 
+            // videogroupBox
+            // 
+            this.videogroupBox.Controls.Add(this.video_imgbox);
+            this.videogroupBox.Controls.Add(this.label6);
+            this.videogroupBox.Location = new System.Drawing.Point(33, 18);
+            this.videogroupBox.Name = "videogroupBox";
+            this.videogroupBox.Size = new System.Drawing.Size(971, 603);
+            this.videogroupBox.TabIndex = 35;
+            this.videogroupBox.TabStop = false;
+            this.videogroupBox.Visible = false;
+            // 
+            // video_imgbox
+            // 
+            this.video_imgbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.video_imgbox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.video_imgbox.Location = new System.Drawing.Point(3, 27);
+            this.video_imgbox.Margin = new System.Windows.Forms.Padding(6);
+            this.video_imgbox.Name = "video_imgbox";
+            this.video_imgbox.Size = new System.Drawing.Size(958, 573);
+            this.video_imgbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.video_imgbox.TabIndex = 4;
+            this.video_imgbox.TabStop = false;
             // 
             // ComputerVision_Tab
             // 
@@ -294,30 +308,28 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.template_imgbox);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.video_imgbox);
+            this.Controls.Add(this.videogroupBox);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ComputerVision_Tab";
-            this.Size = new System.Drawing.Size(2278, 1300);
-            ((System.ComponentModel.ISupportInitialize)(this.video_imgbox)).EndInit();
+            this.Size = new System.Drawing.Size(2560, 1440);
             ((System.ComponentModel.ISupportInitialize)(this.template_imgbox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.captured_imgbox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tracked_imgbox)).EndInit();
+            this.videogroupBox.ResumeLayout(false);
+            this.videogroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.video_imgbox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private Emgu.CV.UI.ImageBox video_imgbox;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label3;
         private Emgu.CV.UI.ImageBox template_imgbox;
         private System.Windows.Forms.Label label1;
         private Emgu.CV.UI.ImageBox captured_imgbox;
         private System.Windows.Forms.Label label2;
-        private Emgu.CV.UI.ImageBox tracked_imgbox;
         private System.Windows.Forms.Button startCaptureButton;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
@@ -332,5 +344,8 @@
         private System.Windows.Forms.Button SavePicture;
         private System.Windows.Forms.ComboBox Camera_Selection;
         private System.Windows.Forms.Label label7;
+        private Emgu.CV.UI.ImageBox tracked_imgbox;
+        private System.Windows.Forms.GroupBox videogroupBox;
+        private Emgu.CV.UI.ImageBox video_imgbox;
     }
 }
