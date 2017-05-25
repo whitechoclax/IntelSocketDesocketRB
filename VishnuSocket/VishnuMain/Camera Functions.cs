@@ -23,19 +23,13 @@ namespace VishnuMain
         private Capture camera_feed;
 
         /*CONSTURCTOR: INTIALIZE CAMERA CAPTURE*/
-        public CvFunctions()
+        public CvFunctions() 
         {
-
             /*CAMERA SETTINGS*/
 
-            //camera_feed = new Capture(); 
-            //camera_feed.SetCaptureProperty(CapProp.FrameHeight, 1080);
-            //camera_feed.SetCaptureProperty(CapProp.FrameWidth, 1920);
-        }
-
-        ~CvFunctions()
-        {
-            //camera_feed.Dispose();
+            camera_feed = new Capture(); 
+            camera_feed.SetCaptureProperty(CapProp.FrameHeight, 1080);
+            camera_feed.SetCaptureProperty(CapProp.FrameWidth, 1920);
         }
 
         /*METHODS BELOW*/
@@ -43,12 +37,10 @@ namespace VishnuMain
         ///<summary>
         /// Returns image, various modes: 1.grayscale 2.redbinary 3.binary
         ///</summary>
-        public Mat SnapPicture(int mode, Capture camera_feed)
-        {
+        public Mat SnapPicture(int mode, Capture camera_feed) {
             camera_feed.Retrieve(color_frame);
 
-            switch (mode)
-            {
+            switch (mode) {
 
                 case 1: //case for just grayscale img
                     CvInvoke.CvtColor(color_frame, gray_frame, ColorConversion.Bgr2Gray);
@@ -165,7 +157,6 @@ namespace VishnuMain
         ///</summary>
         public string BarcodeScanner(Mat barcode_img)
         {
-
             //creates decorder object
             DmtxImageDecoder decoder = new DmtxImageDecoder();
 
@@ -179,7 +170,6 @@ namespace VishnuMain
             {
                 return "Nothing found";
             }
-            
         }
 
         public void SaveImg(Mat Img, string filename)
