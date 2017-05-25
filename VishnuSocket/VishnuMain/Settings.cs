@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using System.IO;
 
 namespace VishnuMain
 {
@@ -20,6 +21,7 @@ namespace VishnuMain
         //strings to save
         string xmlPathString;
         string invPathString;
+        public string xmlfullpath;
 
         //tray properties for different sizes
         int trayLength;
@@ -42,7 +44,7 @@ namespace VishnuMain
         public SettingsMenu()
         {
             InitializeComponent();
-            loadFromXML();   // breaks after installed
+            //loadFromXML();  // breaks when debugging
         }
 
         //UI changes section
@@ -154,9 +156,9 @@ namespace VishnuMain
 
         public void loadFromXML()
         {
-            XDocument settingsmenu = XDocument.Load("..\\..\\..\\..\\Common\\Settings\\settings.xml");  // loads at startup - breaks install
-            //XDocument settingsmenu = XDocument.Load(xmlPathString + "\\settings.xml");  // load after setting path
-
+            //xmlfullpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Path.Combine("Settings", "settings.xml")); // doesnt work on install
+            //XDocument settingsmenu = XDocument.Load(xmlfullpath);  // doesnt work on install
+            XDocument settingsmenu = XDocument.Load(xmlPathString + "\\settings.xml");  // load after setting path
             //use NULL COALESCING with ?? to set default if not found
             var groupEl = from setting in settingsmenu.Nodes()
                     select setting;
@@ -230,15 +232,14 @@ namespace VishnuMain
             );
 
             //save to file
-            settings.Save("..\\..\\..\\..\\Common\\Settings\\settings.xml");
-            //settings.Save(xmlPathString + "\\settings.xml");  // load after setting path
+            //settings.Save(xmlfullpath);  // doesnt work on install
+            settings.Save(xmlPathString + "\\settings.xml");  // load after setting path
             return;
         }
 
         private void xmlSaveButton_Click(object sender, EventArgs e)
         {
             savetoXML();
-
         }
 
         private void loadxmlButton_Click(object sender, EventArgs e)
