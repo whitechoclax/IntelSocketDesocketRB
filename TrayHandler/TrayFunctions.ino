@@ -127,61 +127,39 @@ void CommandProcess(){//Parse command
 
 void RelayCoordinates(){ //Send back coordinates
   float zTmp = round(zpos);
-  EEPROM.updateDouble(THETAMEM, theta);
-  EEPROM.updateDouble(RADMEM, radius);
   EEPROM.updateDouble(ZMEM, zpos);
-  EEPROM.updateDouble(ENDMEM, traypos);
+  EEPROM.updateDouble(trayposMEM, traypos);
   if(DEBUG){
-    Serial.println(EEPROM.readDouble(THETAMEM));
-    Serial.println(EEPROM.readDouble(RADMEM));
+    Serial.println(EEPROM.readDouble(trayposMEM));
     Serial.println(EEPROM.readDouble(ZMEM));
-    Serial.println(EEPROM.readDouble(ENDMEM));
   }
   Serial.print("COOR:");
-  Serial.print(xTmp);Serial.print(':');
-  Serial.print(yTmp);Serial.print(':');
   Serial.print(zTmp);Serial.print(':');
-  Serial.print(traypos,1);Serial.print(':');
-  Serial.println(theta,2);
+  Serial.println(traypos)
   return;
 }
 
 void Navigate(){ //Moves to new positions
-  
-  boolean radDirection;
-  boolean thetaDirection;
-  
-  if(radiusNew != radius){ //These determine direction
-    if(radiusNew > radius){
-      digitalWrite(Dir[RADMOTOR], LOW);
-      deltaRadius =  radiusNew - radius;
-      radDirection = OUT;
-    }
-    else{
-      digitalWrite(Dir[RADMOTOR], HIGH);
-      deltaRadius = radius - radiusNew;
-      radDirection = IN;
-    }
-  }
+  boolean trayposDirection;
   float delayFactor = 0;
-  if(thetaNew != theta){
-    if(abs(thetaNew) > abs(theta)){
+  if(trayposNew != traypos){
+    if(abs(trayposNew) > abs(traypos)){
       if(DEBUG){
         Serial.println("    Moving clockwise");
       }
-      delayFactor = thetaNew/theta;
-      digitalWrite(Dir[THETAMOTOR], HIGH);
-      deltaTheta = thetaNew - theta;
-      thetaDirection = RIGHT;
+      delayFactor = trayposNew/traypos;
+      digitalWrite(Dir[trayposMOTOR], HIGH);
+      deltatraypos = trayposNew - traypos;
+      trayposDirection = RIGHT;
     }
     else{
       if(DEBUG){
         Serial.println("    Moving counter-clockwise");
       }
-      delayFactor = theta/thetaNew;
-      digitalWrite(Dir[THETAMOTOR], LOW);
-      deltaTheta = theta - thetaNew;
-      thetaDirection = LEFT;
+      delayFactor = traypos/trayposNew;
+      digitalWrite(Dir[trayposMOTOR], LOW);
+      deltatraypos = traypos - trayposNew;
+      trayposDirection = LEFT;
     }
   }
   if(zposNew != zpos){
@@ -193,7 +171,7 @@ void Navigate(){ //Moves to new positions
   
   if(DEBUG){
     Serial.println("\nDeltas are:");
-    Serial.print("Theta: ");Serial.println(deltaTheta,2);
+    Serial.print("traypos: ");Serial.println(deltatraypos,2);
     Serial.print("Radius: ");Serial.println(deltaRadius,2);
     Serial.print("Z: ");Serial.println(deltaZ,2);  
   }
@@ -227,36 +205,36 @@ void Navigate(){ //Moves to new positions
   }
 
   boolean doneRad = false;
-  boolean doneTheta = false;
+  boolean donetraypos = false;
   boolean donetraypos = false;
 
-  int thetaOriginal = theta;
-  int whereWereGoing = thetaOriginal + deltaTheta;
-  while(!doneTheta){
+  int trayposOriginal = traypos;
+  int whereWereGoing = trayposOriginal + deltatraypos;
+  while(!donetraypos){
     serialEvent();
-    if(deltaTheta > .4){  //Theta Section
-      digitalWrite(Enable[THETAMOTOR], LOW);
-      digitalWrite(Step[THETAMOTOR], LOW);
+    if(deltatraypos > .4){  //traypos Section
+      digitalWrite(Enable[trayposMOTOR], LOW);
+      digitalWrite(Step[trayposMOTOR], LOW);
       delay(3);
-      digitalWrite(Step[THETAMOTOR], HIGH);
-      double x = ((theta-thetaOriginal)*2*PI)/(whereWereGoing - thetaOriginal);
+      digitalWrite(Step[trayposMOTOR], HIGH);
+      double x = ((traypos-trayposOriginal)*2*PI)/(whereWereGoing - trayposOriginal);
       double tDelay = 5*cos(x)+5;
       int addDelay = (4*tDelay) + 15;
       if(DEBUG){
         Serial.print("addDelay: ");Serial.println(addDelay);
       }
       delay(addDelay);
-      deltaTheta -= 1/float(THETA);
-      if(thetaDirection == LEFT){
-        theta -= 1/float(THETA);
+      deltatraypos -= 1/float(traypos);
+      if(trayposDirection == LEFT){
+        traypos -= 1/float(traypos);
       }
       else
-        theta += 1/float(THETA);
+        traypos += 1/float(traypos);
     }
-    if(deltaTheta <= .4){
-      doneTheta = true;
+    if(deltatraypos <= .4){
+      donetraypos = true;
       delay(1500);
-      digitalWrite(Enable[THETAMOTOR], HIGH);
+      digitalWrite(Enable[trayposMOTOR], HIGH);
     }  
   }
   while(!doneRad){  //Radius Section
@@ -314,10 +292,10 @@ void Navigate(){ //Moves to new positions
 }
 
 void EmergencyStop(){ //Resets movement information
-  thetaNew = 0;
+  trayposNew = 0;
   radiusNew = 0;
   deltaZ = 0;
-  deltaTheta = 0;
+  deltatraypos = 0;
   deltaRadius = 0;
   return;
 }

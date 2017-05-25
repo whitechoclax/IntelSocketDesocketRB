@@ -248,7 +248,6 @@
             this.videogroupBox.Size = new System.Drawing.Size(486, 302);
             this.videogroupBox.TabIndex = 35;
             this.videogroupBox.TabStop = false;
-            this.videogroupBox.Visible = false;
             // 
             // video_imgbox
             // 
