@@ -18,7 +18,7 @@ namespace VishnuMain
     public partial class ComputerVision_Tab : UserControl
     {
 
-        /* Variabless  */
+        /* Variables  */
         private Capture _capture = null;
         private bool videoFeed;
         public bool userImgLoaded;

@@ -5,7 +5,10 @@
    using A4988 Stepper motor Drivers
 */
 
-//Millimeter to step mappings
+#include <Servo.h>
+#include <EEPROMex.h>
+Servo grabber1
+Servo grabber2
 
 //power settings: .5 A , 12v 
 //Motor Mappings
@@ -16,12 +19,14 @@
 #define LEFT false
 #define OUT true
 #define IN false
+#define THETAMEM 4
+#define ZMEM 0
 
 boolean DEBUG = false; 
 
 //Current position
-byte traypos = 0;
-int zpos = 0;
+byte traypos = EEPROM.readDouble(THETAMEM);
+int zpos = EEPROM.readDouble(ZMEM);
 
 //Desired Positions
 byte trayposNew = 0;

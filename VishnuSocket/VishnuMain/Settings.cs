@@ -42,7 +42,7 @@ namespace VishnuMain
         public SettingsMenu()
         {
             InitializeComponent();
-            //loadFromXML();   // breaks after installed
+            loadFromXML();   // breaks after installed
         }
 
         //UI changes section
@@ -154,8 +154,8 @@ namespace VishnuMain
 
         public void loadFromXML()
         {
-            //XDocument settingsmenu = XDocument.Load("..\\..\\..\\..\\Common\\Settings\\settings.xml");  // loads at startup - breaks install
-            XDocument settingsmenu = XDocument.Load(xmlPathString + "\\settings.xml");  // load after setting path
+            XDocument settingsmenu = XDocument.Load("..\\..\\..\\..\\Common\\Settings\\settings.xml");  // loads at startup - breaks install
+            //XDocument settingsmenu = XDocument.Load(xmlPathString + "\\settings.xml");  // load after setting path
 
             //use NULL COALESCING with ?? to set default if not found
             var groupEl = from setting in settingsmenu.Nodes()
@@ -230,8 +230,8 @@ namespace VishnuMain
             );
 
             //save to file
-            //settings.Save("..\\..\\..\\..\\Common\\Settings\\settings.xml");
-            settings.Save(xmlPathString + "\\settings.xml");  // load after setting path
+            settings.Save("..\\..\\..\\..\\Common\\Settings\\settings.xml");
+            //settings.Save(xmlPathString + "\\settings.xml");  // load after setting path
             return;
         }
 
