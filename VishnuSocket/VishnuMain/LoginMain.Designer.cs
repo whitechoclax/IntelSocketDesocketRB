@@ -38,6 +38,7 @@
             this.centralTab.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.centralTab.Name = "centralTab";
             this.centralTab.SelectedIndex = 0;
+            this.centralTab.Size = new System.Drawing.Size(1500, 800);
             this.centralTab.TabIndex = 0;
             // 
             // LoginMain
