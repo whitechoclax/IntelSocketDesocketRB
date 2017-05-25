@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <TrayLength>11</TrayLength>
+  <TrayWidth>2</TrayWidth>
+  <TrayStack>6</TrayStack>
+  <TrayOR2CenterX>20</TrayOR2CenterX>
+  <TrayOR2CenterY>35</TrayOR2CenterY>
+  <TrayCenter2CenterRow>27.5</TrayCenter2CenterRow>
+  <TrayCenter2CenterCol>65</TrayCenter2CenterCol>
+  <TrayHeight>10.15</TrayHeight>
+  <SocketDimX>100</SocketDimX>
+  <SocketDimY>100</SocketDimY>
+  <SocketDimZ>100</SocketDimZ>
+  <inventoryPath>F:\Development Capstone\VishnuSocket\Common</inventoryPath>
+</Root>
