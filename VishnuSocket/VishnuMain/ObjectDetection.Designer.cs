@@ -51,6 +51,7 @@
             this.tracked_imgbox = new Emgu.CV.UI.ImageBox();
             this.video_imgbox = new Emgu.CV.UI.ImageBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.harr_button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.template_imgbox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.captured_imgbox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tracked_imgbox)).BeginInit();
@@ -62,13 +63,13 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(19, 355);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(83, 13);
+            this.label3.Size = new System.Drawing.Size(79, 13);
             this.label3.TabIndex = 17;
-            this.label3.Text = "Template Image";
+            this.label3.Text = "Haar Detection";
             // 
             // template_imgbox
             // 
-            this.template_imgbox.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.template_imgbox.BackColor = System.Drawing.SystemColors.Control;
             this.template_imgbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.template_imgbox.Location = new System.Drawing.Point(22, 389);
             this.template_imgbox.Name = "template_imgbox";
@@ -88,6 +89,7 @@
             // 
             // captured_imgbox
             // 
+            this.captured_imgbox.BackColor = System.Drawing.SystemColors.Control;
             this.captured_imgbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.captured_imgbox.Location = new System.Drawing.Point(534, 70);
             this.captured_imgbox.Name = "captured_imgbox";
@@ -101,9 +103,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(531, 355);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(86, 13);
+            this.label2.Size = new System.Drawing.Size(100, 13);
             this.label2.TabIndex = 21;
-            this.label2.Text = "Tracked Objects";
+            this.label2.Text = "Template Detection";
             // 
             // startCaptureButton
             // 
@@ -226,6 +228,7 @@
             // 
             // tracked_imgbox
             // 
+            this.tracked_imgbox.BackColor = System.Drawing.SystemColors.Control;
             this.tracked_imgbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tracked_imgbox.Location = new System.Drawing.Point(534, 390);
             this.tracked_imgbox.Name = "tracked_imgbox";
@@ -236,6 +239,7 @@
             // 
             // video_imgbox
             // 
+            this.video_imgbox.BackColor = System.Drawing.SystemColors.Control;
             this.video_imgbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.video_imgbox.Location = new System.Drawing.Point(22, 70);
             this.video_imgbox.Name = "video_imgbox";
@@ -253,12 +257,24 @@
             this.label6.TabIndex = 16;
             this.label6.Text = "Video Feed";
             // 
+            // harr_button
+            // 
+            this.harr_button.Location = new System.Drawing.Point(1055, 550);
+            this.harr_button.Name = "harr_button";
+            this.harr_button.Size = new System.Drawing.Size(100, 34);
+            this.harr_button.TabIndex = 35;
+            this.harr_button.Text = "HarrDetection";
+            this.harr_button.UseVisualStyleBackColor = true;
+            this.harr_button.Click += new System.EventHandler(this.harr_button_Click);
+            // 
             // ComputerVision_Tab
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.AutoSize = true;
+            this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.Controls.Add(this.harr_button);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.video_imgbox);
             this.Controls.Add(this.label7);
@@ -281,7 +297,7 @@
             this.Controls.Add(this.label3);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ComputerVision_Tab";
-            this.Size = new System.Drawing.Size(1239, 815);
+            this.Size = new System.Drawing.Size(1220, 777);
             ((System.ComponentModel.ISupportInitialize)(this.template_imgbox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.captured_imgbox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tracked_imgbox)).EndInit();
@@ -314,5 +330,6 @@
         private Emgu.CV.UI.ImageBox tracked_imgbox;
         private Emgu.CV.UI.ImageBox video_imgbox;
         private System.Windows.Forms.Label label6;
+        public System.Windows.Forms.Button harr_button;
     }
 }

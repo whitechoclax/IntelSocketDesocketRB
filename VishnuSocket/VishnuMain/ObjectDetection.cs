@@ -17,7 +17,6 @@ namespace VishnuMain
 
     public partial class ComputerVision_Tab : UserControl
     {
-
         /* Variabless  */
         private Capture _capture = null;
         private bool videoFeed;
@@ -26,17 +25,36 @@ namespace VishnuMain
         String[] templateList;
         Mat source_img = new Mat();
 
+        int CameraDevice = 0; //Variable to track camera device selected
+        CameraStructures[] WebCams; //List containing all the camera available
+
+        List<Rectangle> cpuDetected = new List<Rectangle>();
+
         /* Calling Object CvFunctions */
         CvFunctions _Template = new CvFunctions();
+
+
 
         public ComputerVision_Tab() {
             /* Initilize winforms */
             InitializeComponent();
 
-            /* start camera feed loading the UI */
-            _capture = StartCapture();
-        }
+            DsDevice[] _SystemCameras = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice);
+            WebCams = new CameraStructures[_SystemCameras.Length];
 
+            for (int i = 0; i < _SystemCameras.Length; i++) {
+                WebCams[i] = new CameraStructures(i, _SystemCameras[i].Name, _SystemCameras[i].ClassID); //fill web cam array
+                Camera_Selection.Items.Add(WebCams[i].ToString());
+            }
+            if (Camera_Selection.Items.Count > 0) {
+                Camera_Selection.SelectedIndex = 0; //Set the selected device the default
+                startCaptureButton.Enabled = true; //Enable the start
+            }
+
+
+            /* start camera feed loading the UI */
+             _capture = StartCapture();
+        }
 
         public Capture StartCapture() {
             try {
@@ -53,55 +71,11 @@ namespace VishnuMain
         }
 
 
-        //int CameraDevice = 0; //Variable to track camera device selected
-        //CameraStructures[] WebCams; //List containing all the camera available
-
-
         
 
+     
 
-        
-        ///* Initialziation for camera feed */
-        //public ComputerVision_Tab()
-        //{
-        //    /* Initilize winforms */
-        //    InitializeComponent();
-        //    DsDevice[] _SystemCameras = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice);
-        //    WebCams = new CameraStructures[_SystemCameras.Length];
-        //    for (int i = 0; i < _SystemCameras.Length; i++)
-        //    {
-        //        WebCams[i] = new CameraStructures(i, _SystemCameras[i].Name, _SystemCameras[i].ClassID); //fill web cam array
-        //        Camera_Selection.Items.Add(WebCams[i].ToString());
-        //    }
-        //    if (Camera_Selection.Items.Count > 0)
-        //    {
-        //        Camera_Selection.SelectedIndex = 0; //Set the selected device the default
-        //        startCaptureButton.Enabled = true; //Enable the start
-        //    }
-            
-        //} 
-        
-       
-
-        //public Capture StartCapture()
-        //{
-        //    try
-        //    {
-        //        _capture = new Capture();
-        //        _capture.SetCaptureProperty(CapProp.FrameHeight, 1080);
-        //        _capture.SetCaptureProperty(CapProp.FrameWidth, 1920);
-        //        _capture.ImageGrabbed += videoFeed_refresher; //live stream image cap
-        //        return _capture;         //return the capture value parameter, 
-        //    }
-        //    catch (System.Exception e)
-        //    {
-        //        MessageBox.Show(e.StackTrace);
-        //        return _capture = null;
-        //    }
-        //}
-
-
-        private delegate void DisplayImageDelegate(Mat Image);
+        ///private delegate void DisplayImageDelegate(Mat Image);
 
         //private void DisplayImage(Mat Image)
         //{
@@ -168,14 +142,14 @@ namespace VishnuMain
         //{
         //    //update the selected device
         //    CameraDevice = Camera_Identifier;
-            
+
         //    //Dispose of Capture if it was created before
         //    if (_capture != null) _capture.Dispose();
         //    try
         //    {
         //        //Set up capture device
         //        _capture = new Capture(CameraDevice);
-                
+
         //        _capture.SetCaptureProperty(CapProp.Fps, 30);
         //        _capture.ImageGrabbed += _capture_ImageGrabbed;
         //    }
@@ -185,7 +159,6 @@ namespace VishnuMain
         //    }
         //}
 
-        
 
 
 
@@ -254,5 +227,14 @@ namespace VishnuMain
             _Template.SaveImg(_Template.SnapPicture(3, _capture), Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/" + "EMGU.jpg");
         }
 
+        private void harr_button_Click(object sender, EventArgs e) {
+            
+            Mat Img = _Template.SnapPicture(0, _capture);
+            _Template.haar_cascade(Img, cpuDetected);
+            _Template.displayHar(Img, cpuDetected, template_imgbox);
+            cpuDetected.Clear();
+
+
+        }
     }
 }

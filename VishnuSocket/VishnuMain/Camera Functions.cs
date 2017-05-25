@@ -177,5 +177,31 @@ namespace VishnuMain
             Img.Save(filename);
         }
 
+        public void haar_cascade(Mat Img, List<Rectangle> cpus) {
+
+            using (CascadeClassifier cpu = new CascadeClassifier("../../../../Common/haar_classifier/cpu_working.xml")) {
+                using (Mat gray = new Mat()) {
+
+                    CvInvoke.CvtColor(Img, gray, ColorConversion.Bgr2Gray);
+                    CvInvoke.EqualizeHist(gray, gray);
+                    Rectangle[] cpuDetected = cpu.DetectMultiScale(gray, 1.2, 2);
+                    foreach (Rectangle c in cpuDetected) {
+                        Rectangle cpuRect = c;
+                        cpuRect.Offset(c.X, c.Y);
+                        cpus.Add(cpuRect);
+                    }
+                }
+            }
+        }
+
+        public void displayHar(Mat Img, List<Rectangle> cpus, Emgu.CV.UI.ImageBox OutputImgBox) {
+            foreach (Rectangle cpu in cpus)
+                CvInvoke.Rectangle(Img, cpu, new Bgr(Color.Cyan).MCvScalar, 2);
+            OutputImgBox.Image = Img;
+        }
+
+
+
+
     }
 }
