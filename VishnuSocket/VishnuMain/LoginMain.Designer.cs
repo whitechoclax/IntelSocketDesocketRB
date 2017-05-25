@@ -34,27 +34,25 @@
             // 
             // centralTab
             // 
-            this.centralTab.Location = new System.Drawing.Point(16, 16);
-            this.centralTab.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.centralTab.Location = new System.Drawing.Point(10, 10);
+            this.centralTab.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.centralTab.Name = "centralTab";
             this.centralTab.SelectedIndex = 0;
-            this.centralTab.Size = new System.Drawing.Size(2560, 1350);
             this.centralTab.TabIndex = 0;
             // 
             // LoginMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(192F, 192F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.Menu;
-            this.ClientSize = new System.Drawing.Size(1894, 1009);
+            this.ClientSize = new System.Drawing.Size(996, 541);
             this.Controls.Add(this.centralTab);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.MaximumSize = new System.Drawing.Size(2560, 1440);
-            this.MinimumSize = new System.Drawing.Size(1366, 768);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MinimumSize = new System.Drawing.Size(860, 498);
             this.Name = "LoginMain";
             this.Text = "Vishnu 2017 0.4a";
             this.Load += new System.EventHandler(this.LoginMain_Load_1);
