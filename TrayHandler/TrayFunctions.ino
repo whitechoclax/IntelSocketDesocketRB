@@ -3,7 +3,7 @@ int Calibrate(){ //TBD Later
 }
 
 void CommandProcess(){//Parse command
-  if(stringComplete){
+  if(stringComplete){ //Tray position, z height
     int i = 0;
     int len = inputString.length();
     char inputChars[50];
@@ -111,7 +111,7 @@ void CommandProcess(){//Parse command
       delay(100);
     }
 
-    if(zposNew >= 0 && trayposNew >=0 && zposNew < 400 && trayposNew < 5){
+    if(zposNew >= 0 && trayposNew >=0 && zposNew < 400 && trayposNew < 3){
        Serial.println("NAVIGATING");
        Navigate();
        Serial.println("DONE");
@@ -136,8 +136,8 @@ void RelayCoordinates(){ //Send back coordinates
     Serial.println(EEPROM.readDouble(ZMEM));
   }
   Serial.print("COOR:");
-  Serial.print(zTmp);Serial.print(':');
-  Serial.println(traypos);
+  Serial.print(traypos);Serial.print(':');
+  Serial.println(zTmp);
   return;
 }
 
@@ -199,6 +199,13 @@ void Navigate(){ //Moves to new positions
 
   boolean doneRad = false;
   boolean donetraypos = false;
+  if(trayposNew == traypos){
+    donetraypos = true;
+    if(DEBUG){
+      Serial.println("No tray change");
+    }
+  }
+  
   int stepCount = 0;
 
   while(!donetraypos){
@@ -208,14 +215,14 @@ void Navigate(){ //Moves to new positions
     digitalWrite(Step[TRAYMOTOR], LOW);
     delay(3);
     digitalWrite(Step[TRAYMOTOR], HIGH);
-    double tDelay = (5*cos(90*57.296)+5)/placesChange;
-    int addDelay = (4*tDelay) + 15;
     if(DEBUG){
-      Serial.print("addDelay: ");Serial.println(addDelay);
+      Serial.print("Step count: ");Serial.println(90*placesChange - stepCount);
     }
-    delay(addDelay);
-    if(stepCount <= 90*placesChange){
+    ++stepCount;
+    delay(10);
+    if(stepCount >= 90*placesChange){
       donetraypos = true;
+      traypos = trayposNew;
       delay(1500);
       digitalWrite(Enable[TRAYMOTOR], HIGH);
     }  
