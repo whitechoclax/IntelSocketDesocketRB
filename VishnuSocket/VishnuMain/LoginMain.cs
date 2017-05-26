@@ -9,50 +9,63 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Emgu.CV;
 using Emgu.CV.Structure;
+using Emgu.CV.CvEnum;
+using Emgu.Util;
 
 namespace VishnuMain
 {
     public partial class LoginMain : Form
     {
+
+        //Camera Feed
+        Capture _capture = null;
+        bool videoFeed;
+        Mat frame = new Mat();
+
+
+        ComputerVision_Tab Match = new ComputerVision_Tab();
+        ArmControl Arm = new ArmControl();
+        CameraFeed cam = new CameraFeed();
+        
+
         public LoginMain()
         {
             InitializeComponent();
         }
 
         //set the load order here for all tabs
-        private void LoginMain_Load_1(object sender, EventArgs e)
+        public void LoginMain_Load_1(object sender, EventArgs e)
         {
             ArduinoMotionLibrary.ArduinoMotionLibraryBoot();
             LoadMainViewerTab();        //tabindex 0
             LoadArmControlTab();        //tabindex 1
             LoadSettingsTab();          //tabindex 2
             LoadCvDetectionTab();       //tabindex 3
+            StartCapture();
+            
         }
 
-        //load tab pages here
 
         //Load main viewer tab
-        private void LoadMainViewerTab()
+        public void LoadMainViewerTab()
         {
             TabPage page = new TabPage();
             page.Text = "Main Viewer";
-            CameraFeed cam = new VishnuMain.CameraFeed();
             page.Controls.Add(cam);
             centralTab.TabPages.Add(page);
         }
 
         //load tab page for Arm handler controls
-        private void LoadArmControlTab()
+        public void LoadArmControlTab()
         {
             TabPage page = new TabPage();
-            page.Text = "Manual Arm Control";
-            ArmControl Arm = new VishnuMain.ArmControl();
+            page.Text = "Manual Arm Control";            
             page.Controls.Add(Arm);
             centralTab.TabPages.Add(page);
         }
 
         //load settings tab
-        private void LoadSettingsTab()
+        public void LoadSettingsTab()
         {
             TabPage page = new TabPage();
             page.Text = "Settings";
@@ -62,14 +75,61 @@ namespace VishnuMain
         }
 
         //template detection
-        private void LoadCvDetectionTab() 
+        public void LoadCvDetectionTab() 
         {
             TabPage page = new TabPage();
             page.Text = "Object Detection";
-            ComputerVision_Tab Match = new VishnuMain.ComputerVision_Tab();
             page.Controls.Add(Match);
             centralTab.TabPages.Add(page);
         }
+
+
+
+
+        public Capture StartCapture() {
+            try {
+                _capture = new Capture();
+                _capture.SetCaptureProperty(CapProp.FrameHeight, 1080);
+                _capture.SetCaptureProperty(CapProp.FrameWidth, 1920);
+                _capture.ImageGrabbed += videoFeed_refresher; //live stream image cap
+                return _capture;         //return the capture value parameter, 
+            }
+            catch (System.Exception e) {
+                MessageBox.Show(e.StackTrace);
+                return _capture = null;
+            }
+        }
+
+        void videoFeed_refresher(object sender, EventArgs arg) {
+            _capture.Retrieve(frame); 
+            Match.video_imgbox.Image = frame; 
+            Arm.ArmFeedBox.Image = frame;
+            cam.CameraFeedBox.Image = frame;
+        }
+
+
+
+       void button1_Click(object sender, EventArgs e) {
+            if (_capture != null) {
+                if (videoFeed) {
+                    button1.Text = "Start Capture";
+                    _capture.Pause();
+                }
+                else {
+                    button1.Text = "Stop";
+                    _capture.Start();
+                }
+                videoFeed = !videoFeed;
+            }
+        }
+
+
+
+
+
+
+
+
 
 
 

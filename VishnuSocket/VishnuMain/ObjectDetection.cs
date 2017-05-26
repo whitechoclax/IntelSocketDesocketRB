@@ -12,17 +12,20 @@ using Emgu.CV.CvEnum;
 using Emgu.Util;
 using DirectShowLib;
 
-namespace VishnuMain
-{
+namespace VishnuMain {
 
-    public partial class ComputerVision_Tab : UserControl
-    {
+    public partial class ComputerVision_Tab : UserControl {
+
+   
+        
+
         /* Variabless  */
         private Capture _capture = null;
         private bool videoFeed;
         public bool userImgLoaded;
         Mat frame = new Mat();
         String[] templateList;
+        double[] xy = { 0, 0 };
         Mat source_img = new Mat();
 
         int CameraDevice = 0; //Variable to track camera device selected
@@ -53,14 +56,14 @@ namespace VishnuMain
 
 
             /* start camera feed loading the UI */
-             _capture = StartCapture();
+            _capture = StartCapture();
         }
 
         public Capture StartCapture() {
             try {
                 _capture = new Capture();
-                _capture.SetCaptureProperty(CapProp.FrameHeight, 1080);
-                _capture.SetCaptureProperty(CapProp.FrameWidth, 1920);
+                //_capture.SetCaptureProperty(CapProp.FrameHeight, 1080);
+                //_capture.SetCaptureProperty(CapProp.FrameWidth, 1920);
                 _capture.ImageGrabbed += videoFeed_refresher; //live stream image cap
                 return _capture;         //return the capture value parameter, 
             }
@@ -71,9 +74,9 @@ namespace VishnuMain
         }
 
 
-        
 
-     
+
+
 
         ///private delegate void DisplayImageDelegate(Mat Image);
 
@@ -182,59 +185,50 @@ namespace VishnuMain
             }
         }
 
-        void captureImg_Click(object sender, EventArgs e)
-        {
+        void captureImg_Click(object sender, EventArgs e) {
             //SnapPicture has various modes
             captured_imgbox.Image = _Template.SnapPicture(3, _capture);
         }
 
-        void loadImg_Click(object sender, EventArgs e)
-        {
+        void loadImg_Click(object sender, EventArgs e) {
             DialogResult result = openFileDialog1.ShowDialog();
-            if (result == DialogResult.OK || result == DialogResult.Yes)
-            {
+            if (result == DialogResult.OK || result == DialogResult.Yes) {
                 sourceimg_textbox.Text = openFileDialog1.FileName;
                 userImgLoaded = true;
             }
         }
 
-        void loadTemplate_Click(object sender, EventArgs e)
-        {
+        void loadTemplate_Click(object sender, EventArgs e) {
             DialogResult result = openFileDialog2.ShowDialog();
-            if (result == DialogResult.OK || result == DialogResult.Yes)
-            {
+            if (result == DialogResult.OK || result == DialogResult.Yes) {
                 templateList = openFileDialog2.FileNames;
                 template_textbox.Text = String.Join(Environment.NewLine, templateList);
 
             }
         }
 
-        void findMatch_Click(object sender, EventArgs e)
-        {
-            double[] xy = { 0, 0 };
-
+        void findMatch_Click(object sender, EventArgs e) {
             //loads image taken from capture and does templatedetection
-            Mat res = new Mat();
             //source_img = new Mat(sourceimg_textbox.Text, LoadImageType.Grayscale);
-
             //grab images from UI, run templ detection and retrieve images.  
-            res = _Template.TemplateDetection(templateList, _Template.SnapPicture(3, _capture), xy);
-            tracked_imgbox.Image = res;
+            tracked_imgbox.Image = _Template.TemplateDetection(templateList, _Template.SnapPicture(3, _capture), xy);
         }
 
-        void savePicture_Click(object sender, EventArgs e)
-        {
+        void savePicture_Click(object sender, EventArgs e) {
             _Template.SaveImg(_Template.SnapPicture(3, _capture), Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/" + "EMGU.jpg");
         }
 
         private void harr_button_Click(object sender, EventArgs e) {
-            
-            Mat Img = _Template.SnapPicture(0, _capture);
+
+            Mat Img = _Template.SnapPicture(0, _capture); 
             _Template.haar_cascade(Img, cpuDetected);
             _Template.displayHar(Img, cpuDetected, template_imgbox);
             cpuDetected.Clear();
-
-
+   
+          
         }
+
+
     }
 }
+

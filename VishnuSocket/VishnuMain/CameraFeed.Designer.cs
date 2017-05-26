@@ -53,7 +53,7 @@
             // 
             this.captureButton.Enabled = false;
             this.captureButton.Location = new System.Drawing.Point(278, 34);
-            this.captureButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.captureButton.Margin = new System.Windows.Forms.Padding(2);
             this.captureButton.Name = "captureButton";
             this.captureButton.Size = new System.Drawing.Size(102, 22);
             this.captureButton.TabIndex = 0;
@@ -67,26 +67,26 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.98039F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.01961F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40.31071F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 59.68929F));
             this.tableLayoutPanel1.Controls.Add(this.Setting_lbl, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.Cam_lbl, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.CameraFeedBox, 0, 1);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(818, 714);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1223, 714);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // Setting_lbl
             // 
             this.Setting_lbl.AutoSize = true;
             this.Setting_lbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Setting_lbl.Location = new System.Drawing.Point(419, 0);
+            this.Setting_lbl.Location = new System.Drawing.Point(494, 0);
             this.Setting_lbl.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Setting_lbl.Name = "Setting_lbl";
             this.Setting_lbl.Size = new System.Drawing.Size(64, 16);
@@ -108,16 +108,16 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.Camera_Selection);
             this.panel1.Controls.Add(this.captureButton);
-            this.panel1.Location = new System.Drawing.Point(419, 24);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Location = new System.Drawing.Point(494, 24);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(397, 688);
+            this.panel1.Size = new System.Drawing.Size(727, 688);
             this.panel1.TabIndex = 0;
             // 
             // progressBar1
             // 
             this.progressBar1.Location = new System.Drawing.Point(18, 192);
-            this.progressBar1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.progressBar1.Margin = new System.Windows.Forms.Padding(2);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(372, 22);
             this.progressBar1.TabIndex = 27;
@@ -125,7 +125,7 @@
             // showStats
             // 
             this.showStats.Location = new System.Drawing.Point(18, 258);
-            this.showStats.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.showStats.Margin = new System.Windows.Forms.Padding(2);
             this.showStats.Name = "showStats";
             this.showStats.Size = new System.Drawing.Size(90, 22);
             this.showStats.TabIndex = 26;
@@ -138,7 +138,7 @@
             this.MainSequenceButton.BackColor = System.Drawing.Color.Blue;
             this.MainSequenceButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MainSequenceButton.Location = new System.Drawing.Point(18, 106);
-            this.MainSequenceButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MainSequenceButton.Margin = new System.Windows.Forms.Padding(2);
             this.MainSequenceButton.Name = "MainSequenceButton";
             this.MainSequenceButton.Size = new System.Drawing.Size(190, 62);
             this.MainSequenceButton.TabIndex = 25;
@@ -149,7 +149,7 @@
             // Refresh_BTN
             // 
             this.Refresh_BTN.Location = new System.Drawing.Point(146, 258);
-            this.Refresh_BTN.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Refresh_BTN.Margin = new System.Windows.Forms.Padding(2);
             this.Refresh_BTN.Name = "Refresh_BTN";
             this.Refresh_BTN.Size = new System.Drawing.Size(102, 22);
             this.Refresh_BTN.TabIndex = 12;
@@ -160,7 +160,7 @@
             // richTextBox1
             // 
             this.richTextBox1.Location = new System.Drawing.Point(18, 308);
-            this.richTextBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.richTextBox1.Margin = new System.Windows.Forms.Padding(2);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(372, 102);
             this.richTextBox1.TabIndex = 11;
@@ -192,7 +192,7 @@
             // 
             this.Camera_Selection.FormattingEnabled = true;
             this.Camera_Selection.Location = new System.Drawing.Point(18, 38);
-            this.Camera_Selection.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Camera_Selection.Margin = new System.Windows.Forms.Padding(2);
             this.Camera_Selection.Name = "Camera_Selection";
             this.Camera_Selection.Size = new System.Drawing.Size(230, 21);
             this.Camera_Selection.TabIndex = 3;
@@ -212,9 +212,10 @@
             // 
             this.CameraFeedBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.CameraFeedBox.Location = new System.Drawing.Point(2, 24);
-            this.CameraFeedBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CameraFeedBox.Margin = new System.Windows.Forms.Padding(2);
             this.CameraFeedBox.Name = "CameraFeedBox";
-            this.CameraFeedBox.Size = new System.Drawing.Size(406, 306);
+            this.CameraFeedBox.Size = new System.Drawing.Size(480, 270);
+            this.CameraFeedBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.CameraFeedBox.TabIndex = 2;
             this.CameraFeedBox.TabStop = false;
             // 
@@ -224,9 +225,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "CameraFeed";
-            this.Size = new System.Drawing.Size(842, 740);
+            this.Size = new System.Drawing.Size(1247, 740);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -252,7 +253,7 @@
         private System.Windows.Forms.Button showStats;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.ComponentModel.BackgroundWorker backWorker;
-        private Emgu.CV.UI.ImageBox CameraFeedBox;
+        public Emgu.CV.UI.ImageBox CameraFeedBox;
     }
 }
 

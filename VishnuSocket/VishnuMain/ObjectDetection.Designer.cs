@@ -273,7 +273,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.AutoSize = true;
-            this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.Controls.Add(this.harr_button);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.video_imgbox);
@@ -297,7 +297,7 @@
             this.Controls.Add(this.label3);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ComputerVision_Tab";
-            this.Size = new System.Drawing.Size(1220, 777);
+            this.Size = new System.Drawing.Size(1355, 777);
             ((System.ComponentModel.ISupportInitialize)(this.template_imgbox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.captured_imgbox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tracked_imgbox)).EndInit();
@@ -327,9 +327,9 @@
         private System.Windows.Forms.Button SavePicture;
         private System.Windows.Forms.ComboBox Camera_Selection;
         private System.Windows.Forms.Label label7;
-        private Emgu.CV.UI.ImageBox tracked_imgbox;
-        private Emgu.CV.UI.ImageBox video_imgbox;
         private System.Windows.Forms.Label label6;
         public System.Windows.Forms.Button harr_button;
+        public Emgu.CV.UI.ImageBox tracked_imgbox;
+        public Emgu.CV.UI.ImageBox video_imgbox;
     }
 }
