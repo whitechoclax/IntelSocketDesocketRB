@@ -19,9 +19,9 @@ namespace VishnuMain {
     public partial class LoginMain : Form
     {
 
-        
+
         Capture _capture = new Capture();
-        ComputerVision_Tab Match = new ComputerVision_Tab();
+        
         ArmControl Arm = new ArmControl();
         CameraFeed cam = new CameraFeed();
 
@@ -38,11 +38,15 @@ namespace VishnuMain {
         {
             InitializeComponent();
             
+
+
         }
 
         //set the load order here for all tabs
         public void LoginMain_Load_1(object sender, EventArgs e)
         {
+           
+
             ArduinoMotionLibrary.ArduinoMotionLibraryBoot();
             LoadMainViewerTab();        //tabindex 0
             LoadArmControlTab();        //tabindex 1
@@ -86,6 +90,7 @@ namespace VishnuMain {
         {
             TabPage page = new TabPage();
             page.Text = "Object Detection";
+            ComputerVision_Tab Match = new ComputerVision_Tab(_capture);
             page.Controls.Add(Match);
             centralTab.TabPages.Add(page);
         }
@@ -107,16 +112,16 @@ namespace VishnuMain {
             }
         }
 
-        void videoFeed_refresher(object sender, EventArgs arg) {
+        public void videoFeed_refresher(object sender, EventArgs arg) {
             _capture.Retrieve(frame); 
-            Match.video_imgbox.Image = frame; 
+            //Match.video_imgbox.Image = frame; 
             Arm.ArmFeedBox.Image = frame;
             cam.CameraFeedBox.Image = frame;
         }
 
 
 
-       void button1_Click(object sender, EventArgs e) {
+        public void button1_Click(object sender, EventArgs e) {
             if (_capture != null) {
                 if (videoFeed) {
                     button1.Text = "Start Capture";

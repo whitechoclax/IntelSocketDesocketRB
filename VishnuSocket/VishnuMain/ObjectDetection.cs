@@ -35,11 +35,12 @@ namespace VishnuMain {
 
 
 
-        public ComputerVision_Tab() {
+        public ComputerVision_Tab(Capture capture) {
             /* Initilize winforms */
             InitializeComponent();
+            _capture = capture;
 
-           // _capture = capture;
+            // _capture = capture;
             DsDevice[] _SystemCameras = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice);
             WebCams = new CameraStructures[_SystemCameras.Length];
 
