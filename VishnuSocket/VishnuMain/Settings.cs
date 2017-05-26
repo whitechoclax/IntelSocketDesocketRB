@@ -14,14 +14,15 @@ namespace VishnuMain
 {
     public partial class SettingsMenu : UserControl
     {
+        public string xmlfullpath;
         //To add a new varaible to the settings menu:  
         //add appropriate control.  stick with the camelcaseing naming convention here
         //   yourVariableName should suffice.
-        
+
         //strings to save
         string xmlPathString;
         string invPathString;
-        public string xmlfullpath;
+        
 
         //tray properties for different sizes
         int trayLength;
@@ -44,7 +45,7 @@ namespace VishnuMain
         public SettingsMenu()
         {
             InitializeComponent();
-            //loadFromXML();  // breaks when debugging
+            loadFromXML();  // breaks when debugging
         }
 
         //UI changes section
@@ -156,9 +157,9 @@ namespace VishnuMain
 
         public void loadFromXML()
         {
-            //xmlfullpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Path.Combine("Settings", "settings.xml")); // doesnt work on install
-            //XDocument settingsmenu = XDocument.Load(xmlfullpath);  // doesnt work on install
-            XDocument settingsmenu = XDocument.Load(xmlPathString + "\\settings.xml");  // load after setting path
+            xmlfullpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Path.Combine("Resources", "settings.xml")); // doesnt work on install
+            XDocument settingsmenu = XDocument.Load(xmlfullpath);  // doesnt work on install
+            //XDocument settingsmenu = XDocument.Load(xmlPathString + "\\settings.xml");  // load after setting path
             //use NULL COALESCING with ?? to set default if not found
             var groupEl = from setting in settingsmenu.Nodes()
                     select setting;
