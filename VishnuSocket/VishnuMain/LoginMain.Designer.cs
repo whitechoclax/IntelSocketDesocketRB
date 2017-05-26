@@ -59,8 +59,8 @@
             this.AutoScroll = true;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.BackColor = System.Drawing.SystemColors.Menu;
-            this.ClientSize = new System.Drawing.Size(1372, 729);
+            this.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ClientSize = new System.Drawing.Size(1383, 729);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.centralTab);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

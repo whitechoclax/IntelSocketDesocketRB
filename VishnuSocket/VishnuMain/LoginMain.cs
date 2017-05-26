@@ -12,25 +12,32 @@ using Emgu.CV.Structure;
 using Emgu.CV.CvEnum;
 using Emgu.Util;
 
-namespace VishnuMain
-{
+namespace VishnuMain {
+
+
+
     public partial class LoginMain : Form
     {
 
+        
+        Capture _capture = new Capture();
+        ComputerVision_Tab Match = new ComputerVision_Tab();
+        ArmControl Arm = new ArmControl();
+        CameraFeed cam = new CameraFeed();
+
         //Camera Feed
-        Capture _capture = null;
+
         bool videoFeed;
         Mat frame = new Mat();
 
 
-        ComputerVision_Tab Match = new ComputerVision_Tab();
-        ArmControl Arm = new ArmControl();
-        CameraFeed cam = new CameraFeed();
+        
         
 
         public LoginMain()
         {
             InitializeComponent();
+            
         }
 
         //set the load order here for all tabs
@@ -88,7 +95,7 @@ namespace VishnuMain
 
         public Capture StartCapture() {
             try {
-                _capture = new Capture();
+                
                 _capture.SetCaptureProperty(CapProp.FrameHeight, 1080);
                 _capture.SetCaptureProperty(CapProp.FrameWidth, 1920);
                 _capture.ImageGrabbed += videoFeed_refresher; //live stream image cap
