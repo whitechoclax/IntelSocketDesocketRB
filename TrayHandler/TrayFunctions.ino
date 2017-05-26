@@ -22,7 +22,7 @@ void CommandProcess(){//Parse command
       }
     }    
     boolean Redef = false;
-    else if(inputString.startsWith("MOVE")){ //Move to coordinates
+    if(inputString.startsWith("MOVE")){ //Move to coordinates
       inputString = inputString.substring(5);
       if(DEBUG){
         Serial.println("Command is MOVE");
@@ -42,7 +42,8 @@ void CommandProcess(){//Parse command
       return;
     }
     else if(inputString.startsWith("GRAB")){//Send coordinates
-      digitalWrite(GRABBER, HIGH);
+      HOLDING = true;
+      //Close servos
       Serial.println("NAVIGATING");
       Serial.println("DONE");
       RelayCoordinates();
@@ -53,7 +54,8 @@ void CommandProcess(){//Parse command
       return;
     }
     else if(inputString.startsWith("RELEASE")){//Send coordinates
-      digitalWrite(GRABBER, LOW);
+      HOLDING = false;
+      //Open servos
       Serial.println("NAVIGATING");
       Serial.println("DONE");
       RelayCoordinates();
@@ -95,8 +97,8 @@ void CommandProcess(){//Parse command
     zposNew = atoi(pieces[2]);
 
     if(Redef){
-      traypos = xposNew;
-      ypos = yposNew;
+      traypos = trayposNew;
+      zpos = zposNew;
     }
 
     if(DEBUG){
@@ -128,38 +130,34 @@ void CommandProcess(){//Parse command
 void RelayCoordinates(){ //Send back coordinates
   float zTmp = round(zpos);
   EEPROM.updateDouble(ZMEM, zpos);
-  EEPROM.updateDouble(trayposMEM, traypos);
+  EEPROM.updateDouble(TRAYMEM, traypos);
   if(DEBUG){
-    Serial.println(EEPROM.readDouble(trayposMEM));
+    Serial.println(EEPROM.readDouble(TRAYMEM));
     Serial.println(EEPROM.readDouble(ZMEM));
   }
   Serial.print("COOR:");
   Serial.print(zTmp);Serial.print(':');
-  Serial.println(traypos)
+  Serial.println(traypos);
   return;
 }
 
 void Navigate(){ //Moves to new positions
-  boolean trayposDirection;
   float delayFactor = 0;
+  int placesChange = abs(trayposNew - traypos);
   if(trayposNew != traypos){
     if(abs(trayposNew) > abs(traypos)){
       if(DEBUG){
         Serial.println("    Moving clockwise");
       }
       delayFactor = trayposNew/traypos;
-      digitalWrite(Dir[trayposMOTOR], HIGH);
-      deltatraypos = trayposNew - traypos;
-      trayposDirection = RIGHT;
+      digitalWrite(Dir[TRAYMOTOR], HIGH);
     }
     else{
       if(DEBUG){
         Serial.println("    Moving counter-clockwise");
       }
       delayFactor = traypos/trayposNew;
-      digitalWrite(Dir[trayposMOTOR], LOW);
-      deltatraypos = traypos - trayposNew;
-      trayposDirection = LEFT;
+      digitalWrite(Dir[TRAYMOTOR], LOW);
     }
   }
   if(zposNew != zpos){
@@ -171,8 +169,7 @@ void Navigate(){ //Moves to new positions
   
   if(DEBUG){
     Serial.println("\nDeltas are:");
-    Serial.print("traypos: ");Serial.println(deltatraypos,2);
-    Serial.print("Radius: ");Serial.println(deltaRadius,2);
+    Serial.print("traypos: ");Serial.println(placesChange,2);
     Serial.print("Z: ");Serial.println(deltaZ,2);  
   }
   
@@ -200,71 +197,28 @@ void Navigate(){ //Moves to new positions
     digitalWrite(Enable[ZMOTOR], HIGH);
   }
 
-  if(DEBUG){ //Move laterally
-    Serial.println("Moving over");
-  }
-
   boolean doneRad = false;
   boolean donetraypos = false;
-  boolean donetraypos = false;
+  int stepCount = 0;
 
-  int trayposOriginal = traypos;
-  int whereWereGoing = trayposOriginal + deltatraypos;
   while(!donetraypos){
     serialEvent();
-    if(deltatraypos > .4){  //traypos Section
-      digitalWrite(Enable[trayposMOTOR], LOW);
-      digitalWrite(Step[trayposMOTOR], LOW);
-      delay(3);
-      digitalWrite(Step[trayposMOTOR], HIGH);
-      double x = ((traypos-trayposOriginal)*2*PI)/(whereWereGoing - trayposOriginal);
-      double tDelay = 5*cos(x)+5;
-      int addDelay = (4*tDelay) + 15;
-      if(DEBUG){
-        Serial.print("addDelay: ");Serial.println(addDelay);
-      }
-      delay(addDelay);
-      deltatraypos -= 1/float(traypos);
-      if(trayposDirection == LEFT){
-        traypos -= 1/float(traypos);
-      }
-      else
-        traypos += 1/float(traypos);
+    //tray Section
+    digitalWrite(Enable[TRAYMOTOR], LOW);
+    digitalWrite(Step[TRAYMOTOR], LOW);
+    delay(3);
+    digitalWrite(Step[TRAYMOTOR], HIGH);
+    double tDelay = (5*cos(90*57.296)+5)/placesChange;
+    int addDelay = (4*tDelay) + 15;
+    if(DEBUG){
+      Serial.print("addDelay: ");Serial.println(addDelay);
     }
-    if(deltatraypos <= .4){
+    delay(addDelay);
+    if(stepCount <= 90*placesChange){
       donetraypos = true;
       delay(1500);
-      digitalWrite(Enable[trayposMOTOR], HIGH);
+      digitalWrite(Enable[TRAYMOTOR], HIGH);
     }  
-  }
-  while(!doneRad){  //Radius Section
-    serialEvent();
-    if(deltaRadius > 0.01){
-      digitalWrite(Enable[RADMOTOR], LOW);
-      digitalWrite(Step[RADMOTOR], LOW);
-      delayMicroseconds(500);
-      digitalWrite(Step[RADMOTOR], HIGH);
-      delayMicroseconds(500);
-      deltaRadius -= 1/float(RAD);
-      if(radDirection == IN){
-        radius -= 1/float(RAD);
-      }
-      else
-        radius += 1/float(RAD);
-      if(DEBUG){
-        //Serial.print("Radius position: ");Serial.println(radius);
-      }
-    }
-    if(deltaRadius <= 0.01){
-      doneRad = true;
-      digitalWrite(Enable[RADMOTOR], HIGH);
-    }
-  }
-  
-  effector.write(trayposNew); //traypos Section
-  traypos = trayposNew;
-  if(DEBUG){
-    Serial.print("traypos position: ");Serial.println(traypos);
   }
   
   if(zpos > zposNew){ //Z going down, do last
@@ -292,11 +246,8 @@ void Navigate(){ //Moves to new positions
 }
 
 void EmergencyStop(){ //Resets movement information
-  trayposNew = 0;
-  radiusNew = 0;
+  trayposNew = traypos;
   deltaZ = 0;
-  deltatraypos = 0;
-  deltaRadius = 0;
   return;
 }
 

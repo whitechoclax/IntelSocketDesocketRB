@@ -7,12 +7,13 @@
 
 #include <Servo.h>
 #include <EEPROMex.h>
-Servo grabber1
-Servo grabber2
+Servo grabber1;
+Servo grabber2;
 
 //power settings: .5 A , 12v 
 //Motor Mappings
 #define Z 100
+#define STEPS 180
 #define TRAYMOTOR 0
 #define ZMOTOR 2
 #define RIGHT true
@@ -23,6 +24,7 @@ Servo grabber2
 #define ZMEM 0
 
 boolean DEBUG = false; 
+boolean HOLDING = false;
 
 //Current position
 byte traypos = EEPROM.readDouble(TRAYMEM);
@@ -31,6 +33,7 @@ int zpos = EEPROM.readDouble(ZMEM);
 //Desired Positions
 byte trayposNew = 0;
 int zposNew = 0;
+double deltaZ = 0;
 
 //Pin Mappings to Stepper Drivers based on shield
 // z motor:   pins 2,5,6
