@@ -14,8 +14,8 @@ Servo grabber2;
 //Motor Mappings
 #define Z 100
 #define STEPS 180
-#define TRAYMOTOR 0
-#define ZMOTOR 2
+#define TRAYMOTOR 2
+#define ZMOTOR 4
 #define RIGHT true
 #define LEFT false
 #define OUT true
