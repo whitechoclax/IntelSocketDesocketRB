@@ -378,7 +378,6 @@
             this.xmlSaveFileButton.TabIndex = 5;
             this.xmlSaveFileButton.Text = "Browse";
             this.xmlSaveFileButton.UseVisualStyleBackColor = true;
-            this.xmlSaveFileButton.Click += new System.EventHandler(this.xmlSaveFileButton_Click);
             // 
             // inventorySaveFileButton
             // 
