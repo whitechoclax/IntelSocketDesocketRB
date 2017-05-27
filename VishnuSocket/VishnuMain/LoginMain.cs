@@ -22,8 +22,8 @@ namespace VishnuMain {
 
         Capture _capture = new Capture();
         
-        ArmControl Arm = new ArmControl();
-        CameraFeed cam = new CameraFeed();
+       
+        
 
         //Camera Feed
 
@@ -62,6 +62,7 @@ namespace VishnuMain {
         {
             TabPage page = new TabPage();
             page.Text = "Main Viewer";
+            CameraFeed cam = new CameraFeed();
             page.Controls.Add(cam);
             centralTab.TabPages.Add(page);
         }
@@ -70,7 +71,8 @@ namespace VishnuMain {
         public void LoadArmControlTab()
         {
             TabPage page = new TabPage();
-            page.Text = "Manual Arm Control";            
+            page.Text = "Manual Arm Control";
+            ArmControl Arm = new ArmControl();
             page.Controls.Add(Arm);
             centralTab.TabPages.Add(page);
         }
@@ -113,10 +115,8 @@ namespace VishnuMain {
         }
 
         public void videoFeed_refresher(object sender, EventArgs arg) {
-            _capture.Retrieve(frame); 
-            //Match.video_imgbox.Image = frame; 
-            Arm.ArmFeedBox.Image = frame;
-            cam.CameraFeedBox.Image = frame;
+            _capture.Retrieve(frame);
+            main_camera_feed.Image = frame;
         }
 
 
