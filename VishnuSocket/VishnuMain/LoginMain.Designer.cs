@@ -28,42 +28,109 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginMain));
             this.centralTab = new System.Windows.Forms.TabControl();
+            this.main_camera_feed = new Emgu.CV.UI.ImageBox();
+            this.start_camera = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.Camera_Selection = new System.Windows.Forms.ComboBox();
+            ((System.ComponentModel.ISupportInitialize)(this.main_camera_feed)).BeginInit();
             this.SuspendLayout();
             // 
             // centralTab
             // 
-            this.centralTab.Location = new System.Drawing.Point(10, 10);
-            this.centralTab.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.centralTab.Location = new System.Drawing.Point(11, 11);
+            this.centralTab.Margin = new System.Windows.Forms.Padding(2);
             this.centralTab.Name = "centralTab";
             this.centralTab.SelectedIndex = 0;
-            this.centralTab.Size = new System.Drawing.Size(1500, 800);
+            this.centralTab.Size = new System.Drawing.Size(812, 663);
             this.centralTab.TabIndex = 0;
+            // 
+            // main_camera_feed
+            // 
+            this.main_camera_feed.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.main_camera_feed.Location = new System.Drawing.Point(844, 46);
+            this.main_camera_feed.Name = "main_camera_feed";
+            this.main_camera_feed.Size = new System.Drawing.Size(480, 270);
+            this.main_camera_feed.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.main_camera_feed.TabIndex = 2;
+            this.main_camera_feed.TabStop = false;
+            // 
+            // start_camera
+            // 
+            this.start_camera.Location = new System.Drawing.Point(1018, 347);
+            this.start_camera.Name = "start_camera";
+            this.start_camera.Size = new System.Drawing.Size(100, 34);
+            this.start_camera.TabIndex = 3;
+            this.start_camera.Text = "Camera Start";
+            this.start_camera.UseVisualStyleBackColor = true;
+            this.start_camera.Click += new System.EventHandler(this.start_camera_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(841, 335);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(90, 13);
+            this.label7.TabIndex = 35;
+            this.label7.Text = "Camera Selection";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(839, 30);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(70, 13);
+            this.label1.TabIndex = 36;
+            this.label1.Text = "Camera Feed";
+            // 
+            // Camera_Selection
+            // 
+            this.Camera_Selection.FormattingEnabled = true;
+            this.Camera_Selection.Location = new System.Drawing.Point(844, 355);
+            this.Camera_Selection.Name = "Camera_Selection";
+            this.Camera_Selection.Size = new System.Drawing.Size(121, 21);
+            this.Camera_Selection.TabIndex = 37;
             // 
             // LoginMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.AutoSize = true;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.BackColor = System.Drawing.SystemColors.Menu;
-            this.ClientSize = new System.Drawing.Size(996, 541);
+            this.ClientSize = new System.Drawing.Size(1343, 686);
+            this.Controls.Add(this.Camera_Selection);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.start_camera);
+            this.Controls.Add(this.main_camera_feed);
             this.Controls.Add(this.centralTab);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.MinimumSize = new System.Drawing.Size(860, 498);
+            this.Margin = new System.Windows.Forms.Padding(2);
+            this.MinimumSize = new System.Drawing.Size(691, 406);
             this.Name = "LoginMain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Vishnu 2017 0.4a";
             this.Load += new System.EventHandler(this.LoginMain_Load_1);
+            ((System.ComponentModel.ISupportInitialize)(this.main_camera_feed)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.TabControl centralTab;
+        private Emgu.CV.UI.ImageBox main_camera_feed;
+        private System.Windows.Forms.Button start_camera;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox Camera_Selection;
     }
 }
 

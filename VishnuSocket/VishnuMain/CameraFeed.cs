@@ -19,31 +19,32 @@ namespace VishnuMain
     {
         
         #region Variables
-        private Capture _capture = null;
-        private bool _captureInProgress = false;
-        Mat frame = new Mat();
-        Mat grayFrame = new Mat();
-        public int CameraDevice = 0; //Variable to track camera device selected
-        CameraStructures[] WebCams; //List containing all the camera available
+        Capture _capture = null;
+        bool _captureInProgress = false;
+        //Mat frame = new Mat();
+        //Mat grayFrame = new Mat();
+        //public int CameraDevice = 0; //Variable to track camera device selected
+        //CameraStructures[] WebCams; //List containing all the camera available
 
         #endregion
 
-        public CameraFeed()
+        public CameraFeed(Capture capture)
         {
             InitializeComponent();
+            _capture = capture;
             //find cameras on system using DirectShow.net dll
-            DsDevice[] _SystemCameras = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice);
-            WebCams = new CameraStructures[_SystemCameras.Length];
-            for (int i = 0; i < _SystemCameras.Length; i++)
-            {
-                WebCams[i] = new CameraStructures(i, _SystemCameras[i].Name, _SystemCameras[i].ClassID); //fill web cam array
-                Camera_Selection.Items.Add(WebCams[i].ToString());
-            }
-            if (Camera_Selection.Items.Count > 0)
-            {
-                Camera_Selection.SelectedIndex = 0; //Set the selected device the default
-                captureButton.Enabled = true; //Enable the start
-            }
+            //DsDevice[] _SystemCameras = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice);
+            //WebCams = new CameraStructures[_SystemCameras.Length];
+            //for (int i = 0; i < _SystemCameras.Length; i++)
+            //{
+            //    WebCams[i] = new CameraStructures(i, _SystemCameras[i].Name, _SystemCameras[i].ClassID); //fill web cam array
+            //    Camera_Selection.Items.Add(WebCams[i].ToString());
+            //}
+            //if (Camera_Selection.Items.Count > 0)
+            //{
+            //    Camera_Selection.SelectedIndex = 0; //Set the selected device the default
+            //    captureButton.Enabled = true; //Enable the start
+            //}
 
 
             backWorker.WorkerReportsProgress = true;
@@ -53,147 +54,141 @@ namespace VishnuMain
 
         }
 
-        private void ProcessFrame(object sender, EventArgs arg)
-        {
-            //***If you want to access the image data the use the following method call***/
-            Mat PFrame = new Mat();
-            
-            _capture.Retrieve(PFrame);
-            CameraFeedBox.Image = PFrame;
-            
+        //private void ProcessFrame(object sender, EventArgs arg)
+        //{
+        //    //***If you want to access the image data the use the following method call***/
+        //    Mat PFrame = new Mat();
 
+        //    _capture.Retrieve(PFrame);
+        //    CameraFeedBox.Image = PFrame;
+
+
+        //}
+
+        //private delegate void DisplayImageDelegate(Mat Image);
+
+        //private void DisplayImage(Mat Image)
+        //{
+        //    if (CameraFeedBox.InvokeRequired)
+        //    {
+        //        try
+        //        {
+        //            DisplayImageDelegate DI = new DisplayImageDelegate(DisplayImage);
+        //            this.BeginInvoke(DI, new object[] { Image });
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            MessageBox.Show("Thread Unssafe operation");
+        //        }
+
+        //    }
+        //    else
+        //    {
+        //        CameraFeedBox.Image = Image;
+        //    }
+        //}
+
+        private void captureButton_Click(object sender, EventArgs e) {
+            //if (_capture != null) {
+            //    //see if the current camera feed is running.  
+            //    if (_captureInProgress) {
+            //        //stop the capture
+            //        captureButton.Text = "Start Capture";   //Change text on button
+            //        _capture.Pause();                     //Pause the capture
+            //        _capture.Dispose();
+            //        _captureInProgress = false;             //Flag the state of the camera
+            //        _capture = null;                        //assign null, rebuild camera later.
+            //        CameraFeedBox.Image = null;
+            //        CameraFeedBox.Refresh();
+            //    }
+
+            //    else {
+            //        //Check to see if the selected device has changed
+            //        if (Camera_Selection.SelectedIndex != CameraDevice) {
+            //            SetupCapture(Camera_Selection.SelectedIndex); //Setup capture with the new device
+            //        }
+            //        RetrieveCaptureInformation(); //Get Camera information
+
+            //        SetupCapture(Camera_Selection.SelectedIndex);
+            //        captureButton.Text = "Stop";    //Change text on button
+            //        _capture.Start();               //Start the capture
+            //        _captureInProgress = true;      //Flag the state of the camera
+            //    }
+
+            //}
+            //else {
+            //    //set up capture with selected device
+            //    SetupCapture(Camera_Selection.SelectedIndex);
+            //    //Be lazy and Recall this method to start camera
+            //    captureButton_Click(null, null);
+            //}
         }
 
-        private delegate void DisplayImageDelegate(Mat Image);
+        //private void SetupCapture(int Camera_Identifier)
+        //{
+        //    //update the selected device
+        //    CameraDevice = Camera_Identifier;
 
-        private void DisplayImage(Mat Image)
-        {
-            if (CameraFeedBox.InvokeRequired)
-            {
-                try
-                {
-                    DisplayImageDelegate DI = new DisplayImageDelegate(DisplayImage);
-                    this.BeginInvoke(DI, new object[] { Image });
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Thread Unssafe operation");
-                }
+        //    //Dispose of Capture if it was created before
+        //    if (_capture != null) _capture.Dispose();
+        //    try
+        //    {
+        //        //Set up capture device
+        //        _capture = new Capture(CameraDevice);
+        //        _capture.ImageGrabbed += ProcessFrame;
+        //    }
+        //    catch (NullReferenceException excpt)
+        //    {
+        //        MessageBox.Show(excpt.Message);
+        //    }
+        //}
 
-            }
-            else
-            {
-                CameraFeedBox.Image = Image;
-            }
-        }
+        //private void RetrieveCaptureInformation()
+        //{
+        //    richTextBox1.Clear();
+        //    richTextBox1.AppendText("Camera: " + WebCams[CameraDevice].Device_Name + " (-1 = Unknown)\n\n");
 
-        private void captureButton_Click(object sender, EventArgs e)
-        {
-            if (_capture != null)
-            {
-                //see if the current camera feed is running.  
-                if (_captureInProgress)
-                {
-                    //stop the capture
-                    captureButton.Text = "Start Capture";   //Change text on button
-                    _capture.Pause();                     //Pause the capture
-                    _capture.Dispose();
-                    _captureInProgress = false;             //Flag the state of the camera
-                    _capture = null;                        //assign null, rebuild camera later.
-                    CameraFeedBox.Image = null;
-                    CameraFeedBox.Refresh();
-                }
 
-                else
-                {
-                    //Check to see if the selected device has changed
-                    if (Camera_Selection.SelectedIndex != CameraDevice)
-                    {
-                        SetupCapture(Camera_Selection.SelectedIndex); //Setup capture with the new device
-                    }
-                    RetrieveCaptureInformation(); //Get Camera information
+        //    //TODO: ALL These need sliders setting up on main form
+        //    richTextBox1.AppendText("Convert RGB : " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.ConvertRgb).ToString() + "\n");
+        //    richTextBox1.AppendText("Exposure control done by camera: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.AutoExposure).ToString() + "\n");
+        //    richTextBox1.AppendText("Exposure: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Exposure).ToString() + "\n");
+        //    richTextBox1.AppendText("Frame Height: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameHeight).ToString() + "\n");
+        //    richTextBox1.AppendText("Frame Width: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameWidth).ToString() + "\n");
+        //    richTextBox1.AppendText("Gain: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Gain).ToString() + "\n");
+        //    richTextBox1.AppendText("Gamma: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Gamma).ToString() + "\n");
+        //    richTextBox1.AppendText("Hue: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Hue).ToString() + "\n");
+        //    richTextBox1.AppendText("Saturation: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Staturation).ToString() + "\n");
+        //    richTextBox1.AppendText("Sharpness: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Sharpness).ToString() + "\n");
+        //    richTextBox1.AppendText("Trigger: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Trigger).ToString() + "\n");
+        //    richTextBox1.AppendText("Trigger Delay: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.TriggerDelay).ToString() + "\n");
+        //    richTextBox1.AppendText("White balance blue u : " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.WhiteBalanceBlueU).ToString() + "\n");
+        //    richTextBox1.AppendText("White balance red v : " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.WhiteBalanceRedV).ToString() + "\n");
+        //    richTextBox1.AppendText("Max DC1394: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.MaxDC1394).ToString() + "\n");
+        //    richTextBox1.AppendText("Current Capture Mode: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Mode).ToString() + "\n");
+        //    richTextBox1.AppendText("Monocrome : " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Monochrome).ToString() + "\n");
+        //    richTextBox1.AppendText("Rectification : " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Rectification).ToString() + "\n");
+        //    richTextBox1.AppendText("Preview (tricky property, returns cpnst char* indeed ): " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.SupportedPreviewSizesString).ToString() + "\n");
 
-                    SetupCapture(Camera_Selection.SelectedIndex);
-                    captureButton.Text = "Stop";    //Change text on button
-                    _capture.Start();               //Start the capture
-                    _captureInProgress = true;      //Flag the state of the camera
-                }
 
-            }
-            else
-            {
-                //set up capture with selected device
-                SetupCapture(Camera_Selection.SelectedIndex);
-                //Be lazy and Recall this method to start camera
-                captureButton_Click(null, null);
-            }
-        }
 
-        private void SetupCapture(int Camera_Identifier)
-        {
-            //update the selected device
-            CameraDevice = Camera_Identifier;
-
-            //Dispose of Capture if it was created before
-            if (_capture != null) _capture.Dispose();
-            try
-            {
-                //Set up capture device
-                _capture = new Capture(CameraDevice);
-                _capture.ImageGrabbed += ProcessFrame;
-            }
-            catch (NullReferenceException excpt)
-            {
-                MessageBox.Show(excpt.Message);
-            }
-        }
-
-        private void RetrieveCaptureInformation()
-        {
-            richTextBox1.Clear();
-            richTextBox1.AppendText("Camera: " + WebCams[CameraDevice].Device_Name + " (-1 = Unknown)\n\n");
-
-      
-            //TODO: ALL These need sliders setting up on main form
-            richTextBox1.AppendText("Convert RGB : " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.ConvertRgb).ToString() + "\n");
-            richTextBox1.AppendText("Exposure control done by camera: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.AutoExposure).ToString() + "\n");
-            richTextBox1.AppendText("Exposure: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Exposure).ToString() + "\n");
-            richTextBox1.AppendText("Frame Height: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameHeight).ToString() + "\n");
-            richTextBox1.AppendText("Frame Width: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameWidth).ToString() + "\n");
-            richTextBox1.AppendText("Gain: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Gain).ToString() + "\n");
-            richTextBox1.AppendText("Gamma: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Gamma).ToString() + "\n");
-            richTextBox1.AppendText("Hue: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Hue).ToString() + "\n");
-            richTextBox1.AppendText("Saturation: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Staturation).ToString() + "\n");
-            richTextBox1.AppendText("Sharpness: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Sharpness).ToString() + "\n");
-            richTextBox1.AppendText("Trigger: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Trigger).ToString() + "\n");
-            richTextBox1.AppendText("Trigger Delay: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.TriggerDelay).ToString() + "\n");
-            richTextBox1.AppendText("White balance blue u : " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.WhiteBalanceBlueU).ToString() + "\n");
-            richTextBox1.AppendText("White balance red v : " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.WhiteBalanceRedV).ToString() + "\n");
-            richTextBox1.AppendText("Max DC1394: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.MaxDC1394).ToString() + "\n");
-            richTextBox1.AppendText("Current Capture Mode: " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Mode).ToString() + "\n");
-            richTextBox1.AppendText("Monocrome : " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Monochrome).ToString() + "\n");
-            richTextBox1.AppendText("Rectification : " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Rectification).ToString() + "\n");
-            richTextBox1.AppendText("Preview (tricky property, returns cpnst char* indeed ): " + _capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.SupportedPreviewSizesString).ToString() + "\n");
-
-            
-
-        }
+        //}
 
         private void Refresh_BTN_Click(object sender, EventArgs e)
         {
-            if (_capture != null)
-            {
-                RetrieveCaptureInformation();
-            }
+            //if (_capture != null)
+            //{
+            //    RetrieveCaptureInformation();
+            //}
         }
 
 
         protected void OnFormClosing(CancelEventArgs e)
         {
-            if (Capture != false)
-            {
-                _capture.Dispose();
-            }
+            //if (Capture != false)
+            //{
+            //    _capture.Dispose();
+            //}
 
         }
 
