@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using System.IO;
+using System.Reflection;
 
 namespace VishnuMain
 {
@@ -20,7 +21,6 @@ namespace VishnuMain
         //   yourVariableName should suffice.
 
         //strings to save
-        string xmlPathString;
         string invPathString;
         
 
@@ -140,26 +140,14 @@ namespace VishnuMain
             }
         }
 
-        //save button handler
-        private void xmlSaveFileButton_Click(object sender, EventArgs e)
-        {
-            FolderBrowserDialog folderDialog_xml = new FolderBrowserDialog();
-            folderDialog_xml.ShowNewFolderButton = true;
-            DialogResult result = folderDialog_xml.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                //assign path to textbox and save as string
-                xmlPathTextBox.Text = folderDialog_xml.SelectedPath;
-                xmlPathString = xmlPathTextBox.Text;
-                Environment.SpecialFolder root = folderDialog_xml.RootFolder;
-            }
-        }
+       
+        
 
         public void loadFromXML()
         {
-            xmlfullpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Path.Combine("Resources", "settings.xml")); // doesnt work on install
+            xmlfullpath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Resources\settings.xml");
             XDocument settingsmenu = XDocument.Load(xmlfullpath);  // doesnt work on install
-            //XDocument settingsmenu = XDocument.Load(xmlPathString + "\\settings.xml");  // load after setting path
+            
             //use NULL COALESCING with ?? to set default if not found
             var groupEl = from setting in settingsmenu.Nodes()
                     select setting;
@@ -233,8 +221,8 @@ namespace VishnuMain
             );
 
             //save to file
-            //settings.Save(xmlfullpath);  // doesnt work on install
-            settings.Save(xmlPathString + "\\settings.xml");  // load after setting path
+            settings.Save(xmlfullpath);  // doesnt work on install
+            //settings.Save(xmlPathString + "\\settings.xml");  // load after setting path
             return;
         }
 

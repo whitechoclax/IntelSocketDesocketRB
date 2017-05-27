@@ -48,10 +48,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.invManagerBox = new System.Windows.Forms.GroupBox();
             this.isCompressedFile = new System.Windows.Forms.CheckBox();
-            this.xmlSaveFileButton = new System.Windows.Forms.Button();
             this.inventorySaveFileButton = new System.Windows.Forms.Button();
-            this.xmlPathTextBox = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.invPathTextBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
@@ -102,11 +99,11 @@
             this.groupBox1.Controls.Add(this.trayWidthValue);
             this.groupBox1.Controls.Add(this.trayLengthValue);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(11, 25);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Location = new System.Drawing.Point(22, 48);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox1.Size = new System.Drawing.Size(249, 315);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Size = new System.Drawing.Size(498, 606);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Tray Properties";
@@ -114,18 +111,20 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(9, 259);
+            this.label11.Location = new System.Drawing.Point(18, 498);
+            this.label11.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(139, 13);
+            this.label11.Size = new System.Drawing.Size(288, 25);
             this.label11.TabIndex = 16;
             this.label11.Text = "Tray Center-Center Col (mm)";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(11, 209);
+            this.label10.Location = new System.Drawing.Point(22, 402);
+            this.label10.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(138, 13);
+            this.label10.Size = new System.Drawing.Size(283, 25);
             this.label10.TabIndex = 15;
             this.label10.Text = "Tray Origin to center Y (mm)";
             // 
@@ -137,9 +136,10 @@
             0,
             0,
             65536});
-            this.trayCenter2CenterValueCol.Location = new System.Drawing.Point(159, 257);
+            this.trayCenter2CenterValueCol.Location = new System.Drawing.Point(318, 494);
+            this.trayCenter2CenterValueCol.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.trayCenter2CenterValueCol.Name = "trayCenter2CenterValueCol";
-            this.trayCenter2CenterValueCol.Size = new System.Drawing.Size(79, 20);
+            this.trayCenter2CenterValueCol.Size = new System.Drawing.Size(158, 31);
             this.trayCenter2CenterValueCol.TabIndex = 14;
             this.trayCenter2CenterValueCol.ValueChanged += new System.EventHandler(this.trayCenter2CenterValueCol_ValueChanged);
             // 
@@ -151,9 +151,10 @@
             0,
             0,
             65536});
-            this.trayOr2CenterValueY.Location = new System.Drawing.Point(159, 207);
+            this.trayOr2CenterValueY.Location = new System.Drawing.Point(318, 398);
+            this.trayOr2CenterValueY.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.trayOr2CenterValueY.Name = "trayOr2CenterValueY";
-            this.trayOr2CenterValueY.Size = new System.Drawing.Size(79, 20);
+            this.trayOr2CenterValueY.Size = new System.Drawing.Size(158, 31);
             this.trayOr2CenterValueY.TabIndex = 13;
             this.trayOr2CenterValueY.ValueChanged += new System.EventHandler(this.trayOr2CenterValueY_ValueChanged);
             // 
@@ -165,10 +166,10 @@
             0,
             0,
             65536});
-            this.trayHeightValue.Location = new System.Drawing.Point(158, 282);
-            this.trayHeightValue.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.trayHeightValue.Location = new System.Drawing.Point(316, 542);
+            this.trayHeightValue.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.trayHeightValue.Name = "trayHeightValue";
-            this.trayHeightValue.Size = new System.Drawing.Size(80, 20);
+            this.trayHeightValue.Size = new System.Drawing.Size(160, 31);
             this.trayHeightValue.TabIndex = 12;
             this.trayHeightValue.ValueChanged += new System.EventHandler(this.trayHeightValue_ValueChanged);
             // 
@@ -180,10 +181,10 @@
             0,
             0,
             65536});
-            this.trayCenter2CenterValueRow.Location = new System.Drawing.Point(158, 232);
-            this.trayCenter2CenterValueRow.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.trayCenter2CenterValueRow.Location = new System.Drawing.Point(316, 446);
+            this.trayCenter2CenterValueRow.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.trayCenter2CenterValueRow.Name = "trayCenter2CenterValueRow";
-            this.trayCenter2CenterValueRow.Size = new System.Drawing.Size(80, 20);
+            this.trayCenter2CenterValueRow.Size = new System.Drawing.Size(160, 31);
             this.trayCenter2CenterValueRow.TabIndex = 11;
             this.trayCenter2CenterValueRow.ValueChanged += new System.EventHandler(this.trayCenter2CenterValue_ValueChanged);
             // 
@@ -195,47 +196,47 @@
             0,
             0,
             65536});
-            this.trayOr2CenterValueX.Location = new System.Drawing.Point(159, 182);
-            this.trayOr2CenterValueX.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.trayOr2CenterValueX.Location = new System.Drawing.Point(318, 350);
+            this.trayOr2CenterValueX.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.trayOr2CenterValueX.Name = "trayOr2CenterValueX";
-            this.trayOr2CenterValueX.Size = new System.Drawing.Size(79, 20);
+            this.trayOr2CenterValueX.Size = new System.Drawing.Size(158, 31);
             this.trayOr2CenterValueX.TabIndex = 10;
             this.trayOr2CenterValueX.ValueChanged += new System.EventHandler(this.trayOr2CenterValue_ValueChanged);
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(10, 284);
-            this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label9.Location = new System.Drawing.Point(20, 546);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(87, 13);
+            this.label9.Size = new System.Drawing.Size(177, 25);
             this.label9.TabIndex = 9;
             this.label9.Text = "Tray Height (mm)";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(10, 234);
-            this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label8.Location = new System.Drawing.Point(20, 450);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(146, 13);
+            this.label8.Size = new System.Drawing.Size(298, 25);
             this.label8.TabIndex = 8;
             this.label8.Text = "Tray Center-Center Row (mm)";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(10, 185);
-            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label7.Location = new System.Drawing.Point(20, 356);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(138, 13);
+            this.label7.Size = new System.Drawing.Size(282, 25);
             this.label7.TabIndex = 7;
             this.label7.Text = "Tray Origin to center X (mm)";
             // 
             // trayStackValue
             // 
-            this.trayStackValue.Location = new System.Drawing.Point(152, 115);
-            this.trayStackValue.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.trayStackValue.Location = new System.Drawing.Point(304, 221);
+            this.trayStackValue.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.trayStackValue.Maximum = new decimal(new int[] {
             50,
             0,
@@ -247,7 +248,7 @@
             0,
             0});
             this.trayStackValue.Name = "trayStackValue";
-            this.trayStackValue.Size = new System.Drawing.Size(80, 20);
+            this.trayStackValue.Size = new System.Drawing.Size(160, 31);
             this.trayStackValue.TabIndex = 6;
             this.trayStackValue.Value = new decimal(new int[] {
             1,
@@ -259,37 +260,37 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(13, 115);
-            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label4.Location = new System.Drawing.Point(26, 221);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(136, 13);
+            this.label4.Size = new System.Drawing.Size(274, 25);
             this.label4.TabIndex = 5;
             this.label4.Text = "Tray Height (Stack of trays)";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(13, 89);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label3.Location = new System.Drawing.Point(26, 171);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(126, 13);
+            this.label3.Size = new System.Drawing.Size(252, 25);
             this.label3.TabIndex = 4;
             this.label3.Text = "Tray Width (in # of chips)";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 61);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Location = new System.Drawing.Point(26, 117);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(131, 13);
+            this.label2.Size = new System.Drawing.Size(263, 25);
             this.label2.TabIndex = 3;
             this.label2.Text = "Tray Length (in # of chips)";
             // 
             // trayWidthValue
             // 
-            this.trayWidthValue.Location = new System.Drawing.Point(152, 89);
-            this.trayWidthValue.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.trayWidthValue.Location = new System.Drawing.Point(304, 171);
+            this.trayWidthValue.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.trayWidthValue.Maximum = new decimal(new int[] {
             50,
             0,
@@ -301,7 +302,7 @@
             0,
             0});
             this.trayWidthValue.Name = "trayWidthValue";
-            this.trayWidthValue.Size = new System.Drawing.Size(80, 20);
+            this.trayWidthValue.Size = new System.Drawing.Size(160, 31);
             this.trayWidthValue.TabIndex = 2;
             this.trayWidthValue.Value = new decimal(new int[] {
             1,
@@ -312,15 +313,15 @@
             // 
             // trayLengthValue
             // 
-            this.trayLengthValue.Location = new System.Drawing.Point(152, 60);
-            this.trayLengthValue.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.trayLengthValue.Location = new System.Drawing.Point(304, 115);
+            this.trayLengthValue.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.trayLengthValue.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.trayLengthValue.Name = "trayLengthValue";
-            this.trayLengthValue.Size = new System.Drawing.Size(80, 20);
+            this.trayLengthValue.Size = new System.Drawing.Size(160, 31);
             this.trayLengthValue.TabIndex = 1;
             this.trayLengthValue.Value = new decimal(new int[] {
             1,
@@ -333,27 +334,24 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(4, 25);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Location = new System.Drawing.Point(8, 48);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(126, 20);
+            this.label1.Size = new System.Drawing.Size(257, 37);
             this.label1.TabIndex = 0;
             this.label1.Text = "Tray Dimensions";
             // 
             // invManagerBox
             // 
             this.invManagerBox.Controls.Add(this.isCompressedFile);
-            this.invManagerBox.Controls.Add(this.xmlSaveFileButton);
             this.invManagerBox.Controls.Add(this.inventorySaveFileButton);
-            this.invManagerBox.Controls.Add(this.xmlPathTextBox);
-            this.invManagerBox.Controls.Add(this.label6);
             this.invManagerBox.Controls.Add(this.invPathTextBox);
             this.invManagerBox.Controls.Add(this.label5);
-            this.invManagerBox.Location = new System.Drawing.Point(264, 25);
-            this.invManagerBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.invManagerBox.Location = new System.Drawing.Point(528, 48);
+            this.invManagerBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.invManagerBox.Name = "invManagerBox";
-            this.invManagerBox.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.invManagerBox.Size = new System.Drawing.Size(429, 204);
+            this.invManagerBox.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.invManagerBox.Size = new System.Drawing.Size(858, 252);
             this.invManagerBox.TabIndex = 1;
             this.invManagerBox.TabStop = false;
             this.invManagerBox.Text = "Inventory Management";
@@ -361,79 +359,50 @@
             // isCompressedFile
             // 
             this.isCompressedFile.AutoSize = true;
-            this.isCompressedFile.Location = new System.Drawing.Point(16, 159);
-            this.isCompressedFile.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.isCompressedFile.Location = new System.Drawing.Point(31, 173);
+            this.isCompressedFile.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.isCompressedFile.Name = "isCompressedFile";
-            this.isCompressedFile.Size = new System.Drawing.Size(169, 17);
+            this.isCompressedFile.Size = new System.Drawing.Size(338, 29);
             this.isCompressedFile.TabIndex = 6;
             this.isCompressedFile.Text = "Use High image quality (>1mb)";
             this.isCompressedFile.UseVisualStyleBackColor = true;
             // 
-            // xmlSaveFileButton
-            // 
-            this.xmlSaveFileButton.Location = new System.Drawing.Point(316, 111);
-            this.xmlSaveFileButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.xmlSaveFileButton.Name = "xmlSaveFileButton";
-            this.xmlSaveFileButton.Size = new System.Drawing.Size(101, 25);
-            this.xmlSaveFileButton.TabIndex = 5;
-            this.xmlSaveFileButton.Text = "Browse";
-            this.xmlSaveFileButton.UseVisualStyleBackColor = true;
-            this.xmlSaveFileButton.Click += new System.EventHandler(this.xmlSaveFileButton_Click);
-            // 
             // inventorySaveFileButton
             // 
-            this.inventorySaveFileButton.Location = new System.Drawing.Point(316, 53);
-            this.inventorySaveFileButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.inventorySaveFileButton.Location = new System.Drawing.Point(632, 102);
+            this.inventorySaveFileButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.inventorySaveFileButton.Name = "inventorySaveFileButton";
-            this.inventorySaveFileButton.Size = new System.Drawing.Size(101, 25);
+            this.inventorySaveFileButton.Size = new System.Drawing.Size(202, 48);
             this.inventorySaveFileButton.TabIndex = 4;
             this.inventorySaveFileButton.Text = "Browse";
             this.inventorySaveFileButton.UseVisualStyleBackColor = true;
             this.inventorySaveFileButton.Click += new System.EventHandler(this.inventorySaveFileButton_Click);
             // 
-            // xmlPathTextBox
-            // 
-            this.xmlPathTextBox.Location = new System.Drawing.Point(16, 115);
-            this.xmlPathTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.xmlPathTextBox.Name = "xmlPathTextBox";
-            this.xmlPathTextBox.Size = new System.Drawing.Size(273, 20);
-            this.xmlPathTextBox.TabIndex = 3;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(13, 93);
-            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(129, 13);
-            this.label6.TabIndex = 2;
-            this.label6.Text = "Settings Save file location";
-            // 
             // invPathTextBox
             // 
-            this.invPathTextBox.Location = new System.Drawing.Point(16, 57);
-            this.invPathTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.invPathTextBox.Location = new System.Drawing.Point(32, 110);
+            this.invPathTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.invPathTextBox.Name = "invPathTextBox";
-            this.invPathTextBox.Size = new System.Drawing.Size(273, 20);
+            this.invPathTextBox.Size = new System.Drawing.Size(542, 31);
             this.invPathTextBox.TabIndex = 1;
             this.invPathTextBox.TextChanged += new System.EventHandler(this.invPathTextBox_TextChanged);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(13, 30);
-            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label5.Location = new System.Drawing.Point(26, 58);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(123, 13);
+            this.label5.Size = new System.Drawing.Size(248, 25);
             this.label5.TabIndex = 0;
             this.label5.Text = "Inventory Folder location";
             // 
             // xmlSaveButton
             // 
-            this.xmlSaveButton.Location = new System.Drawing.Point(264, 319);
-            this.xmlSaveButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.xmlSaveButton.Location = new System.Drawing.Point(528, 613);
+            this.xmlSaveButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.xmlSaveButton.Name = "xmlSaveButton";
-            this.xmlSaveButton.Size = new System.Drawing.Size(116, 48);
+            this.xmlSaveButton.Size = new System.Drawing.Size(232, 92);
             this.xmlSaveButton.TabIndex = 2;
             this.xmlSaveButton.Text = "SAVE TO FILE";
             this.xmlSaveButton.UseVisualStyleBackColor = true;
@@ -441,10 +410,10 @@
             // 
             // loadxmlButton
             // 
-            this.loadxmlButton.Location = new System.Drawing.Point(397, 319);
-            this.loadxmlButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.loadxmlButton.Location = new System.Drawing.Point(794, 613);
+            this.loadxmlButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.loadxmlButton.Name = "loadxmlButton";
-            this.loadxmlButton.Size = new System.Drawing.Size(116, 48);
+            this.loadxmlButton.Size = new System.Drawing.Size(232, 92);
             this.loadxmlButton.TabIndex = 3;
             this.loadxmlButton.Text = "LOAD FROM FILE";
             this.loadxmlButton.UseVisualStyleBackColor = true;
@@ -456,20 +425,20 @@
             this.checkedListBox1.Items.AddRange(new object[] {
             "ARDUINO: MAINROBOTARM ",
             "ARDUINO: TRAYHANDLER"});
-            this.checkedListBox1.Location = new System.Drawing.Point(4, 16);
-            this.checkedListBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkedListBox1.Location = new System.Drawing.Point(8, 31);
+            this.checkedListBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(217, 4);
+            this.checkedListBox1.Size = new System.Drawing.Size(430, 4);
             this.checkedListBox1.TabIndex = 4;
             // 
             // componentBox
             // 
             this.componentBox.Controls.Add(this.checkedListBox1);
-            this.componentBox.Location = new System.Drawing.Point(264, 248);
-            this.componentBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.componentBox.Location = new System.Drawing.Point(528, 477);
+            this.componentBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.componentBox.Name = "componentBox";
-            this.componentBox.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.componentBox.Size = new System.Drawing.Size(249, 64);
+            this.componentBox.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.componentBox.Size = new System.Drawing.Size(498, 123);
             this.componentBox.TabIndex = 5;
             this.componentBox.TabStop = false;
             this.componentBox.Text = "System Peripherals";
@@ -482,11 +451,11 @@
             this.socketBox.Controls.Add(this.socketDimYValue);
             this.socketBox.Controls.Add(this.socketX);
             this.socketBox.Controls.Add(this.socketDimXValue);
-            this.socketBox.Location = new System.Drawing.Point(11, 354);
-            this.socketBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.socketBox.Location = new System.Drawing.Point(22, 681);
+            this.socketBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.socketBox.Name = "socketBox";
-            this.socketBox.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.socketBox.Size = new System.Drawing.Size(249, 136);
+            this.socketBox.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.socketBox.Size = new System.Drawing.Size(498, 262);
             this.socketBox.TabIndex = 6;
             this.socketBox.TabStop = false;
             this.socketBox.Text = "Socket Properties";
@@ -494,17 +463,17 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(10, 90);
-            this.label13.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label13.Location = new System.Drawing.Point(20, 173);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(103, 13);
+            this.label13.Size = new System.Drawing.Size(204, 25);
             this.label13.TabIndex = 5;
             this.label13.Text = "Socket Dimension Z";
             // 
             // socketDimZValue
             // 
-            this.socketDimZValue.Location = new System.Drawing.Point(138, 86);
-            this.socketDimZValue.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.socketDimZValue.Location = new System.Drawing.Point(276, 165);
+            this.socketDimZValue.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.socketDimZValue.Maximum = new decimal(new int[] {
             250,
             0,
@@ -516,24 +485,24 @@
             0,
             -2147483648});
             this.socketDimZValue.Name = "socketDimZValue";
-            this.socketDimZValue.Size = new System.Drawing.Size(80, 20);
+            this.socketDimZValue.Size = new System.Drawing.Size(160, 31);
             this.socketDimZValue.TabIndex = 4;
             this.socketDimZValue.ValueChanged += new System.EventHandler(this.socketDimZValue_ValueChanged);
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(10, 61);
-            this.label12.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label12.Location = new System.Drawing.Point(20, 117);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(103, 13);
+            this.label12.Size = new System.Drawing.Size(206, 25);
             this.label12.TabIndex = 3;
             this.label12.Text = "Socket Dimension Y";
             // 
             // socketDimYValue
             // 
-            this.socketDimYValue.Location = new System.Drawing.Point(138, 58);
-            this.socketDimYValue.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.socketDimYValue.Location = new System.Drawing.Point(276, 112);
+            this.socketDimYValue.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.socketDimYValue.Maximum = new decimal(new int[] {
             250,
             0,
@@ -545,37 +514,37 @@
             0,
             -2147483648});
             this.socketDimYValue.Name = "socketDimYValue";
-            this.socketDimYValue.Size = new System.Drawing.Size(80, 20);
+            this.socketDimYValue.Size = new System.Drawing.Size(160, 31);
             this.socketDimYValue.TabIndex = 2;
             this.socketDimYValue.ValueChanged += new System.EventHandler(this.socketDimYValue_ValueChanged);
             // 
             // socketX
             // 
             this.socketX.AutoSize = true;
-            this.socketX.Location = new System.Drawing.Point(10, 30);
-            this.socketX.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.socketX.Location = new System.Drawing.Point(20, 58);
+            this.socketX.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.socketX.Name = "socketX";
-            this.socketX.Size = new System.Drawing.Size(106, 13);
+            this.socketX.Size = new System.Drawing.Size(211, 25);
             this.socketX.TabIndex = 1;
             this.socketX.Text = "Socket Dimension X ";
             // 
             // socketDimXValue
             // 
-            this.socketDimXValue.Location = new System.Drawing.Point(138, 30);
-            this.socketDimXValue.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.socketDimXValue.Location = new System.Drawing.Point(276, 58);
+            this.socketDimXValue.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.socketDimXValue.Maximum = new decimal(new int[] {
             300,
             0,
             0,
             0});
             this.socketDimXValue.Name = "socketDimXValue";
-            this.socketDimXValue.Size = new System.Drawing.Size(80, 20);
+            this.socketDimXValue.Size = new System.Drawing.Size(160, 31);
             this.socketDimXValue.TabIndex = 0;
             this.socketDimXValue.ValueChanged += new System.EventHandler(this.socketDimXValue_ValueChanged);
             // 
             // SettingsMenu
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.AutoSize = true;
@@ -585,9 +554,9 @@
             this.Controls.Add(this.invManagerBox);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.componentBox);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "SettingsMenu";
-            this.Size = new System.Drawing.Size(1159, 677);
+            this.Size = new System.Drawing.Size(2318, 1302);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trayCenter2CenterValueCol)).EndInit();
@@ -621,11 +590,8 @@
         private System.Windows.Forms.NumericUpDown trayLengthValue;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox invManagerBox;
-        private System.Windows.Forms.TextBox xmlPathTextBox;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox invPathTextBox;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button xmlSaveFileButton;
         private System.Windows.Forms.Button inventorySaveFileButton;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Button xmlSaveButton;
