@@ -111,7 +111,7 @@ void CommandProcess(){//Parse command
       delay(100);
     }
 
-    if(zposNew >= 0 && trayposNew >=0 && zposNew < 400 && trayposNew < 3){
+    if(zposNew >= 0 && trayposNew >=0 && zposNew < 400 && trayposNew < 4){
        Serial.println("NAVIGATING");
        Navigate();
        Serial.println("DONE");

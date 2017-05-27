@@ -142,7 +142,7 @@ void CommandProcess(){//Parse command
       angleNew = 0;
     }
 
-    if(xposNew >= 0 && yposNew >= -600 && zposNew >= 0 && angleNew >=0 && xposNew < 600 && yposNew < 600 && zposNew < 600 && angleNew < 360){
+    if(xposNew >= -90.01 && yposNew >= -600 && zposNew >= 0 && angleNew >=0 && xposNew < 600 && yposNew < 600 && zposNew < 600 && angleNew < 360){
        MapCoordinates(false);
        if(radiusNew < 159 || radiusNew > 490){
         Serial.println("ERROR:CRASH");
@@ -168,10 +168,16 @@ void MapCoordinates(boolean cartesian){ //Converts cart -> cyl and back
     double x = double(xposNew);
     double y = double(yposNew);
     thetaNew = atan2(x,y)*57.2958;
-    radiusNew = sqrt(pow(xposNew,2)+pow(yposNew,2));
+    //radiusNew = sqrt(pow(xposNew,2)+pow(yposNew,2));
+    radiusNew = sqrt(pow(xposNew,2)+pow(yposNew,2)-pow(90,2));
     x = double(xpos);
     y = double(ypos);
     theta = abs(atan2(x,y)*57.2958);
+    theta = 2*(atan2(sqrt(pow(xposNew,2)+pow(yposNew,2)-pow(90,2))-yposNew,90-xposNew)+PI);
+    theta = theta *57.2958;
+    if(DEBUG){
+        Serial.print("Theta calculated: ");Serial.println(theta);
+      }
     if(theta > 179.99){
       theta = 179.99;
     }
@@ -185,11 +191,14 @@ void MapCoordinates(boolean cartesian){ //Converts cart -> cyl and back
       thetaNew = theta;
       Serial.println("ERROR:EOB");
     }
-    radius = sqrt(pow(xpos,2)+pow(ypos,2));
+    //radius = sqrt(pow(xpos,2)+pow(ypos,2));
+    radiusNew = sqrt(pow(xposNew,2)+pow(yposNew,2)-pow(90,2));
   }
   else{ //Convert to cart. coor
-    xpos = radius * (sin(theta/(180.0/PI)));
-    ypos = radius * (cos(theta/(180.0/PI)));
+    //xpos = radius * (sin(theta*(PI/180.0)));
+    xpos = -90*cos(theta*(PI/180.0)) - radius * (sin(theta*(PI/180.0)));
+    //ypos = radius * (cos(theta*(PI/180.0)));
+    xpos = -90*sin(theta*(PI/180.0)) + radius * (cos(theta*(PI/180.0)));
   }
 
   if(DEBUG){

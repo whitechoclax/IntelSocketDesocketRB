@@ -4,17 +4,10 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO.Ports;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
-using Emgu.Util;
-using Emgu.CV;
-using Emgu.CV.CvEnum;
-using DirectShowLib;
-using Emgu.CV.Structure;
+
 
 namespace VishnuMain
 {
@@ -29,8 +22,6 @@ namespace VishnuMain
         int TrayChoiceValue;
         public Capture _capture;
         public bool _captureInProgress;
-        int CameraDevice = 0; //Variable to track camera device selected
-        CameraStructures[] WebCams; //List containing all the camera available
 
         public ArmControl()
         {
@@ -42,123 +33,6 @@ namespace VishnuMain
             DownRightButton.Text = char.ConvertFromUtf32(0x2198);
             UpLeftButton.Text = char.ConvertFromUtf32(0x2196);
             UpRightButton.Text = char.ConvertFromUtf32(0x2197);
-
-            //find availible webcams
-            DsDevice[] _SystemCameras = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice);
-            WebCams = new CameraStructures[_SystemCameras.Length];
-            for (int i = 0; i < _SystemCameras.Length; i++)
-            {
-                WebCams[i] = new CameraStructures(i, _SystemCameras[i].Name, _SystemCameras[i].ClassID); //fill web cam array
-                Camera_Selection.Items.Add(WebCams[i].ToString());
-            }
-            if (Camera_Selection.Items.Count > 0)
-            {
-                Camera_Selection.SelectedIndex = 0; //Set the selected device the default
-                captureButton.Enabled = true; //Enable the start
-            }
-        }
-        //Camera feed related functions
-
-        private delegate void DisplayImageDelegate(Mat Image);
-
-        private void DisplayImage(Mat Image)
-        {
-            
-                if (ArmFeedBox.InvokeRequired)
-                {
-                    try
-                    {
-                        DisplayImageDelegate DI = new DisplayImageDelegate(DisplayImage);
-                        this.BeginInvoke(DI, new object[] { Image });
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Thread Unsafe operation" + ex.ToString());
-                    }
-
-                }
-                else
-                {
-                    ArmFeedBox.Image = Image;
-                    
-                }
-        }
-
-        private void captureButton_Click(object sender, EventArgs e)
-        {
-            if (_capture != null)
-            {
-                if (_captureInProgress)
-                {
-                    //stop the capture
-                    StopCapture();
-                }
-                else
-                {
-                    if (Camera_Selection.SelectedIndex != CameraDevice)
-                    {
-                        SetupCapture(Camera_Selection.SelectedIndex); //Setup capture with the new device
-                    }
-                    SetupCapture(Camera_Selection.SelectedIndex);
-                    captureButton.Text = "Stop"; //Change text on button
-                    _capture.Start(); //Start the capture
-                    _captureInProgress = true; //Flag the state of the camera
-                }
-
-            }
-            else
-            {
-               
-                //set up capture with selected device
-                SetupCapture(Camera_Selection.SelectedIndex);
-                //Be lazy and Recall this method to start camera
-                captureButton_Click(null, null);
-            }
-        }
-
-        //camera stop so we wont have more than one feed running at a time.
-        public void StopCapture()
-        {
-            captureButton.Text = "Start Capture"; //Change text on button
-            _capture.Pause();
-            _capture.Dispose();
-            _captureInProgress = false;           //Flag the state of the camera
-            _capture = null;
-            ArmFeedBox.Image = null;              //reset picture in imagebox
-            ArmFeedBox.Refresh();
-        }
-        //create cpature class iof not already,
-        private void SetupCapture(int Camera_Identifier)
-        {
-            //update the selected device
-            CameraDevice = Camera_Identifier;
-            //Dispose of Capture if it was created before
-            if (_capture != null) _capture.Dispose();
-            try
-            {
-                //Set up capture device
-                _capture = new Capture(CameraDevice);
-                _capture.SetCaptureProperty(CapProp.Fps, 30);
-                _capture.ImageGrabbed += _capture_ImageGrabbed;
-            }
-            catch (NullReferenceException excpt)
-            {
-                MessageBox.Show(excpt.Message);
-            }
-
-        }
-
-        //image process update imagebox
-        private void _capture_ImageGrabbed(object sender, EventArgs e)
-        {
-            Mat Frame = new Mat();
-            
-            //Mat Frame = new Mat();
-            _capture.Retrieve(Frame);
-            //ArmFeedBox.Image = Frame;
-            DisplayImage(Frame);
-            
-            
         }
 
 
@@ -234,6 +108,9 @@ namespace VishnuMain
             BWS.RunWorkerAsync();
 
         }
+
+
+
         //ASYNC TASKS
         
 
@@ -411,6 +288,14 @@ namespace VishnuMain
                 portListBox.AppendText("SHIFTX from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
             };
             BWR.RunWorkerAsync();
+        }
+
+        private void cameraFeedBox_Enter(object sender, EventArgs e) {
+
+        }
+
+        private void ArmFeedBox_Click(object sender, EventArgs e) {
+
         }
 
     }
