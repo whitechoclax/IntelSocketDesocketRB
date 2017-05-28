@@ -31,6 +31,7 @@ Servo effector;
 #define THETAMEM 4
 #define ZMEM 8
 #define ENDMEM 12
+#define R -90.0
 
 boolean DEBUG = false; 
 
