@@ -8,15 +8,24 @@ using DirectShowLib;
 namespace VishnuMain {
     public partial class LoginMain : Form {
 
+        //object used to control camera
         Capture _capture = null;
+
+        //object used to hold images
         Mat frame = new Mat();
-        bool videoFeed;
+        
+        //array to hold list of web cameras
         CameraStructures[] WebCams;
-        int CameraDevice = 0;
+
+
+        bool videoFeed;
+        int cameraSelect = 0;
 
 
         public LoginMain() {
             InitializeComponent();
+            list_cameras();
+            default_camera();
             StartCapture(); //initilize camera
         }
 
@@ -28,12 +37,6 @@ namespace VishnuMain {
             LoadArmControlTab();        //tabindex 1
             LoadSettingsTab();          //tabindex 2
             LoadCvDetectionTab();       //tabindex 3
-            
-
-
-            
-
-
         }
 
 
@@ -85,7 +88,7 @@ namespace VishnuMain {
 
         public Capture StartCapture() {
             try {
-                _capture = new Capture();
+                _capture = new Capture(cameraSelect);
                 _capture.SetCaptureProperty(CapProp.FrameHeight, 1080);
                 _capture.SetCaptureProperty(CapProp.FrameWidth, 1920);
                 _capture.ImageGrabbed += videoFeed_refresher;
@@ -96,7 +99,7 @@ namespace VishnuMain {
                 return _capture = null;
             }
         }
-
+ 
 
         public void listCamera() {
 
@@ -125,8 +128,43 @@ namespace VishnuMain {
                 }
                 videoFeed = !videoFeed;
             }
-
         }
+
+
+        private void default_camera() {
+            cameraSelect = Properties.Settings.Default.camera_selection;
+            Camera_Selection.SelectedIndex = cameraSelect;
+        }
+
+
+        private void save_camera_Click(object sender, EventArgs e) {
+            Properties.Settings.Default.camera_selection = Camera_Selection.SelectedIndex;
+            Properties.Settings.Default.Save();
+            start_camera.Text = "Resume";
+            _capture.Stop();
+            _capture.Dispose();
+            _capture = null;
+            videoFeed = false;
+            default_camera();
+            StartCapture();
+            
+        }
+
+
+        void list_cameras() {
+            //find cameras on system using DirectShow.net dll
+            DsDevice[] _SystemCameras = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice);
+            WebCams = new CameraStructures[_SystemCameras.Length];
+            for (int i = 0; i < _SystemCameras.Length; i++) {
+                WebCams[i] = new CameraStructures(i, _SystemCameras[i].Name, _SystemCameras[i].ClassID); //fill web cam array
+                Camera_Selection.Items.Add(WebCams[i].ToString());
+            }
+            if (Camera_Selection.Items.Count > 0) {
+                Camera_Selection.SelectedIndex = 0; //Set the selected device the default
+                start_camera.Enabled = true; //Enable the start
+            }
+        }
+
 
 
     }
