@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO.Ports;
+using System.Windows.Forms;
 
 namespace VishnuMain
 {
@@ -78,11 +79,13 @@ namespace VishnuMain
             }
             catch (System.IO.IOException e)
             {//If there's an exception on the first one we have a problem
+                //MessageBox.Show(e.Message);
                 Error(0);
                 return;
             }
             catch (System.UnauthorizedAccessException e)
             {
+                //MessageBox.Show(e.Message);
                 Error(0);
                 return;
             }
@@ -94,10 +97,12 @@ namespace VishnuMain
             }
             catch (System.IO.IOException e)
             {//If there's an exception on the second one we just have one connected
+                //MessageBox.Show(e.Message);
                 numArduinos = 1;
             }
             catch (System.UnauthorizedAccessException e)
             {
+                //MessageBox.Show(e.Message);
                 numArduinos = 1;
             }
 
@@ -116,6 +121,7 @@ namespace VishnuMain
                 }
                 catch (TimeoutException e)
                 {
+                    //MessageBox.Show(e.Message);
                     numArduinos = 0;
                     return;
                 }
