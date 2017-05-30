@@ -16,15 +16,10 @@ namespace VishnuMain {
         Mat binary_frame = new Mat();
         Mat[] rgb_frame;
 
-        /*CONSTURCTOR: INTIALIZE CAMERA CAPTURE*/
-        public CvFunctions() {
-
-        }
-
         /*METHODS BELOW*/
 
         ///<summary>
-        /// Returns image, various modes: 1.grayscale 2.redbinary 3.binary
+        /// Returns image, various modes: 0.color 1.grayscale 2.redbinary 3.binary
         ///</summary>
         public Mat SnapPicture(int mode, Capture camera_feed) {
             camera_feed.Retrieve(color_frame);
@@ -56,7 +51,7 @@ namespace VishnuMain {
         ///</summary>
         public Mat TemplateDetection(string[] templatelist, Mat sourceImg, double[] xy_Coord) { //takes in list of template images, source img
 
-            using (Mat ResultMat = new Mat())                       //mat data holds template matches coordinates
+            using (Mat ResultMat = new Mat())                   //mat data holds template matches coordinates
             using (Mat result_img = sourceImg.Clone()) {        //image with rectangles
                 int template_length = 0;
                 try
@@ -75,15 +70,20 @@ namespace VishnuMain {
                 double maxValues = 0;
                 Point minLocations = new Point { X = 0, Y = 0 };
                 Point maxLocations = new Point { X = 0, Y = 0 };
+       
 
-                for (int i = 0; i < template_length; ++i) { //loop used to go through all template images
+                //loop used to go through all template images
+                for (int i = 0; i < template_length; ++i) { 
+                    //loop to mark all matches
+                    while (true) { 
 
-                    while (true) { //loop to mark all matches
+                        //creates image from list
+                        Mat templateImg = CvInvoke.Imread(templatelist[i], LoadImageType.Grayscale); 
 
-                        Mat templateImg = CvInvoke.Imread(templatelist[i], LoadImageType.Grayscale); //creates image from list
-                        CvInvoke.MatchTemplate(sourceImg, templateImg, ResultMat, TemplateMatchingType.CcoeffNormed); //does template matching
-                                                                                                                      //UNHANDLED EXCEPTION HERE!! ^^
-                                                                                                                      //finds best matching location
+                        //does template matching
+                        CvInvoke.MatchTemplate(sourceImg, templateImg, ResultMat, TemplateMatchingType.CcoeffNormed); 
+                                                                                                                    
+                        //finds best matching location
                         CvInvoke.MinMaxLoc(ResultMat, ref minValues, ref maxValues, ref minLocations, ref maxLocations);
 
                         //accpetance check
@@ -169,10 +169,13 @@ namespace VishnuMain {
             }
         }
 
+        
         public void SaveImg(Mat Img, string filename) {
             Img.Save(filename);
         }
 
+
+        //object detection, cpu chips via haar casecade
         public void haar_cascade(Mat Img, List<Rectangle> cpus) {
 
             using (CascadeClassifier cpu = new CascadeClassifier("../../../../Common/haar_classifier/cpu_working.xml")) {
@@ -189,12 +192,14 @@ namespace VishnuMain {
                 }
             }
         }
-
+ 
+  
+        //displays haar detected images
         public void displayHar(Mat Img, List<Rectangle> cpus, Emgu.CV.UI.ImageBox OutputImgBox) {
             foreach (Rectangle cpu in cpus)
                 CvInvoke.Rectangle(Img, cpu, new Bgr(Color.Cyan).MCvScalar, 2);
             OutputImgBox.Image = Img;
-
         }
+
     }
 }

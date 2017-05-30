@@ -27,11 +27,13 @@ namespace VishnuMain {
 
 
         void captureImg_Click(object sender, EventArgs e) {
-
+            //takes picture in binary
             captured_imgbox.Image = _Template.SnapPicture(3, _capture);
         }
 
 
+        // can be used to load images without having to capture
+        // for template detection
         void loadImg_Click(object sender, EventArgs e) {
             DialogResult result = openFileDialog1.ShowDialog();
             if (result == DialogResult.OK || result == DialogResult.Yes) {
@@ -54,7 +56,12 @@ namespace VishnuMain {
 
 
         void findMatch_Click(object sender, EventArgs e) {
-            tracked_imgbox.Image = _Template.TemplateDetection(templateList, _Template.SnapPicture(3, _capture), xy);
+            try {
+                tracked_imgbox.Image = _Template.TemplateDetection(templateList, _Template.SnapPicture(3, _capture), xy);
+            } catch {
+                MessageBox.Show("Template image not loaded, please load template image");
+
+            }
         }
 
 

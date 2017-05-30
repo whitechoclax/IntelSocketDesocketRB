@@ -36,6 +36,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.Camera_Selection = new System.Windows.Forms.ComboBox();
+            this.save_camera = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.main_camera_feed)).BeginInit();
             this.SuspendLayout();
             // 
@@ -60,18 +61,18 @@
             // 
             // start_camera
             // 
-            this.start_camera.Location = new System.Drawing.Point(1018, 347);
+            this.start_camera.Location = new System.Drawing.Point(957, 412);
             this.start_camera.Name = "start_camera";
             this.start_camera.Size = new System.Drawing.Size(100, 34);
             this.start_camera.TabIndex = 3;
-            this.start_camera.Text = "Camera Start";
+            this.start_camera.Text = "Start Video";
             this.start_camera.UseVisualStyleBackColor = true;
             this.start_camera.Click += new System.EventHandler(this.start_camera_Click);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(841, 335);
+            this.label7.Location = new System.Drawing.Point(841, 360);
             this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(90, 13);
@@ -90,10 +91,20 @@
             // Camera_Selection
             // 
             this.Camera_Selection.FormattingEnabled = true;
-            this.Camera_Selection.Location = new System.Drawing.Point(844, 355);
+            this.Camera_Selection.Location = new System.Drawing.Point(842, 376);
             this.Camera_Selection.Name = "Camera_Selection";
-            this.Camera_Selection.Size = new System.Drawing.Size(121, 21);
+            this.Camera_Selection.Size = new System.Drawing.Size(215, 21);
             this.Camera_Selection.TabIndex = 37;
+            // 
+            // save_camera
+            // 
+            this.save_camera.Location = new System.Drawing.Point(842, 412);
+            this.save_camera.Name = "save_camera";
+            this.save_camera.Size = new System.Drawing.Size(100, 34);
+            this.save_camera.TabIndex = 38;
+            this.save_camera.Text = "Save Selection";
+            this.save_camera.UseVisualStyleBackColor = true;
+            this.save_camera.Click += new System.EventHandler(this.save_camera_Click);
             // 
             // LoginMain
             // 
@@ -104,6 +115,7 @@
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.BackColor = System.Drawing.SystemColors.Menu;
             this.ClientSize = new System.Drawing.Size(1343, 686);
+            this.Controls.Add(this.save_camera);
             this.Controls.Add(this.Camera_Selection);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label7);
@@ -130,7 +142,8 @@
         private System.Windows.Forms.Button start_camera;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox Camera_Selection;
+        private System.Windows.Forms.Button save_camera;
+        public System.Windows.Forms.ComboBox Camera_Selection;
     }
 }
 

@@ -83,7 +83,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DataMatrix.net">
@@ -145,7 +145,6 @@
     <Compile Include="CameraFeed.Designer.cs">
       <DependentUpon>CameraFeed.cs</DependentUpon>
     </Compile>
-    <Compile Include="CameraFeedUnified.cs" />
     <Compile Include="CameraStructures.cs" />
     <Compile Include="LoginMain.cs">
       <SubType>Form</SubType>
