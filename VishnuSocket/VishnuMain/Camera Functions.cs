@@ -58,7 +58,17 @@ namespace VishnuMain {
 
             using (Mat ResultMat = new Mat())                       //mat data holds template matches coordinates
             using (Mat result_img = sourceImg.Clone()) {        //image with rectangles
-                int template_length = templatelist.Length;
+                int template_length = 0;
+                try
+                {
+                    template_length = templatelist.Length;
+                }
+                catch (System.NullReferenceException ex)
+                {
+                    MessageBox.Show(ex + Environment.NewLine + "Please select a template image");
+                    return sourceImg;
+                }
+                
 
                 //requirement for template detection
                 double minValues = 0;

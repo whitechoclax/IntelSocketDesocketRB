@@ -46,6 +46,9 @@ namespace VishnuMain
         {
             InitializeComponent();
             loadFromXML();  // breaks when debugging
+            
+           
+           
         }
 
         //UI changes section
