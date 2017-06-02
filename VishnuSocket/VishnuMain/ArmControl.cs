@@ -12,7 +12,7 @@ using Emgu.CV.CvEnum;
 namespace VishnuMain
 {
     public partial class ArmControl : UserControl
-    {        
+    {
         delegate void SetTextCallback(string text);
         int portID = 0;
         int ZcoordinateValue;
@@ -22,7 +22,9 @@ namespace VishnuMain
         int TrayChoiceValue;
         public Capture _capture;
         public bool _captureInProgress;
-
+        private double xShift, yShift = 0.0;
+        private double NewCameraX, NewCameraY = 0.0;
+        
         public ArmControl()
         {
             InitializeComponent();
@@ -39,7 +41,7 @@ namespace VishnuMain
         //arduino messages/connections
         private void BootMessages()
         {
-            if(ArduinoMotionLibrary.Arduinos[0] != 2)
+            if (ArduinoMotionLibrary.Arduinos[0] != 2)
             {
                 portListBox.AppendText("Main Robot Arm Connected" + Environment.NewLine);
                 coordControl.Enabled = true;
@@ -58,7 +60,7 @@ namespace VishnuMain
             }
             else if (ArduinoMotionLibrary.Arduinos[1] == 2)
             {
-                portListBox.AppendText("Tray Handler Arm is disconnected." + Environment.NewLine 
+                portListBox.AppendText("Tray Handler Arm is disconnected." + Environment.NewLine
                     + "Have You checked your arduino connection or device manager?" + Environment.NewLine);
                 trayGroupBox.Enabled = false;
             }
@@ -66,11 +68,11 @@ namespace VishnuMain
         }
 
         private void openPort_Click(object sender, EventArgs e)
-        { 
+        {
             portListBox.AppendText(portID + " opened.");
             MessageBox.Show("COM PORT not found, Have you checked Arduino Connection?" + Environment.NewLine);
         }
-      
+
         //ALL coordinate values assignment functions
         private void moveXval_ValueChanged(object sender, EventArgs e)
         {
@@ -112,7 +114,7 @@ namespace VishnuMain
 
 
         //ASYNC TASKS
-        
+
 
         private void redefineButton_Click(object sender, EventArgs e)
         {
@@ -155,7 +157,7 @@ namespace VishnuMain
             {
                 portListBox.AppendText("SHIFT" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + ZcoordinateValue.ToString() + RotationVal.ToString() + Environment.NewLine);
                 portListBox.AppendText("Coordinates: X: " + ArduinoMotionLibrary.ArmCoordinates[0]
-                    + " Y: "  + ArduinoMotionLibrary.ArmCoordinates[1] + " "
+                    + " Y: " + ArduinoMotionLibrary.ArmCoordinates[1] + " "
                     + " Z: " + ArduinoMotionLibrary.ArmCoordinates[2] + " "
                     + " theta: " + ArduinoMotionLibrary.ArmCoordinates[3] + " " + Environment.NewLine);
 
@@ -180,7 +182,7 @@ namespace VishnuMain
             var BWG = new BackgroundWorker();
             BWG.DoWork += delegate
             {
-                ArduinoMotionLibrary.ArdPosition("GRAB", portID, 0,0,0,0);
+                ArduinoMotionLibrary.ArdPosition("GRAB", portID, 0, 0, 0, 0);
             };
             BWG.RunWorkerCompleted += delegate
             {
@@ -194,7 +196,7 @@ namespace VishnuMain
             var BWRE = new BackgroundWorker();
             BWRE.DoWork += delegate
             {
-                ArduinoMotionLibrary.ArdPosition("RELEASE", portID, 0,0,0,0);
+                ArduinoMotionLibrary.ArdPosition("RELEASE", portID, 0, 0, 0, 0);
             };
             BWRE.RunWorkerCompleted += delegate
             {
@@ -203,23 +205,9 @@ namespace VishnuMain
             BWRE.RunWorkerAsync();
         }
 
-       
+
         //raise and lower
         private void raiseZButton_Click(object sender, EventArgs e)
-        {
-            var BWR = new BackgroundWorker();
-            BWR.DoWork += delegate
-            {
-                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, 0 , 0, ZcoordinateValue, 0);
-            };
-            BWR.RunWorkerCompleted += delegate
-            {
-                portListBox.AppendText("SHIFTZ from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
-            };
-            BWR.RunWorkerAsync();
-        }
-
-        private void lowerZButton_Click(object sender, EventArgs e)
         {
             var BWR = new BackgroundWorker();
             BWR.DoWork += delegate
@@ -233,13 +221,47 @@ namespace VishnuMain
             BWR.RunWorkerAsync();
         }
 
-        //directional arrow button pad
-        private void upButton_Click(object sender, EventArgs e)
+        private void lowerZButton_Click(object sender, EventArgs e)
         {
             var BWR = new BackgroundWorker();
             BWR.DoWork += delegate
             {
-                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, XcoordinateValue, YcoordinateValue, 0, 0);
+                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, 0, 0, (-1* ZcoordinateValue), 0);
+            };
+            BWR.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("SHIFTZ from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+            };
+            BWR.RunWorkerAsync();
+        }
+
+        //directional arrow button pad
+
+        private double ShifttoCameraX(double XcoordtoShift)
+        {
+             xShift = -1 * XcoordtoShift * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
+                          + XcoordtoShift * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
+            xShift = Math.Round(xShift);
+            return xShift;
+        }
+
+        private double ShifttoCameraY(double YcoordtoShift)
+        {
+            yShift = YcoordtoShift * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
+                   - YcoordtoShift * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
+            yShift = Math.Round(yShift);
+            return yShift;
+        }
+
+        private void upButton_Click(object sender, EventArgs e)
+        {
+            var BWR = new BackgroundWorker();
+
+            NewCameraX = ShifttoCameraX(0);
+            NewCameraY = ShifttoCameraY((-1 * YcoordinateValue));
+            BWR.DoWork += delegate
+            {
+                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, NewCameraX, NewCameraY, 0, 0);
             };
             BWR.RunWorkerCompleted += delegate
             {
@@ -251,9 +273,11 @@ namespace VishnuMain
         private void downButton_Click(object sender, EventArgs e)
         {
             var BWR = new BackgroundWorker();
+            NewCameraX = ShifttoCameraX(0);
+            NewCameraY = ShifttoCameraY(YcoordinateValue);
             BWR.DoWork += delegate
             {
-                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, XcoordinateValue, YcoordinateValue, 0, 0);
+                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, NewCameraX, NewCameraY, 0, 0);
             };
             BWR.RunWorkerCompleted += delegate
             {
@@ -265,9 +289,12 @@ namespace VishnuMain
         private void leftButton_Click(object sender, EventArgs e)
         {
             var BWR = new BackgroundWorker();
+
+            NewCameraX = ShifttoCameraX((XcoordinateValue));
+            NewCameraY = ShifttoCameraY(0);
             BWR.DoWork += delegate
             {
-                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, XcoordinateValue, YcoordinateValue, 0, 0);
+                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, NewCameraX, NewCameraY, 0, 0);
             };
             BWR.RunWorkerCompleted += delegate
             {
@@ -279,9 +306,12 @@ namespace VishnuMain
         private void rightButton_Click(object sender, EventArgs e)
         {
             var BWR = new BackgroundWorker();
+            NewCameraX = ShifttoCameraX((-1 * XcoordinateValue));
+            NewCameraY = ShifttoCameraY(0);
             BWR.DoWork += delegate
             {
-                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, XcoordinateValue, YcoordinateValue, 0, 0);
+                
+                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, NewCameraX, NewCameraY, 0, 0);
             };
             BWR.RunWorkerCompleted += delegate
             {
@@ -289,6 +319,75 @@ namespace VishnuMain
             };
             BWR.RunWorkerAsync();
         }
+
+        private void UpLeftButton_Click(object sender, EventArgs e)
+        {
+            var BWR = new BackgroundWorker();
+            NewCameraX = ShifttoCameraX(XcoordinateValue);
+            NewCameraY = ShifttoCameraY((-1* YcoordinateValue));
+            BWR.DoWork += delegate
+            {
+                
+                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, NewCameraX, NewCameraY, 0, 0);
+            };
+            BWR.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("SHIFTXY from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+            };
+            BWR.RunWorkerAsync();
+        }
+
+        private void UpRightButton_Click(object sender, EventArgs e)
+        {
+            var BWR = new BackgroundWorker();
+            NewCameraX = ShifttoCameraX((-1 * XcoordinateValue));
+            NewCameraY = ShifttoCameraY((-1 * YcoordinateValue));
+            BWR.DoWork += delegate
+            {
+                
+                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, NewCameraX, NewCameraY, 0, 0);
+            };
+            BWR.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("SHIFTXY from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+            };
+            BWR.RunWorkerAsync();
+        }
+
+        private void DownLeftButton_Click(object sender, EventArgs e)
+        {
+            var BWR = new BackgroundWorker();
+            NewCameraX = ShifttoCameraX(XcoordinateValue);
+            NewCameraY = ShifttoCameraY(YcoordinateValue);
+            BWR.DoWork += delegate
+            {
+              
+                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, NewCameraX, NewCameraY, 0, 0);
+            };
+            BWR.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("SHIFTXY from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+            };
+            BWR.RunWorkerAsync();
+        }
+
+        private void DownRightButton_Click(object sender, EventArgs e)
+        {
+            var BWR = new BackgroundWorker();
+            NewCameraX = ShifttoCameraX((-1 * XcoordinateValue));
+            NewCameraY = ShifttoCameraY(YcoordinateValue);
+            BWR.DoWork += delegate
+            {
+                
+                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, NewCameraX, NewCameraY, 0, 0);
+            };
+            BWR.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("SHIFTX from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+            };
+            BWR.RunWorkerAsync();
+        }
+
 
         private void cameraFeedBox_Enter(object sender, EventArgs e) {
 
