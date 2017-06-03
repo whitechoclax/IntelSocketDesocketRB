@@ -13,7 +13,7 @@ Servo grabber2;
 //power settings: .5 A , 12v 
 //Motor Mappings
 #define Z 100
-#define STEPS 180
+#define STEPS 180 * 19.18
 #define TRAYMOTOR 2
 #define ZMOTOR 4
 #define RIGHT true
