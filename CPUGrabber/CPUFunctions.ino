@@ -142,9 +142,9 @@ void CommandProcess(){//Parse command
       angleNew = 0;
     }
 
-    if(xposNew >= -90.01 && yposNew >= -600 && zposNew >= 0 && angleNew >=0 && xposNew < 600 && yposNew < 600 && zposNew < 600 && angleNew < 360){
+    if(xposNew >= R-.01 && yposNew >= -1*RADMAX && zposNew >= 0 && angleNew >=0 && xposNew < RADMAX && yposNew < RADMAX && zposNew < 600 && angleNew < 360){
       MapCoordinates(false);
-      if(radiusNew < 159 || radiusNew > 490){
+      if(radiusNew < RADMIN -1 || radiusNew > RADMAX){
         Serial.println("ERROR:CRASH");
         return;
       }

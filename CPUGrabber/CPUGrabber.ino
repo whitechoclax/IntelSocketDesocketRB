@@ -32,6 +32,10 @@ Servo effector;
 #define ZMEM 8
 #define ENDMEM 12
 #define R -90.0
+#define RADMAX 490
+#define RADMIN 170
+//Real distance: -83.83mm
+//From Camera to end effector: 44.915mm
 
 boolean DEBUG = false; 
 
