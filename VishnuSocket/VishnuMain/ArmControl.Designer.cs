@@ -133,6 +133,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.findPorts);
             this.groupBox1.Controls.Add(this.trayGroupBox);
             this.groupBox1.Controls.Add(this.coordControl);
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI Black", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -410,7 +411,7 @@
             // 
             this.releaseButton.AutoSize = true;
             this.releaseButton.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.releaseButton.Location = new System.Drawing.Point(336, 160);
+            this.releaseButton.Location = new System.Drawing.Point(319, 161);
             this.releaseButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.releaseButton.Name = "releaseButton";
             this.releaseButton.Size = new System.Drawing.Size(91, 46);
@@ -423,7 +424,7 @@
             // 
             this.grabButton.AutoSize = true;
             this.grabButton.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grabButton.Location = new System.Drawing.Point(336, 94);
+            this.grabButton.Location = new System.Drawing.Point(319, 102);
             this.grabButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.grabButton.Name = "grabButton";
             this.grabButton.Size = new System.Drawing.Size(91, 46);
@@ -447,11 +448,11 @@
             this.groupBox3.Controls.Add(this.lowerZButton);
             this.groupBox3.Controls.Add(this.raiseZButton);
             this.groupBox3.Font = new System.Drawing.Font("Segoe UI Black", 10.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox3.Location = new System.Drawing.Point(431, 482);
+            this.groupBox3.Location = new System.Drawing.Point(431, 413);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox3.Size = new System.Drawing.Size(438, 304);
+            this.groupBox3.Size = new System.Drawing.Size(424, 304);
             this.groupBox3.TabIndex = 17;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Main arm Manual Control Pad";
@@ -616,7 +617,7 @@
             // 
             this.findPorts.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.findPorts.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.findPorts.Location = new System.Drawing.Point(434, 388);
+            this.findPorts.Location = new System.Drawing.Point(15, 637);
             this.findPorts.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.findPorts.Name = "findPorts";
             this.findPorts.Size = new System.Drawing.Size(118, 62);
@@ -631,13 +632,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.Controls.Add(this.findPorts);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox3);
             this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "ArmControl";
-            this.Size = new System.Drawing.Size(905, 951);
+            this.Size = new System.Drawing.Size(905, 782);
             this.groupBox1.ResumeLayout(false);
             this.trayGroupBox.ResumeLayout(false);
             this.trayGroupBox.PerformLayout();

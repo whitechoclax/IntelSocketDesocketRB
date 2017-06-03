@@ -46,7 +46,7 @@
             this.centralTab.Margin = new System.Windows.Forms.Padding(2);
             this.centralTab.Name = "centralTab";
             this.centralTab.SelectedIndex = 0;
-            this.centralTab.Size = new System.Drawing.Size(900, 829);
+            this.centralTab.Size = new System.Drawing.Size(875, 800);
             this.centralTab.TabIndex = 0;
             // 
             // main_camera_feed
@@ -120,7 +120,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.BackColor = System.Drawing.SystemColors.Menu;
-            this.ClientSize = new System.Drawing.Size(1494, 858);
+            this.ClientSize = new System.Drawing.Size(1494, 828);
             this.Controls.Add(this.save_camera);
             this.Controls.Add(this.Camera_Selection);
             this.Controls.Add(this.label1);
@@ -130,7 +130,7 @@
             this.Controls.Add(this.centralTab);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.MinimumSize = new System.Drawing.Size(859, 496);
+            this.MinimumSize = new System.Drawing.Size(800, 496);
             this.Name = "LoginMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Vishnu 2017 0.4a";

@@ -191,7 +191,7 @@
             this.template_imgbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.template_imgbox.Name = "template_imgbox";
             this.template_imgbox.Size = new System.Drawing.Size(188, 138);
-            this.template_imgbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.template_imgbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.template_imgbox.TabIndex = 36;
             this.template_imgbox.TabStop = false;
             // 
