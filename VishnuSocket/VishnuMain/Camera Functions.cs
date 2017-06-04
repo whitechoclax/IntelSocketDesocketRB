@@ -6,7 +6,7 @@ using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using DataMatrix.net;
-
+using Emgu.CV.UI;
 
 namespace VishnuMain {
     public class CvFunctions {
@@ -195,7 +195,7 @@ namespace VishnuMain {
  
   
         //displays haar detected images
-        public void displayHar(Mat Img, List<Rectangle> cpus, Emgu.CV.UI.ImageBox OutputImgBox) {
+        public void displayHar(Mat Img, List<Rectangle> cpus, ImageBox OutputImgBox) {
             foreach (Rectangle cpu in cpus)
                 CvInvoke.Rectangle(Img, cpu, new Bgr(Color.Cyan).MCvScalar, 2);
             OutputImgBox.Image = Img;

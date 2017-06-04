@@ -235,8 +235,8 @@ namespace VishnuMain
                         }
                         else if (portID == 1)
                         {
-                            TrayZ = double.Parse(pieces[1]);
-                            TrayPresented = int.Parse(pieces[2]);
+                            TrayZ = double.Parse(pieces[2]);
+                            TrayPresented = int.Parse(pieces[1]);
                         }
                     }
                     else
