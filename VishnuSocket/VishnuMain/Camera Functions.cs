@@ -73,9 +73,9 @@ namespace VishnuMain {
        
 
                 //loop used to go through all template images
-                for (int i = 0; i < template_length; ++i) { 
+                for (int i = 0; i < template_length; i++) { 
                     //loop to mark all matches
-                    while (true) { 
+                    
 
                         //creates image from list
                         Mat templateImg = CvInvoke.Imread(templatelist[i], LoadImageType.Grayscale); 
@@ -144,7 +144,7 @@ namespace VishnuMain {
                         }
                         else
                             break;
-                    } //loops template matching
+                     //loops template matching
                 }
 
                 return sourceImg;

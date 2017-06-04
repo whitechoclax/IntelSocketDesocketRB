@@ -213,14 +213,14 @@ void Navigate(){ //Moves to new positions
     //tray Section
     digitalWrite(Enable[TRAYMOTOR], LOW);
     digitalWrite(Step[TRAYMOTOR], LOW);
-    delay(3);
+    delayMicroseconds(500);
     digitalWrite(Step[TRAYMOTOR], HIGH);
     if(DEBUG){
-      Serial.print("Step count: ");Serial.println(90*placesChange - stepCount);
+      Serial.print("Step count: ");Serial.println(STEPS*placesChange - stepCount);
     }
     ++stepCount;
     delay(10);
-    if(stepCount >= 90*placesChange){
+    if(stepCount >= STEPS*placesChange){
       donetraypos = true;
       traypos = trayposNew;
       delay(1500);
