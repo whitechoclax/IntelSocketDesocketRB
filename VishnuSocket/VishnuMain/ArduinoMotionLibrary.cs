@@ -185,6 +185,7 @@ namespace VishnuMain
         public static int ArdPosition(string command, int portID, double Xval, double Yval, double Zval, double thetaVal)
         {//Inputs a command and values, and a desired arduino (0 or 1)
             bool problem = false; //Did we encounter a problem during the operation?
+            ArdPorts[portID].DiscardInBuffer();
             if (Arduinos[portID] == 2)
             {
                 return -1; //Not connected
@@ -229,6 +230,7 @@ namespace VishnuMain
                         string[] pieces = data.Split(':');
                         if (portID == 0)
                         {
+                            double[] OldValues = { ArmCoordinates[0], ArmCoordinates[1], ArmCoordinates[2], ArmCoordinates[3]};
                             try
                             {
                                 ArmCoordinates[0] = double.Parse(pieces[1]);
@@ -249,9 +251,24 @@ namespace VishnuMain
                                 return -2;
                             }
 
-                            if (command == "SHIFT" || command == "MOVE")
+                            if (command == "MOVE")
                             {//If the command was an actual move command
                                 double[] error = { ArmCoordinates[0] - Xval, ArmCoordinates[1] - Yval, ArmCoordinates[2] - Zval, ArmCoordinates[3] - thetaVal };
+                                if (Math.Abs(error[0]) > 20 || Math.Abs(error[1]) > 20 || Math.Abs(error[2]) > 20 || Math.Abs(error[3]) > 20)
+                                {//If there is significant error we might have had a power loss, tell it where it is and carry on
+                                    ArdPosition("REDEF", 0, Xval, Yval, Zval, thetaVal);
+                                    problem = true;
+                                }
+                                if ((Math.Abs(error[0]) > 2 || Math.Abs(error[1]) > 2) && CorrectionDepth < 5)
+                                {//This function will work recursively to correct any detected math error
+                                    ++CorrectionDepth;
+                                    ArdPosition("SHIFT", 0, error[0], error[1], error[2], error[3]);
+                                }
+                            }
+                            if (command == "SHIFT")
+                            {//If the command was an actual move command
+                                double[] error = { ArmCoordinates[0] - OldValues[0] - Xval, ArmCoordinates[1] - OldValues[1]  - Yval,
+                                    ArmCoordinates[2] - OldValues[2] - Zval, ArmCoordinates[3] - OldValues[3] - thetaVal };
                                 if (Math.Abs(error[0]) > 20 || Math.Abs(error[1]) > 20 || Math.Abs(error[2]) > 20 || Math.Abs(error[3]) > 20)
                                 {//If there is significant error we might have had a power loss, tell it where it is and carry on
                                     ArdPosition("REDEF", 0, Xval, Yval, Zval, thetaVal);
