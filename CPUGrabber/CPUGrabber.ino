@@ -3,6 +3,8 @@
    Arduino control portion, only works on MEGA
    The program receives commands and navigates
    using A4988 Stepper motor Drivers
+   IF YOU ARE UPLOADING, MAKE SURE YOU COMMENT
+   OUT ALL SERIAL PRINTS IN EEPROMEX.CPP!!!!!
 */
 
 #include <Servo.h>
@@ -11,7 +13,7 @@ Servo effector;
 
 //Millimeter to step mappings
 # define RAD 100
-# define THETA 2 //to one degree
+# define THETA 2.0*19.19 //to one degree
 # define Z 100
 
 //power settings: .5 A , 24v 
@@ -31,14 +33,15 @@ Servo effector;
 #define THETAMEM 4
 #define ZMEM 8
 #define ENDMEM 12
-#define R -90.0
+#define R -83.83
 #define RADMAX 490
 #define RADMIN 170
+#define EFFECTOR 44.915
 //Real distance: -83.83mm
 //From Camera to end effector: 44.915mm
 
 boolean DEBUG = false; 
-
+boolean CAMERA = false; //This is if we've extended the camera out
 //Current position
 double xpos = 0;
 double ypos = 150;

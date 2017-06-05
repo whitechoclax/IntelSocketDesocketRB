@@ -17,6 +17,7 @@ namespace VishnuMain
         public static double[] ArmCoordinates = { 0.0, 0.0, 0.0, 0.0, 0.0 }; //X,Y,Z, end eff., theta
         public static double TrayZ = 0.0;
         public static int TrayPresented = 0;
+        private static int CorrectionDepth = 0;
 
         public static void ArduinoMotionLibraryBoot()
         {
@@ -183,6 +184,7 @@ namespace VishnuMain
         //positional commands.  send command type (shift, move, redef, the port number 0 or 1, and the four coords.
         public static int ArdPosition(string command, int portID, double Xval, double Yval, double Zval, double thetaVal)
         {//Inputs a command and values, and a desired arduino (0 or 1)
+            bool problem = false; //Did we encounter a problem during the operation?
             if (Arduinos[portID] == 2)
             {
                 return -1; //Not connected
@@ -227,11 +229,41 @@ namespace VishnuMain
                         string[] pieces = data.Split(':');
                         if (portID == 0)
                         {
-                            ArmCoordinates[0] = double.Parse(pieces[1]);
-                            ArmCoordinates[1] = double.Parse(pieces[2]);
-                            ArmCoordinates[2] = double.Parse(pieces[3]);
-                            ArmCoordinates[3] = double.Parse(pieces[4]);
-                            ArmCoordinates[4] = double.Parse(pieces[5]);
+                            try
+                            {
+                                ArmCoordinates[0] = double.Parse(pieces[1]);
+                                ArmCoordinates[1] = double.Parse(pieces[2]);
+                                ArmCoordinates[2] = double.Parse(pieces[3]);
+                                ArmCoordinates[3] = double.Parse(pieces[4]);
+                                ArmCoordinates[4] = double.Parse(pieces[5]);
+                            }
+                            catch(Exception e)
+                            { //If there's junk data, nan throws an error and we're done for
+                                ArdPosition("REDEF", 0, -82, 170, 100, 90);
+                                return -2;
+                            }
+
+                            if(Math.Abs(ArmCoordinates[0]) > 600 || Math.Abs(ArmCoordinates[1]) > 600 || Math.Abs(ArmCoordinates[2]) > 600 || Math.Abs(ArmCoordinates[3]) > 200)
+                            {//We were out of bounds somehow, that's a big problem
+                                ArdPosition("REDEF", 0, -82, 170, 100, 90);
+                                return -2;
+                            }
+
+                            if (command == "SHIFT" || command == "MOVE")
+                            {//If the command was an actual move command
+                                double[] error = { ArmCoordinates[0] - Xval, ArmCoordinates[1] - Yval, ArmCoordinates[2] - Zval, ArmCoordinates[3] - thetaVal };
+                                if (Math.Abs(error[0]) > 20 || Math.Abs(error[1]) > 20 || Math.Abs(error[2]) > 20 || Math.Abs(error[3]) > 20)
+                                {//If there is significant error we might have had a power loss, tell it where it is and carry on
+                                    ArdPosition("REDEF", 0, Xval, Yval, Zval, thetaVal);
+                                    problem = true;
+                                }
+                                if ((Math.Abs(error[0]) > 2 || Math.Abs(error[1]) > 2) && CorrectionDepth < 5)
+                                {//This function will work recursively to correct any detected math error
+                                    ++CorrectionDepth;
+                                    ArdPosition("SHIFT", 0, error[0], error[1], error[2], error[3]);
+                                }
+                            }
+
                         }
                         else if (portID == 1)
                         {
@@ -270,6 +302,15 @@ namespace VishnuMain
                     }
                     return -2;//Command didn't work
                 }
+            }
+            Task.Delay(500);
+            --CorrectionDepth; //Rising up out of recursion
+            if (CorrectionDepth < 0)
+                CorrectionDepth = 0;
+
+            if (problem)
+            {//Command required a redefine, you may not be where you need to or may be mapped wrong
+                return -1;
             }
 
             return 0;

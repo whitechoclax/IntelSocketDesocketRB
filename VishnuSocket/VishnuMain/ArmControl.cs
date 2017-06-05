@@ -388,6 +388,21 @@ namespace VishnuMain
             BWR.RunWorkerAsync();
         }
 
+        private void CameraViewer_Click(object sender, EventArgs e)
+        {
+            ArduinoMotionLibrary.ArdPosition("CAM", 0, 0, 0, 0, 0);
+        }
+
+        private void EffectorViewer_Click(object sender, EventArgs e)
+        {
+            ArduinoMotionLibrary.ArdPosition("GRIP", 0, 0, 0, 0, 0);
+        }
+
+        private void RestPos_Click(object sender, EventArgs e)
+        {
+            ArduinoMotionLibrary.ArdPosition("MOVE", 0, ArmHandlerLibrary.RestLocation[0],
+                ArmHandlerLibrary.RestLocation[1], ArmHandlerLibrary.RestLocation[2], ArmHandlerLibrary.RestLocation[3]);
+        }
 
         private void cameraFeedBox_Enter(object sender, EventArgs e) {
 

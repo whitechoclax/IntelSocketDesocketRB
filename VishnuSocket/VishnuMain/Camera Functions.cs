@@ -112,7 +112,7 @@ namespace VishnuMain {
                             double[] template_xy = { offset_x, offset_y };
 
 
-                            //MessageBox.Show("Left/Right:" + offset_x + "\n" + "Up/Down:" + offset_y, "Coordinates");
+                            MessageBox.Show("Left/Right:" + offset_x + "\n" + "Up/Down:" + offset_y, "Coordinates");
 
                             xShift = -1 * template_xy[0] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
                            + template_xy[1] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);

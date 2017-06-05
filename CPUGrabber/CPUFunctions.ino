@@ -71,6 +71,32 @@ void CommandProcess(){//Parse command
       stringComplete = false;
       return;
     }
+    else if(inputString.startsWith("CAM")){//Send coordinates
+      Serial.println("NAVIGATING");
+      if(CAMERA == false)
+        moveToCam(true);
+      CAMERA = true;
+      Serial.println("DONE");
+      RelayCoordinates();
+      if(DEBUG)
+        Serial.println("Shifting to Camera");
+      inputString = "";
+      stringComplete = false;
+      return;
+    }
+    else if(inputString.startsWith("GRIP")){//Send coordinates
+      Serial.println("NAVIGATING");
+      if(CAMERA == true)
+        moveToCam(false);
+      CAMERA = false;
+      Serial.println("DONE");
+      RelayCoordinates();
+      if(DEBUG)
+        Serial.println("Shifting to Gripper");
+      inputString = "";
+      stringComplete = false;
+      return;
+    }
     else if(inputString.startsWith("DEBUG")){//send debug messages
       if(DEBUG){
         DEBUG = false;
@@ -144,7 +170,7 @@ void CommandProcess(){//Parse command
 
     if(xposNew >= R-.01 && yposNew >= -1*RADMAX && zposNew >= 0 && angleNew >=0 && xposNew < RADMAX && yposNew < RADMAX && zposNew < 600 && angleNew < 360){
       MapCoordinates(false);
-      if(radiusNew < RADMIN -1 || radiusNew > RADMAX){
+      if(radiusNew < RADMIN -1 || radiusNew > RADMAX || thetaNew > 170 || thetaNew < -0.01){
         Serial.println("ERROR:CRASH");
         return;
       }
@@ -343,13 +369,14 @@ void Navigate(){ //Moves to new positions
       digitalWrite(Step[THETAMOTOR], LOW);
       delay(3);
       digitalWrite(Step[THETAMOTOR], HIGH);
-      double x = ((theta-thetaOriginal)*2*PI)/(whereWereGoing - thetaOriginal);
-      double tDelay = 5*cos(x)+5;
-      int addDelay = (4*tDelay) + 15;
+      //double x = ((theta-thetaOriginal)*2*PI)/(whereWereGoing - thetaOriginal);
+      //double tDelay = 5*cos(x)+5;
+      //int addDelay = (4*tDelay) + 15;
       if(DEBUG){
-        Serial.print("addDelay: ");Serial.println(addDelay);
+        //Serial.print("addDelay: ");Serial.println(addDelay);
       }
-      delay(addDelay);
+      //delay(addDelay / 19.19);
+      delayMicroseconds(500);
       deltaTheta -= 1/float(THETA);
       if(thetaDirection == LEFT){
         theta -= 1/float(THETA);
@@ -414,6 +441,25 @@ void Navigate(){ //Moves to new positions
     }
     digitalWrite(Enable[ZMOTOR], HIGH);
   }
+  return;
+}
+
+void moveToCam(boolean camera){
+  if(camera == true){
+    digitalWrite(Dir[RADMOTOR], LOW); //Extending out
+  }
+  else{
+    digitalWrite(Dir[RADMOTOR], HIGH); //Coming back in 
+  }
+  digitalWrite(Enable[RADMOTOR], LOW);
+  int steps = RAD * EFFECTOR;
+  for(int i=0;i<steps;++i){
+    digitalWrite(Step[RADMOTOR], LOW);
+    delayMicroseconds(500);
+    digitalWrite(Step[RADMOTOR], HIGH);
+    delayMicroseconds(500);
+  }
+  digitalWrite(Enable[RADMOTOR], HIGH);
   return;
 }
 

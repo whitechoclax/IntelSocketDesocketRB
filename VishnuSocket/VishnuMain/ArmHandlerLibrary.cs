@@ -10,15 +10,17 @@ namespace VishnuMain
     static class ArmHandlerLibrary
     {
         public static bool Running = false;
-        public static double[] RestLocation = { 0.0, 150.0, 200.0, 84 }; //Change to calibration image
+        public static double[] RestLocation = { -82, 170.0, 100.0, 84 }; //Change to calibration image
         // Calibrate image at: "COOR:176.00:339.00:60.00:84.0:27.50"
-        public static double[] OriginLocation = { 0.0, 183.0, 38.0, 84.0 }; //CPU0 location
+        public static double[] OriginLocation = { -82, 375.0, 90.0, 84.0 }; //CPU0 location
+        public static double[] TestImgLocation = { 60, 273, 100, 84 }; //Img location
         //"COOR:0.00:183.00:38.00:0.0:0.00\r" , z = 52 for last one,
         public static double[] SocketLocation = { 40.0, -250.0, 200.0, 0.0 }; //Socket center point 
         private static double centerToCenterL = 0.0; //Distance between left and right CPU
         private static double centerToCenterW = 0.0; //Distance between top and bottom CPU
         private static double centerToCenterZ = 0.0; //Distance between trays
         public static int CPUindex = 0; //Which CPU we're on
+        public static bool Error = false;  //This indicates if there was a failed operation somewhere
 
         
         
@@ -53,20 +55,15 @@ namespace VishnuMain
 
             while (!done)
             { //Main Loop
-                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, -20, 0); // Z down
-                Task.Delay(500);
+                ArduinoMotionLibrary.ArdPosition("MOVE", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[3]);
+                ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1], OriginLocation[2], OriginLocation[3]);
+                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, -5, 0); // Z down
                 ArduinoMotionLibrary.ArdPosition("GRAB", 0, 0, 0, 0, 0); //Grab CPU
-                Task.Delay(500);
-                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 20, 0); //Z up
-                Task.Delay(500);
-                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, centerToCenterW, 0, 0); //move to cpu1 y axis
-                Task.Delay(500);
-                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, -20, 0); //Z down
-                Task.Delay(500);
+                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 5, 0); //Z up
+                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, -centerToCenterL, 0, 0); //move to cpu1 y axis
+                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, -10, 0); //Z down
                 ArduinoMotionLibrary.ArdPosition("RELEASE", 0, 0, 0, 0, 0); //drop CPU
-                Task.Delay(500);
-                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 20, 0); //Z up
-                Task.Delay(500);
+                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 10, 0); //Z up
                 Running = false;
                 done = true;
             }
@@ -163,6 +160,7 @@ namespace VishnuMain
                 //Shift by the template_xy 
 
             }
+            ArduinoMotionLibrary.ArdPosition("REDEF", 0, TestImgLocation[0], TestImgLocation[1], TestImgLocation[2], TestImgLocation[3]);
             return true;
         }
 
