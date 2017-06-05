@@ -185,19 +185,15 @@ namespace VishnuMain
         public static int ArdPosition(string command, int portID, double Xval, double Yval, double Zval, double thetaVal)
         {//Inputs a command and values, and a desired arduino (0 or 1)
             bool problem = false; //Did we encounter a problem during the operation?
-            try
-            {
-                ArdPorts[portID].DiscardInBuffer(); 
-            } catch
-            {
-                MessageBox.Show("No Arduino detected!!!");
-            }
-
-
             if (Arduinos[portID] == 2)
             {
                 return -1; //Not connected
             }
+
+            if (ArdPorts[portID].BytesToRead > 0)
+                {
+                        ArdPorts[portID].DiscardInBuffer();
+                }
 
             string inputLine = null;
             if (portID == 0) //Going to CPU Main arm
@@ -253,7 +249,8 @@ namespace VishnuMain
                                 return -2;
                             }
 
-                            if(Math.Abs(ArmCoordinates[0]) > 600 || Math.Abs(ArmCoordinates[1]) > 600 || Math.Abs(ArmCoordinates[2]) > 600 || Math.Abs(ArmCoordinates[3]) > 200)
+                            if(ArmCoordinates[0] > 600 || ArmCoordinates[0] < -600 || ArmCoordinates[1] > 600 || ArmCoordinates[1] < -600 || 
+                                ArmCoordinates[2] > 600 || ArmCoordinates[2] < -600 || ArmCoordinates[3] > 200 || ArmCoordinates[0] < -200)
                             {//We were out of bounds somehow, that's a big problem
                                 ArdPosition("REDEF", 0, -82, 170, 100, 90);
                                 return -2;
@@ -262,12 +259,12 @@ namespace VishnuMain
                             if (command == "MOVE")
                             {//If the command was an actual move command
                                 double[] error = { ArmCoordinates[0] - Xval, ArmCoordinates[1] - Yval, ArmCoordinates[2] - Zval, ArmCoordinates[3] - thetaVal };
-                                if (Math.Abs(error[0]) > 20 || Math.Abs(error[1]) > 20 || Math.Abs(error[2]) > 20 || Math.Abs(error[3]) > 20)
+                                if (error[0] > 20 || error[0] < -20 || error[1] > 20 || error[1] < -20 || error[2] > 20 || error[3] < -20 || error[3] > 20 || error[3] < -20)
                                 {//If there is significant error we might have had a power loss, tell it where it is and carry on
                                     ArdPosition("REDEF", 0, Xval, Yval, Zval, thetaVal);
                                     problem = true;
                                 }
-                                if ((Math.Abs(error[0]) > 2 || Math.Abs(error[1]) > 2) && CorrectionDepth < 5)
+                                if (error[0] > 2 || error[0] < -2 || error[1] > 2 || error[0] < -2 && CorrectionDepth < 5)
                                 {//This function will work recursively to correct any detected math error
                                     ++CorrectionDepth;
                                     ArdPosition("SHIFT", 0, error[0], error[1], error[2], error[3]);
@@ -277,12 +274,12 @@ namespace VishnuMain
                             {//If the command was an actual move command
                                 double[] error = { ArmCoordinates[0] - OldValues[0] - Xval, ArmCoordinates[1] - OldValues[1]  - Yval,
                                     ArmCoordinates[2] - OldValues[2] - Zval, ArmCoordinates[3] - OldValues[3] - thetaVal };
-                                if (Math.Abs(error[0]) > 20 || Math.Abs(error[1]) > 20 || Math.Abs(error[2]) > 20 || Math.Abs(error[3]) > 20)
+                                if (error[0] > 20 || error[0] < -20 || error[1] > 20 || error[1] < -20 || error[2] > 20 || error[3] < -20 || error[3] > 20 || error[3] < -20)
                                 {//If there is significant error we might have had a power loss, tell it where it is and carry on
                                     ArdPosition("REDEF", 0, Xval, Yval, Zval, thetaVal);
                                     problem = true;
                                 }
-                                if ((Math.Abs(error[0]) > 2 || Math.Abs(error[1]) > 2) && CorrectionDepth < 5)
+                                if (error[0] > 2 || error[0] < -2 || error[1] > 2 || error[0] < -2 && CorrectionDepth < 5)
                                 {//This function will work recursively to correct any detected math error
                                     ++CorrectionDepth;
                                     ArdPosition("SHIFT", 0, error[0], error[1], error[2], error[3]);
