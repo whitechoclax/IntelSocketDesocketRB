@@ -63,7 +63,7 @@
             // template_textbox
             // 
             this.template_textbox.Location = new System.Drawing.Point(664, 305);
-            this.template_textbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.template_textbox.Margin = new System.Windows.Forms.Padding(4);
             this.template_textbox.Name = "template_textbox";
             this.template_textbox.Size = new System.Drawing.Size(89, 22);
             this.template_textbox.TabIndex = 28;
@@ -81,7 +81,7 @@
             // findMatch
             // 
             this.findMatch.Location = new System.Drawing.Point(664, 585);
-            this.findMatch.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.findMatch.Margin = new System.Windows.Forms.Padding(4);
             this.findMatch.Name = "findMatch";
             this.findMatch.Size = new System.Drawing.Size(125, 42);
             this.findMatch.TabIndex = 27;
@@ -102,7 +102,7 @@
             // loadTemplate
             // 
             this.loadTemplate.Location = new System.Drawing.Point(759, 304);
-            this.loadTemplate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.loadTemplate.Margin = new System.Windows.Forms.Padding(4);
             this.loadTemplate.Name = "loadTemplate";
             this.loadTemplate.Size = new System.Drawing.Size(30, 25);
             this.loadTemplate.TabIndex = 26;
@@ -113,7 +113,7 @@
             // SavePicture
             // 
             this.SavePicture.Location = new System.Drawing.Point(664, 521);
-            this.SavePicture.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SavePicture.Margin = new System.Windows.Forms.Padding(4);
             this.SavePicture.Name = "SavePicture";
             this.SavePicture.Size = new System.Drawing.Size(125, 42);
             this.SavePicture.TabIndex = 32;
@@ -124,7 +124,7 @@
             // capturePicture
             // 
             this.capturePicture.Location = new System.Drawing.Point(664, 459);
-            this.capturePicture.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.capturePicture.Margin = new System.Windows.Forms.Padding(4);
             this.capturePicture.Name = "capturePicture";
             this.capturePicture.Size = new System.Drawing.Size(125, 42);
             this.capturePicture.TabIndex = 25;
@@ -135,7 +135,7 @@
             // sourceimg_textbox
             // 
             this.sourceimg_textbox.Location = new System.Drawing.Point(664, 385);
-            this.sourceimg_textbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.sourceimg_textbox.Margin = new System.Windows.Forms.Padding(4);
             this.sourceimg_textbox.Name = "sourceimg_textbox";
             this.sourceimg_textbox.Size = new System.Drawing.Size(89, 22);
             this.sourceimg_textbox.TabIndex = 24;
@@ -144,7 +144,7 @@
             // 
             this.captured_imgbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.captured_imgbox.Location = new System.Drawing.Point(19, 32);
-            this.captured_imgbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.captured_imgbox.Margin = new System.Windows.Forms.Padding(4);
             this.captured_imgbox.Name = "captured_imgbox";
             this.captured_imgbox.Size = new System.Drawing.Size(600, 337);
             this.captured_imgbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -154,7 +154,7 @@
             // loadSource
             // 
             this.loadSource.Location = new System.Drawing.Point(759, 384);
-            this.loadSource.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.loadSource.Margin = new System.Windows.Forms.Padding(4);
             this.loadSource.Name = "loadSource";
             this.loadSource.Size = new System.Drawing.Size(30, 25);
             this.loadSource.TabIndex = 23;
@@ -165,7 +165,7 @@
             // harr__find
             // 
             this.harr__find.Location = new System.Drawing.Point(664, 649);
-            this.harr__find.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.harr__find.Margin = new System.Windows.Forms.Padding(4);
             this.harr__find.Name = "harr__find";
             this.harr__find.Size = new System.Drawing.Size(125, 42);
             this.harr__find.TabIndex = 35;
@@ -177,7 +177,7 @@
             // 
             this.tracked_imgbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tracked_imgbox.Location = new System.Drawing.Point(19, 408);
-            this.tracked_imgbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tracked_imgbox.Margin = new System.Windows.Forms.Padding(4);
             this.tracked_imgbox.Name = "tracked_imgbox";
             this.tracked_imgbox.Size = new System.Drawing.Size(600, 337);
             this.tracked_imgbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -188,10 +188,11 @@
             // 
             this.template_imgbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.template_imgbox.Location = new System.Drawing.Point(664, 96);
-            this.template_imgbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.template_imgbox.Margin = new System.Windows.Forms.Padding(4);
+            this.template_imgbox.MaximumSize = new System.Drawing.Size(188, 138);
             this.template_imgbox.Name = "template_imgbox";
             this.template_imgbox.Size = new System.Drawing.Size(188, 138);
-            this.template_imgbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.template_imgbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.template_imgbox.TabIndex = 36;
             this.template_imgbox.TabStop = false;
             // 

@@ -45,10 +45,7 @@ namespace VishnuMain
         public SettingsMenu()
         {
             InitializeComponent();
-            loadFromXML();  // breaks when debugging
-            
-           
-           
+            loadFromXML();  
         }
 
         //UI changes section
