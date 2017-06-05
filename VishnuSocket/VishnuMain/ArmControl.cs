@@ -49,8 +49,7 @@ namespace VishnuMain
             }
             else if (ArduinoMotionLibrary.Arduinos[0] == 2)
             {
-                portListBox.AppendText("Main Robot Arm is disconnected." + Environment.NewLine
-                    + "Arduino connected?" + Environment.NewLine);
+                portListBox.AppendText("Main Robot Arm is disconnected." + Environment.NewLine);
                 coordControl.Enabled = false;
                 groupBox3.Enabled = false;
             }
@@ -62,8 +61,7 @@ namespace VishnuMain
             }
             else if (ArduinoMotionLibrary.Arduinos[1] == 2)
             {
-                portListBox.AppendText("Tray Handler Arm is disconnected." + Environment.NewLine
-                    + "Arduino connected?" + Environment.NewLine);
+                portListBox.AppendText("Tray Handler Arm is disconnected." + Environment.NewLine);
                 trayGroupBox.Enabled = false;
             }
 
@@ -127,7 +125,8 @@ namespace VishnuMain
             };
             BWR.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("REDEF" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + ZcoordinateValue.ToString() + RotationVal.ToString() + Environment.NewLine);
+                portListBox.AppendText("REDEF " + XcoordinateValue.ToString() + YcoordinateValue.ToString() + ZcoordinateValue.ToString() + RotationVal.ToString() + Environment.NewLine);
+                portListBox.ScrollToCaret();
             };
             BWR.RunWorkerAsync();
 
@@ -142,7 +141,8 @@ namespace VishnuMain
             };
             BWM.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("MOVE" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + ZcoordinateValue.ToString() + RotationVal.ToString() + Environment.NewLine);
+                portListBox.AppendText("MOVE " + XcoordinateValue.ToString() + YcoordinateValue.ToString() + ZcoordinateValue.ToString() + RotationVal.ToString() + Environment.NewLine);
+                portListBox.ScrollToCaret();
             };
             BWM.RunWorkerAsync();
 
@@ -189,6 +189,7 @@ namespace VishnuMain
             BWG.RunWorkerCompleted += delegate
             {
                 portListBox.AppendText("GRABBED" + Environment.NewLine);
+                portListBox.ScrollToCaret();
             };
             BWG.RunWorkerAsync();
         }
@@ -203,6 +204,7 @@ namespace VishnuMain
             BWRE.RunWorkerCompleted += delegate
             {
                 portListBox.AppendText("RELEASED" + Environment.NewLine);
+                portListBox.ScrollToCaret();
             };
             BWRE.RunWorkerAsync();
         }
@@ -218,7 +220,8 @@ namespace VishnuMain
             };
             BWR.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("PAD Z RAISE" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.AppendText("PAD Z RAISE " + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.ScrollToCaret();
             };
             BWR.RunWorkerAsync();
         }
@@ -232,7 +235,8 @@ namespace VishnuMain
             };
             BWR.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("PAD Z LOWER" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.AppendText("PAD Z LOWER " + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.ScrollToCaret();
             };
             BWR.RunWorkerAsync();
         }
@@ -267,7 +271,8 @@ namespace VishnuMain
             };
             BWR.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("PAD Y INCREMENT" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.AppendText("PAD +Y " + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.ScrollToCaret();
             };
             BWR.RunWorkerAsync();
         }
@@ -283,7 +288,8 @@ namespace VishnuMain
             };
             BWR.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("PAD Y DECREMENT" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.AppendText("PAD -Y " + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.ScrollToCaret();
             };
             BWR.RunWorkerAsync();
         }
@@ -300,7 +306,8 @@ namespace VishnuMain
             };
             BWR.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("PAD X INCREMENT" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.AppendText("PAD -X " + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.ScrollToCaret();
             };
             BWR.RunWorkerAsync();
         }
@@ -317,7 +324,8 @@ namespace VishnuMain
             };
             BWR.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("PAD X DECREMENT" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.AppendText("PAD +X " + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.ScrollToCaret();
             };
             BWR.RunWorkerAsync();
         }
@@ -334,7 +342,8 @@ namespace VishnuMain
             };
             BWR.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("PAD (+X)(-Y)" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.AppendText("PAD (+X)(-Y) " + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.ScrollToCaret();
             };
             BWR.RunWorkerAsync();
         }
@@ -351,7 +360,8 @@ namespace VishnuMain
             };
             BWR.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("PAD (-)XY" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.AppendText("PAD (+)XY " + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.ScrollToCaret();
             };
             BWR.RunWorkerAsync();
         }
@@ -368,7 +378,8 @@ namespace VishnuMain
             };
             BWR.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("PAD XY" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.AppendText("PAD (-)XY " + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.ScrollToCaret();
             };
             BWR.RunWorkerAsync();
         }
@@ -385,7 +396,8 @@ namespace VishnuMain
             };
             BWR.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("PAD (-x)(+Y)" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.AppendText("PAD (+X)(-Y) " + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.ScrollToCaret();
             };
             BWR.RunWorkerAsync();
         }

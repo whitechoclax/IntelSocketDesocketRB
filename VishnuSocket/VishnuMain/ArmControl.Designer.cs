@@ -46,6 +46,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.trayZaxis = new System.Windows.Forms.NumericUpDown();
             this.coordControl = new System.Windows.Forms.GroupBox();
+            this.buttonCLR = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -74,7 +75,6 @@
             this.CameraViewer = new System.Windows.Forms.Button();
             this.EffectorViewer = new System.Windows.Forms.Button();
             this.RestPos = new System.Windows.Forms.Button();
-            this.buttonCLR = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.trayGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trayZaxis)).BeginInit();
@@ -90,11 +90,11 @@
             // redefineButton
             // 
             this.redefineButton.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.redefineButton.Location = new System.Drawing.Point(186, 175);
+            this.redefineButton.Location = new System.Drawing.Point(232, 219);
             this.redefineButton.Margin = new System.Windows.Forms.Padding(2);
             this.redefineButton.Name = "redefineButton";
-            this.redefineButton.Size = new System.Drawing.Size(70, 34);
-            this.redefineButton.TabIndex = 3;
+            this.redefineButton.Size = new System.Drawing.Size(88, 42);
+            this.redefineButton.TabIndex = 7;
             this.redefineButton.Text = "REDEFINE";
             this.redefineButton.UseVisualStyleBackColor = true;
             this.redefineButton.Click += new System.EventHandler(this.redefineButton_Click);
@@ -102,11 +102,11 @@
             // stopButton
             // 
             this.stopButton.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.stopButton.Location = new System.Drawing.Point(22, 219);
+            this.stopButton.Location = new System.Drawing.Point(28, 274);
             this.stopButton.Margin = new System.Windows.Forms.Padding(2);
             this.stopButton.Name = "stopButton";
-            this.stopButton.Size = new System.Drawing.Size(234, 30);
-            this.stopButton.TabIndex = 0;
+            this.stopButton.Size = new System.Drawing.Size(292, 38);
+            this.stopButton.TabIndex = 8;
             this.stopButton.Text = "STOP";
             this.stopButton.UseVisualStyleBackColor = true;
             this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
@@ -114,11 +114,11 @@
             // moveButton
             // 
             this.moveButton.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.moveButton.Location = new System.Drawing.Point(106, 175);
+            this.moveButton.Location = new System.Drawing.Point(132, 219);
             this.moveButton.Margin = new System.Windows.Forms.Padding(2);
             this.moveButton.Name = "moveButton";
-            this.moveButton.Size = new System.Drawing.Size(62, 34);
-            this.moveButton.TabIndex = 2;
+            this.moveButton.Size = new System.Drawing.Size(78, 42);
+            this.moveButton.TabIndex = 6;
             this.moveButton.Text = "MOVE";
             this.moveButton.UseVisualStyleBackColor = true;
             this.moveButton.Click += new System.EventHandler(this.moveButton_Click);
@@ -126,11 +126,11 @@
             // ShiftButton
             // 
             this.ShiftButton.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ShiftButton.Location = new System.Drawing.Point(22, 175);
+            this.ShiftButton.Location = new System.Drawing.Point(28, 219);
             this.ShiftButton.Margin = new System.Windows.Forms.Padding(2);
             this.ShiftButton.Name = "ShiftButton";
-            this.ShiftButton.Size = new System.Drawing.Size(60, 34);
-            this.ShiftButton.TabIndex = 1;
+            this.ShiftButton.Size = new System.Drawing.Size(75, 42);
+            this.ShiftButton.TabIndex = 5;
             this.ShiftButton.Text = "SHIFT";
             this.ShiftButton.UseVisualStyleBackColor = true;
             this.ShiftButton.Click += new System.EventHandler(this.ShiftButton_Click);
@@ -141,11 +141,11 @@
             this.groupBox1.Controls.Add(this.trayGroupBox);
             this.groupBox1.Controls.Add(this.coordControl);
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI Black", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(11, 14);
+            this.groupBox1.Location = new System.Drawing.Point(14, 18);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(316, 595);
+            this.groupBox1.Size = new System.Drawing.Size(395, 744);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Motor Control Panel";
@@ -154,10 +154,10 @@
             // 
             this.findPorts.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.findPorts.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.findPorts.Location = new System.Drawing.Point(12, 510);
+            this.findPorts.Location = new System.Drawing.Point(15, 638);
             this.findPorts.Margin = new System.Windows.Forms.Padding(2);
             this.findPorts.Name = "findPorts";
-            this.findPorts.Size = new System.Drawing.Size(94, 50);
+            this.findPorts.Size = new System.Drawing.Size(118, 62);
             this.findPorts.TabIndex = 3;
             this.findPorts.Text = "Find Ports";
             this.toolTip1.SetToolTip(this.findPorts, "Click to discover connected Arduinos if not connected already");
@@ -174,11 +174,11 @@
             this.trayGroupBox.Controls.Add(this.label7);
             this.trayGroupBox.Controls.Add(this.label8);
             this.trayGroupBox.Controls.Add(this.trayZaxis);
-            this.trayGroupBox.Location = new System.Drawing.Point(12, 298);
+            this.trayGroupBox.Location = new System.Drawing.Point(15, 372);
             this.trayGroupBox.Margin = new System.Windows.Forms.Padding(2);
             this.trayGroupBox.Name = "trayGroupBox";
             this.trayGroupBox.Padding = new System.Windows.Forms.Padding(2);
-            this.trayGroupBox.Size = new System.Drawing.Size(288, 190);
+            this.trayGroupBox.Size = new System.Drawing.Size(360, 238);
             this.trayGroupBox.TabIndex = 16;
             this.trayGroupBox.TabStop = false;
             this.trayGroupBox.Text = "Tray Arm Coordinate";
@@ -191,20 +191,20 @@
             "Good Tray",
             "Empty Tray",
             "Bad Tray"});
-            this.traySelectorBox.Location = new System.Drawing.Point(34, 29);
+            this.traySelectorBox.Location = new System.Drawing.Point(42, 36);
             this.traySelectorBox.Margin = new System.Windows.Forms.Padding(2);
             this.traySelectorBox.Name = "traySelectorBox";
-            this.traySelectorBox.Size = new System.Drawing.Size(82, 21);
+            this.traySelectorBox.Size = new System.Drawing.Size(102, 25);
             this.traySelectorBox.TabIndex = 16;
             this.traySelectorBox.SelectedIndexChanged += new System.EventHandler(this.traySelectorBox_SelectedIndexChanged);
             // 
             // trayRedefine
             // 
             this.trayRedefine.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.trayRedefine.Location = new System.Drawing.Point(186, 103);
+            this.trayRedefine.Location = new System.Drawing.Point(232, 129);
             this.trayRedefine.Margin = new System.Windows.Forms.Padding(2);
             this.trayRedefine.Name = "trayRedefine";
-            this.trayRedefine.Size = new System.Drawing.Size(70, 34);
+            this.trayRedefine.Size = new System.Drawing.Size(88, 42);
             this.trayRedefine.TabIndex = 13;
             this.trayRedefine.Text = "REDEFINE";
             this.trayRedefine.UseVisualStyleBackColor = true;
@@ -212,10 +212,10 @@
             // trayMove
             // 
             this.trayMove.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.trayMove.Location = new System.Drawing.Point(106, 103);
+            this.trayMove.Location = new System.Drawing.Point(132, 129);
             this.trayMove.Margin = new System.Windows.Forms.Padding(2);
             this.trayMove.Name = "trayMove";
-            this.trayMove.Size = new System.Drawing.Size(62, 34);
+            this.trayMove.Size = new System.Drawing.Size(78, 42);
             this.trayMove.TabIndex = 14;
             this.trayMove.Text = "MOVE";
             this.trayMove.UseVisualStyleBackColor = true;
@@ -223,10 +223,10 @@
             // trayStop
             // 
             this.trayStop.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.trayStop.Location = new System.Drawing.Point(22, 147);
+            this.trayStop.Location = new System.Drawing.Point(28, 184);
             this.trayStop.Margin = new System.Windows.Forms.Padding(2);
             this.trayStop.Name = "trayStop";
-            this.trayStop.Size = new System.Drawing.Size(234, 30);
+            this.trayStop.Size = new System.Drawing.Size(292, 38);
             this.trayStop.TabIndex = 1;
             this.trayStop.Text = "STOP";
             this.trayStop.UseVisualStyleBackColor = true;
@@ -234,10 +234,10 @@
             // trayShift
             // 
             this.trayShift.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.trayShift.Location = new System.Drawing.Point(22, 103);
+            this.trayShift.Location = new System.Drawing.Point(28, 129);
             this.trayShift.Margin = new System.Windows.Forms.Padding(2);
             this.trayShift.Name = "trayShift";
-            this.trayShift.Size = new System.Drawing.Size(60, 34);
+            this.trayShift.Size = new System.Drawing.Size(75, 42);
             this.trayShift.TabIndex = 15;
             this.trayShift.Text = "SHIFT";
             this.trayShift.UseVisualStyleBackColor = true;
@@ -246,28 +246,28 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(126, 65);
+            this.label7.Location = new System.Drawing.Point(158, 81);
             this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(136, 17);
+            this.label7.Size = new System.Drawing.Size(153, 20);
             this.label7.TabIndex = 6;
-            this.label7.Text = "Increment Z (cm)";
+            this.label7.Text = "Increment Z (mm)";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(126, 29);
+            this.label8.Location = new System.Drawing.Point(158, 36);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(136, 17);
+            this.label8.Size = new System.Drawing.Size(153, 20);
             this.label8.TabIndex = 10;
             this.label8.Text = "Tray Choice 0..3";
             // 
             // trayZaxis
             // 
             this.trayZaxis.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.trayZaxis.Location = new System.Drawing.Point(46, 61);
+            this.trayZaxis.Location = new System.Drawing.Point(58, 76);
             this.trayZaxis.Margin = new System.Windows.Forms.Padding(2);
             this.trayZaxis.Maximum = new decimal(new int[] {
             1000,
@@ -275,7 +275,7 @@
             0,
             0});
             this.trayZaxis.Name = "trayZaxis";
-            this.trayZaxis.Size = new System.Drawing.Size(62, 22);
+            this.trayZaxis.Size = new System.Drawing.Size(78, 25);
             this.trayZaxis.TabIndex = 17;
             // 
             // coordControl
@@ -293,52 +293,63 @@
             this.coordControl.Controls.Add(this.moveZval);
             this.coordControl.Controls.Add(this.RotationDegrees);
             this.coordControl.Controls.Add(this.moveButton);
-            this.coordControl.Location = new System.Drawing.Point(12, 21);
+            this.coordControl.Location = new System.Drawing.Point(15, 26);
             this.coordControl.Margin = new System.Windows.Forms.Padding(2);
             this.coordControl.Name = "coordControl";
             this.coordControl.Padding = new System.Windows.Forms.Padding(2);
-            this.coordControl.Size = new System.Drawing.Size(288, 266);
+            this.coordControl.Size = new System.Drawing.Size(360, 332);
             this.coordControl.TabIndex = 12;
             this.coordControl.TabStop = false;
             this.coordControl.Text = "Main Arm Coordinate";
+            // 
+            // buttonCLR
+            // 
+            this.buttonCLR.Location = new System.Drawing.Point(265, 6);
+            this.buttonCLR.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonCLR.Name = "buttonCLR";
+            this.buttonCLR.Size = new System.Drawing.Size(95, 29);
+            this.buttonCLR.TabIndex = 9;
+            this.buttonCLR.Text = "Clear";
+            this.buttonCLR.UseVisualStyleBackColor = true;
+            this.buttonCLR.Click += new System.EventHandler(this.buttonCLR_Click);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(104, 141);
+            this.label2.Location = new System.Drawing.Point(130, 176);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(184, 17);
-            this.label2.TabIndex = 8;
+            this.label2.Size = new System.Drawing.Size(207, 20);
+            this.label2.TabIndex = 13;
             this.label2.Text = "End Effector (Degrees)";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(104, 67);
+            this.label4.Location = new System.Drawing.Point(130, 84);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(136, 17);
-            this.label4.TabIndex = 10;
+            this.label4.Size = new System.Drawing.Size(153, 20);
+            this.label4.TabIndex = 11;
             this.label4.Text = "Increment Y (mm)";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(104, 107);
+            this.label1.Location = new System.Drawing.Point(130, 134);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(136, 17);
-            this.label1.TabIndex = 9;
+            this.label1.Size = new System.Drawing.Size(153, 20);
+            this.label1.TabIndex = 12;
             this.label1.Text = "Increment Z (cm)";
             // 
             // moveXval
             // 
             this.moveXval.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.moveXval.Location = new System.Drawing.Point(24, 23);
+            this.moveXval.Location = new System.Drawing.Point(30, 29);
             this.moveXval.Margin = new System.Windows.Forms.Padding(2);
             this.moveXval.Maximum = new decimal(new int[] {
             1000,
@@ -351,25 +362,25 @@
             0,
             -2147483648});
             this.moveXval.Name = "moveXval";
-            this.moveXval.Size = new System.Drawing.Size(62, 20);
-            this.moveXval.TabIndex = 4;
+            this.moveXval.Size = new System.Drawing.Size(78, 23);
+            this.moveXval.TabIndex = 1;
             this.moveXval.ValueChanged += new System.EventHandler(this.moveXval_ValueChanged);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(104, 31);
+            this.label3.Location = new System.Drawing.Point(130, 39);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(136, 17);
-            this.label3.TabIndex = 11;
+            this.label3.Size = new System.Drawing.Size(153, 20);
+            this.label3.TabIndex = 10;
             this.label3.Text = "Increment X (mm)";
             // 
             // moveYval
             // 
             this.moveYval.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.moveYval.Location = new System.Drawing.Point(24, 63);
+            this.moveYval.Location = new System.Drawing.Point(30, 79);
             this.moveYval.Margin = new System.Windows.Forms.Padding(2);
             this.moveYval.Maximum = new decimal(new int[] {
             1000,
@@ -382,14 +393,14 @@
             0,
             -2147483648});
             this.moveYval.Name = "moveYval";
-            this.moveYval.Size = new System.Drawing.Size(62, 20);
-            this.moveYval.TabIndex = 5;
+            this.moveYval.Size = new System.Drawing.Size(78, 23);
+            this.moveYval.TabIndex = 2;
             this.moveYval.ValueChanged += new System.EventHandler(this.moveYval_ValueChanged);
             // 
             // moveZval
             // 
             this.moveZval.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.moveZval.Location = new System.Drawing.Point(24, 103);
+            this.moveZval.Location = new System.Drawing.Point(30, 129);
             this.moveZval.Margin = new System.Windows.Forms.Padding(2);
             this.moveZval.Maximum = new decimal(new int[] {
             1000,
@@ -402,14 +413,14 @@
             0,
             -2147483648});
             this.moveZval.Name = "moveZval";
-            this.moveZval.Size = new System.Drawing.Size(62, 22);
-            this.moveZval.TabIndex = 6;
+            this.moveZval.Size = new System.Drawing.Size(78, 25);
+            this.moveZval.TabIndex = 3;
             this.moveZval.ValueChanged += new System.EventHandler(this.moveZval_ValueChanged);
             // 
             // RotationDegrees
             // 
             this.RotationDegrees.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RotationDegrees.Location = new System.Drawing.Point(24, 137);
+            this.RotationDegrees.Location = new System.Drawing.Point(30, 171);
             this.RotationDegrees.Margin = new System.Windows.Forms.Padding(2);
             this.RotationDegrees.Maximum = new decimal(new int[] {
             359,
@@ -422,18 +433,18 @@
             0,
             -2147483648});
             this.RotationDegrees.Name = "RotationDegrees";
-            this.RotationDegrees.Size = new System.Drawing.Size(62, 22);
-            this.RotationDegrees.TabIndex = 7;
+            this.RotationDegrees.Size = new System.Drawing.Size(78, 25);
+            this.RotationDegrees.TabIndex = 4;
             this.RotationDegrees.ValueChanged += new System.EventHandler(this.RotationDegrees_ValueChanged);
             // 
             // releaseButton
             // 
             this.releaseButton.AutoSize = true;
             this.releaseButton.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.releaseButton.Location = new System.Drawing.Point(255, 129);
+            this.releaseButton.Location = new System.Drawing.Point(319, 161);
             this.releaseButton.Margin = new System.Windows.Forms.Padding(2);
             this.releaseButton.Name = "releaseButton";
-            this.releaseButton.Size = new System.Drawing.Size(73, 37);
+            this.releaseButton.Size = new System.Drawing.Size(92, 46);
             this.releaseButton.TabIndex = 11;
             this.releaseButton.Text = "RELEASE";
             this.releaseButton.UseVisualStyleBackColor = true;
@@ -443,10 +454,10 @@
             // 
             this.grabButton.AutoSize = true;
             this.grabButton.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grabButton.Location = new System.Drawing.Point(255, 82);
+            this.grabButton.Location = new System.Drawing.Point(319, 102);
             this.grabButton.Margin = new System.Windows.Forms.Padding(2);
             this.grabButton.Name = "grabButton";
-            this.grabButton.Size = new System.Drawing.Size(73, 37);
+            this.grabButton.Size = new System.Drawing.Size(91, 46);
             this.grabButton.TabIndex = 10;
             this.grabButton.Text = "GRAB";
             this.grabButton.UseVisualStyleBackColor = true;
@@ -467,11 +478,11 @@
             this.groupBox3.Controls.Add(this.lowerZButton);
             this.groupBox3.Controls.Add(this.raiseZButton);
             this.groupBox3.Font = new System.Drawing.Font("Segoe UI Black", 10.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox3.Location = new System.Drawing.Point(345, 330);
+            this.groupBox3.Location = new System.Drawing.Point(431, 412);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox3.Size = new System.Drawing.Size(339, 243);
+            this.groupBox3.Size = new System.Drawing.Size(424, 304);
             this.groupBox3.TabIndex = 17;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Main Arm Manual Control Pad";
@@ -481,11 +492,12 @@
             // 
             this.DownRightButton.AutoSize = true;
             this.DownRightButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DownRightButton.Location = new System.Drawing.Point(181, 171);
+            this.DownRightButton.Location = new System.Drawing.Point(226, 214);
             this.DownRightButton.Margin = new System.Windows.Forms.Padding(2);
             this.DownRightButton.Name = "DownRightButton";
-            this.DownRightButton.Size = new System.Drawing.Size(59, 50);
+            this.DownRightButton.Size = new System.Drawing.Size(74, 62);
             this.DownRightButton.TabIndex = 24;
+            this.toolTip1.SetToolTip(this.DownRightButton, "Shift +X-Y Direction");
             this.DownRightButton.UseVisualStyleBackColor = true;
             this.DownRightButton.Click += new System.EventHandler(this.DownRightButton_Click);
             // 
@@ -493,11 +505,12 @@
             // 
             this.DownLeftButton.AutoSize = true;
             this.DownLeftButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DownLeftButton.Location = new System.Drawing.Point(34, 172);
+            this.DownLeftButton.Location = new System.Drawing.Point(42, 215);
             this.DownLeftButton.Margin = new System.Windows.Forms.Padding(2);
             this.DownLeftButton.Name = "DownLeftButton";
-            this.DownLeftButton.Size = new System.Drawing.Size(59, 50);
+            this.DownLeftButton.Size = new System.Drawing.Size(74, 62);
             this.DownLeftButton.TabIndex = 23;
+            this.toolTip1.SetToolTip(this.DownLeftButton, "Shift -XY Direction");
             this.DownLeftButton.UseVisualStyleBackColor = true;
             this.DownLeftButton.Click += new System.EventHandler(this.DownLeftButton_Click);
             // 
@@ -505,11 +518,12 @@
             // 
             this.UpLeftButton.AutoSize = true;
             this.UpLeftButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UpLeftButton.Location = new System.Drawing.Point(34, 30);
+            this.UpLeftButton.Location = new System.Drawing.Point(42, 38);
             this.UpLeftButton.Margin = new System.Windows.Forms.Padding(2);
             this.UpLeftButton.Name = "UpLeftButton";
-            this.UpLeftButton.Size = new System.Drawing.Size(59, 50);
+            this.UpLeftButton.Size = new System.Drawing.Size(74, 62);
             this.UpLeftButton.TabIndex = 22;
+            this.toolTip1.SetToolTip(this.UpLeftButton, "Shift -X+Y Direction");
             this.UpLeftButton.UseVisualStyleBackColor = true;
             this.UpLeftButton.Click += new System.EventHandler(this.UpLeftButton_Click);
             // 
@@ -517,11 +531,12 @@
             // 
             this.UpRightButton.AutoSize = true;
             this.UpRightButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UpRightButton.Location = new System.Drawing.Point(181, 30);
+            this.UpRightButton.Location = new System.Drawing.Point(226, 38);
             this.UpRightButton.Margin = new System.Windows.Forms.Padding(2);
             this.UpRightButton.Name = "UpRightButton";
-            this.UpRightButton.Size = new System.Drawing.Size(59, 50);
+            this.UpRightButton.Size = new System.Drawing.Size(74, 62);
             this.UpRightButton.TabIndex = 21;
+            this.toolTip1.SetToolTip(this.UpRightButton, "Shift +XY Direction");
             this.UpRightButton.UseVisualStyleBackColor = true;
             this.UpRightButton.Click += new System.EventHandler(this.UpRightButton_Click);
             // 
@@ -529,12 +544,13 @@
             // 
             this.downButton.AutoSize = true;
             this.downButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.downButton.Location = new System.Drawing.Point(109, 171);
+            this.downButton.Location = new System.Drawing.Point(136, 214);
             this.downButton.Margin = new System.Windows.Forms.Padding(2);
             this.downButton.Name = "downButton";
-            this.downButton.Size = new System.Drawing.Size(59, 52);
+            this.downButton.Size = new System.Drawing.Size(74, 65);
             this.downButton.TabIndex = 20;
             this.downButton.Text = "↓";
+            this.toolTip1.SetToolTip(this.downButton, "Shift -Y Direction");
             this.downButton.UseVisualStyleBackColor = true;
             this.downButton.Click += new System.EventHandler(this.downButton_Click);
             // 
@@ -542,12 +558,13 @@
             // 
             this.rightButton.AutoSize = true;
             this.rightButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rightButton.Location = new System.Drawing.Point(181, 98);
+            this.rightButton.Location = new System.Drawing.Point(226, 122);
             this.rightButton.Margin = new System.Windows.Forms.Padding(2);
             this.rightButton.Name = "rightButton";
-            this.rightButton.Size = new System.Drawing.Size(59, 55);
+            this.rightButton.Size = new System.Drawing.Size(74, 69);
             this.rightButton.TabIndex = 19;
             this.rightButton.Text = "→";
+            this.toolTip1.SetToolTip(this.rightButton, "Shift +X Direction");
             this.rightButton.UseVisualStyleBackColor = true;
             this.rightButton.Click += new System.EventHandler(this.rightButton_Click);
             // 
@@ -555,12 +572,13 @@
             // 
             this.leftButton.AutoSize = true;
             this.leftButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.leftButton.Location = new System.Drawing.Point(34, 98);
+            this.leftButton.Location = new System.Drawing.Point(42, 122);
             this.leftButton.Margin = new System.Windows.Forms.Padding(2);
             this.leftButton.Name = "leftButton";
-            this.leftButton.Size = new System.Drawing.Size(59, 55);
+            this.leftButton.Size = new System.Drawing.Size(74, 69);
             this.leftButton.TabIndex = 18;
             this.leftButton.Text = "←";
+            this.toolTip1.SetToolTip(this.leftButton, "Shift -X Direction");
             this.leftButton.UseVisualStyleBackColor = true;
             this.leftButton.Click += new System.EventHandler(this.leftButton_Click);
             // 
@@ -568,12 +586,13 @@
             // 
             this.upButton.AutoSize = true;
             this.upButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.upButton.Location = new System.Drawing.Point(109, 30);
+            this.upButton.Location = new System.Drawing.Point(136, 38);
             this.upButton.Margin = new System.Windows.Forms.Padding(2);
             this.upButton.Name = "upButton";
-            this.upButton.Size = new System.Drawing.Size(59, 50);
+            this.upButton.Size = new System.Drawing.Size(74, 62);
             this.upButton.TabIndex = 17;
             this.upButton.Text = "↑";
+            this.toolTip1.SetToolTip(this.upButton, "Shift +Y Direction");
             this.upButton.UseVisualStyleBackColor = true;
             this.upButton.Click += new System.EventHandler(this.upButton_Click);
             // 
@@ -581,12 +600,13 @@
             // 
             this.lowerZButton.AutoSize = true;
             this.lowerZButton.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lowerZButton.Location = new System.Drawing.Point(109, 130);
+            this.lowerZButton.Location = new System.Drawing.Point(136, 162);
             this.lowerZButton.Margin = new System.Windows.Forms.Padding(2);
             this.lowerZButton.Name = "lowerZButton";
-            this.lowerZButton.Size = new System.Drawing.Size(59, 37);
+            this.lowerZButton.Size = new System.Drawing.Size(74, 46);
             this.lowerZButton.TabIndex = 1;
             this.lowerZButton.Text = "LOWER";
+            this.toolTip1.SetToolTip(this.lowerZButton, "Shift -Z direction");
             this.lowerZButton.UseVisualStyleBackColor = true;
             this.lowerZButton.Click += new System.EventHandler(this.lowerZButton_Click);
             // 
@@ -594,12 +614,13 @@
             // 
             this.raiseZButton.AutoSize = true;
             this.raiseZButton.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.raiseZButton.Location = new System.Drawing.Point(109, 87);
+            this.raiseZButton.Location = new System.Drawing.Point(136, 109);
             this.raiseZButton.Margin = new System.Windows.Forms.Padding(2);
             this.raiseZButton.Name = "raiseZButton";
-            this.raiseZButton.Size = new System.Drawing.Size(59, 39);
+            this.raiseZButton.Size = new System.Drawing.Size(74, 49);
             this.raiseZButton.TabIndex = 0;
             this.raiseZButton.Text = "RAISE";
+            this.toolTip1.SetToolTip(this.raiseZButton, "Shift +Z Direction");
             this.raiseZButton.UseVisualStyleBackColor = true;
             this.raiseZButton.Click += new System.EventHandler(this.raiseZButton_Click);
             // 
@@ -610,11 +631,11 @@
             this.groupBox2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.groupBox2.Font = new System.Drawing.Font("Segoe UI Black", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.groupBox2.Location = new System.Drawing.Point(345, 7);
+            this.groupBox2.Location = new System.Drawing.Point(431, 9);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox2.Size = new System.Drawing.Size(328, 294);
+            this.groupBox2.Size = new System.Drawing.Size(410, 368);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Arduino Control";
@@ -624,19 +645,20 @@
             this.portListBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.portListBox.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.portListBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.portListBox.Location = new System.Drawing.Point(2, 24);
+            this.portListBox.Location = new System.Drawing.Point(2, 30);
             this.portListBox.Margin = new System.Windows.Forms.Padding(2);
             this.portListBox.Name = "portListBox";
             this.portListBox.ReadOnly = true;
-            this.portListBox.Size = new System.Drawing.Size(324, 268);
+            this.portListBox.Size = new System.Drawing.Size(406, 336);
             this.portListBox.TabIndex = 2;
             this.portListBox.Text = "";
             // 
             // CameraViewer
             // 
-            this.CameraViewer.Location = new System.Drawing.Point(345, 572);
+            this.CameraViewer.Location = new System.Drawing.Point(431, 715);
+            this.CameraViewer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.CameraViewer.Name = "CameraViewer";
-            this.CameraViewer.Size = new System.Drawing.Size(109, 45);
+            this.CameraViewer.Size = new System.Drawing.Size(136, 56);
             this.CameraViewer.TabIndex = 18;
             this.CameraViewer.Text = "Switch Camera";
             this.CameraViewer.UseVisualStyleBackColor = true;
@@ -644,9 +666,10 @@
             // 
             // EffectorViewer
             // 
-            this.EffectorViewer.Location = new System.Drawing.Point(460, 572);
+            this.EffectorViewer.Location = new System.Drawing.Point(575, 715);
+            this.EffectorViewer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.EffectorViewer.Name = "EffectorViewer";
-            this.EffectorViewer.Size = new System.Drawing.Size(108, 44);
+            this.EffectorViewer.Size = new System.Drawing.Size(135, 55);
             this.EffectorViewer.TabIndex = 19;
             this.EffectorViewer.Text = "Switch Effector";
             this.EffectorViewer.UseVisualStyleBackColor = true;
@@ -654,27 +677,18 @@
             // 
             // RestPos
             // 
-            this.RestPos.Location = new System.Drawing.Point(574, 572);
+            this.RestPos.Location = new System.Drawing.Point(718, 715);
+            this.RestPos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.RestPos.Name = "RestPos";
-            this.RestPos.Size = new System.Drawing.Size(110, 44);
+            this.RestPos.Size = new System.Drawing.Size(138, 55);
             this.RestPos.TabIndex = 20;
             this.RestPos.Text = "Return To Resting Position";
             this.RestPos.UseVisualStyleBackColor = true;
             this.RestPos.Click += new System.EventHandler(this.RestPos_Click);
             // 
-            // buttonCLR
-            // 
-            this.buttonCLR.Location = new System.Drawing.Point(212, 5);
-            this.buttonCLR.Name = "buttonCLR";
-            this.buttonCLR.Size = new System.Drawing.Size(76, 23);
-            this.buttonCLR.TabIndex = 12;
-            this.buttonCLR.Text = "Clear";
-            this.buttonCLR.UseVisualStyleBackColor = true;
-            this.buttonCLR.Click += new System.EventHandler(this.buttonCLR_Click);
-            // 
             // ArmControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.RestPos);
@@ -685,7 +699,7 @@
             this.Controls.Add(this.groupBox3);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ArmControl";
-            this.Size = new System.Drawing.Size(724, 626);
+            this.Size = new System.Drawing.Size(905, 782);
             this.groupBox1.ResumeLayout(false);
             this.trayGroupBox.ResumeLayout(false);
             this.trayGroupBox.PerformLayout();
