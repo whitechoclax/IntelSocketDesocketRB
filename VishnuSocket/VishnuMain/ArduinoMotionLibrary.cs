@@ -185,7 +185,15 @@ namespace VishnuMain
         public static int ArdPosition(string command, int portID, double Xval, double Yval, double Zval, double thetaVal)
         {//Inputs a command and values, and a desired arduino (0 or 1)
             bool problem = false; //Did we encounter a problem during the operation?
-            ArdPorts[portID].DiscardInBuffer();
+            try
+            {
+                ArdPorts[portID].DiscardInBuffer(); 
+            } catch
+            {
+                MessageBox.Show("No Arduino detected!!!");
+            }
+
+
             if (Arduinos[portID] == 2)
             {
                 return -1; //Not connected

@@ -74,6 +74,7 @@
             this.CameraViewer = new System.Windows.Forms.Button();
             this.EffectorViewer = new System.Windows.Forms.Button();
             this.RestPos = new System.Windows.Forms.Button();
+            this.buttonCLR = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.trayGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trayZaxis)).BeginInit();
@@ -93,7 +94,7 @@
             this.redefineButton.Margin = new System.Windows.Forms.Padding(2);
             this.redefineButton.Name = "redefineButton";
             this.redefineButton.Size = new System.Drawing.Size(70, 34);
-            this.redefineButton.TabIndex = 0;
+            this.redefineButton.TabIndex = 3;
             this.redefineButton.Text = "REDEFINE";
             this.redefineButton.UseVisualStyleBackColor = true;
             this.redefineButton.Click += new System.EventHandler(this.redefineButton_Click);
@@ -105,7 +106,7 @@
             this.stopButton.Margin = new System.Windows.Forms.Padding(2);
             this.stopButton.Name = "stopButton";
             this.stopButton.Size = new System.Drawing.Size(234, 30);
-            this.stopButton.TabIndex = 1;
+            this.stopButton.TabIndex = 0;
             this.stopButton.Text = "STOP";
             this.stopButton.UseVisualStyleBackColor = true;
             this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
@@ -129,7 +130,7 @@
             this.ShiftButton.Margin = new System.Windows.Forms.Padding(2);
             this.ShiftButton.Name = "ShiftButton";
             this.ShiftButton.Size = new System.Drawing.Size(60, 34);
-            this.ShiftButton.TabIndex = 3;
+            this.ShiftButton.TabIndex = 1;
             this.ShiftButton.Text = "SHIFT";
             this.ShiftButton.UseVisualStyleBackColor = true;
             this.ShiftButton.Click += new System.EventHandler(this.ShiftButton_Click);
@@ -275,10 +276,11 @@
             0});
             this.trayZaxis.Name = "trayZaxis";
             this.trayZaxis.Size = new System.Drawing.Size(62, 22);
-            this.trayZaxis.TabIndex = 5;
+            this.trayZaxis.TabIndex = 17;
             // 
             // coordControl
             // 
+            this.coordControl.Controls.Add(this.buttonCLR);
             this.coordControl.Controls.Add(this.stopButton);
             this.coordControl.Controls.Add(this.ShiftButton);
             this.coordControl.Controls.Add(this.label2);
@@ -307,9 +309,9 @@
             this.label2.Location = new System.Drawing.Point(104, 141);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(152, 17);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Rotation (Degrees)";
+            this.label2.Size = new System.Drawing.Size(184, 17);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "End Effector (Degrees)";
             // 
             // label4
             // 
@@ -319,7 +321,7 @@
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(136, 17);
-            this.label4.TabIndex = 11;
+            this.label4.TabIndex = 10;
             this.label4.Text = "Increment Y (mm)";
             // 
             // label1
@@ -330,7 +332,7 @@
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(136, 17);
-            this.label1.TabIndex = 6;
+            this.label1.TabIndex = 9;
             this.label1.Text = "Increment Z (cm)";
             // 
             // moveXval
@@ -350,7 +352,7 @@
             -2147483648});
             this.moveXval.Name = "moveXval";
             this.moveXval.Size = new System.Drawing.Size(62, 20);
-            this.moveXval.TabIndex = 8;
+            this.moveXval.TabIndex = 4;
             this.moveXval.ValueChanged += new System.EventHandler(this.moveXval_ValueChanged);
             // 
             // label3
@@ -361,7 +363,7 @@
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(136, 17);
-            this.label3.TabIndex = 10;
+            this.label3.TabIndex = 11;
             this.label3.Text = "Increment X (mm)";
             // 
             // moveYval
@@ -381,7 +383,7 @@
             -2147483648});
             this.moveYval.Name = "moveYval";
             this.moveYval.Size = new System.Drawing.Size(62, 20);
-            this.moveYval.TabIndex = 9;
+            this.moveYval.TabIndex = 5;
             this.moveYval.ValueChanged += new System.EventHandler(this.moveYval_ValueChanged);
             // 
             // moveZval
@@ -401,7 +403,7 @@
             -2147483648});
             this.moveZval.Name = "moveZval";
             this.moveZval.Size = new System.Drawing.Size(62, 22);
-            this.moveZval.TabIndex = 5;
+            this.moveZval.TabIndex = 6;
             this.moveZval.ValueChanged += new System.EventHandler(this.moveZval_ValueChanged);
             // 
             // RotationDegrees
@@ -421,7 +423,7 @@
             -2147483648});
             this.RotationDegrees.Name = "RotationDegrees";
             this.RotationDegrees.Size = new System.Drawing.Size(62, 22);
-            this.RotationDegrees.TabIndex = 4;
+            this.RotationDegrees.TabIndex = 7;
             this.RotationDegrees.ValueChanged += new System.EventHandler(this.RotationDegrees_ValueChanged);
             // 
             // releaseButton
@@ -472,7 +474,7 @@
             this.groupBox3.Size = new System.Drawing.Size(339, 243);
             this.groupBox3.TabIndex = 17;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Main arm Manual Control Pad";
+            this.groupBox3.Text = "Main Arm Manual Control Pad";
             this.toolTip1.SetToolTip(this.groupBox3, resources.GetString("groupBox3.ToolTip"));
             // 
             // DownRightButton
@@ -660,6 +662,16 @@
             this.RestPos.UseVisualStyleBackColor = true;
             this.RestPos.Click += new System.EventHandler(this.RestPos_Click);
             // 
+            // buttonCLR
+            // 
+            this.buttonCLR.Location = new System.Drawing.Point(212, 5);
+            this.buttonCLR.Name = "buttonCLR";
+            this.buttonCLR.Size = new System.Drawing.Size(76, 23);
+            this.buttonCLR.TabIndex = 12;
+            this.buttonCLR.Text = "Clear";
+            this.buttonCLR.UseVisualStyleBackColor = true;
+            this.buttonCLR.Click += new System.EventHandler(this.buttonCLR_Click);
+            // 
             // ArmControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -737,5 +749,6 @@
         private System.Windows.Forms.Button CameraViewer;
         private System.Windows.Forms.Button EffectorViewer;
         private System.Windows.Forms.Button RestPos;
+        private System.Windows.Forms.Button buttonCLR;
     }
 }

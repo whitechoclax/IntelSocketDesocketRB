@@ -49,7 +49,7 @@ namespace VishnuMain
             else if (ArduinoMotionLibrary.Arduinos[0] == 2)
             {
                 portListBox.AppendText("Main Robot Arm is disconnected." + Environment.NewLine
-                    + "Have you checked your arduino connection or device manager?" + Environment.NewLine);
+                    + "Arduino connected?" + Environment.NewLine);
                 coordControl.Enabled = false;
             }
             //default 2 means not connected. 
@@ -61,7 +61,7 @@ namespace VishnuMain
             else if (ArduinoMotionLibrary.Arduinos[1] == 2)
             {
                 portListBox.AppendText("Tray Handler Arm is disconnected." + Environment.NewLine
-                    + "Have You checked your arduino connection or device manager?" + Environment.NewLine);
+                    + "Arduino connected?" + Environment.NewLine);
                 trayGroupBox.Enabled = false;
             }
 
@@ -70,7 +70,7 @@ namespace VishnuMain
         private void openPort_Click(object sender, EventArgs e)
         {
             portListBox.AppendText(portID + " opened.");
-            MessageBox.Show("COM PORT not found, Have you checked Arduino Connection?" + Environment.NewLine);
+            MessageBox.Show("COM PORT not found, Arduino Connected?" + Environment.NewLine);
         }
 
         //ALL coordinate values assignment functions
@@ -216,7 +216,7 @@ namespace VishnuMain
             };
             BWR.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("SHIFTZ from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.AppendText("PAD Z RAISE" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
             };
             BWR.RunWorkerAsync();
         }
@@ -230,7 +230,7 @@ namespace VishnuMain
             };
             BWR.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("SHIFTZ from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.AppendText("PAD Z LOWER" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
             };
             BWR.RunWorkerAsync();
         }
@@ -265,7 +265,7 @@ namespace VishnuMain
             };
             BWR.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("SHIFTY from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.AppendText("PAD Y INCREMENT" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
             };
             BWR.RunWorkerAsync();
         }
@@ -281,7 +281,7 @@ namespace VishnuMain
             };
             BWR.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("SHIFTY from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.AppendText("PAD Y DECREMENT" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
             };
             BWR.RunWorkerAsync();
         }
@@ -298,7 +298,7 @@ namespace VishnuMain
             };
             BWR.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("SHIFTX from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.AppendText("PAD X INCREMENT" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
             };
             BWR.RunWorkerAsync();
         }
@@ -315,7 +315,7 @@ namespace VishnuMain
             };
             BWR.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("SHIFTX from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.AppendText("PAD X DECREMENT" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
             };
             BWR.RunWorkerAsync();
         }
@@ -332,7 +332,7 @@ namespace VishnuMain
             };
             BWR.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("SHIFTXY from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.AppendText("PAD (+X)(-Y)" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
             };
             BWR.RunWorkerAsync();
         }
@@ -349,7 +349,7 @@ namespace VishnuMain
             };
             BWR.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("SHIFTXY from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.AppendText("PAD (-)XY" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
             };
             BWR.RunWorkerAsync();
         }
@@ -366,7 +366,7 @@ namespace VishnuMain
             };
             BWR.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("SHIFTXY from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.AppendText("PAD XY" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
             };
             BWR.RunWorkerAsync();
         }
@@ -383,7 +383,7 @@ namespace VishnuMain
             };
             BWR.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("SHIFTX from PAD" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
+                portListBox.AppendText("PAD (-x)(+Y)" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + Environment.NewLine);
             };
             BWR.RunWorkerAsync();
         }
@@ -402,6 +402,15 @@ namespace VishnuMain
         {
             ArduinoMotionLibrary.ArdPosition("MOVE", 0, ArmHandlerLibrary.RestLocation[0],
                 ArmHandlerLibrary.RestLocation[1], ArmHandlerLibrary.RestLocation[2], ArmHandlerLibrary.RestLocation[3]);
+        }
+
+        private void buttonCLR_Click(object sender, EventArgs e)
+        {
+            moveXval.Value = 0;
+            moveYval.Value = 0;
+            moveZval.Value = 0;
+            RotationDegrees.Value = 0;
+
         }
 
         private void cameraFeedBox_Enter(object sender, EventArgs e) {
