@@ -317,7 +317,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(130, 176);
+            this.label2.Location = new System.Drawing.Point(128, 176);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(207, 20);
@@ -328,7 +328,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(130, 84);
+            this.label4.Location = new System.Drawing.Point(130, 88);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(153, 20);
@@ -349,7 +349,7 @@
             // moveXval
             // 
             this.moveXval.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.moveXval.Location = new System.Drawing.Point(30, 29);
+            this.moveXval.Location = new System.Drawing.Point(30, 40);
             this.moveXval.Margin = new System.Windows.Forms.Padding(2);
             this.moveXval.Maximum = new decimal(new int[] {
             1000,
@@ -370,7 +370,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(130, 39);
+            this.label3.Location = new System.Drawing.Point(130, 43);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(153, 20);
@@ -380,7 +380,7 @@
             // moveYval
             // 
             this.moveYval.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.moveYval.Location = new System.Drawing.Point(30, 79);
+            this.moveYval.Location = new System.Drawing.Point(30, 85);
             this.moveYval.Margin = new System.Windows.Forms.Padding(2);
             this.moveYval.Maximum = new decimal(new int[] {
             1000,
@@ -465,6 +465,9 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.CameraViewer);
+            this.groupBox3.Controls.Add(this.EffectorViewer);
+            this.groupBox3.Controls.Add(this.RestPos);
             this.groupBox3.Controls.Add(this.releaseButton);
             this.groupBox3.Controls.Add(this.DownRightButton);
             this.groupBox3.Controls.Add(this.DownLeftButton);
@@ -482,7 +485,7 @@
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox3.Size = new System.Drawing.Size(424, 304);
+            this.groupBox3.Size = new System.Drawing.Size(424, 350);
             this.groupBox3.TabIndex = 17;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Main Arm Manual Control Pad";
@@ -655,34 +658,37 @@
             // 
             // CameraViewer
             // 
-            this.CameraViewer.Location = new System.Drawing.Point(431, 715);
+            this.CameraViewer.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CameraViewer.Location = new System.Drawing.Point(6, 285);
             this.CameraViewer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.CameraViewer.Name = "CameraViewer";
             this.CameraViewer.Size = new System.Drawing.Size(136, 56);
             this.CameraViewer.TabIndex = 18;
-            this.CameraViewer.Text = "Switch Camera";
+            this.CameraViewer.Text = "Switch to Camera Position";
             this.CameraViewer.UseVisualStyleBackColor = true;
             this.CameraViewer.Click += new System.EventHandler(this.CameraViewer_Click);
             // 
             // EffectorViewer
             // 
-            this.EffectorViewer.Location = new System.Drawing.Point(575, 715);
+            this.EffectorViewer.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EffectorViewer.Location = new System.Drawing.Point(143, 285);
             this.EffectorViewer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.EffectorViewer.Name = "EffectorViewer";
             this.EffectorViewer.Size = new System.Drawing.Size(135, 55);
             this.EffectorViewer.TabIndex = 19;
-            this.EffectorViewer.Text = "Switch Effector";
+            this.EffectorViewer.Text = "Switch to Effector Position";
             this.EffectorViewer.UseVisualStyleBackColor = true;
             this.EffectorViewer.Click += new System.EventHandler(this.EffectorViewer_Click);
             // 
             // RestPos
             // 
-            this.RestPos.Location = new System.Drawing.Point(718, 715);
+            this.RestPos.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RestPos.Location = new System.Drawing.Point(280, 285);
             this.RestPos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.RestPos.Name = "RestPos";
             this.RestPos.Size = new System.Drawing.Size(138, 55);
             this.RestPos.TabIndex = 20;
-            this.RestPos.Text = "Return To Resting Position";
+            this.RestPos.Text = "Return To Home Position";
             this.RestPos.UseVisualStyleBackColor = true;
             this.RestPos.Click += new System.EventHandler(this.RestPos_Click);
             // 
@@ -691,9 +697,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.Controls.Add(this.RestPos);
-            this.Controls.Add(this.EffectorViewer);
-            this.Controls.Add(this.CameraViewer);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox3);
