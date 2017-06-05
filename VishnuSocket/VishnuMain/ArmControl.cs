@@ -45,12 +45,14 @@ namespace VishnuMain
             {
                 portListBox.AppendText("Main Robot Arm Connected" + Environment.NewLine);
                 coordControl.Enabled = true;
+                groupBox3.Enabled = true;
             }
             else if (ArduinoMotionLibrary.Arduinos[0] == 2)
             {
                 portListBox.AppendText("Main Robot Arm is disconnected." + Environment.NewLine
                     + "Arduino connected?" + Environment.NewLine);
                 coordControl.Enabled = false;
+                groupBox3.Enabled = false;
             }
             //default 2 means not connected. 
             if (ArduinoMotionLibrary.Arduinos[1] != 2)
