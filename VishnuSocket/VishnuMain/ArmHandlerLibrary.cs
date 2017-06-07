@@ -30,12 +30,12 @@ namespace VishnuMain
 
             double[] Loc = { 0.0, 0.0, 0.0, 0.0 };
             FetchInformation();
-            TrayManagerLibrary trayHandler = new TrayManagerLibrary(); //should be background worker
+            TrayManagerLibrary trayHandler = new TrayManagerLibrary();
             bool done = false;
             int CPU;
 
             //Test procedure:
-            //Calibrate on rest postion
+            //Move to rest position
             //Redifine arduino position on test img coordinates
             //Move to CPU
             //Pick up CPU
@@ -43,26 +43,22 @@ namespace VishnuMain
             //Move CPU to wherever (watch end effector)
             //Go back and pick up next CPU (account for z change, 14mm / 10)
 
-
-
-
-
-            //ArduinoMotionLibrary.ArdPosition("REDEF", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[3]); //Calibrate now
-            //ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1], OriginLocation[2], OriginLocation[3]); //Move to CPU 0 spot to start
-
             while (!done)
             { //Main Loop
                 if(ArduinoMotionLibrary.ArdPosition("MOVE", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[3]) == -2)
                 { FatalCrash(); return; }//Move to rest location if we didn't start there
                 if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1], OriginLocation[2], OriginLocation[3]) == -2)
                 { FatalCrash(); return; }//Move to CPU0
-                if (ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, -5, 0) == -2)
+                if (ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, -10, 0) == -2)
                 { FatalCrash(); return; }//Move down to grab CPU
                 if (ArduinoMotionLibrary.ArdPosition("GRAB", 0, 0, 0, 0, 0) == -2)
                 { FatalCrash(); return; }
-                if (ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 5, 0) == -2)
+                if (ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 10, 0) == -2)
                 { FatalCrash(); return; }//Raise back up
-                if (ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, -centerToCenterL, 0, 0) == -2)
+                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, TestImgLocation[0], TestImgLocation[1], TestImgLocation[2], TestImgLocation[3]) == -2)
+                { FatalCrash(); return; }//Go calibrate
+                CameraTestImg(camera_feed);
+                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1] - centerToCenterL, OriginLocation[2], OriginLocation[3]) == -2)
                 { FatalCrash(); return; }//Move to next spot
                 if (ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, -10, 0) == -2)
                 { FatalCrash(); return; }//Put it down

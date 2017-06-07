@@ -24,6 +24,7 @@ namespace VishnuMain
         public bool _captureInProgress;
         private double xShift, yShift = 0.0;
         private double NewCameraX, NewCameraY = 0.0;
+        private bool gripperPresented = true;
         
         public ArmControl()
         {
@@ -36,7 +37,6 @@ namespace VishnuMain
             UpLeftButton.Text = char.ConvertFromUtf32(0x2196);
             UpRightButton.Text = char.ConvertFromUtf32(0x2197);
         }
-
 
         //arduino messages/connections
         private void BootMessages()
@@ -110,7 +110,6 @@ namespace VishnuMain
             BWS.RunWorkerAsync();
 
         }
-
 
 
         //ASYNC TASKS
@@ -402,14 +401,20 @@ namespace VishnuMain
             BWR.RunWorkerAsync();
         }
 
-        private void CameraViewer_Click(object sender, EventArgs e)
-        {
-            ArduinoMotionLibrary.ArdPosition("CAM", 0, 0, 0, 0, 0);
-        }
-
         private void EffectorViewer_Click(object sender, EventArgs e)
         {
-            ArduinoMotionLibrary.ArdPosition("GRIP", 0, 0, 0, 0, 0);
+            if (gripperPresented)
+            {
+                ArduinoMotionLibrary.ArdPosition("CAM", 0, 0, 0, 0, 0);
+                EffectorViewer.Text = "Switch to Effector Position";
+                gripperPresented = false;
+            }
+            else
+            {
+                ArduinoMotionLibrary.ArdPosition("CAM", 0, 0, 0, 0, 0);
+                EffectorViewer.Text = "Switch to Camera Position";
+                gripperPresented = true;
+            }
         }
 
         private void RestPos_Click(object sender, EventArgs e)

@@ -44,6 +44,8 @@ void CommandProcess(){//Parse command
     else if(inputString.startsWith("GRAB")){//Send coordinates
       HOLDING = true;
       //Close servos
+      grabber1.write(180);
+      grabber2.write(100);
       Serial.println("NAVIGATING");
       Serial.println("DONE");
       RelayCoordinates();
@@ -56,6 +58,8 @@ void CommandProcess(){//Parse command
     else if(inputString.startsWith("RELEASE")){//Send coordinates
       HOLDING = false;
       //Open servos
+      grabber1.write(20);
+      grabber2.write(20);
       Serial.println("NAVIGATING");
       Serial.println("DONE");
       RelayCoordinates();

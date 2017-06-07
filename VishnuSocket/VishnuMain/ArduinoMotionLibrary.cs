@@ -230,7 +230,7 @@ namespace VishnuMain
                     }
                     //Check COOR
                     if (data.StartsWith("COOR"))
-                    {
+                    { 
                         string[] pieces = data.Split(':');
                         if (portID == 0)
                         {
@@ -391,7 +391,6 @@ namespace VishnuMain
                     }
                 }
             }
-
             return 0;
         }
 

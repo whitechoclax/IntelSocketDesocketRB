@@ -22,6 +22,9 @@ Servo grabber2;
 #define IN false
 #define TRAYMEM 4
 #define ZMEM 0
+#define SERVO1 3
+#define SERVO2 4
+#define HALLSENSOR A4
 
 boolean DEBUG = false; 
 boolean HOLDING = false;
@@ -58,6 +61,13 @@ void setup() {
     pinMode(Dir[i], OUTPUT);
     digitalWrite(Dir[i], LOW);
   }
+  pinMode(HALLSENSOR, INPUT);
+  pinMode(SERVO1, OUTPUT);
+  pinMode(SERVO2, OUTPUT);
+  grabber1.attach(SERVO1);
+  grabber2.attach(SERVO2);
+  grabber1.write(20);
+  grabber2.write(20);
   delay(250);
   Serial.println("TRAYHANDLER");
 }
