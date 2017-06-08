@@ -488,10 +488,10 @@ void serialEvent(){ //Catch chars coming in
           }
           if(inputString.startsWith("STOP")){ //Emergency Brake
             EmergencyStop();
-            Serial.println("STOPPING");
+            //Serial.println("STOPPING");
             inputString = "";
             stringComplete = false;
-            RelayCoordinates();
+            //RelayCoordinates();
             return;
           }
           CommandProcess();

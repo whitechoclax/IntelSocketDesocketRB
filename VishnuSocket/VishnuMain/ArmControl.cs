@@ -49,7 +49,7 @@ namespace VishnuMain
             }
             else if (ArduinoMotionLibrary.Arduinos[0] == 2)
             {
-                portListBox.AppendText("Main Robot Arm is disconnected." + Environment.NewLine);
+                portListBox.AppendText("Main Robot Arm is Disconnected" + Environment.NewLine);
                 coordControl.Enabled = false;
                 groupBox3.Enabled = false;
             }
@@ -61,7 +61,7 @@ namespace VishnuMain
             }
             else if (ArduinoMotionLibrary.Arduinos[1] == 2)
             {
-                portListBox.AppendText("Tray Handler Arm is disconnected." + Environment.NewLine);
+                portListBox.AppendText("Tray Handler Arm is Disconnected" + Environment.NewLine);
                 trayGroupBox.Enabled = false;
             }
 
@@ -105,7 +105,7 @@ namespace VishnuMain
             };
             BWS.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("EMERGENCY STOP ASYNC");
+                portListBox.AppendText("EMERGENCY STOP ASYNC" + Environment.NewLine);
             };
             BWS.RunWorkerAsync();
 
@@ -157,11 +157,6 @@ namespace VishnuMain
             BWR.RunWorkerCompleted += delegate
             {
               portListBox.AppendText("SHIFT" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + ZcoordinateValue.ToString() + RotationVal.ToString() + Environment.NewLine);
-                portListBox.AppendText("X: " + ArduinoMotionLibrary.ArmCoordinates[0]
-                    + " Y: " + ArduinoMotionLibrary.ArmCoordinates[1] + " "
-                    + " Z: " + ArduinoMotionLibrary.ArmCoordinates[2] + " "
-                    + " theta: " + ArduinoMotionLibrary.ArmCoordinates[3] + " " + Environment.NewLine);
-                portListBox.ScrollToCaret();  // enables autoscrolling
             };
 
             BWR.RunWorkerAsync();
@@ -452,7 +447,7 @@ namespace VishnuMain
             var BWR = new BackgroundWorker();
             BWR.DoWork += delegate
             {
-                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, 0, 0, 0, 0);
+                ArduinoMotionLibrary.ArdPosition("RELAY", portID, 0, 0, 0, 0);
             };
             BWR.RunWorkerCompleted += delegate
             {
