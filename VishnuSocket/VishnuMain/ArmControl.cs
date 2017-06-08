@@ -432,6 +432,21 @@ namespace VishnuMain
 
         }
 
+        private void trayMove_Click(object sender, EventArgs e)
+        {
+            ArduinoMotionLibrary.ArdPosition("MOVE", 1, traySelectorBox.SelectedIndex, (double) trayZaxis.Value, 0, 0);
+        }
+
+        private void trayZaxis_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trayRedefine_Click(object sender, EventArgs e)
+        {
+            ArduinoMotionLibrary.ArdPosition("REDEF", 1, traySelectorBox.SelectedIndex, (double)trayZaxis.Value, 0, 0);
+        }
+
         private void cameraFeedBox_Enter(object sender, EventArgs e) {
 
         }

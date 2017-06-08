@@ -190,10 +190,10 @@ namespace VishnuMain
                 return -1; //Not connected
             }
 
-            if (ArdPorts[portID].BytesToRead > 0)
-                {
-                        ArdPorts[portID].DiscardInBuffer();
-                }
+            if (ArdPorts[Arduinos[portID]].BytesToRead > 0)
+            {
+                ArdPorts[Arduinos[portID]].DiscardInBuffer();
+            }
 
             string inputLine = null;
             if (portID == 0) //Going to CPU Main arm
@@ -209,24 +209,24 @@ namespace VishnuMain
                 return -1;
             }
 
-            ArdPorts[portID].WriteLine(inputLine);
+            ArdPorts[Arduinos[portID]].WriteLine(inputLine);
             Task.Delay(30); //Waiting for navigation message
-            string data = ArdPorts[portID].ReadLine();
+            string data = ArdPorts[Arduinos[portID]].ReadLine();
 
             bool done = false;
             while (!done)
             {
                 Task.Delay(50);
-                if (ArdPorts[portID].BytesToRead > 0 && !(data.StartsWith("COOR")))
+                if (ArdPorts[Arduinos[portID]].BytesToRead > 0 && !(data.StartsWith("COOR")))
                 {
-                    data = ArdPorts[portID].ReadLine();
+                    data = ArdPorts[Arduinos[portID]].ReadLine();
                 }
                 if (data == "DONE\r" || data.StartsWith("COOR"))
                 {
                     Task.Delay(50);
-                    if (ArdPorts[portID].BytesToRead > 0 && data == "DONE\r")
+                    if (ArdPorts[Arduinos[portID]].BytesToRead > 0 && data == "DONE\r")
                     {
-                        data = ArdPorts[portID].ReadLine();
+                        data = ArdPorts[Arduinos[portID]].ReadLine();
                     }
                     //Check COOR
                     if (data.StartsWith("COOR"))
