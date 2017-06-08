@@ -489,7 +489,7 @@
             this.EffectorViewer.Name = "EffectorViewer";
             this.EffectorViewer.Size = new System.Drawing.Size(135, 55);
             this.EffectorViewer.TabIndex = 19;
-            this.EffectorViewer.Text = "Switch Effector Position";
+            this.EffectorViewer.Text = "Switch Camera Position";
             this.toolTip1.SetToolTip(this.EffectorViewer, "Switches between camera and End effector");
             this.EffectorViewer.UseVisualStyleBackColor = true;
             this.EffectorViewer.Click += new System.EventHandler(this.EffectorViewer_Click);

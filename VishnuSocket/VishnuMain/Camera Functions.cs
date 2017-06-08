@@ -8,8 +8,10 @@ using Emgu.CV.Structure;
 using DataMatrix.net;
 using Emgu.CV.UI;
 
-namespace VishnuMain {
-    public class CvFunctions {
+namespace VishnuMain
+{
+    public class CvFunctions
+    {
 
         Mat color_frame = new Mat();
         Mat gray_frame = new Mat();
@@ -21,10 +23,12 @@ namespace VishnuMain {
         ///<summary>
         /// Returns image, various modes: 0.color 1.grayscale 2.redbinary 3.binary
         ///</summary>
-        public Mat SnapPicture(int mode, Capture camera_feed) {
+        public Mat SnapPicture(int mode, Capture camera_feed)
+        {
             camera_feed.Retrieve(color_frame);
 
-            switch (mode) {
+            switch (mode)
+            {
 
                 case 1: //case for just grayscale img
                     CvInvoke.CvtColor(color_frame, gray_frame, ColorConversion.Bgr2Gray);
@@ -49,10 +53,12 @@ namespace VishnuMain {
         ///<summary>
         ///Return coordinate offset for correcton
         ///</summary>
-        public Mat TemplateDetection(string[] templatelist, Mat sourceImg, double[] xy_Coord) { //takes in list of template images, source img
+        public Mat TemplateDetection(string[] templatelist, Mat sourceImg, double[] xy_Coord, bool fromTab)
+        { //takes in list of template images, source img
 
             using (Mat ResultMat = new Mat())                   //mat data holds template matches coordinates
-            using (Mat result_img = sourceImg.Clone()) {        //image with rectangles
+            using (Mat result_img = sourceImg.Clone())
+            {        //image with rectangles
                 int template_length = 0;
                 try
                 {
@@ -63,88 +69,92 @@ namespace VishnuMain {
                     MessageBox.Show(ex + Environment.NewLine + "Please select a template image");
                     return sourceImg;
                 }
-                
+
 
                 //requirement for template detection
                 double minValues = 0;
                 double maxValues = 0;
                 Point minLocations = new Point { X = 0, Y = 0 };
                 Point maxLocations = new Point { X = 0, Y = 0 };
-       
+
 
                 //loop used to go through all template images
-                for (int i = 0; i < template_length; i++) { 
+                for (int i = 0; i < template_length; i++)
+                {
                     //loop to mark all matches
-                    
-
-                        //creates image from list
-                        Mat templateImg = CvInvoke.Imread(templatelist[i], LoadImageType.Grayscale); 
-
-                        //does template matching
-                        CvInvoke.MatchTemplate(sourceImg, templateImg, ResultMat, TemplateMatchingType.CcoeffNormed); 
-                                                                                                                    
-                        //finds best matching location
-                        CvInvoke.MinMaxLoc(ResultMat, ref minValues, ref maxValues, ref minLocations, ref maxLocations);
-
-                        //accpetance check
-                        if (maxValues > 0.8) {
-
-                            //creates rectangle 
-                            Rectangle match = new Rectangle(maxLocations, templateImg.Size);
-
-                            double offset_x;
-                            double offset_y;
-                            double x_cm = 1920 / 23;
-                            double y_cm = 1080 / 13;
-                            //23x13 @ 16.5 cm  use this z height for calibration
-                            //20x10 @ 12.5 cm
-                            //12.1x6.8 @ 8.3 cm 
-                            //30 x 15.5 @ 21 cm
 
 
-                            offset_x = Math.Round((960 - (match.X + (match.Width / 2))) / x_cm, 2) * 10;
-                            offset_y = Math.Round((540 - (match.Y + (match.Height / 2))) / y_cm, 2) * 10;
+                    //creates image from list
+                    Mat templateImg = CvInvoke.Imread(templatelist[i], LoadImageType.Grayscale);
 
-                            xy_Coord[0] = offset_x;
-                            xy_Coord[1] = offset_y;
+                    //does template matching
+                    CvInvoke.MatchTemplate(sourceImg, templateImg, ResultMat, TemplateMatchingType.CcoeffNormed);
 
-                            double xShift, yShift = 0.0;
-                            double[] template_xy = { offset_x, offset_y };
+                    //finds best matching location
+                    CvInvoke.MinMaxLoc(ResultMat, ref minValues, ref maxValues, ref minLocations, ref maxLocations);
+
+                    //accpetance check
+                    if (maxValues > 0.7)
+                    {
+
+                        //creates rectangle 
+                        Rectangle match = new Rectangle(maxLocations, templateImg.Size);
+
+                        double offset_x;
+                        double offset_y;
+                        double x_cm = 1920 / 23;
+                        double y_cm = 1080 / 13;
+                        //23x13 @ 16.5 cm  use this z height for calibration
+                        //20x10 @ 12.5 cm
+                        //12.1x6.8 @ 8.3 cm 
+                        //30 x 15.5 @ 21 cm
 
 
-                            MessageBox.Show("Left/Right:" + offset_x + "\n" + "Up/Down:" + offset_y, "Coordinates");
+                        offset_x = Math.Round((960 - (match.X + (match.Width / 2))) / x_cm, 2) * 10;
+                        offset_y = Math.Round((540 - (match.Y + (match.Height / 2))) / y_cm, 2) * 10;
 
-                            xShift = -1 * template_xy[0] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
-                           + template_xy[1] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
-                            yShift = template_xy[0] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
-                                - template_xy[1] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
-                            xShift = xShift * (ArduinoMotionLibrary.ArmCoordinates[2] / 165);
-                            yShift = -1 * yShift * (ArduinoMotionLibrary.ArmCoordinates[2] / 165);
+                        xy_Coord[0] = offset_x;
+                        xy_Coord[1] = offset_y;
+
+                        double xShift, yShift = 0.0;
+                        double[] template_xy = { offset_x, offset_y };
+
+
+                        //MessageBox.Show("Left/Right:" + offset_x + "\n" + "Up/Down:" + offset_y, "Coordinates");
+
+                        xShift = -1 * template_xy[0] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
+                       + template_xy[1] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
+                        yShift = template_xy[0] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
+                            - template_xy[1] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
+                        xShift = xShift * (ArduinoMotionLibrary.ArmCoordinates[2] / 165);
+                        yShift = -1 * yShift * (ArduinoMotionLibrary.ArmCoordinates[2] / 165);
+                        if (fromTab)
+                        {
                             MessageBox.Show("X Relative:" + xShift + "\n" + "Y Relative:" + yShift, "Coordinates");
-
-                            //draws rectangle match onto source img
-                            CvInvoke.Rectangle(sourceImg, match, new Bgr(Color.Cyan).MCvScalar, 20);
-
-                            //section to compelte floodfill function
-                            //Rectangle outRect;
-
-                            //Mat mask = new Mat(sourceImg.Height + 2, sourceImg.Width + 2, DepthType.Cv8U, 1);
-
-                            //MCvScalar lo = new MCvScalar(0);
-                            //MCvScalar up = new MCvScalar(255);
-
-                            //method to fill in all rectagles so there will be no redundant detection
-                            //CvInvoke.FloodFill(sourceImg,
-                            //    mask, maxLocations,
-                            //    new MCvScalar(0), out outRect,
-                            //    lo, up,
-                            //    Connectivity.FourConnected,
-                            //    FloodFillType.Default);
-
                         }
-                        else
-                            break;
-                     //loops template matching
+                        //draws rectangle match onto source img
+                        CvInvoke.Rectangle(sourceImg, match, new Bgr(Color.Cyan).MCvScalar, 20);
+
+                        //section to compelte floodfill function
+                        //Rectangle outRect;
+
+                        //Mat mask = new Mat(sourceImg.Height + 2, sourceImg.Width + 2, DepthType.Cv8U, 1);
+
+                        //MCvScalar lo = new MCvScalar(0);
+                        //MCvScalar up = new MCvScalar(255);
+
+                        //method to fill in all rectagles so there will be no redundant detection
+                        //CvInvoke.FloodFill(sourceImg,
+                        //    mask, maxLocations,
+                        //    new MCvScalar(0), out outRect,
+                        //    lo, up,
+                        //    Connectivity.FourConnected,
+                        //    FloodFillType.Default);
+
+                    }
+                    else
+                        break;
+                    //loops template matching
                 }
 
                 return sourceImg;
@@ -154,7 +164,8 @@ namespace VishnuMain {
         ///<summary>
         ///Scans 2D-DataMatrix Barcode and returns value
         ///</summary>
-        public string BarcodeScanner(Mat barcode_img) {
+        public string BarcodeScanner(Mat barcode_img)
+        {
             //creates decorder object
             DmtxImageDecoder decoder = new DmtxImageDecoder();
 
@@ -164,27 +175,33 @@ namespace VishnuMain {
             //return barcode string
             if (codes.Count > 0)
                 return codes[0];
-            else {
+            else
+            {
                 return "Nothing found";
             }
         }
 
-        
-        public void SaveImg(Mat Img, string filename) {
+
+        public void SaveImg(Mat Img, string filename)
+        {
             Img.Save(filename);
         }
 
 
         //object detection, cpu chips via haar casecade
-        public void haar_cascade(Mat Img, List<Rectangle> cpus) {
+        public void haar_cascade(Mat Img, List<Rectangle> cpus)
+        {
 
-            using (CascadeClassifier cpu = new CascadeClassifier("../../../../Common/haar_classifier/cpu_working.xml")) {
-                using (Mat gray = new Mat()) {
+            using (CascadeClassifier cpu = new CascadeClassifier("../../../../Common/haar_classifier/cpu_working.xml"))
+            {
+                using (Mat gray = new Mat())
+                {
 
                     CvInvoke.CvtColor(Img, gray, ColorConversion.Bgr2Gray);
                     CvInvoke.EqualizeHist(gray, gray);
                     Rectangle[] cpuDetected = cpu.DetectMultiScale(gray, 1.1, 0);
-                    foreach (Rectangle c in cpuDetected) {
+                    foreach (Rectangle c in cpuDetected)
+                    {
                         Rectangle cpuRect = c;
                         cpuRect.Offset(c.X, c.Y);
                         cpus.Add(cpuRect);
@@ -192,10 +209,11 @@ namespace VishnuMain {
                 }
             }
         }
- 
-  
+
+
         //displays haar detected images
-        public void displayHar(Mat Img, List<Rectangle> cpus, ImageBox OutputImgBox) {
+        public void displayHar(Mat Img, List<Rectangle> cpus, ImageBox OutputImgBox)
+        {
             foreach (Rectangle cpu in cpus)
                 CvInvoke.Rectangle(Img, cpu, new Bgr(Color.Cyan).MCvScalar, 2);
             OutputImgBox.Image = Img;

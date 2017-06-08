@@ -57,7 +57,7 @@ namespace VishnuMain {
 
         void findMatch_Click(object sender, EventArgs e) {
             try {
-                tracked_imgbox.Image = _Template.TemplateDetection(templateList, _Template.SnapPicture(3, _capture), xy);
+                tracked_imgbox.Image = _Template.TemplateDetection(templateList, _Template.SnapPicture(3, _capture), xy, true);
             } catch {
                 MessageBox.Show("Template image not loaded, please load template image");
 

@@ -170,7 +170,7 @@ void CommandProcess(){//Parse command
 
     if(xposNew >= R-.01 && yposNew >= -1*RADMAX && zposNew >= 0 && angleNew >=0 && xposNew < RADMAX && yposNew < RADMAX && zposNew < 600 && angleNew < 360){
       MapCoordinates(false);
-      if(radiusNew < RADMIN -1 || radiusNew > RADMAX || thetaNew > 170 || thetaNew < -0.01){
+      if(radiusNew < RADMIN -1 || radiusNew > RADMAX || thetaNew > 170 || thetaNew < -0.01 || zposNew < 129){
         Serial.println("ERROR:CRASH");
         return;
       }

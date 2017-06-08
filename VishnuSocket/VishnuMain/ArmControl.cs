@@ -406,7 +406,7 @@ namespace VishnuMain
             }
             else
             {
-                ArduinoMotionLibrary.ArdPosition("CAM", 0, 0, 0, 0, 0);
+                ArduinoMotionLibrary.ArdPosition("GRIP", 0, 0, 0, 0, 0);
                 EffectorViewer.Text = "Switch to Camera Position";
                 gripperPresented = true;
             }
@@ -454,7 +454,7 @@ namespace VishnuMain
                 portListBox.AppendText("X: " + ArduinoMotionLibrary.ArmCoordinates[0]
                     + " Y: " + ArduinoMotionLibrary.ArmCoordinates[1] + " "
                     + " Z: " + ArduinoMotionLibrary.ArmCoordinates[2] + " "
-                    + " theta: " + ArduinoMotionLibrary.ArmCoordinates[3] + " " + Environment.NewLine);
+                    + " effector: " + ArduinoMotionLibrary.ArmCoordinates[3] + " " + Environment.NewLine);
                 portListBox.ScrollToCaret();  // enables autoscrolling
             };
 

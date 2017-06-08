@@ -7,10 +7,10 @@ namespace VishnuMain
     static class ArmHandlerLibrary
     {
         public static bool Running = false;
-        public static double[] RestLocation = { -82, 170.0, 100.0, 84 }; //Change to calibration image
+        public static double[] RestLocation = { -82, 170.0, 200.0, 84 }; //Change to calibration image
         // Calibrate image at: "COOR:176.00:339.00:60.00:84.0:27.50"
-        public static double[] OriginLocation = { -82, 410.0, 200.0, 84.0 }; //CPU0 location
-        public static double[] TestImgLocation = { 60, 273, 100, 84 }; //Img location
+        public static double[] OriginLocation = { -82, 400.0, 200.0, 84.0 }; //CPU0 location
+        public static double[] TestImgLocation = { 48, 254, 200, 84 }; //Img location
         //"COOR:0.00:183.00:38.00:0.0:0.00\r" , z = 52 for last one,
         public static double[] SocketLocation = { 40.0, -250.0, 200.0, 0.0 }; //Socket center point 
         private static double centerToCenterL = 0.0; //Distance between left and right CPU
@@ -166,7 +166,7 @@ namespace VishnuMain
                     template_xy[1] = 1000;
                 }
                
-                imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3, camera_feed ), template_xy);
+                imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3, camera_feed ), template_xy, false);
                     
                 xShift = -1 * template_xy[0] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
                     + template_xy[1] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
