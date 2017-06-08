@@ -75,6 +75,7 @@
             this.portListBox = new System.Windows.Forms.RichTextBox();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.CurrPosition = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.trayGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trayZaxis)).BeginInit();
@@ -280,6 +281,7 @@
             // 
             // coordControl
             // 
+            this.coordControl.Controls.Add(this.CurrPosition);
             this.coordControl.Controls.Add(this.buttonCLR);
             this.coordControl.Controls.Add(this.stopButton);
             this.coordControl.Controls.Add(this.ShiftButton);
@@ -329,7 +331,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(255, 32);
             this.label4.TabIndex = 11;
-            this.label4.Text = "Increment Y (mm)";
+            this.label4.Text = "Y Value (mm)";
             // 
             // label1
             // 
@@ -339,7 +341,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(255, 32);
             this.label1.TabIndex = 12;
-            this.label1.Text = "Increment Z (mm)";
+            this.label1.Text = "Z Value (mm)";
             // 
             // moveXval
             // 
@@ -368,7 +370,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(255, 32);
             this.label3.TabIndex = 10;
-            this.label3.Text = "Increment X (mm)";
+            this.label3.Text = "X Value (mm)";
             // 
             // moveYval
             // 
@@ -484,7 +486,8 @@
             this.EffectorViewer.Name = "EffectorViewer";
             this.EffectorViewer.Size = new System.Drawing.Size(216, 88);
             this.EffectorViewer.TabIndex = 19;
-            this.EffectorViewer.Text = "Switch to Camera Position";
+            this.EffectorViewer.Text = "Switch Camera Position";
+            this.toolTip1.SetToolTip(this.EffectorViewer, "Switches between camera and End effector");
             this.EffectorViewer.UseVisualStyleBackColor = true;
             this.EffectorViewer.Click += new System.EventHandler(this.EffectorViewer_Click);
             // 
@@ -605,6 +608,7 @@
             this.lowerZButton.AutoSize = true;
             this.lowerZButton.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lowerZButton.Location = new System.Drawing.Point(218, 259);
+            this.lowerZButton.MinimumSize = new System.Drawing.Size(74, 49);
             this.lowerZButton.Name = "lowerZButton";
             this.lowerZButton.Size = new System.Drawing.Size(149, 74);
             this.lowerZButton.TabIndex = 1;
@@ -618,6 +622,7 @@
             this.raiseZButton.AutoSize = true;
             this.raiseZButton.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.raiseZButton.Location = new System.Drawing.Point(218, 174);
+            this.raiseZButton.MinimumSize = new System.Drawing.Size(74, 49);
             this.raiseZButton.Name = "raiseZButton";
             this.raiseZButton.Size = new System.Drawing.Size(126, 78);
             this.raiseZButton.TabIndex = 0;
@@ -651,6 +656,16 @@
             this.portListBox.Size = new System.Drawing.Size(650, 539);
             this.portListBox.TabIndex = 2;
             this.portListBox.Text = "";
+            // 
+            // CurrPosition
+            // 
+            this.CurrPosition.Location = new System.Drawing.Point(265, 52);
+            this.CurrPosition.Name = "CurrPosition";
+            this.CurrPosition.Size = new System.Drawing.Size(95, 29);
+            this.CurrPosition.TabIndex = 14;
+            this.CurrPosition.Text = "Position";
+            this.CurrPosition.UseVisualStyleBackColor = true;
+            this.CurrPosition.Click += new System.EventHandler(this.CurrPosition_Click);
             // 
             // ArmControl
             // 
@@ -724,6 +739,7 @@
         private System.Windows.Forms.Button EffectorViewer;
         private System.Windows.Forms.Button RestPos;
         private System.Windows.Forms.Button buttonCLR;
+        private System.Windows.Forms.Button CurrPosition;
         private System.Windows.Forms.Button saveCalibrationButton;
         private System.Windows.Forms.ComboBox calibrationSelectorBox;
     }

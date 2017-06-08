@@ -51,7 +51,7 @@ namespace VishnuMain
             }
             else if (ArduinoMotionLibrary.Arduinos[0] == 2)
             {
-                portListBox.AppendText("Main Robot Arm is disconnected." + Environment.NewLine);
+                portListBox.AppendText("Main Robot Arm is Disconnected" + Environment.NewLine);
                 coordControl.Enabled = false;
                 groupBox3.Enabled = false;
             }
@@ -63,7 +63,7 @@ namespace VishnuMain
             }
             else if (ArduinoMotionLibrary.Arduinos[1] == 2)
             {
-                portListBox.AppendText("Tray Handler Arm is disconnected." + Environment.NewLine);
+                portListBox.AppendText("Tray Handler Arm is Disconnected" + Environment.NewLine);
                 trayGroupBox.Enabled = false;
             }
 
@@ -107,7 +107,7 @@ namespace VishnuMain
             };
             BWS.RunWorkerCompleted += delegate
             {
-                portListBox.AppendText("EMERGENCY STOP ASYNC");
+                portListBox.AppendText("EMERGENCY STOP ASYNC" + Environment.NewLine);
             };
             BWS.RunWorkerAsync();
 
@@ -159,11 +159,6 @@ namespace VishnuMain
             BWR.RunWorkerCompleted += delegate
             {
               portListBox.AppendText("SHIFT" + XcoordinateValue.ToString() + YcoordinateValue.ToString() + ZcoordinateValue.ToString() + RotationVal.ToString() + Environment.NewLine);
-                portListBox.AppendText("X: " + ArduinoMotionLibrary.ArmCoordinates[0]
-                    + " Y: " + ArduinoMotionLibrary.ArmCoordinates[1] + " "
-                    + " Z: " + ArduinoMotionLibrary.ArmCoordinates[2] + " "
-                    + " theta: " + ArduinoMotionLibrary.ArmCoordinates[3] + " " + Environment.NewLine);
-                portListBox.ScrollToCaret();  // enables autoscrolling
             };
 
             BWR.RunWorkerAsync();
@@ -413,7 +408,7 @@ namespace VishnuMain
             }
             else
             {
-                ArduinoMotionLibrary.ArdPosition("CAM", 0, 0, 0, 0, 0);
+                ArduinoMotionLibrary.ArdPosition("GRIP", 0, 0, 0, 0, 0);
                 EffectorViewer.Text = "Switch to Camera Position";
                 gripperPresented = true;
             }
@@ -473,6 +468,26 @@ namespace VishnuMain
             LocationChoiceValue = calibrationSelectorBox.SelectedIndex;
         }
 
+        private void CurrPosition_Click(object sender, EventArgs e)
+        {
+            var BWR = new BackgroundWorker();
+            BWR.DoWork += delegate
+            {
+                ArduinoMotionLibrary.ArdPosition("RELAY", portID, 0, 0, 0, 0);
+            };
+            BWR.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("X: " + ArduinoMotionLibrary.ArmCoordinates[0]
+                    + " Y: " + ArduinoMotionLibrary.ArmCoordinates[1] + " "
+                    + " Z: " + ArduinoMotionLibrary.ArmCoordinates[2] + " "
+                    + " effector: " + ArduinoMotionLibrary.ArmCoordinates[3] + " " + Environment.NewLine);
+                portListBox.ScrollToCaret();  // enables autoscrolling
+            };
+
+            BWR.RunWorkerAsync();
+        }
+
+        private void cameraFeedBox_Enter(object sender, EventArgs e) {
         private void trayZaxis_ValueChanged(object sender, EventArgs e)
         {
 

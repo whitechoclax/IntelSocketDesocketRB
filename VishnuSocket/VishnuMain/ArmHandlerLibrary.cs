@@ -7,10 +7,10 @@ namespace VishnuMain
     static class ArmHandlerLibrary
     {
         public static bool Running = false;
-        public static double[] RestLocation = { -82, 170.0, 100.0, 84 }; //Change to calibration image
+        public static double[] RestLocation = { -82, 170.0, 200.0, 84 }; //Change to calibration image
         // Calibrate image at: "COOR:176.00:339.00:60.00:84.0:27.50"
-        public static double[] OriginLocation = { -82, 375.0, 100.0, 84.0 }; //CPU0 location
-        public static double[] TestImgLocation = { 60, 273, 100, 84 }; //Img location
+        public static double[] OriginLocation = { -82, 400.0, 200.0, 84.0 }; //CPU0 location
+        public static double[] TestImgLocation = { 48, 254, 200, 84 }; //Img location
         //"COOR:0.00:183.00:38.00:0.0:0.00\r" , z = 52 for last one,
         public static double[] SocketLocation = { 40.0, -250.0, 200.0, 0.0 }; //Socket center point 
         private static double centerToCenterL = 0.0; //Distance between left and right CPU
@@ -49,23 +49,13 @@ namespace VishnuMain
                 { FatalCrash(); return; }//Move to rest location if we didn't start there
                 if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1], OriginLocation[2], OriginLocation[3]) == -2)
                 { FatalCrash(); return; }//Move to CPU0
-                if (ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, -10, 0) == -2)
-                { FatalCrash(); return; }//Move down to grab CPU
-                if (ArduinoMotionLibrary.ArdPosition("GRAB", 0, 0, 0, 0, 0) == -2)
-                { FatalCrash(); return; }
-                if (ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 10, 0) == -2)
-                { FatalCrash(); return; }//Raise back up
+                GrabChip();
                 if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, TestImgLocation[0], TestImgLocation[1], TestImgLocation[2], TestImgLocation[3]) == -2)
                 { FatalCrash(); return; }//Go calibrate
                 CameraTestImg(camera_feed);
                 if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1] - centerToCenterL, OriginLocation[2], OriginLocation[3]) == -2)
                 { FatalCrash(); return; }//Move to next spot
-                if (ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, -10, 0) == -2)
-                { FatalCrash(); return; }//Put it down
-                if (ArduinoMotionLibrary.ArdPosition("RELEASE", 0, 0, 0, 0, 0) == -2)
-                { FatalCrash(); return; }
-                if (ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 10, 0) == -2)
-                { FatalCrash(); return; }//Go back
+                ReleaseChip();
                 if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[3]) == -2)
                 { FatalCrash(); return; }//Move to rest location to finish
                 Running = false;
@@ -127,7 +117,25 @@ namespace VishnuMain
         {
             MessageBox.Show("Arm encountered an error, procedure had to be aborted");
         }
-
+        private static void GrabChip()
+        {
+            
+            if (ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, -10, 0) == -2)
+            { FatalCrash(); return; }//Move down to grab CPU
+            if (ArduinoMotionLibrary.ArdPosition("GRAB", 0, 0, 0, 0, 0) == -2)
+            { FatalCrash(); return; }
+            if (ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 10, 0) == -2)
+            { FatalCrash(); return; }//Raise back up
+        }
+        private static void ReleaseChip()
+        {
+            if (ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, -10, 0) == -2)
+            { FatalCrash(); return; }//Put it down
+            if (ArduinoMotionLibrary.ArdPosition("RELEASE", 0, 0, 0, 0, 0) == -2)
+            { FatalCrash(); return; }
+            if (ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 10, 0) == -2)
+            { FatalCrash(); return; }//Go back
+        }
         private static void FetchInformation()
         {//Get information from settings later
             centerToCenterL = Math.Round(SettingsLibrary.TrayCenter2CenterCol,0);
@@ -158,7 +166,7 @@ namespace VishnuMain
                     template_xy[1] = 1000;
                 }
                
-                imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3, camera_feed ), template_xy);
+                imgFx.TemplateDetection(fileloc, imgFx.SnapPicture(3, camera_feed ), template_xy, false);
                     
                 xShift = -1 * template_xy[0] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
                     + template_xy[1] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
