@@ -69,6 +69,7 @@
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.updateExternalButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trayCenter2CenterValueCol)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trayOr2CenterValueY)).BeginInit();
@@ -539,6 +540,7 @@
             // 
             // locationsBox
             // 
+            this.locationsBox.Controls.Add(this.updateExternalButton);
             this.locationsBox.Controls.Add(this.originLocationBox);
             this.locationsBox.Controls.Add(this.socketLocationBox);
             this.locationsBox.Controls.Add(this.restLocationBox);
@@ -605,6 +607,16 @@
             this.label6.Size = new System.Drawing.Size(172, 25);
             this.label6.TabIndex = 0;
             this.label6.Text = "Socket Location:";
+            // 
+            // updateExternalButton
+            // 
+            this.updateExternalButton.Location = new System.Drawing.Point(21, 298);
+            this.updateExternalButton.Name = "updateExternalButton";
+            this.updateExternalButton.Size = new System.Drawing.Size(194, 46);
+            this.updateExternalButton.TabIndex = 6;
+            this.updateExternalButton.Text = "Update Locations";
+            this.updateExternalButton.UseVisualStyleBackColor = true;
+            this.updateExternalButton.Click += new System.EventHandler(this.updateExternalButton_Click);
             // 
             // SettingsMenu
             // 
@@ -690,5 +702,6 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button updateExternalButton;
     }
 }

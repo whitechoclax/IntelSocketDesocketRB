@@ -439,22 +439,18 @@ namespace VishnuMain
             switch (LocationChoiceValue)
             {
                 case 0:
-                    SettingsLibrary.RestLocationCoords[0] = ArduinoMotionLibrary.ArmCoordinates[0];
-                    SettingsLibrary.RestLocationCoords[1] = ArduinoMotionLibrary.ArmCoordinates[1];
-                    SettingsLibrary.RestLocationCoords[2] = ArduinoMotionLibrary.ArmCoordinates[2];
-                    SettingsLibrary.RestLocationCoords[3] = ArduinoMotionLibrary.ArmCoordinates[3];
+                    for (int i=0 ; i < 4; i++)
+                        SettingsLibrary.RestLocationCoords[i] = ArduinoMotionLibrary.ArmCoordinates[i];
+
                     break; 
                 case 1:
-                    SettingsLibrary.SocketLocationCoords[0] = ArduinoMotionLibrary.ArmCoordinates[0];
-                    SettingsLibrary.SocketLocationCoords[1] = ArduinoMotionLibrary.ArmCoordinates[1];
-                    SettingsLibrary.SocketLocationCoords[2] = ArduinoMotionLibrary.ArmCoordinates[2];
-                    SettingsLibrary.SocketLocationCoords[3] = ArduinoMotionLibrary.ArmCoordinates[3];
+                    for (int i = 0; i < 4; i++)
+                        SettingsLibrary.SocketLocationCoords[i] = ArduinoMotionLibrary.ArmCoordinates[i];
+                    
                     break;
                 case 2:
-                    SettingsLibrary.OriginLocationCoords[0] = ArduinoMotionLibrary.ArmCoordinates[0];
-                    SettingsLibrary.OriginLocationCoords[1] = ArduinoMotionLibrary.ArmCoordinates[1];
-                    SettingsLibrary.OriginLocationCoords[2] = ArduinoMotionLibrary.ArmCoordinates[2];
-                    SettingsLibrary.OriginLocationCoords[3] = ArduinoMotionLibrary.ArmCoordinates[3];
+                    for (int i = 0; i < 4; i++)
+                        SettingsLibrary.OriginLocationCoords[i] = ArduinoMotionLibrary.ArmCoordinates[i];
                     break;
                 default:
                     break;
@@ -487,7 +483,7 @@ namespace VishnuMain
             BWR.RunWorkerAsync();
         }
 
-        private void cameraFeedBox_Enter(object sender, EventArgs e) {
+
         private void trayZaxis_ValueChanged(object sender, EventArgs e)
         {
 
@@ -497,8 +493,6 @@ namespace VishnuMain
         {
             ArduinoMotionLibrary.ArdPosition("REDEF", 1, traySelectorBox.SelectedIndex, (double)trayZaxis.Value, 0, 0);
         }
-
-        
 
     }
 }

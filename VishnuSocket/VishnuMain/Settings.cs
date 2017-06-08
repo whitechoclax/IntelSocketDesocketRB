@@ -57,7 +57,7 @@ namespace VishnuMain
         {
             InitializeComponent();
             loadFromXML();
-            //updateExternalUISettings();
+            
         }
 
         //UI changes section
@@ -180,9 +180,6 @@ namespace VishnuMain
             }
         }
 
-       
-        
-
         public void loadFromXML()
         {
             xmlfullpath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Resources\settings.xml");
@@ -212,7 +209,7 @@ namespace VishnuMain
                 invPathString = (string)setting.Element("inventoryPath") ?? string.Empty;
 
                 //so double arrays are really funky to save.  this is a very hacky way to save it.
-                restLocString = (string)setting.Element("restLocation") ?? "-82:170:200:84";
+                restLocString = (string)setting.Element("restLocation") ?? "-90:100:300:24";
                 string[] restLocationCoordString = restLocString.Split(':');
                 //populate array
                 for (int i = 0; i < 4; i++)
@@ -259,7 +256,6 @@ namespace VishnuMain
         }
 
         
-
         //step 5: save to xml update. Add the key , in our case the var name we want to add as a string, followed by 
         //the UI varaible *(the stuff saved in numeric boxes and buttons) as the contnet we are saving from user.
         //next step go to settingslibrary.cs to add the encapsulated fields.
@@ -294,14 +290,17 @@ namespace VishnuMain
             return;
         }
 
-        private void updateExternalUISettings()
+
+        private string JoinString(double[] ArrayToCombine)
         {
-            restLocationBox.Text = SettingsLibrary.RestLocationCoords.ToString();
-
-            socketLocationBox.Text = SettingsLibrary.SocketLocationCoords.ToString();
-            originLocationBox.Text = SettingsLibrary.OriginLocationCoords.ToString();
+            string[] joiner = { "0", "0", "0", "0"};                         //declare NULL in scope array of strings
+            for (int i = 0; i < 4; i++)
+            {
+                joiner[i] = ArrayToCombine[i].ToString();   //iterate through each index and convert to string.
+            }
+            string TextBoxOut = String.Join(":", joiner);   //join via : delimiters
+            return TextBoxOut;                              //return to updateUI 
         }
-
         private void xmlSaveButton_Click(object sender, EventArgs e)
         {
             savetoXML();
@@ -312,6 +311,12 @@ namespace VishnuMain
             loadFromXML();
         }
 
-        
+
+        private void updateExternalButton_Click(object sender, EventArgs e)
+        {
+            restLocationBox.Text = JoinString(SettingsLibrary.RestLocationCoords);
+            socketLocationBox.Text = JoinString(SettingsLibrary.SocketLocationCoords);
+            originLocationBox.Text = JoinString(SettingsLibrary.OriginLocationCoords);
+        }
     }
 }
