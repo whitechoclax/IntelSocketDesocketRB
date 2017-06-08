@@ -47,11 +47,17 @@ namespace VishnuMain
         double[] socketLocationCoords = { 0, 0, 0, 0 };
         double[] originLocationCoords = { 0, 0, 0, 0 };
 
+        //strings for location coords, not saved in settings library but used to update UI
+        string restLocString;
+        string socketLocString;
+        string originLocString;
+
         //load menu
         public SettingsMenu()
         {
             InitializeComponent();
-            loadFromXML();  
+            loadFromXML();
+            //updateExternalUISettings();
         }
 
         //UI changes section
@@ -130,17 +136,32 @@ namespace VishnuMain
 
         private void restLocationBox_TextChanged(object sender, EventArgs e)
         {
-            SettingsLibrary.   = restLocationBox.Text;
+            string[] splitrestBox = (restLocationBox.Text).Split(':');
+            for (int i = 0; i < 4; i++)
+            {
+                restLocationCoords[i] = double.Parse(splitrestBox[i]);
+                SettingsLibrary.RestLocationCoords[i] = double.Parse(splitrestBox[i]);
+            }
         }
 
         private void socketLocationBox_TextChanged(object sender, EventArgs e)
         {
-            SettingsLibrary. = socketLocationBox.Text;
+            string[] splitsocketBox = (socketLocationBox.Text).Split(':');
+            for (int i = 0; i < 4; i++)
+            {
+                socketLocationCoords[i] = double.Parse(splitsocketBox[i]);
+                SettingsLibrary.SocketLocationCoords[i] = double.Parse(splitsocketBox[i]);
+            }
         }
 
         private void originLocationBox_TextChanged(object sender, EventArgs e)
         {
-            SettingsLibrary.  = originLocationBox.Text;
+            string[] splitoriginBox = (originLocationBox.Text).Split(':');
+            for (int i = 0; i < 4; i++)
+            {
+                originLocationCoords[i] = double.Parse(splitoriginBox[i]);
+                SettingsLibrary.OriginLocationCoords[i] = double.Parse(splitoriginBox[i]);
+            }
         }
 
         //load button handler
@@ -190,17 +211,25 @@ namespace VishnuMain
                 socketDimZ = (int?)setting.Element("SocketDimZ") ?? 100;
                 invPathString = (string)setting.Element("inventoryPath") ?? string.Empty;
 
-                //restLocationCoords = (from coord in setting.Elements("restLocation")
-                //                      select new 
-                //                      {
-                //                          restLocationCoords[0] = (double)coord.Element("X"),
-                //                          restLocationCoords[1] = (double)coord.Element("Y"),
-                //                          restLocationCoords[2] = (double)coord.Element("Z"),
-                //                          restLocationCoords[3] = (double)coord.Element("R")
-                //                      }).ToArray();
+                //so double arrays are really funky to save.  this is a very hacky way to save it.
+                restLocString = (string)setting.Element("restLocation") ?? "-82:170:200:84";
+                string[] restLocationCoordString = restLocString.Split(':');
+                //populate array
+                for (int i = 0; i < 4; i++)
+                { restLocationCoords[i] = double.Parse(restLocationCoordString[i]); }
                 
-                //socketLocationCoords =
-                //originLocationCoords = 
+                socketLocString = (string)setting.Element("socketLocation") ?? "-82:170:200:84";
+                string[] socketLocationCoordString = socketLocString.Split(':');
+                //populate array
+                for (int i = 0; i < 4; i++)
+                { socketLocationCoords[i] = double.Parse(socketLocationCoordString[i]); }
+
+                originLocString = (string)setting.Element("originLocation") ?? "-82:170:200:84";
+                string[] originLocationCoordString = originLocString.Split(':');
+                //populate array
+                for (int i = 0; i < 4; i++)
+                { originLocationCoords[i] = double.Parse(originLocationCoordString[i]); }
+                
             }
             //step 4: update the UI.  it is yourVariableNameValue.value = yourVariableName
             //you may need to cast it to decimal.  
@@ -223,8 +252,10 @@ namespace VishnuMain
             socketDimZValue.Value = (decimal)socketDimZ;
 
             invPathTextBox.Text = invPathString;
-            
-      
+            //coordinate field save
+            restLocationBox.Text = restLocString;
+            socketLocationBox.Text = socketLocString;
+            originLocationBox.Text = originLocString;
         }
 
         
@@ -249,24 +280,10 @@ namespace VishnuMain
                 new XElement("SocketDimY", socketDimYValue.Value.ToString()),
                 new XElement("SocketDimZ", socketDimZValue.Value.ToString()),
                 new XElement("inventoryPath", invPathString),
-                new XElement("restLocation", 
-                            from coord in restLocationCoords
-                            select new XElement("X", restLocationCoords[0]),
-                                    new XElement("Y", restLocationCoords[1]),
-                                    new XElement("Z", restLocationCoords[2]),
-                                    new XElement("R", restLocationCoords[3])),
-                new XElement("socketLocation",
-                            from coord in socketLocationCoords
-                            select new XElement("X", socketLocationCoords[0]),
-                                   new XElement("Y", socketLocationCoords[1]),
-                                   new XElement("Z", socketLocationCoords[2]),
-                                   new XElement("R", socketLocationCoords[3])),
-                new XElement("originLocation",
-                            from coord in originLocationCoords
-                            select new XElement("X", originLocationCoords[0]),
-                                   new XElement("Y", originLocationCoords[1]),
-                                   new XElement("Z", originLocationCoords[2]),
-                                   new XElement("R", originLocationCoords[3]))
+                new XElement("restLocation", restLocationBox.Text),
+                new XElement("socketLocation", socketLocationBox.Text),
+                new XElement("originLocation", originLocationBox.Text)
+                           
 
                 )
             );
@@ -275,6 +292,14 @@ namespace VishnuMain
             settings.Save(xmlfullpath);  // doesnt work on install
             //settings.Save(xmlPathString + "\\settings.xml");  // load after setting path
             return;
+        }
+
+        private void updateExternalUISettings()
+        {
+            restLocationBox.Text = SettingsLibrary.RestLocationCoords.ToString();
+
+            socketLocationBox.Text = SettingsLibrary.SocketLocationCoords.ToString();
+            originLocationBox.Text = SettingsLibrary.OriginLocationCoords.ToString();
         }
 
         private void xmlSaveButton_Click(object sender, EventArgs e)

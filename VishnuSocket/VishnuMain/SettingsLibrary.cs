@@ -28,6 +28,10 @@ namespace VishnuMain
         static int _socketDimZ;
 
         static string _invPathString;
+        //you MUST initialize a static array or else it will be null.
+        static double[] _restLocationCoords = { 0, 0, 0, 0 };
+        static double[] _socketLocationCoords = { 0, 0, 0, 0 };
+        static double[] _originLocationCoords = { 0, 0, 0, 0};
 
         //encapsulated stubs begin here, from step 2 instructions.
         public static double TrayOrigin2CenterX { get { return _trayOrigin2CenterX; } set { _trayOrigin2CenterX = value; } }
@@ -36,14 +40,18 @@ namespace VishnuMain
         public static double TrayCenter2CenterCol { get { return _trayCenter2CenterCol; } set { _trayCenter2CenterCol = value; } }
 
         public static double TrayHeight { get { return _trayHeight; } set { _trayHeight = value; } }
-        public static int TrayLength { get { return _trayLength; }  set { _trayLength = value; } }
+        public static int TrayLength { get { return _trayLength; } set { _trayLength = value; } }
         public static int TrayWidth { get { return _trayWidth; } set { _trayWidth = value; } }
         public static int TrayStack { get { return _trayStack; } set { _trayStack = value; } }
-        
+
         public static int SocketDimX { get { return _socketDimX; } set { _socketDimX = value; } }
         public static int SocketDimY { get { return _socketDimY; } set { _socketDimY = value; } }
         public static int SocketDimZ { get { return _socketDimZ; } set { _socketDimZ = value; } }
 
         public static string InvPathString { get { return _invPathString; } set { _invPathString = value; } }
+
+        public static double[] RestLocationCoords { get { return _restLocationCoords; } set { _restLocationCoords = value; } }
+        public static double[] SocketLocationCoords { get { return _socketLocationCoords; } set { _socketLocationCoords = value; } }
+        public static double[] OriginLocationCoords { get { return _originLocationCoords; } set { _originLocationCoords = value; } }
     }
 }

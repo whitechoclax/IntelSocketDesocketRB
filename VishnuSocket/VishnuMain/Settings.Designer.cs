@@ -63,12 +63,12 @@
             this.socketX = new System.Windows.Forms.Label();
             this.socketDimXValue = new System.Windows.Forms.NumericUpDown();
             this.locationsBox = new System.Windows.Forms.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.restLocationBox = new System.Windows.Forms.TextBox();
-            this.socketLocationBox = new System.Windows.Forms.TextBox();
             this.originLocationBox = new System.Windows.Forms.TextBox();
+            this.socketLocationBox = new System.Windows.Forms.TextBox();
+            this.restLocationBox = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trayCenter2CenterValueCol)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trayOr2CenterValueY)).BeginInit();
@@ -144,7 +144,7 @@
             0,
             65536});
             this.trayCenter2CenterValueCol.Location = new System.Drawing.Point(318, 494);
-            this.trayCenter2CenterValueCol.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.trayCenter2CenterValueCol.Margin = new System.Windows.Forms.Padding(6);
             this.trayCenter2CenterValueCol.Name = "trayCenter2CenterValueCol";
             this.trayCenter2CenterValueCol.Size = new System.Drawing.Size(158, 31);
             this.trayCenter2CenterValueCol.TabIndex = 14;
@@ -159,7 +159,7 @@
             0,
             65536});
             this.trayOr2CenterValueY.Location = new System.Drawing.Point(318, 398);
-            this.trayOr2CenterValueY.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.trayOr2CenterValueY.Margin = new System.Windows.Forms.Padding(6);
             this.trayOr2CenterValueY.Name = "trayOr2CenterValueY";
             this.trayOr2CenterValueY.Size = new System.Drawing.Size(158, 31);
             this.trayOr2CenterValueY.TabIndex = 13;
@@ -423,7 +423,7 @@
             this.checkedListBox1.Location = new System.Drawing.Point(32, 33);
             this.checkedListBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(430, 30);
+            this.checkedListBox1.Size = new System.Drawing.Size(430, 56);
             this.checkedListBox1.TabIndex = 4;
             // 
             // componentBox
@@ -552,23 +552,32 @@
             this.locationsBox.TabStop = false;
             this.locationsBox.Text = "Calibrated Location Coordinates";
             // 
-            // label6
+            // originLocationBox
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(26, 168);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(172, 25);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "Socket Location:";
+            this.originLocationBox.Location = new System.Drawing.Point(231, 233);
+            this.originLocationBox.Name = "originLocationBox";
+            this.originLocationBox.ReadOnly = true;
+            this.originLocationBox.Size = new System.Drawing.Size(336, 31);
+            this.originLocationBox.TabIndex = 5;
+            this.originLocationBox.TextChanged += new System.EventHandler(this.originLocationBox_TextChanged);
             // 
-            // label14
+            // socketLocationBox
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(26, 98);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(150, 25);
-            this.label14.TabIndex = 1;
-            this.label14.Text = "Rest Location:";
+            this.socketLocationBox.Location = new System.Drawing.Point(231, 168);
+            this.socketLocationBox.Name = "socketLocationBox";
+            this.socketLocationBox.ReadOnly = true;
+            this.socketLocationBox.Size = new System.Drawing.Size(336, 31);
+            this.socketLocationBox.TabIndex = 4;
+            this.socketLocationBox.TextChanged += new System.EventHandler(this.socketLocationBox_TextChanged);
+            // 
+            // restLocationBox
+            // 
+            this.restLocationBox.Location = new System.Drawing.Point(231, 95);
+            this.restLocationBox.Name = "restLocationBox";
+            this.restLocationBox.ReadOnly = true;
+            this.restLocationBox.Size = new System.Drawing.Size(336, 31);
+            this.restLocationBox.TabIndex = 3;
+            this.restLocationBox.TextChanged += new System.EventHandler(this.restLocationBox_TextChanged);
             // 
             // label15
             // 
@@ -579,29 +588,23 @@
             this.label15.TabIndex = 2;
             this.label15.Text = "Origin Location:";
             // 
-            // restLocationBox
+            // label14
             // 
-            this.restLocationBox.Location = new System.Drawing.Point(231, 95);
-            this.restLocationBox.Name = "restLocationBox";
-            this.restLocationBox.Size = new System.Drawing.Size(336, 31);
-            this.restLocationBox.TabIndex = 3;
-            this.restLocationBox.TextChanged += new System.EventHandler(this.restLocationBox_TextChanged);
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(26, 98);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(150, 25);
+            this.label14.TabIndex = 1;
+            this.label14.Text = "Rest Location:";
             // 
-            // socketLocationBox
+            // label6
             // 
-            this.socketLocationBox.Location = new System.Drawing.Point(231, 168);
-            this.socketLocationBox.Name = "socketLocationBox";
-            this.socketLocationBox.Size = new System.Drawing.Size(336, 31);
-            this.socketLocationBox.TabIndex = 4;
-            this.socketLocationBox.TextChanged += new System.EventHandler(this.socketLocationBox_TextChanged);
-            // 
-            // originLocationBox
-            // 
-            this.originLocationBox.Location = new System.Drawing.Point(231, 233);
-            this.originLocationBox.Name = "originLocationBox";
-            this.originLocationBox.Size = new System.Drawing.Size(336, 31);
-            this.originLocationBox.TabIndex = 5;
-            this.originLocationBox.TextChanged += new System.EventHandler(this.originLocationBox_TextChanged);
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(26, 168);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(172, 25);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Socket Location:";
             // 
             // SettingsMenu
             // 
