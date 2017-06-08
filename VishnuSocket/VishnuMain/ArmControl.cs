@@ -447,6 +447,25 @@ namespace VishnuMain
             ArduinoMotionLibrary.ArdPosition("REDEF", 1, traySelectorBox.SelectedIndex, (double)trayZaxis.Value, 0, 0);
         }
 
+        private void CurrPosition_Click(object sender, EventArgs e)
+        {
+            var BWR = new BackgroundWorker();
+            BWR.DoWork += delegate
+            {
+                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, 0, 0, 0, 0);
+            };
+            BWR.RunWorkerCompleted += delegate
+            {
+                portListBox.AppendText("X: " + ArduinoMotionLibrary.ArmCoordinates[0]
+                    + " Y: " + ArduinoMotionLibrary.ArmCoordinates[1] + " "
+                    + " Z: " + ArduinoMotionLibrary.ArmCoordinates[2] + " "
+                    + " theta: " + ArduinoMotionLibrary.ArmCoordinates[3] + " " + Environment.NewLine);
+                portListBox.ScrollToCaret();  // enables autoscrolling
+            };
+
+            BWR.RunWorkerAsync();
+        }
+
         private void cameraFeedBox_Enter(object sender, EventArgs e) {
 
         }

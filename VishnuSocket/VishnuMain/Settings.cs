@@ -130,17 +130,17 @@ namespace VishnuMain
 
         private void restLocationBox_TextChanged(object sender, EventArgs e)
         {
-            SettingsLibrary.   = restLocationBox.Text;
+            //SettingsLibrary.   = restLocationBox.Text;
         }
 
         private void socketLocationBox_TextChanged(object sender, EventArgs e)
         {
-            SettingsLibrary. = socketLocationBox.Text;
+            //SettingsLibrary. = socketLocationBox.Text;
         }
 
         private void originLocationBox_TextChanged(object sender, EventArgs e)
         {
-            SettingsLibrary.  = originLocationBox.Text;
+            //SettingsLibrary.  = originLocationBox.Text;
         }
 
         //load button handler
