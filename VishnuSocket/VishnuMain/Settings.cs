@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using System.IO;
 using System.Reflection;
+using System.Runtime.Serialization;
 
 namespace VishnuMain
 {
@@ -40,6 +41,11 @@ namespace VishnuMain
         int socketDimX;
         int socketDimY;
         int socketDimZ;
+
+        //calibrated location saved
+        double[] restLocationCoords = { 0, 0, 0, 0 };
+        double[] socketLocationCoords = { 0, 0, 0, 0 };
+        double[] originLocationCoords = { 0, 0, 0, 0 };
 
         //load menu
         public SettingsMenu()
@@ -122,7 +128,20 @@ namespace VishnuMain
             SettingsLibrary.InvPathString = invPathString; 
         }
 
+        private void restLocationBox_TextChanged(object sender, EventArgs e)
+        {
+            SettingsLibrary.   = restLocationBox.Text;
+        }
 
+        private void socketLocationBox_TextChanged(object sender, EventArgs e)
+        {
+            SettingsLibrary. = socketLocationBox.Text;
+        }
+
+        private void originLocationBox_TextChanged(object sender, EventArgs e)
+        {
+            SettingsLibrary.  = originLocationBox.Text;
+        }
 
         //load button handler
         private void inventorySaveFileButton_Click(object sender, EventArgs e)
@@ -170,6 +189,18 @@ namespace VishnuMain
                 socketDimY = (int?)setting.Element("SocketDimY") ?? 100;
                 socketDimZ = (int?)setting.Element("SocketDimZ") ?? 100;
                 invPathString = (string)setting.Element("inventoryPath") ?? string.Empty;
+
+                //restLocationCoords = (from coord in setting.Elements("restLocation")
+                //                      select new 
+                //                      {
+                //                          restLocationCoords[0] = (double)coord.Element("X"),
+                //                          restLocationCoords[1] = (double)coord.Element("Y"),
+                //                          restLocationCoords[2] = (double)coord.Element("Z"),
+                //                          restLocationCoords[3] = (double)coord.Element("R")
+                //                      }).ToArray();
+                
+                //socketLocationCoords =
+                //originLocationCoords = 
             }
             //step 4: update the UI.  it is yourVariableNameValue.value = yourVariableName
             //you may need to cast it to decimal.  
@@ -192,6 +223,8 @@ namespace VishnuMain
             socketDimZValue.Value = (decimal)socketDimZ;
 
             invPathTextBox.Text = invPathString;
+            
+      
         }
 
         
@@ -215,7 +248,25 @@ namespace VishnuMain
                 new XElement("SocketDimX", socketDimXValue.Value.ToString()),
                 new XElement("SocketDimY", socketDimYValue.Value.ToString()),
                 new XElement("SocketDimZ", socketDimZValue.Value.ToString()),
-                new XElement("inventoryPath", invPathString)
+                new XElement("inventoryPath", invPathString),
+                new XElement("restLocation", 
+                            from coord in restLocationCoords
+                            select new XElement("X", restLocationCoords[0]),
+                                    new XElement("Y", restLocationCoords[1]),
+                                    new XElement("Z", restLocationCoords[2]),
+                                    new XElement("R", restLocationCoords[3])),
+                new XElement("socketLocation",
+                            from coord in socketLocationCoords
+                            select new XElement("X", socketLocationCoords[0]),
+                                   new XElement("Y", socketLocationCoords[1]),
+                                   new XElement("Z", socketLocationCoords[2]),
+                                   new XElement("R", socketLocationCoords[3])),
+                new XElement("originLocation",
+                            from coord in originLocationCoords
+                            select new XElement("X", originLocationCoords[0]),
+                                   new XElement("Y", originLocationCoords[1]),
+                                   new XElement("Z", originLocationCoords[2]),
+                                   new XElement("R", originLocationCoords[3]))
 
                 )
             );
