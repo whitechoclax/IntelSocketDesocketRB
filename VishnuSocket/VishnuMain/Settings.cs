@@ -182,8 +182,9 @@ namespace VishnuMain
 
         public void loadFromXML()
         {
-            //xmlfullpath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Common\settings.xml");
+            //xmlfullpath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Common\settings.xml");  
             xmlfullpath = @"../../../../Common/Settings/settings.xml";
+            System.IO.Directory.CreateDirectory("../../../../Common/Settings");
             try
             {
                 XDocument settingsmenu = XDocument.Load(xmlfullpath);  // doesnt work on install
