@@ -7,10 +7,10 @@ namespace VishnuMain
     static class ArmHandlerLibrary
     {
         public static bool Running = false;
-        public static double[] RestLocation = { -82, 170.0, 200.0, 84 }; //Change to calibration image
+        public static double[] RestLocation = { -82, 220.0, 200.0, 84 }; //Change to calibration image
         // Calibrate image at: "COOR:176.00:339.00:60.00:84.0:27.50"
-        public static double[] OriginLocation = { -82, 400.0, 200.0, 84.0 }; //CPU0 location
-        public static double[] TestImgLocation = { 48, 254, 200, 84 }; //Img location
+        public static double[] OriginLocation = { -82, 395.0, 168.0, 84.0 }; //CPU0 location + 1cm up on z
+        public static double[] TestImgLocation = { 71, 295, 200, 84 }; //Img location
         //"COOR:0.00:183.00:38.00:0.0:0.00\r" , z = 52 for last one,
         public static double[] SocketLocation = { 40.0, -250.0, 200.0, 0.0 }; //Socket center point 
         private static double centerToCenterL = 0.0; //Distance between left and right CPU
@@ -53,7 +53,7 @@ namespace VishnuMain
                 if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, TestImgLocation[0], TestImgLocation[1], TestImgLocation[2], TestImgLocation[3]) == -2)
                 { FatalCrash(); return; }//Go calibrate
                 CameraTestImg(camera_feed);
-                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1] - centerToCenterL, OriginLocation[2], OriginLocation[3]) == -2)
+                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0] + centerToCenterW, OriginLocation[1], OriginLocation[2], OriginLocation[3]) == -2)
                 { FatalCrash(); return; }//Move to next spot
                 ReleaseChip();
                 if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[3]) == -2)
@@ -155,10 +155,10 @@ namespace VishnuMain
             CvFunctions imgFx = new CvFunctions();
 
             
-            while (Math.Abs(template_xy[0]) > 3 && Math.Abs(template_xy[1]) > 3)
+            while (xShift > 3 && xShift < -3 && yShift > 3 && yShift < -3)
             {
                 
-                if (xShift < 100 && yShift < 100)
+                if (xShift < 100 && xShift > -100 && yShift < 100 && yShift > -100)
                 {
                 
                     ArduinoMotionLibrary.ArdPosition("SHIFT", 0, Math.Round(xShift, 0), Math.Round(yShift, 0), 0, 0);

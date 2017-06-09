@@ -1,7 +1,8 @@
 int Calibrate(){ //TBD Later
   return 1;
 }
-
+// 110 in ; 60 out - pin 3 servo1
+// 90 in ; 20 out - pin 4 servo2
 void CommandProcess(){//Parse command
   if(stringComplete){ //Tray position, z height
     int i = 0;
@@ -44,8 +45,8 @@ void CommandProcess(){//Parse command
     else if(inputString.startsWith("GRAB")){//Send coordinates
       HOLDING = true;
       //Close servos
-      grabber1.write(180);
-      grabber2.write(100);
+      grabber1.write(110);
+      grabber2.write(90);
       Serial.println("NAVIGATING");
       Serial.println("DONE");
       RelayCoordinates();
@@ -58,8 +59,8 @@ void CommandProcess(){//Parse command
     else if(inputString.startsWith("RELEASE")){//Send coordinates
       HOLDING = false;
       //Open servos
-      grabber1.write(20);
-      grabber2.write(20);
+      grabber1.write(75);
+      grabber2.write(35);
       Serial.println("NAVIGATING");
       Serial.println("DONE");
       RelayCoordinates();

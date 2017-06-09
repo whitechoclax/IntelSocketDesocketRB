@@ -66,8 +66,8 @@ void setup() {
   pinMode(SERVO2, OUTPUT);
   grabber1.attach(SERVO1);
   grabber2.attach(SERVO2);
-  grabber1.write(20);
-  grabber2.write(20);
+  grabber1.write(75);
+  grabber2.write(35);
   delay(250);
   Serial.println("TRAYHANDLER");
 }

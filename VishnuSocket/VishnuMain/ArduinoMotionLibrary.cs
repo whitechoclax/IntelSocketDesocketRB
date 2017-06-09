@@ -279,7 +279,7 @@ namespace VishnuMain
                                     ArdPosition("REDEF", 0, Xval, Yval, Zval, thetaVal);
                                     problem = true;
                                 }
-                                if (error[0] > 2 || error[0] < -2 || error[1] > 2 || error[0] < -2 && CorrectionDepth < 5)
+                                if ((error[0] > 2 || error[0] < -2 || error[1] > 2 || error[0] < -2) && CorrectionDepth < 5)
                                 {//This function will work recursively to correct any detected math error
                                     ++CorrectionDepth;
                                     ArdPosition("SHIFT", 0, error[0], error[1], error[2], error[3]);
@@ -351,7 +351,7 @@ namespace VishnuMain
                 {
                     ArdPorts[portID].WriteLine(inputLine);
                     string data = ArdPorts[portID].ReadLine();
-                    if (data != "STOPPING\r")
+                    if (data != "STOPPING\r")  // timeout exception
                     {
                         Task.Delay(15); //Should probably have an error counter
                     }
