@@ -18,6 +18,7 @@ namespace VishnuMain
         public static double TrayZ = 0.0;
         public static int TrayPresented = 0;
         private static int CorrectionDepth = 0;
+        private static bool inUse = false;
 
         public static void ArduinoMotionLibraryBoot()
         {
@@ -185,8 +186,14 @@ namespace VishnuMain
         public static int ArdPosition(string command, int portID, double Xval, double Yval, double Zval, double thetaVal)
         {//Inputs a command and values, and a desired arduino (0 or 1)
             bool problem = false; //Did we encounter a problem during the operation?
+            if (inUse)
+            {
+                return -2; //Movment is in use, come back later
+            }
+            inUse = true;
             if (Arduinos[portID] == 2)
             {
+                inUse = false;
                 return -1; //Not connected
             }
 
@@ -206,6 +213,7 @@ namespace VishnuMain
             }
             else
             {
+                inUse = false;
                 return -1;
             }
 
@@ -230,11 +238,11 @@ namespace VishnuMain
                     }
                     //Check COOR
                     if (data.StartsWith("COOR"))
-                    { 
+                    {
                         string[] pieces = data.Split(':');
                         if (portID == 0)
                         {
-                            double[] OldValues = { ArmCoordinates[0], ArmCoordinates[1], ArmCoordinates[2], ArmCoordinates[3]};
+                            double[] OldValues = { ArmCoordinates[0], ArmCoordinates[1], ArmCoordinates[2], ArmCoordinates[3] };
                             try
                             {
                                 ArmCoordinates[0] = double.Parse(pieces[1]);
@@ -243,16 +251,18 @@ namespace VishnuMain
                                 ArmCoordinates[3] = double.Parse(pieces[4]);
                                 ArmCoordinates[4] = double.Parse(pieces[5]);
                             }
-                            catch(Exception e)
+                            catch (Exception e)
                             { //If there's junk data, nan throws an error and we're done for
                                 ArdPosition("REDEF", 0, -82, 170, 100, 90);
+                                inUse = false;
                                 return -2;
                             }
 
-                            if(ArmCoordinates[0] > 600 || ArmCoordinates[0] < -600 || ArmCoordinates[1] > 600 || ArmCoordinates[1] < -600 || 
+                            if (ArmCoordinates[0] > 600 || ArmCoordinates[0] < -600 || ArmCoordinates[1] > 600 || ArmCoordinates[1] < -600 ||
                                 ArmCoordinates[2] > 600 || ArmCoordinates[2] < -600 || ArmCoordinates[3] > 200 || ArmCoordinates[0] < -200)
                             {//We were out of bounds somehow, that's a big problem
                                 ArdPosition("REDEF", 0, -82, 170, 100, 90);
+                                inUse = false;
                                 return -2;
                             }
 
@@ -294,7 +304,10 @@ namespace VishnuMain
                         }
                     }
                     else
+                    {
+                        inUse = false;
                         return -1;
+                    }
                     done = true;
                 }
                 else if (data.StartsWith("ERROR"))
@@ -322,6 +335,7 @@ namespace VishnuMain
 
                         }
                     }
+                    inUse = false;
                     return -2;//Command didn't work
                 }
             }
@@ -332,9 +346,10 @@ namespace VishnuMain
 
             if (problem)
             {//Command required a redefine, you may not be where you need to or may be mapped wrong
+                inUse = false;
                 return -1;
             }
-
+            inUse = false;
             return 0;
         }
 

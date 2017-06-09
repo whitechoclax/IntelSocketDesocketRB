@@ -154,7 +154,8 @@ namespace VishnuMain
             var BWR = new BackgroundWorker();
             BWR.DoWork += delegate
             {
-                ArduinoMotionLibrary.ArdPosition("SHIFT", portID, XcoordinateValue, YcoordinateValue, ZcoordinateValue, RotationVal);
+                if(ArduinoMotionLibrary.ArdPosition("SHIFT", portID, XcoordinateValue, YcoordinateValue, ZcoordinateValue, RotationVal) == -2)
+                {}
             };
             BWR.RunWorkerCompleted += delegate
             {
