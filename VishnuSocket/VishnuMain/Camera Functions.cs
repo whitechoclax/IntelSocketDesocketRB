@@ -196,10 +196,9 @@ namespace VishnuMain
             {
                 using (Mat gray = new Mat())
                 {
-
-                    CvInvoke.CvtColor(Img, gray, ColorConversion.Bgr2Gray);
+                    //CvInvoke.CvtColor(Img, gray, ColorConversion.Bgr2Gray);
                     CvInvoke.EqualizeHist(gray, gray);
-                    Rectangle[] cpuDetected = cpu.DetectMultiScale(gray, 1.1, 0);
+                    Rectangle[] cpuDetected = cpu.DetectMultiScale(gray, 1.2, 1);
                     foreach (Rectangle c in cpuDetected)
                     {
                         Rectangle cpuRect = c;
@@ -215,8 +214,27 @@ namespace VishnuMain
         public void displayHar(Mat Img, List<Rectangle> cpus, ImageBox OutputImgBox)
         {
             foreach (Rectangle cpu in cpus)
-                CvInvoke.Rectangle(Img, cpu, new Bgr(Color.Cyan).MCvScalar, 2);
+                CvInvoke.Rectangle(Img, cpu, new Bgr(Color.Cyan).MCvScalar, 3);
             OutputImgBox.Image = Img;
+        }
+
+        public bool cpuExists(Mat Img, List<Rectangle> cpu)
+        {
+            bool exists;
+           //CvInvoke.Resize(Img, Img, new Size(640, 480));
+           // Image<Bgr, Byte> RImg = Img.ToImage<Bgr, Byte>();
+            //RImg.Rotate(90, new Bgr(Color.Blue));
+
+            //Mat img = RImg.Mat;
+            haar_cascade(Img, cpu);
+
+            if (cpu.Count > 1)
+            {
+                exists = true;
+                //cpu.Clear();
+            }
+            else exists = false;
+            return exists;
         }
 
     }
