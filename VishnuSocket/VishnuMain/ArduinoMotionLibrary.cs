@@ -196,10 +196,18 @@ namespace VishnuMain
                 inUse = false;
                 return -1; //Not connected
             }
-
-            if (ArdPorts[Arduinos[portID]].BytesToRead > 0)
+            try
             {
-                ArdPorts[Arduinos[portID]].DiscardInBuffer();
+                if (ArdPorts[Arduinos[portID]].BytesToRead > 0)
+                {
+                    ArdPorts[Arduinos[portID]].DiscardInBuffer();
+                }
+            }
+            catch
+            {
+                inUse = false;
+                ArduinoMotionLibraryBoot();
+                return -2;
             }
 
             string inputLine = null;

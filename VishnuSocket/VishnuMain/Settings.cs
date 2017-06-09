@@ -209,7 +209,7 @@ namespace VishnuMain
                 invPathString = (string)setting.Element("inventoryPath") ?? string.Empty;
 
                 //so double arrays are really funky to save.  this is a very hacky way to save it.
-                restLocString = (string)setting.Element("restLocation") ?? "-90:100:300:24";
+                restLocString = (string)setting.Element("restLocation") ?? "-82:230:200:84";
                 string[] restLocationCoordString = restLocString.Split(':');
                 //populate array
                 for (int i = 0; i < 4; i++)
@@ -276,9 +276,9 @@ namespace VishnuMain
                 new XElement("SocketDimY", socketDimYValue.Value.ToString()),
                 new XElement("SocketDimZ", socketDimZValue.Value.ToString()),
                 new XElement("inventoryPath", invPathString),
-                new XElement("restLocation", restLocationBox.Text),
-                new XElement("socketLocation", socketLocationBox.Text),
-                new XElement("originLocation", originLocationBox.Text)
+                new XElement("restLocation", restLocString),
+                new XElement("socketLocation", socketLocString),
+                new XElement("originLocation", originLocString)
                            
 
                 )
@@ -315,8 +315,11 @@ namespace VishnuMain
         private void updateExternalButton_Click(object sender, EventArgs e)
         {
             restLocationBox.Text = JoinString(SettingsLibrary.RestLocationCoords);
+            restLocString = restLocationBox.Text;
             socketLocationBox.Text = JoinString(SettingsLibrary.SocketLocationCoords);
+            socketLocString = socketLocationBox.Text;
             originLocationBox.Text = JoinString(SettingsLibrary.OriginLocationCoords);
+            originLocString = originLocationBox.Text;
         }
     }
 }

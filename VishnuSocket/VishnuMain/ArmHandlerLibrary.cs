@@ -147,15 +147,16 @@ namespace VishnuMain
         public static bool CameraTestImg(Capture camera_feed)
         {
             //value from templateDetection
+            string filepath = "../../../../Common/TempImg/";
             CvFunctions _cameraMethods = new CvFunctions();
             double[] template_xy = { 1000, 1000 };
-            string[] fileloc = { "../../../../Common/TempImg/CIRCLE_TEMP.jpg" };
+            string[] fileloc = { filepath + "CIRCLE_TEMP_2.jpg" , filepath + "CIRCLE_TEMP_2.jpg" };
             double xShift = 1000;
             double yShift = 1000;
             CvFunctions imgFx = new CvFunctions();
 
             
-            while (xShift > 3 && xShift < -3 && yShift > 3 && yShift < -3)
+            while (xShift > 3 || xShift < -3 || yShift > 3 || yShift < -3)
             {
                 
                 if (xShift < 100 && xShift > -100 && yShift < 100 && yShift > -100)
