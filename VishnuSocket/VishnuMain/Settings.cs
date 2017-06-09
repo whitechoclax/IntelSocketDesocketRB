@@ -48,9 +48,9 @@ namespace VishnuMain
         double[] originLocationCoords = { 0, 0, 0, 0 };
 
         //strings for location coords, not saved in settings library but used to update UI
-        string restLocString;
-        string socketLocString;
-        string originLocString;
+        string restLocString = "0:0:0:0";
+        string socketLocString = "0:0:0:0";
+        string originLocString = "0:0:0:0";
 
         //load menu
         public SettingsMenu()
@@ -184,51 +184,63 @@ namespace VishnuMain
         {
             //xmlfullpath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Common\settings.xml");
             xmlfullpath = @"../../../../Common/Settings/settings.xml";
-            XDocument settingsmenu = XDocument.Load(xmlfullpath);  // doesnt work on install
-            
+            try
+            {
+                XDocument settingsmenu = XDocument.Load(xmlfullpath);  // doesnt work on install
+                var groupEl = from setting in settingsmenu.Nodes()
+                              select setting;
+                foreach (XElement setting in groupEl)
+                {
+                    //format:
+                    //UI variable to update = (type?) setting.element("xmlnodename" ?? default value
+                    trayLength = (int?)setting.Element("TrayLength") ?? 11;
+                    trayWidth = (int?)setting.Element("TrayWidth") ?? 2;
+                    trayStack = (int?)setting.Element("TrayStack") ?? 10;
+                    trayOrigin2CenterX = (double?)setting.Element("TrayOR2CenterX") ?? 15.5;
+                    trayOrigin2CenterY = (double?)setting.Element("TrayOR2CenterY") ?? 15.5;
+                    trayCenter2CenterRow = (double?)setting.Element("TrayCenter2CenterRow") ?? 25.5;
+                    trayCenter2CenterCol = (double?)setting.Element("TrayCenter2CenterCol") ?? 25.5;
+                    trayHeight = (double?)setting.Element("TrayHeight") ?? 12.00;
+                    socketDimX = (int?)setting.Element("SocketDimX") ?? 100;
+                    socketDimY = (int?)setting.Element("SocketDimY") ?? 100;
+                    socketDimZ = (int?)setting.Element("SocketDimZ") ?? 100;
+                    invPathString = (string)setting.Element("inventoryPath") ?? string.Empty;
+
+                    //so double arrays are really funky to save.  this is a very hacky way to save it.
+                    restLocString = (string)setting.Element("restLocation") ?? "-82:230:200:84";
+                    string[] restLocationCoordString = restLocString.Split(':');
+                    //populate array
+                    for (int i = 0; i < 4; i++)
+                    { restLocationCoords[i] = double.Parse(restLocationCoordString[i]); }
+
+                    socketLocString = (string)setting.Element("socketLocation") ?? "-82:170:200:84";
+                    string[] socketLocationCoordString = socketLocString.Split(':');
+                    //populate array
+                    for (int i = 0; i < 4; i++)
+                    { socketLocationCoords[i] = double.Parse(socketLocationCoordString[i]); }
+
+                    originLocString = (string)setting.Element("originLocation") ?? "-82:170:200:84";
+                    string[] originLocationCoordString = originLocString.Split(':');
+                    //populate array
+                    for (int i = 0; i < 4; i++)
+                    { originLocationCoords[i] = double.Parse(originLocationCoordString[i]); }
+
+                }
+
+            }
+            catch(FileNotFoundException e)
+            {
+                savetoXML();
+                MessageBox.Show("new settings.xml file created.  Please update and calibrate your system");
+                return;
+            }
+
             //use NULL COALESCING with ?? to set default if not found
-            var groupEl = from setting in settingsmenu.Nodes()
-                    select setting;
+            
 
             //step 3: add your new varaible to the XML load.  remember to put in default value with the ?? operator
             //
-            foreach(XElement setting in groupEl)
-            {
-                //format:
-                //UI variable to update = (type?) setting.element("xmlnodename" ?? default value
-                trayLength = (int?)setting.Element("TrayLength") ?? 11;
-                trayWidth = (int?)setting.Element("TrayWidth") ?? 2;
-                trayStack = (int?)setting.Element("TrayStack") ?? 10;
-                trayOrigin2CenterX = (double?)setting.Element("TrayOR2CenterX") ?? 15.5;
-                trayOrigin2CenterY = (double?)setting.Element("TrayOR2CenterY") ?? 15.5;
-                trayCenter2CenterRow = (double?)setting.Element("TrayCenter2CenterRow") ?? 25.5;
-                trayCenter2CenterCol = (double?)setting.Element("TrayCenter2CenterCol") ?? 25.5;
-                trayHeight = (double?)setting.Element("TrayHeight") ?? 12.00;
-                socketDimX = (int?)setting.Element("SocketDimX") ?? 100;
-                socketDimY = (int?)setting.Element("SocketDimY") ?? 100;
-                socketDimZ = (int?)setting.Element("SocketDimZ") ?? 100;
-                invPathString = (string)setting.Element("inventoryPath") ?? string.Empty;
-
-                //so double arrays are really funky to save.  this is a very hacky way to save it.
-                restLocString = (string)setting.Element("restLocation") ?? "-82:230:200:84";
-                string[] restLocationCoordString = restLocString.Split(':');
-                //populate array
-                for (int i = 0; i < 4; i++)
-                { restLocationCoords[i] = double.Parse(restLocationCoordString[i]); }
-                
-                socketLocString = (string)setting.Element("socketLocation") ?? "-82:170:200:84";
-                string[] socketLocationCoordString = socketLocString.Split(':');
-                //populate array
-                for (int i = 0; i < 4; i++)
-                { socketLocationCoords[i] = double.Parse(socketLocationCoordString[i]); }
-
-                originLocString = (string)setting.Element("originLocation") ?? "-82:170:200:84";
-                string[] originLocationCoordString = originLocString.Split(':');
-                //populate array
-                for (int i = 0; i < 4; i++)
-                { originLocationCoords[i] = double.Parse(originLocationCoordString[i]); }
-                
-            }
+            
             //step 4: update the UI.  it is yourVariableNameValue.value = yourVariableName
             //you may need to cast it to decimal.  
 
@@ -281,7 +293,6 @@ namespace VishnuMain
                 new XElement("socketLocation", socketLocString),
                 new XElement("originLocation", originLocString)
                            
-
                 )
             );
 
