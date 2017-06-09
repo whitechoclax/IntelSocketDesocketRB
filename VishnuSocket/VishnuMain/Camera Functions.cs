@@ -12,7 +12,6 @@ namespace VishnuMain
 {
     public class CvFunctions
     {
-
         Mat color_frame = new Mat();
         Mat gray_frame = new Mat();
         Mat binary_frame = new Mat();
@@ -26,6 +25,9 @@ namespace VishnuMain
         public Mat SnapPicture(int mode, Capture camera_feed)
         {
             camera_feed.Retrieve(color_frame);
+            camera_feed.Retrieve(color_frame);
+            camera_feed.Retrieve(color_frame);
+            
 
             switch (mode)
             {
@@ -50,6 +52,7 @@ namespace VishnuMain
             }
         }
 
+
         ///<summary>
         ///Return coordinate offset for correcton
         ///</summary>
@@ -70,19 +73,16 @@ namespace VishnuMain
                     return sourceImg;
                 }
 
-
                 //requirement for template detection
                 double minValues = 0;
                 double maxValues = 0;
                 Point minLocations = new Point { X = 0, Y = 0 };
                 Point maxLocations = new Point { X = 0, Y = 0 };
 
-
                 //loop used to go through all template images
                 for (int i = 0; i < template_length; i++)
                 {
                     //loop to mark all matches
-
 
                     //creates image from list
                     Mat templateImg = CvInvoke.Imread(templatelist[i], LoadImageType.Grayscale);
@@ -109,7 +109,6 @@ namespace VishnuMain
                         //12.1x6.8 @ 8.3 cm 
                         //30 x 15.5 @ 21 cm
 
-
                         offset_x = Math.Round((960 - (match.X + (match.Width / 2))) / x_cm, 2) * 10;
                         offset_y = Math.Round((540 - (match.Y + (match.Height / 2))) / y_cm, 2) * 10;
 
@@ -119,9 +118,7 @@ namespace VishnuMain
                         double xShift, yShift = 0.0;
                         double[] template_xy = { offset_x, offset_y };
 
-
                         //MessageBox.Show("Left/Right:" + offset_x + "\n" + "Up/Down:" + offset_y, "Coordinates");
-
                         xShift = -1 * template_xy[0] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
                        + template_xy[1] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
                         yShift = template_xy[0] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
@@ -133,7 +130,7 @@ namespace VishnuMain
                             MessageBox.Show("X Relative:" + xShift + "\n" + "Y Relative:" + yShift, "Coordinates");
                         }
                         //draws rectangle match onto source img
-                        CvInvoke.Rectangle(sourceImg, match, new Bgr(Color.Cyan).MCvScalar, 20);
+                        CvInvoke.Rectangle(sourceImg, match, new Bgr(Color.Black).MCvScalar, 20);
 
                         //section to compelte floodfill function
                         //Rectangle outRect;
@@ -152,14 +149,13 @@ namespace VishnuMain
                         //    FloodFillType.Default);
 
                     }
-                    else
-                        break;
                     //loops template matching
                 }
 
                 return sourceImg;
             }
         }
+
 
         ///<summary>
         ///Scans 2D-DataMatrix Barcode and returns value
@@ -191,7 +187,6 @@ namespace VishnuMain
         //object detection, cpu chips via haar casecade
         public void haar_cascade(Mat Img, List<Rectangle> cpus)
         {
-
             using (CascadeClassifier cpu = new CascadeClassifier("../../../../Common/haar_classifier/cpu_working.xml"))
             {
                 using (Mat gray = new Mat())
@@ -217,14 +212,13 @@ namespace VishnuMain
                 CvInvoke.Rectangle(Img, cpu, new Bgr(Color.Cyan).MCvScalar, 3);
             OutputImgBox.Image = Img;
         }
-
+        
         public bool cpuExists(Mat Img, List<Rectangle> cpu)
         {
             bool exists;
            //CvInvoke.Resize(Img, Img, new Size(640, 480));
            // Image<Bgr, Byte> RImg = Img.ToImage<Bgr, Byte>();
             //RImg.Rotate(90, new Bgr(Color.Blue));
-
             //Mat img = RImg.Mat;
             haar_cascade(Img, cpu);
 

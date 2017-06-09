@@ -44,8 +44,11 @@ namespace VishnuMain {
 
 
         void loadTemplate_Click(object sender, EventArgs e) {
+            openFileDialog2.Multiselect = true;
             DialogResult result = openFileDialog2.ShowDialog();
+
             if (result == DialogResult.OK || result == DialogResult.Yes) {
+                
                 templateList = openFileDialog2.FileNames;
                 template_textbox.Text = String.Join(Environment.NewLine, templateList);
             }
