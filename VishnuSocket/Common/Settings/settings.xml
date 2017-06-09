@@ -12,4 +12,7 @@
   <SocketDimY>100</SocketDimY>
   <SocketDimZ>100</SocketDimZ>
   <inventoryPath>F:\Development Capstone\VishnuSocket\Common</inventoryPath>
+  <restLocation>-82:220:200:84</restLocation>
+  <socketLocation>-82:170:200:84</socketLocation>
+  <originLocation>-82:170:200:84</originLocation>
 </Root>

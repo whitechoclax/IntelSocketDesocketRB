@@ -182,7 +182,8 @@ namespace VishnuMain
 
         public void loadFromXML()
         {
-            xmlfullpath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Resources\settings.xml");
+            //xmlfullpath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Common\settings.xml");
+            xmlfullpath = @"../../../../Common/Settings/settings.xml";
             XDocument settingsmenu = XDocument.Load(xmlfullpath);  // doesnt work on install
             
             //use NULL COALESCING with ?? to set default if not found
@@ -285,8 +286,8 @@ namespace VishnuMain
             );
 
             //save to file
-            settings.Save(xmlfullpath);  // doesnt work on install
-            //settings.Save(xmlPathString + "\\settings.xml");  // load after setting path
+            //settings.Save(xmlfullpath);  // doesnt work on install
+            settings.Save(xmlfullpath);  // load after setting path
             return;
         }
 
