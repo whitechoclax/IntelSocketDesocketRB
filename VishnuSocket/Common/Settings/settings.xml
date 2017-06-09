@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Root>
-  <TrayLength>1</TrayLength>
-  <TrayWidth>1</TrayWidth>
-  <TrayStack>1</TrayStack>
-  <TrayOR2CenterX>0</TrayOR2CenterX>
-  <TrayOR2CenterY>0</TrayOR2CenterY>
-  <TrayCenter2CenterRow>0</TrayCenter2CenterRow>
-  <TrayCenter2CenterCol>0</TrayCenter2CenterCol>
-  <TrayHeight>0</TrayHeight>
-  <SocketDimX>0</SocketDimX>
-  <SocketDimY>0</SocketDimY>
-  <SocketDimZ>0</SocketDimZ>
-  <inventoryPath />
-  <restLocation>0:0:0:0</restLocation>
-  <socketLocation>0:0:0:0</socketLocation>
-  <originLocation>0:0:0:0</originLocation>
+  <TrayLength>11</TrayLength>
+  <TrayWidth>2</TrayWidth>
+  <TrayStack>6</TrayStack>
+  <TrayOR2CenterX>20</TrayOR2CenterX>
+  <TrayOR2CenterY>35</TrayOR2CenterY>
+  <TrayCenter2CenterRow>27.5</TrayCenter2CenterRow>
+  <TrayCenter2CenterCol>65</TrayCenter2CenterCol>
+  <TrayHeight>10.15</TrayHeight>
+  <SocketDimX>100</SocketDimX>
+  <SocketDimY>100</SocketDimY>
+  <SocketDimZ>100</SocketDimZ>
+  <inventoryPath>C:\Users\Forrest\Documents\IntelSocketDesocketRB\VishnuSocket\Common</inventoryPath>
+  <restLocation>-82:220:200:84</restLocation>
+  <socketLocation>63:292:200:84</socketLocation>
+  <originLocation>-81:390:156:84</originLocation>
 </Root>

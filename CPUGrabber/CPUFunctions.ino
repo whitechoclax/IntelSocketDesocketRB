@@ -384,12 +384,29 @@ void Navigate(){ //Moves to new positions
       else
         theta += 1/float(THETA);
     }
+    
     if(deltaTheta <= .4){
       doneTheta = true;
-      delay(1500);
-      digitalWrite(Enable[THETAMOTOR], HIGH);
     }  
   }
+  
+  for(int i=0;i<=THETA;++i){//Overshooting our robot's slop
+    digitalWrite(Step[THETAMOTOR], LOW);
+    delay(3);
+    digitalWrite(Step[THETAMOTOR], HIGH);
+    delayMicroseconds(500);
+  }
+  delay(1000);
+  digitalWrite(Dir[THETAMOTOR], !digitalRead(Dir[THETAMOTOR]));
+  for(int i=0;i<=THETA;++i){//Going back
+    digitalWrite(Step[THETAMOTOR], LOW);
+    delay(3);
+    digitalWrite(Step[THETAMOTOR], HIGH);
+    delayMicroseconds(500);
+  }
+  delay(1000);
+  digitalWrite(Enable[THETAMOTOR], HIGH);
+  
   while(!doneRad){  //Radius Section
     serialEvent();
     if(deltaRadius > 0.01){

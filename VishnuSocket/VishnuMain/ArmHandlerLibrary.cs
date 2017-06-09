@@ -10,7 +10,7 @@ namespace VishnuMain
         public static double[] RestLocation = SettingsLibrary.RestLocationCoords; //Change to calibration image
         // Calibrate image at: "COOR:176.00:339.00:60.00:84.0:27.50"
         public static double[] OriginLocation = SettingsLibrary.OriginLocationCoords; //CPU0 location + 1cm up on z
-        public static double[] TestImgLocation = { 71, 295, 200, 84 }; //Img location
+        public static double[] TestImgLocation = SettingsLibrary.SocketLocationCoords; //Img location
         //"COOR:0.00:183.00:38.00:0.0:0.00\r" , z = 52 for last one,
         public static double[] SocketLocation = SettingsLibrary.SocketLocationCoords; //Socket center point 
         private static double centerToCenterL = 0.0; //Distance between left and right CPU
@@ -53,7 +53,7 @@ namespace VishnuMain
                 if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, TestImgLocation[0], TestImgLocation[1], TestImgLocation[2], TestImgLocation[3]) == -2)
                 { FatalCrash(); return; }//Go calibrate
                 CameraTestImg(camera_feed);
-                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0] + centerToCenterW, OriginLocation[1], OriginLocation[2], OriginLocation[3]) == -2)
+                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0] + 11*centerToCenterW, OriginLocation[1]-centerToCenterL, OriginLocation[2], OriginLocation[3]) == -2)
                 { FatalCrash(); return; }//Move to next spot
                 ReleaseChip();
                 if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[3]) == -2)
@@ -174,7 +174,7 @@ namespace VishnuMain
                 yShift = template_xy[0] * Math.Sin(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533)
                     - template_xy[1] * Math.Cos(ArduinoMotionLibrary.ArmCoordinates[4] * 0.0174533);
                 xShift = xShift * ( ArduinoMotionLibrary.ArmCoordinates[2]/165);
-                yShift = yShift * ( ArduinoMotionLibrary.ArmCoordinates[2]/165);
+                yShift = -1 * yShift * ( ArduinoMotionLibrary.ArmCoordinates[2]/165);
                 //Shift by the template_xy 
 
             }

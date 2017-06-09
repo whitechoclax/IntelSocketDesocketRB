@@ -210,12 +210,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Industry-Robot-icon.ico" />
-    <Content Include="Resources\cpu_working.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\settings.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="x64\cvextern.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
