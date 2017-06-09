@@ -91,6 +91,15 @@ namespace VishnuMain {
             cpuDetected.Clear();
         }
 
+        private void barcode_click(object sender, EventArgs e)
+        {
+
+            
+            frame = _Template.SnapPicture(2, _capture);
+            captured_imgbox.Image = frame;
+           MessageBox.Show( _Template.BarcodeScanner(frame));
+            
+        }
     }
 }
 

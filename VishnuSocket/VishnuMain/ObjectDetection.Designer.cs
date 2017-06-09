@@ -47,6 +47,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.barcode_button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.captured_imgbox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tracked_imgbox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.template_imgbox)).BeginInit();
@@ -62,8 +63,8 @@
             // 
             // template_textbox
             // 
-            this.template_textbox.Location = new System.Drawing.Point(930, 427);
-            this.template_textbox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.template_textbox.Location = new System.Drawing.Point(930, 390);
+            this.template_textbox.Margin = new System.Windows.Forms.Padding(6);
             this.template_textbox.Name = "template_textbox";
             this.template_textbox.Size = new System.Drawing.Size(123, 29);
             this.template_textbox.TabIndex = 28;
@@ -71,7 +72,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(925, 503);
+            this.label4.Location = new System.Drawing.Point(925, 466);
             this.label4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(66, 25);
@@ -80,8 +81,8 @@
             // 
             // findMatch
             // 
-            this.findMatch.Location = new System.Drawing.Point(930, 819);
-            this.findMatch.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.findMatch.Location = new System.Drawing.Point(929, 747);
+            this.findMatch.Margin = new System.Windows.Forms.Padding(6);
             this.findMatch.Name = "findMatch";
             this.findMatch.Size = new System.Drawing.Size(175, 59);
             this.findMatch.TabIndex = 27;
@@ -92,7 +93,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(925, 391);
+            this.label5.Location = new System.Drawing.Point(925, 354);
             this.label5.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(94, 25);
@@ -101,8 +102,8 @@
             // 
             // loadTemplate
             // 
-            this.loadTemplate.Location = new System.Drawing.Point(1063, 426);
-            this.loadTemplate.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.loadTemplate.Location = new System.Drawing.Point(1063, 389);
+            this.loadTemplate.Margin = new System.Windows.Forms.Padding(6);
             this.loadTemplate.Name = "loadTemplate";
             this.loadTemplate.Size = new System.Drawing.Size(42, 35);
             this.loadTemplate.TabIndex = 26;
@@ -112,8 +113,8 @@
             // 
             // SavePicture
             // 
-            this.SavePicture.Location = new System.Drawing.Point(930, 729);
-            this.SavePicture.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.SavePicture.Location = new System.Drawing.Point(929, 657);
+            this.SavePicture.Margin = new System.Windows.Forms.Padding(6);
             this.SavePicture.Name = "SavePicture";
             this.SavePicture.Size = new System.Drawing.Size(175, 59);
             this.SavePicture.TabIndex = 32;
@@ -123,8 +124,8 @@
             // 
             // capturePicture
             // 
-            this.capturePicture.Location = new System.Drawing.Point(930, 643);
-            this.capturePicture.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.capturePicture.Location = new System.Drawing.Point(929, 571);
+            this.capturePicture.Margin = new System.Windows.Forms.Padding(6);
             this.capturePicture.Name = "capturePicture";
             this.capturePicture.Size = new System.Drawing.Size(175, 59);
             this.capturePicture.TabIndex = 25;
@@ -134,8 +135,8 @@
             // 
             // sourceimg_textbox
             // 
-            this.sourceimg_textbox.Location = new System.Drawing.Point(930, 539);
-            this.sourceimg_textbox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.sourceimg_textbox.Location = new System.Drawing.Point(930, 502);
+            this.sourceimg_textbox.Margin = new System.Windows.Forms.Padding(6);
             this.sourceimg_textbox.Name = "sourceimg_textbox";
             this.sourceimg_textbox.Size = new System.Drawing.Size(123, 29);
             this.sourceimg_textbox.TabIndex = 24;
@@ -144,7 +145,7 @@
             // 
             this.captured_imgbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.captured_imgbox.Location = new System.Drawing.Point(27, 45);
-            this.captured_imgbox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.captured_imgbox.Margin = new System.Windows.Forms.Padding(6);
             this.captured_imgbox.Name = "captured_imgbox";
             this.captured_imgbox.Size = new System.Drawing.Size(839, 471);
             this.captured_imgbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -153,8 +154,8 @@
             // 
             // loadSource
             // 
-            this.loadSource.Location = new System.Drawing.Point(1063, 538);
-            this.loadSource.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.loadSource.Location = new System.Drawing.Point(1063, 501);
+            this.loadSource.Margin = new System.Windows.Forms.Padding(6);
             this.loadSource.Name = "loadSource";
             this.loadSource.Size = new System.Drawing.Size(42, 35);
             this.loadSource.TabIndex = 23;
@@ -164,8 +165,8 @@
             // 
             // harr__find
             // 
-            this.harr__find.Location = new System.Drawing.Point(930, 909);
-            this.harr__find.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.harr__find.Location = new System.Drawing.Point(929, 837);
+            this.harr__find.Margin = new System.Windows.Forms.Padding(6);
             this.harr__find.Name = "harr__find";
             this.harr__find.Size = new System.Drawing.Size(175, 59);
             this.harr__find.TabIndex = 35;
@@ -177,7 +178,7 @@
             // 
             this.tracked_imgbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tracked_imgbox.Location = new System.Drawing.Point(27, 571);
-            this.tracked_imgbox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tracked_imgbox.Margin = new System.Windows.Forms.Padding(6);
             this.tracked_imgbox.Name = "tracked_imgbox";
             this.tracked_imgbox.Size = new System.Drawing.Size(839, 471);
             this.tracked_imgbox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -188,7 +189,7 @@
             // 
             this.template_imgbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.template_imgbox.Location = new System.Drawing.Point(930, 134);
-            this.template_imgbox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.template_imgbox.Margin = new System.Windows.Forms.Padding(6);
             this.template_imgbox.MaximumSize = new System.Drawing.Size(262, 192);
             this.template_imgbox.Name = "template_imgbox";
             this.template_imgbox.Size = new System.Drawing.Size(262, 192);
@@ -226,6 +227,16 @@
             this.label1.TabIndex = 19;
             this.label1.Text = "Captured Image";
             // 
+            // barcode_button
+            // 
+            this.barcode_button.Location = new System.Drawing.Point(930, 925);
+            this.barcode_button.Name = "barcode_button";
+            this.barcode_button.Size = new System.Drawing.Size(175, 59);
+            this.barcode_button.TabIndex = 38;
+            this.barcode_button.Text = "Scan Barcode";
+            this.barcode_button.UseVisualStyleBackColor = true;
+            this.barcode_button.Click += new System.EventHandler(this.barcode_click);
+            // 
             // ComputerVision_Tab
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(168F, 168F);
@@ -233,6 +244,7 @@
             this.AutoScroll = true;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.Controls.Add(this.barcode_button);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -278,5 +290,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button barcode_button;
     }
 }
