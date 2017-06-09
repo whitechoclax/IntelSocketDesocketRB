@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -63,13 +64,14 @@
             this.socketX = new System.Windows.Forms.Label();
             this.socketDimXValue = new System.Windows.Forms.NumericUpDown();
             this.locationsBox = new System.Windows.Forms.GroupBox();
+            this.updateExternalButton = new System.Windows.Forms.Button();
             this.originLocationBox = new System.Windows.Forms.TextBox();
             this.socketLocationBox = new System.Windows.Forms.TextBox();
             this.restLocationBox = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.updateExternalButton = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trayCenter2CenterValueCol)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trayOr2CenterValueY)).BeginInit();
@@ -149,6 +151,8 @@
             this.trayCenter2CenterValueCol.Name = "trayCenter2CenterValueCol";
             this.trayCenter2CenterValueCol.Size = new System.Drawing.Size(158, 31);
             this.trayCenter2CenterValueCol.TabIndex = 14;
+            this.toolTip1.SetToolTip(this.trayCenter2CenterValueCol, "Tip: Measure center of top chip, to the center of chip below, on short edge of tr" +
+        "ay");
             this.trayCenter2CenterValueCol.ValueChanged += new System.EventHandler(this.trayCenter2CenterValueCol_ValueChanged);
             // 
             // trayOr2CenterValueY
@@ -164,6 +168,7 @@
             this.trayOr2CenterValueY.Name = "trayOr2CenterValueY";
             this.trayOr2CenterValueY.Size = new System.Drawing.Size(158, 31);
             this.trayOr2CenterValueY.TabIndex = 13;
+            this.toolTip1.SetToolTip(this.trayOr2CenterValueY, "Tip: Measure the top edge of the tray to the center");
             this.trayOr2CenterValueY.ValueChanged += new System.EventHandler(this.trayOr2CenterValueY_ValueChanged);
             // 
             // trayHeightValue
@@ -179,6 +184,7 @@
             this.trayHeightValue.Name = "trayHeightValue";
             this.trayHeightValue.Size = new System.Drawing.Size(160, 31);
             this.trayHeightValue.TabIndex = 12;
+            this.toolTip1.SetToolTip(this.trayHeightValue, "Tip: Measure the physical height of the tray with calipers");
             this.trayHeightValue.ValueChanged += new System.EventHandler(this.trayHeightValue_ValueChanged);
             // 
             // trayCenter2CenterValueRow
@@ -194,6 +200,7 @@
             this.trayCenter2CenterValueRow.Name = "trayCenter2CenterValueRow";
             this.trayCenter2CenterValueRow.Size = new System.Drawing.Size(160, 31);
             this.trayCenter2CenterValueRow.TabIndex = 11;
+            this.toolTip1.SetToolTip(this.trayCenter2CenterValueRow, "Tip:  Measure center of chip to adjacent chip on long edge of tray");
             this.trayCenter2CenterValueRow.ValueChanged += new System.EventHandler(this.trayCenter2CenterValue_ValueChanged);
             // 
             // trayOr2CenterValueX
@@ -209,6 +216,7 @@
             this.trayOr2CenterValueX.Name = "trayOr2CenterValueX";
             this.trayOr2CenterValueX.Size = new System.Drawing.Size(158, 31);
             this.trayOr2CenterValueX.TabIndex = 10;
+            this.toolTip1.SetToolTip(this.trayOr2CenterValueX, "Tip: Measure the left edge of the tray to the center ");
             this.trayOr2CenterValueX.ValueChanged += new System.EventHandler(this.trayOr2CenterValue_ValueChanged);
             // 
             // label9
@@ -462,13 +470,13 @@
             this.label13.Location = new System.Drawing.Point(20, 173);
             this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(204, 25);
+            this.label13.Size = new System.Drawing.Size(258, 25);
             this.label13.TabIndex = 5;
-            this.label13.Text = "Socket Dimension Z";
+            this.label13.Text = "Socket Dimension Z (mm)";
             // 
             // socketDimZValue
             // 
-            this.socketDimZValue.Location = new System.Drawing.Point(276, 166);
+            this.socketDimZValue.Location = new System.Drawing.Point(293, 167);
             this.socketDimZValue.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.socketDimZValue.Maximum = new decimal(new int[] {
             250,
@@ -491,13 +499,13 @@
             this.label12.Location = new System.Drawing.Point(20, 117);
             this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(206, 25);
+            this.label12.Size = new System.Drawing.Size(260, 25);
             this.label12.TabIndex = 3;
-            this.label12.Text = "Socket Dimension Y";
+            this.label12.Text = "Socket Dimension Y (mm)";
             // 
             // socketDimYValue
             // 
-            this.socketDimYValue.Location = new System.Drawing.Point(276, 112);
+            this.socketDimYValue.Location = new System.Drawing.Point(293, 111);
             this.socketDimYValue.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.socketDimYValue.Maximum = new decimal(new int[] {
             250,
@@ -520,13 +528,13 @@
             this.socketX.Location = new System.Drawing.Point(20, 58);
             this.socketX.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.socketX.Name = "socketX";
-            this.socketX.Size = new System.Drawing.Size(211, 25);
+            this.socketX.Size = new System.Drawing.Size(265, 25);
             this.socketX.TabIndex = 1;
-            this.socketX.Text = "Socket Dimension X ";
+            this.socketX.Text = "Socket Dimension X (mm) ";
             // 
             // socketDimXValue
             // 
-            this.socketDimXValue.Location = new System.Drawing.Point(276, 58);
+            this.socketDimXValue.Location = new System.Drawing.Point(293, 56);
             this.socketDimXValue.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.socketDimXValue.Maximum = new decimal(new int[] {
             300,
@@ -553,6 +561,18 @@
             this.locationsBox.TabIndex = 7;
             this.locationsBox.TabStop = false;
             this.locationsBox.Text = "Calibrated Location Coordinates";
+            // 
+            // updateExternalButton
+            // 
+            this.updateExternalButton.Location = new System.Drawing.Point(21, 298);
+            this.updateExternalButton.Name = "updateExternalButton";
+            this.updateExternalButton.Size = new System.Drawing.Size(194, 46);
+            this.updateExternalButton.TabIndex = 6;
+            this.updateExternalButton.Text = "Update Locations";
+            this.toolTip1.SetToolTip(this.updateExternalButton, "If one of these locations ws recently calibrated, click this to update the displa" +
+        "y");
+            this.updateExternalButton.UseVisualStyleBackColor = true;
+            this.updateExternalButton.Click += new System.EventHandler(this.updateExternalButton_Click);
             // 
             // originLocationBox
             // 
@@ -607,16 +627,6 @@
             this.label6.Size = new System.Drawing.Size(172, 25);
             this.label6.TabIndex = 0;
             this.label6.Text = "Socket Location:";
-            // 
-            // updateExternalButton
-            // 
-            this.updateExternalButton.Location = new System.Drawing.Point(21, 298);
-            this.updateExternalButton.Name = "updateExternalButton";
-            this.updateExternalButton.Size = new System.Drawing.Size(194, 46);
-            this.updateExternalButton.TabIndex = 6;
-            this.updateExternalButton.Text = "Update Locations";
-            this.updateExternalButton.UseVisualStyleBackColor = true;
-            this.updateExternalButton.Click += new System.EventHandler(this.updateExternalButton_Click);
             // 
             // SettingsMenu
             // 
@@ -703,5 +713,6 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button updateExternalButton;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

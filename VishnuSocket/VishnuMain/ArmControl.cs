@@ -155,7 +155,7 @@ namespace VishnuMain
             BWR.DoWork += delegate
             {
                 if(ArduinoMotionLibrary.ArdPosition("SHIFT", portID, XcoordinateValue, YcoordinateValue, ZcoordinateValue, RotationVal) == -2)
-                {}
+                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished"); }
             };
             BWR.RunWorkerCompleted += delegate
             {
@@ -278,7 +278,7 @@ namespace VishnuMain
         {
             var BWR = new BackgroundWorker();
             NewCameraX = ShifttoCameraX(0);
-            NewCameraY = ShifttoCameraY(YcoordinateValue);
+            NewCameraY = ShifttoCameraY( YcoordinateValue);
             BWR.DoWork += delegate
             {
                 ArduinoMotionLibrary.ArdPosition("SHIFT", portID, NewCameraX, NewCameraY, 0, 0);
@@ -295,7 +295,7 @@ namespace VishnuMain
         {
             var BWR = new BackgroundWorker();
 
-            NewCameraX = ShifttoCameraX((XcoordinateValue));
+            NewCameraX = ShifttoCameraX(XcoordinateValue);
             NewCameraY = ShifttoCameraY(0);
             BWR.DoWork += delegate
             {
@@ -312,7 +312,7 @@ namespace VishnuMain
         private void rightButton_Click(object sender, EventArgs e)
         {
             var BWR = new BackgroundWorker();
-            NewCameraX = ShifttoCameraX((-1 * XcoordinateValue));
+            NewCameraX = ShifttoCameraX(-1 * XcoordinateValue);
             NewCameraY = ShifttoCameraY(0);
             BWR.DoWork += delegate
             {
