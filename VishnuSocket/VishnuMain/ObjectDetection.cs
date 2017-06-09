@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
+using Emgu.CV.Structure;
 
 namespace VishnuMain {
 
@@ -71,11 +72,23 @@ namespace VishnuMain {
 
 
         void harr__find_Click(object sender, EventArgs e) {
-            Mat Img = _Template.SnapPicture(0, _capture);
-            _Template.haar_cascade(Img, cpuDetected);
+            
+            //captures image
+            Mat Img = _Template.SnapPicture(1, _capture);
+
+            //CvInvoke.Transpose(Img, Img);
+
+            // Image<Bgr, Byte> RImg = Img.ToImage<Bgr, Byte>();
+            //  RImg.Rotate(180, new Bgr(Color.Blue));
+
+            // Mat img = RImg.Mat;
+
+            if (_Template.cpuExists(Img, cpuDetected))
+            //_Template.cpuExists(Img, cpuDetected);
+               MessageBox.Show("Chip exisits!");
+
             _Template.displayHar(Img, cpuDetected, tracked_imgbox);
             cpuDetected.Clear();
-
         }
 
     }
