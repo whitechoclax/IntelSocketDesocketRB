@@ -42,7 +42,7 @@ namespace VishnuMain
                     return binary_frame;
 
                 case 3: //case for calibration x.y
-                    CvInvoke.CvtColor(color_frame, gray_frame, ColorConversion.Bgr2Gray);
+                    CvInvoke.CvtColor(color_frame, gray_frame, ColorConversion.Bgr2Gray); //This threw an exception for greyscale stuff
                     CvInvoke.Threshold(gray_frame, binary_frame, 100, 255, ThresholdType.Binary);
                     return binary_frame;
 

@@ -45,15 +45,16 @@ namespace VishnuMain
 
             while (!done)
             { //Main Loop
-                if(ArduinoMotionLibrary.ArdPosition("MOVE", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[3]) == -2)
-                { FatalCrash(); return; }//Move to rest location if we didn't start there
-                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1], OriginLocation[2], OriginLocation[3]) == -2)
+                //if(ArduinoMotionLibrary.ArdPosition("MOVE", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[3]) == -2)
+                //{ FatalCrash(); return; }//Move to rest location if we didn't start there
+                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1], OriginLocation[2], OriginLocation[3]+5) == -2)
                 { FatalCrash(); return; }//Move to CPU0
                 GrabChip();
                 if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, TestImgLocation[0], TestImgLocation[1], TestImgLocation[2], TestImgLocation[3]) == -2)
                 { FatalCrash(); return; }//Go calibrate
                 CameraTestImg(camera_feed);
-                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0] + 11*centerToCenterW, OriginLocation[1]-centerToCenterL, OriginLocation[2], OriginLocation[3]) == -2)
+                //if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0] + (7*centerToCenterW), OriginLocation[1]-(centerToCenterL*0), OriginLocation[2]+(7*1), OriginLocation[3]+ArduinoMotionLibrary.ArmCoordinates[4]) == -2)
+                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, 170, 319, OriginLocation[2] + (3 * 1), 40) == -2)
                 { FatalCrash(); return; }//Move to next spot
                 ReleaseChip();
                 if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[3]) == -2)
