@@ -7,12 +7,12 @@ namespace VishnuMain
     static class ArmHandlerLibrary
     {
         public static bool Running = false;
-        public static double[] RestLocation = { -82, 220.0, 200.0, 84 }; //Change to calibration image
+        public static double[] RestLocation = SettingsLibrary.RestLocationCoords; //Change to calibration image
         // Calibrate image at: "COOR:176.00:339.00:60.00:84.0:27.50"
-        public static double[] OriginLocation = { -82, 395.0, 168.0, 84.0 }; //CPU0 location + 1cm up on z
+        public static double[] OriginLocation = SettingsLibrary.OriginLocationCoords; //CPU0 location + 1cm up on z
         public static double[] TestImgLocation = { 71, 295, 200, 84 }; //Img location
         //"COOR:0.00:183.00:38.00:0.0:0.00\r" , z = 52 for last one,
-        public static double[] SocketLocation = { 40.0, -250.0, 200.0, 0.0 }; //Socket center point 
+        public static double[] SocketLocation = SettingsLibrary.SocketLocationCoords; //Socket center point 
         private static double centerToCenterL = 0.0; //Distance between left and right CPU
         private static double centerToCenterW = 0.0; //Distance between top and bottom CPU
         private static double centerToCenterZ = 0.0; //Distance between trays
@@ -121,11 +121,11 @@ namespace VishnuMain
         {
             
             if (ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, -10, 0) == -2)
-            { FatalCrash(); return; }//Move down to grab CPU
+            { FatalCrash(); return; }//Move down to grab CPU 10mm
             if (ArduinoMotionLibrary.ArdPosition("GRAB", 0, 0, 0, 0, 0) == -2)
             { FatalCrash(); return; }
             if (ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 10, 0) == -2)
-            { FatalCrash(); return; }//Raise back up
+            { FatalCrash(); return; }//Raise back up 10mm
         }
         private static void ReleaseChip()
         {
