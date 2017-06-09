@@ -1,6 +1,7 @@
 ﻿using System;
 using Emgu.CV;
 using System.Windows.Forms;
+using System.Threading.Tasks;
 
 namespace VishnuMain
 {
@@ -47,14 +48,15 @@ namespace VishnuMain
             { //Main Loop
                 //if(ArduinoMotionLibrary.ArdPosition("MOVE", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[3]) == -2)
                 //{ FatalCrash(); return; }//Move to rest location if we didn't start there
-                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1], OriginLocation[2], OriginLocation[3]+5) == -2)
+                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1], OriginLocation[2], OriginLocation[3]+7) == -2)
                 { FatalCrash(); return; }//Move to CPU0
                 GrabChip();
                 if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, TestImgLocation[0], TestImgLocation[1], TestImgLocation[2], TestImgLocation[3]) == -2)
                 { FatalCrash(); return; }//Go calibrate
-                CameraTestImg(camera_feed);
+                //CameraTestImg(camera_feed);
+                Task.Delay(1000);
                 //if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0] + (7*centerToCenterW), OriginLocation[1]-(centerToCenterL*0), OriginLocation[2]+(7*1), OriginLocation[3]+ArduinoMotionLibrary.ArmCoordinates[4]) == -2)
-                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, 170, 319, OriginLocation[2] + (3 * 1), 40) == -2)
+                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, 195, 323, OriginLocation[2] + (5 * 1), 51) == -2)
                 { FatalCrash(); return; }//Move to next spot
                 ReleaseChip();
                 if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[3]) == -2)
@@ -62,55 +64,25 @@ namespace VishnuMain
                 Running = false;
                 done = true;
             }
-                /*
-                CPU = trayHandler.GetCPUPosition();
-                if (CPU == -1)
-                {
-                    Running = false;
-                    done = true;
-                }
-                if (!Running)
-                {
-                    //Return to Origin
-                    return;
-                }
-                Loc[0] = ((CPU % trayHandler.trayDimensions[0]) * centerToCenterL) + OriginLocation[0]; //Move x CPU's over
-                if (CPU >= trayHandler.trayDimensions[0])
-                {
-                    Loc[1] = centerToCenterW + OriginLocation[1];
-                } //Adding the y offset to the tray
-                else
-                {
-                    Loc[1] = OriginLocation[1];
-                }
-                Loc[2] = ((trayHandler.emptyTrayCount - 1 + trayHandler.goodTrayCount + trayHandler.badTrayCount) * centerToCenterZ) + OriginLocation[2];
-                ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1]-60, OriginLocation[2], OriginLocation[3]);
-                CameraTestImg(camera_feed);
-                ArduinoMotionLibrary.ArdPosition("REDEF", 0, OriginLocation[0], OriginLocation[1] - 60, OriginLocation[2], OriginLocation[3]);
-                ArduinoMotionLibrary.ArdPosition("MOVE", 0, Loc[0], Loc[1], Loc[2], Loc[3]); //Move to CPU
-                //Verify we're above a CPU
-                while(!CameraTestCPU())  
-                {
-                    //Keep Navigating to next CPU and testing
-                }
-                //ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, -20, 0); //Descend Z
-                ArduinoMotionLibrary.ArdPosition("GRAB", 0, 0, 0, 0, 0); //Grab CPU
-                //ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 20, 0); //Raise back up
-                //Move to Calibration image, verify it's there in the right spot
-                ArduinoMotionLibrary.ArdPosition("MOVE", 0, SocketLocation[0], SocketLocation[1]+60, SocketLocation[2], SocketLocation[3]); //Calibration spot
-                //CameraTestImg(); //Calibrate Socket
-                ArduinoMotionLibrary.ArdPosition("REDEF", 0, SocketLocation[0], SocketLocation[1] + 60, SocketLocation[2], SocketLocation[3]); //Calibration 
-                ArduinoMotionLibrary.ArdPosition("MOVE", 0, SocketLocation[0], SocketLocation[1], SocketLocation[2], SocketLocation[3]);
-                ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 0, 0); //Descend into socket
-                ArduinoMotionLibrary.ArdPosition("RELEASE", 0, 0, 0, 0, 0); //Release CPU
-                //Release CPU
-                //Wait for test
-                //Tell Tray to present good or bad
-
-                //Runing Template detection code
-
-                ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1], OriginLocation[2], OriginLocation[3]); //Demo done, return to origin
-            }*/
+            /* //This is a demo of range of motion
+                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[4]) == -2)
+                { FatalCrash(); return; }//Move to next spot
+                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, 300, 300, 300, 84) == -2)
+                { FatalCrash(); return; }//Move to next spot
+                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, 300, 300, 300, 40) == -2)
+                { FatalCrash(); return; }//Move to next spot
+                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, 300, 300, 300, 120) == -2)
+                { FatalCrash(); return; }//Move to next spot
+                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, 300, 300, 300, 84) == -2)
+                { FatalCrash(); return; }//Move to next spot
+                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, 150, -240, 300, 84) == -2)
+                { FatalCrash(); return; }//Move to next spot
+                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, 150, -240, 400, 84) == -2)
+                { FatalCrash(); return; }//Move to next spot
+                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[4]) == -2)
+                { FatalCrash(); return; }//Move to next spot
+            }
+            */
             return;
         }
 
