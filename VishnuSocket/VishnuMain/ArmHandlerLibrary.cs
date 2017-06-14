@@ -46,26 +46,38 @@ namespace VishnuMain
 
             while (!done)
             { //Main Loop
-                //if(ArduinoMotionLibrary.ArdPosition("MOVE", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[3]) == -2)
-                //{ FatalCrash(); return; }//Move to rest location if we didn't start there
-                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1], OriginLocation[2], OriginLocation[3]+7) == -2)
-                { FatalCrash(); return; }//Move to CPU0
-                GrabChip();
-                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, TestImgLocation[0], TestImgLocation[1], TestImgLocation[2], TestImgLocation[3]) == -2)
-                { FatalCrash(); return; }//Go calibrate
-                //CameraTestImg(camera_feed);
-                Task.Delay(1000);
-                //if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0] + (7*centerToCenterW), OriginLocation[1]-(centerToCenterL*0), OriginLocation[2]+(7*1), OriginLocation[3]+ArduinoMotionLibrary.ArmCoordinates[4]) == -2)
-                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, 195, 323, OriginLocation[2] + (5 * 1), 51) == -2)
-                { FatalCrash(); return; }//Move to next spot
-                ReleaseChip();
-                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[3]) == -2)
-                { FatalCrash(); return; }//Move to rest location to finish
-                Running = false;
-                done = true;
-            }
-            /* //This is a demo of range of motion
-                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[4]) == -2)
+              if(ArduinoMotionLibrary.ArdPosition("MOVE", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[3]) == -2)
+              { FatalCrash(); return; }//Move to rest location if we didn't start there
+              if (ArduinoMotionLibrary.ArdPosition("MOVE", 1, 0, 0, 0, 0) == 2)
+              { FatalCrash(); return; }//Move tray to spot 0 in order to get tray 2 under arm
+              if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1], OriginLocation[2], OriginLocation[3]) == -2)
+              { FatalCrash(); return; }//Move to CPU0
+              GrabChip();
+              //if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, TestImgLocation[0], TestImgLocation[1], TestImgLocation[2], TestImgLocation[3]) == -2)
+              //{ FatalCrash(); return; }//Go calibrate
+              //CameraTestImg(camera_feed);
+              //Task.Delay(1000);
+              //if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1]-centerToCenterL, OriginLocation[2], OriginLocation[3]) == -2)
+              //if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, 195, 323, OriginLocation[2] + (5 * 1), 51) == -2)
+              //{ FatalCrash(); return; }//Move to next spot
+              if (ArduinoMotionLibrary.ArdPosition("MOVE", 1, 1, 0, 0, 0) == 2)
+              { FatalCrash(); return; }//Move tray to spot 1 in order to get tray 3 under arm
+              ReleaseChip();
+              if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[3]) == -2)
+              { FatalCrash(); return; }//Move to rest location to finish
+              
+              //}
+              //This is a demo of range of motion
+              /*
+                if (ArduinoMotionLibrary.ArdPosition("MOVE", 1, 0, 0, 0, 0) == 2)
+                { FatalCrash(); return; }//Move to next tray spot
+                if (ArduinoMotionLibrary.ArdPosition("MOVE", 1, 1, 0, 0, 0) == 2)
+                { FatalCrash(); return; }//Move to next tray spot
+                if (ArduinoMotionLibrary.ArdPosition("MOVE", 1, 2, 0, 0, 0) == 2)
+                { FatalCrash(); return; }//Move to next tray spot
+                if (ArduinoMotionLibrary.ArdPosition("MOVE", 1, 3, 0, 0, 0) == 2)
+                { FatalCrash(); return; }//Move to next tray spot
+                /*if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[3]) == -2)
                 { FatalCrash(); return; }//Move to next spot
                 if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, 300, 300, 300, 84) == -2)
                 { FatalCrash(); return; }//Move to next spot
@@ -75,14 +87,17 @@ namespace VishnuMain
                 { FatalCrash(); return; }//Move to next spot
                 if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, 300, 300, 300, 84) == -2)
                 { FatalCrash(); return; }//Move to next spot
-                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, 150, -240, 300, 84) == -2)
+                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, 200, 82, 300, 84) == -2)
                 { FatalCrash(); return; }//Move to next spot
-                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, 150, -240, 400, 84) == -2)
+                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, 200, 82, 300, 84) == -2)
                 { FatalCrash(); return; }//Move to next spot
-                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[4]) == -2)
+                if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[3]) == -2)
                 { FatalCrash(); return; }//Move to next spot
+                */
+                Running = false;
+                done = true; 
             }
-            */
+            
             return;
         }
 

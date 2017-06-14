@@ -58,7 +58,7 @@ namespace VishnuMain
             //default 2 means not connected. 
             if (ArduinoMotionLibrary.Arduinos[1] != 2)
             {
-                portListBox.AppendText("Tray Handler Connected");
+                portListBox.AppendText("Tray Handler Connected" + Environment.NewLine);
                 trayGroupBox.Enabled = true;
             }
             else if (ArduinoMotionLibrary.Arduinos[1] == 2)
@@ -123,7 +123,7 @@ namespace VishnuMain
             BWR.DoWork += delegate
             {
                 if( ArduinoMotionLibrary.ArdPosition("REDEF", portID, XcoordinateValue, YcoordinateValue, ZcoordinateValue, RotationVal) == 2)
-                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished"); }
+                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished" + Environment.NewLine); }
             };
             BWR.RunWorkerCompleted += delegate
             {
@@ -157,7 +157,7 @@ namespace VishnuMain
             BWR.DoWork += delegate
             {
                 if(ArduinoMotionLibrary.ArdPosition("SHIFT", portID, XcoordinateValue, YcoordinateValue, ZcoordinateValue, RotationVal) == -2)
-                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished"); }
+                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished" + Environment.NewLine); }
             };
             BWR.RunWorkerCompleted += delegate
             {
@@ -184,7 +184,7 @@ namespace VishnuMain
             BWG.DoWork += delegate
             {
                 if(ArduinoMotionLibrary.ArdPosition("GRAB", portID, 0, 0, 0, 0) == 2)
-                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished"); }
+                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished" + Environment.NewLine); }
             };
             BWG.RunWorkerCompleted += delegate
             {
@@ -200,7 +200,7 @@ namespace VishnuMain
             BWRE.DoWork += delegate
             {
                 if (ArduinoMotionLibrary.ArdPosition("RELEASE", portID, 0, 0, 0, 0) == 2)
-                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished"); }
+                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished" + Environment.NewLine); }
             };
             BWRE.RunWorkerCompleted += delegate
             {
@@ -218,7 +218,7 @@ namespace VishnuMain
             BWR.DoWork += delegate
             {
                 if(ArduinoMotionLibrary.ArdPosition("SHIFT", portID, 0, 0, ZcoordinateValue, 0) == 2)
-                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished"); }
+                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished" + Environment.NewLine); }
             };
             BWR.RunWorkerCompleted += delegate
             {
@@ -234,7 +234,7 @@ namespace VishnuMain
             BWR.DoWork += delegate
             {
                 if(ArduinoMotionLibrary.ArdPosition("SHIFT", portID, 0, 0, (-1* ZcoordinateValue), 0) == 2)
-                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished"); }
+                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished" + Environment.NewLine); }
             };
             BWR.RunWorkerCompleted += delegate
             {
@@ -271,7 +271,7 @@ namespace VishnuMain
             BWR.DoWork += delegate
             {
                 if(ArduinoMotionLibrary.ArdPosition("SHIFT", portID, NewCameraX, NewCameraY, 0, 0) == 2)
-                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished"); }
+                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished" + Environment.NewLine); }
             };
             BWR.RunWorkerCompleted += delegate
             {
@@ -289,7 +289,7 @@ namespace VishnuMain
             BWR.DoWork += delegate
             {
                 if (ArduinoMotionLibrary.ArdPosition("SHIFT", portID, NewCameraX, NewCameraY, 0, 0) == 2)
-                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished"); }
+                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished" + Environment.NewLine); }
             };
             BWR.RunWorkerCompleted += delegate
             {
@@ -308,7 +308,7 @@ namespace VishnuMain
             BWR.DoWork += delegate
             {
                 if(ArduinoMotionLibrary.ArdPosition("SHIFT", portID, NewCameraX, NewCameraY, 0, 0) == 2)
-                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished"); }
+                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished" + Environment.NewLine); }
             };
             BWR.RunWorkerCompleted += delegate
             {
@@ -327,7 +327,7 @@ namespace VishnuMain
             {
                 
                 if(ArduinoMotionLibrary.ArdPosition("SHIFT", portID, NewCameraX, NewCameraY, 0, 0) == 2)
-                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished"); }
+                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished" + Environment.NewLine); }
             };
             BWR.RunWorkerCompleted += delegate
             {
@@ -346,7 +346,7 @@ namespace VishnuMain
             {
                 
                 if(ArduinoMotionLibrary.ArdPosition("SHIFT", portID, NewCameraX, NewCameraY, 0, 0) == 2)
-                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished"); }
+                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished" + Environment.NewLine); }
             };
             BWR.RunWorkerCompleted += delegate
             {
@@ -365,7 +365,7 @@ namespace VishnuMain
             {
                 
                 if(ArduinoMotionLibrary.ArdPosition("SHIFT", portID, NewCameraX, NewCameraY, 0, 0) == 2)
-                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished"); }
+                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished" + Environment.NewLine); }
             };
             BWR.RunWorkerCompleted += delegate
             {
@@ -384,7 +384,7 @@ namespace VishnuMain
             {
               
                 if(ArduinoMotionLibrary.ArdPosition("SHIFT", portID, NewCameraX, NewCameraY, 0, 0) == 2)
-                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished"); }
+                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished" + Environment.NewLine); }
             };
             BWR.RunWorkerCompleted += delegate
             {
@@ -403,7 +403,7 @@ namespace VishnuMain
             {
                 
                 if(ArduinoMotionLibrary.ArdPosition("SHIFT", portID, NewCameraX, NewCameraY, 0, 0) == 2)
-                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished"); }
+                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished" + Environment.NewLine); }
             };
             BWR.RunWorkerCompleted += delegate
             {
@@ -433,7 +433,7 @@ namespace VishnuMain
         {
             if(ArduinoMotionLibrary.ArdPosition("MOVE", 0, ArmHandlerLibrary.RestLocation[0],
                 ArmHandlerLibrary.RestLocation[1], ArmHandlerLibrary.RestLocation[2], ArmHandlerLibrary.RestLocation[3]) == 2)
-            { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished"); }
+            { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished" + Environment.NewLine); }
         }
 
         private void buttonCLR_Click(object sender, EventArgs e)
@@ -448,7 +448,7 @@ namespace VishnuMain
         private void trayMove_Click(object sender, EventArgs e)
         {
             if(ArduinoMotionLibrary.ArdPosition("MOVE", 1, traySelectorBox.SelectedIndex, (double) trayZaxis.Value, 0, 0) == 2)
-            { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished"); }
+            { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished" + Environment.NewLine); }
         }
 
         private void saveCalibrationButton_Click(object sender, EventArgs e)
@@ -487,7 +487,7 @@ namespace VishnuMain
             BWR.DoWork += delegate
             {
                 if(ArduinoMotionLibrary.ArdPosition("RELAY", portID, 0, 0, 0, 0) == 2)
-                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished"); }
+                { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished" + Environment.NewLine); }
             };
             BWR.RunWorkerCompleted += delegate
             {
@@ -510,7 +510,7 @@ namespace VishnuMain
         private void trayRedefine_Click(object sender, EventArgs e)
         {
             if (ArduinoMotionLibrary.ArdPosition("REDEF", 1, traySelectorBox.SelectedIndex, (double)trayZaxis.Value, 0, 0) == 2)
-            { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished"); }
+            { MessageBox.Show("Movement either encountered an error or Must wait until movement has finished" + Environment.NewLine); }
         }
 
     }
