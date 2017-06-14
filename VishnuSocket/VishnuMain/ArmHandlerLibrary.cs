@@ -52,17 +52,36 @@ namespace VishnuMain
               { FatalCrash(); return; }//Move tray to spot 0 in order to get tray 2 under arm
               if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1], OriginLocation[2], OriginLocation[3]) == -2)
               { FatalCrash(); return; }//Move to CPU0
-              GrabChip();
-              //if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, TestImgLocation[0], TestImgLocation[1], TestImgLocation[2], TestImgLocation[3]) == -2)
-              //{ FatalCrash(); return; }//Go calibrate
-              //CameraTestImg(camera_feed);
-              //Task.Delay(1000);
-              //if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1]-centerToCenterL, OriginLocation[2], OriginLocation[3]) == -2)
-              //if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, 195, 323, OriginLocation[2] + (5 * 1), 51) == -2)
-              //{ FatalCrash(); return; }//Move to next spot
-              if (ArduinoMotionLibrary.ArdPosition("MOVE", 1, 1, 0, 0, 0) == 2)
+              //GrabChip();
+
+                Task.Delay(1000);
+                if (ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, -10, 0) == -2)
+                { FatalCrash(); return; }//Move down to grab CPU 10mm
+                if (ArduinoMotionLibrary.ArdPosition("GRAB", 0, 0, 0, 0, 0) == -2)
+                { FatalCrash(); return; }
+                if (ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 20, 0) == -2)
+                { FatalCrash(); return; }//Raise back up 10mm
+
+                //if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, TestImgLocation[0], TestImgLocation[1], TestImgLocation[2], TestImgLocation[3]) == -2)
+                //{ FatalCrash(); return; }//Go calibrate
+                //CameraTestImg(camera_feed);
+                //Task.Delay(1000);
+                //if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, OriginLocation[0], OriginLocation[1]-centerToCenterL, OriginLocation[2], OriginLocation[3]) == -2)
+                //if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, 195, 323, OriginLocation[2] + (5 * 1), 51) == -2)
+                //{ FatalCrash(); return; }//Move to next spot
+                if (ArduinoMotionLibrary.ArdPosition("MOVE", 1, 1, 0, 0, 0) == 2)
               { FatalCrash(); return; }//Move tray to spot 1 in order to get tray 3 under arm
-              ReleaseChip();
+              //ReleaseChip();
+
+                Task.Delay(1000);
+                if (ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, -15, 0) == -2)
+                { FatalCrash(); return; }//Put it down
+                if (ArduinoMotionLibrary.ArdPosition("RELEASE", 0, 0, 0, 0, 0) == -2)
+                { FatalCrash(); return; }
+                if (ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, 10, 0) == -2)
+                { FatalCrash(); return; }//Go back
+
+                Task.Delay(3000);
               if (ArduinoMotionLibrary.ArdPosition("MOVE", 0, RestLocation[0], RestLocation[1], RestLocation[2], RestLocation[3]) == -2)
               { FatalCrash(); return; }//Move to rest location to finish
               
@@ -107,7 +126,7 @@ namespace VishnuMain
         }
         private static void GrabChip()
         {
-            
+            Task.Delay(1000);
             if (ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, -10, 0) == -2)
             { FatalCrash(); return; }//Move down to grab CPU 10mm
             if (ArduinoMotionLibrary.ArdPosition("GRAB", 0, 0, 0, 0, 0) == -2)
@@ -117,6 +136,7 @@ namespace VishnuMain
         }
         private static void ReleaseChip()
         {
+            Task.Delay(1000);
             if (ArduinoMotionLibrary.ArdPosition("SHIFT", 0, 0, 0, -10, 0) == -2)
             { FatalCrash(); return; }//Put it down
             if (ArduinoMotionLibrary.ArdPosition("RELEASE", 0, 0, 0, 0, 0) == -2)
